@@ -25,7 +25,7 @@
 	</delete>
 	
 	<select id="listAll" resultType="ComQnADTO">
-		select * from com_qna where com_qna_no>0 order by com_qna_no desc, regdate, desc
+		select * from com_qna where com_qna_no>0 order by com_qna_no desc, regdate desc
 	</select>
 	
 </mapper>
