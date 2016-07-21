@@ -17,47 +17,43 @@
 	<div class="row">
 		<div id="wrapper">
 			<div>
-				<%@ include file="../include/myteamsidebar.jsp" %>
+				<%@ include file="../include/myclubSidebar.jsp" %>
 			</div>
 			<div id="page-content-wrapper">
 				<div class="col-md-10">
 					<!-- 메인폼  -->
 					<div align="left">
 						<!-- 팀 타이틀이 들어갈 장소 -->
-						<h2>기록실</h2>
+						<h2>현금출납부</h2>
 					</div>
 					<div class="myteamheader" align="right">
 						<!-- 버튼두개짜리 헤더  -->
-						<%@include file="../include/myteamheader.jsp" %>
+						<%@include file="../include/myclubHeader.jsp" %>
 					</div>
 				</div>
 				<div class="col-md-10">
-					<form action="" method="post">
-						<table class="table table-bordered table-hover">
+					<table class="table table-bordered table-hover">
 							<!-- 수정 list -->
 							<tr style="text-align: center;font-weight:bold;">
 								<td>번호</td>
-								<td>이름</td>
-								<td>경기수</td>
-								<td>골</td>
-								<td>어시스트</td>
-								<td>경고</td>
-								<td>퇴장</td>
+								<td>날짜</td>
+								<td>유형</td>
+								<td>금액</td>
+								<td>내역</td>
+								<td>잔고</td>
 							</tr>
 							<tr style="text-algin:center">
 								<td>1</td>
-								<td>홍길동</td>
-								<td><input type="text" class="form-control" size="2" id="usergoal" value="15"></td>
-								<td><input type="text" class="form-control" size="2" id="userassist" value="3"></td>
-								<td><input type="text" class="form-control" size="2" id="useryellowcard" value="7"></td>
-								<td><input type="text" class="form-control" size="2" id="username" value="6"></td>
-								<td><input type="text" class="form-control" size="2" id="userredcard" value="1"></td>
+								<td>16.07.19</td>
+								<td>지출</td>
+								<td>200,000</td>
+								<td>7월회식</td>
+								<td>0</td>
 							</tr>
 						</table>
-						<div align="right">
-							<button class="btn btn-default" type="submit">등록</button>
-						</div>
-					</form>
+					<div align="right">
+						<a class="btn btn-default" role="button" href="myteamcashbookMgr.jsp">수정</a>
+					</div>
 				</div>
 			</div>	
 		</div>

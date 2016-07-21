@@ -59,7 +59,7 @@
 					
 				<div class="container-fluid">
 					<div class="row">
-						<form action="/myclub/notice/register">
+						<form action="#">
 							<!-- 검색하는 부분 -->
 							<div class="col-md-5 form-inline" style="float: left;">
 								<select class="btn btn-default input-group-add">
@@ -70,27 +70,25 @@
 								<input class="form-control" type="text" value="" name="" />
 								<button class="btn btn-default input-group-add">검색</button>
 							</div>
+						</form>	
 								
+						<!-- 페이징-->
+						<div class="col-md-4">
+							<ul id="pagingul" class="pagination">
+							    <li><a href="#">&laquo;</a></li>
+							    <li><a href="#">1</a></li>
+							    <li><a href="#">2</a></li>
+							    <li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#">5</a></li>
+								<li><a href="#">&raquo;</a></li>
+							</ul>
+						</div>
 								
-							<!-- 페이징-->
-							<div class="col-md-4">
-								<ul id="pagingul" class="pagination">
-							    	<li><a href="#">&laquo;</a></li>
-							    	<li><a href="#">1</a></li>
-							    	<li><a href="#">2</a></li>
-							    	<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><a href="#">&raquo;</a></li>
-								</ul>
-							</div>
-								
-							<!-- 글쓰기 -->
-							<div style="float: right;">
-								<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-pencil"></span>글쓰기</button>
-							</div>
-						
-						</form>
+						<!-- 글쓰기 -->
+						<div style="float: right;">
+							<a href="/myclub/notice/register" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-pencil"></span>글쓰기</a>
+						</div>
 					</div>
 				</div> <!-- /container-fluid -->
 

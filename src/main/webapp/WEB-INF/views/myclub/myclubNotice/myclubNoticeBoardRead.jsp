@@ -68,9 +68,9 @@
 				<hr/>
 					
 					<div align="right">
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
+						<a href="/myclub/notice/main" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
+						<a href="/myclub/notice/update" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>수정</a>
+						<a href="/myclub/notice/delete" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>삭제</a>
 					</div>		
 				</div>
 			</div>

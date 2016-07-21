@@ -17,7 +17,7 @@
 	<div class="row">
 		<div id="wrapper">
 			<div>
-				<%@ include file="../include/myteamsidebar.jsp" %>
+				<%@ include file="../include/myclubSidebar.jsp" %>
 			</div>
 			<div id="page-content-wrapper">
 				<div class="col-md-10">
@@ -28,7 +28,7 @@
 					</div>
 					<div class="myteamheader" align="right">
 						<!-- 버튼두개짜리 헤더  -->
-						<%@include file="../include/myteamheader.jsp" %>
+						<%@include file="../include/myclubHeader.jsp" %>
 					</div>
 				</div>
 				<div class="col-md-10">

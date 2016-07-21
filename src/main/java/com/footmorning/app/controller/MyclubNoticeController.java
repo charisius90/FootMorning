@@ -22,27 +22,57 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 	public String home(Locale locale, Model model) {
 		logger.info("메인", locale);
 		
-		return "myteam/myteam";
+		return "myclub/myclubMain";
 	}
 	
-	@RequestMapping("/myclub/notice")
+	@RequestMapping("/myclub/notice/main")
 	public String notice(Locale locale, Model model) {
 		logger.info("공지사항", locale);
 		
-		return "myteam/myteamNotice/notice_board";
+		return "/myclub/myclubNotice/myclubNoticeBoardMain";
 	}
 	
-	@RequestMapping("/myclub/notice/register")
+	@RequestMapping(value="/myclub/notice/register", method=RequestMethod.GET)
 	public String register(Locale locale, Model model) {
 		logger.info("등록", locale);
 		
-		return "myteam/myteamNotice/notice_post";
+		return "myclub/myclubNotice/myclubNoticeBoardRegister";
+	}
+	
+	@RequestMapping(value="/myclub/notice/register", method=RequestMethod.POST)
+	public String registerComplete(Locale locale, Model model) {
+		logger.info("등록", locale);
+		
+		return "myclub/myclubNotice/myclubNoticeBoardMain";
 	}
 	
 	@RequestMapping("/myclub/notice/read")
 	public String read(Locale locale, Model model) {
-		logger.info("등록", locale);
+		logger.info("읽기", locale);
 		
-		return "myteam/myteamNotice/notice_Read";
+		return "myclub/myclubNotice/myclubNoticeBoardRead";
 	}
+	
+	@RequestMapping(value="/myclub/notice/update", method=RequestMethod.GET)
+	public String update(Locale locale, Model model) {
+		logger.info("수정", locale);
+		
+		return "myclub/myclubNotice/myclubNoticeBoardUpdate";
+	}
+	
+	@RequestMapping(value="/myclub/notice/update", method=RequestMethod.POST)
+	public String updateComplete(Locale locale, Model model) {
+		logger.info("수정", locale);
+		
+		return "myclub/myclubNotice/myclubNoticeBoardMain";
+	}
+	
+	@RequestMapping("/myclub/notice/delete")
+	public String delete(Locale locale, Model model) {
+		logger.info("삭제", locale);
+		
+		return "myclub/myclubNotice/myclubNoticeBoardMain";
+	}
+	
+	
 }

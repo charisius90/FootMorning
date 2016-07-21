@@ -16,6 +16,7 @@
 			<div>
 				<%@ include file="../../include/communitysidebar.jsp" %>
 			</div>
+			<form method="post" action="/myclub/notice/register">
 			<div class="col-md-10">
 				<div id="page-content-wrapper">
 				<h1>클럽자랑-글쓰기</h1> 			
@@ -43,12 +44,13 @@
 				<hr/>
 			
 				<div align="right">
-					<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
-					<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
-					<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
+					<a href="/myclub/notice/main" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</button>
+					<a href="/myclub/notice/main" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
 				</div>		
 				</div>
 			</div>	
+			</form>
 		</div>
 	</div>
 </div>

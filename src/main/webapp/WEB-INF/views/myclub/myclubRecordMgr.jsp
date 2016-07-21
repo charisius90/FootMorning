@@ -17,7 +17,7 @@
 	<div class="row">
 		<div id="wrapper">
 			<div>
-				<%@ include file="../include/myteamsidebar.jsp" %>
+				<%@ include file="../include/myclubSidebar.jsp" %>
 			</div>
 			<div id="page-content-wrapper">
 				<div class="col-md-10">
@@ -28,79 +28,36 @@
 					</div>
 					<div class="myteamheader" align="right">
 						<!-- 버튼두개짜리 헤더  -->
-						<%@include file="../include/myteamheader.jsp" %>
+						<%@include file="../include/myclubHeader.jsp" %>
 					</div>
 				</div>
 				<div class="col-md-10">
-					<table class="table table-bordered table-hover">
-						<!-- 기록 list td형식 -->
-						<tr>
-							<td>번호</td>
-							<td>이름</td>
-							<td>경기수</td>
-							<td>골</td>
-							<td>어시스트</td>
-							<td>경고</td>
-							<td>퇴장</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>홍길동</td>
-							<td>15</td>
-							<td>3</td>
-							<td>7</td>
-							<td>6</td>
-							<td>1</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>홍길동</td>
-							<td>15</td>
-							<td>3</td>
-							<td>7</td>
-							<td>6</td>
-							<td>1</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>홍길동</td>
-							<td>15</td>
-							<td>3</td>
-							<td>7</td>
-							<td>6</td>
-							<td>1</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>홍길동</td>
-							<td>15</td>
-							<td>3</td>
-							<td>7</td>
-							<td>6</td>
-							<td>1</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>홍길동</td>
-							<td>15</td>
-							<td>3</td>
-							<td>7</td>
-							<td>6</td>
-							<td>1</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>홍길동</td>
-							<td>15</td>
-							<td>3</td>
-							<td>7</td>
-							<td>6</td>
-							<td>1</td>
-						</tr>
-					</table>
-					<div align="right">
-						<a class="btn btn-default" role="button" href="myteamrecordMgr.jsp">관리</a>
-					</div>
+					<form action="" method="post">
+						<table class="table table-bordered table-hover">
+							<!-- 수정 list -->
+							<tr style="text-align: center;font-weight:bold;">
+								<td>번호</td>
+								<td>이름</td>
+								<td>경기수</td>
+								<td>골</td>
+								<td>어시스트</td>
+								<td>경고</td>
+								<td>퇴장</td>
+							</tr>
+							<tr style="text-algin:center">
+								<td>1</td>
+								<td>홍길동</td>
+								<td><input type="text" class="form-control" size="2" id="usergoal" value="15"></td>
+								<td><input type="text" class="form-control" size="2" id="userassist" value="3"></td>
+								<td><input type="text" class="form-control" size="2" id="useryellowcard" value="7"></td>
+								<td><input type="text" class="form-control" size="2" id="username" value="6"></td>
+								<td><input type="text" class="form-control" size="2" id="userredcard" value="1"></td>
+							</tr>
+						</table>
+						<div align="right">
+							<button class="btn btn-default" type="submit">등록</button>
+						</div>
+					</form>
 				</div>
 			</div>	
 		</div>
