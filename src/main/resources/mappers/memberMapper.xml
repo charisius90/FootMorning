@@ -4,4 +4,29 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.footmorning.mappers.memberMapper">
+	<select id="isCorrectPW">
+		select 
+	</select>
+	
+	<select id="getMemberInfo" resultType="MemberDTO">
+	
+	</select>
+	
+	<select id="isMember">
+	
+	</select>
+	
+	<!-- mem_birth DB추가요청 -->
+	<insert id="insertMember" parameterType="MemberDTO">
+		insert into member(mem_email, mem_pw, mem_name, mem_gender, mem_phone, mem_addr)
+		 values(#{mem_email}, #{mem_pw}, #{mem_name}, #{mem_gender}, #{mem_phone}, #{mem_addr})
+	</insert>
+	
+	<update id="updateMember" parameterType="MemberDTO">
+		update member set 
+	</update>	
+	
+	<delete id="deleteMember" parameterType="string">
+	
+	</delete>
 </mapper>
