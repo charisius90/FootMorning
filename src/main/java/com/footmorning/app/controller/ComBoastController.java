@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.footmorning.app.domain.ComBoastDTO;
+
 /**
  * 커뮤니티 자랑게시판 컨트롤러
  * @author 박수항
