@@ -1,6 +1,6 @@
 package com.footmorning.app.domain;
 
-public class ComDiscussionKorNoDTO {
+public class ComDiscussionKorDTO {
 	private String com_discussion_kor_no;
 	private String mem_no;
 	private String com_discussion_kor_subject;
@@ -47,7 +47,7 @@ public class ComDiscussionKorNoDTO {
 	
 	@Override
 	public String toString() {
-		return "ComDiscussionKorNoDTO [com_discussion_kor_no=" + com_discussion_kor_no + ", mem_no=" + mem_no
+		return "ComDiscussionKorDTO [com_discussion_kor_no=" + com_discussion_kor_no + ", mem_no=" + mem_no
 				+ ", com_discussion_kor_subject=" + com_discussion_kor_subject + ", com_discussion_kor_content="
 				+ com_discussion_kor_content + ", com_discussion_kor_regdate=" + com_discussion_kor_regdate
 				+ ", com_discussion_kor_count=" + com_discussion_kor_count + "]";

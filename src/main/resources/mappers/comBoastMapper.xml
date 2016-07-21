@@ -5,12 +5,12 @@
 
 <mapper namespace="com.footmorning.mappers.comBoastMapper">
 	
-	<insert id="register" parameterType="com.footmoring.app.domain.ComBoastDTO">
+	<insert id="register" parameterType="ComBoastDTO">
 		insert into com_boast(mem_no, com_boast_subject, com_boast_content, com_boast_count)
 		values(#{mem_no},#{com_boast_subject},#{com_boast_content},#{com_boast_count})
 	</insert>
 	
-	<select id="read">
+	<select id="read" resultType="ComBoastDTO">
 		select * from com_boast where com_boast_no=#{com_boast_no}
 	</select>
 	
@@ -25,7 +25,7 @@
 	</delete>
 	
 	<select id="listAll" resultType="ComBoastDTO">
-		select * from com_boast where com_boast_no>0 order by com_boast_no desc, regdate desc
+		select * from com_boast where com_boast_no>0 order by com_boast_no desc, com_boast_regdate desc
 	</select>
 	
 </mapper>

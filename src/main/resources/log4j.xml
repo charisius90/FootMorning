@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.charisius.app">
+	<logger name="com.footmorning.app">
 		<level value="info" />
 	</logger>
 	

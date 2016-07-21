@@ -96,7 +96,13 @@ public class MemberDTO {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "MemberDTO [mem_no=" + mem_no + ", mem_email=" + mem_email + 
+		", mem_pw=" + mem_pw + ", mem_name=" + mem_name + 
+		", mem_gender=" + mem_gender + ", mem_phone=" + mem_phone + 
+		", mem_addr=" + mem_addr + ", mem_grade=" + mem_grade + 
+		", mem_image=" + mem_image + ",	mem_regdate=" + mem_regdate +
+		", mem_logdate=" + mem_logdate + ",	mem_backno=" + mem_backno +
+		", club_no=" + club_no + "]";
 	}
+	
 }

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.footmorning.mappers.comQnAMapper">
 	
-	<insert id="register" parameterType="com.footmoring.app.domain.ComQnADTO">
+	<insert id="register" parameterType="ComQnADTO">
 		insert into com_qna(mem_no, com_qna_subject, com_qna_content, com_qna_count)
 		values(#{mem_no},#{com_qna_subject},#{com_qna_content},#{com_qna_count})
 	</insert>
@@ -25,7 +25,7 @@
 	</delete>
 	
 	<select id="listAll" resultType="ComQnADTO">
-		select * from com_qna where com_qna_no>0 order by com_qna_no desc, regdate desc
+		select * from com_qna where com_qna_no>0 order by com_qna_no desc, com_qna_regdate desc
 	</select>
 	
 </mapper>

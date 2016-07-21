@@ -1,5 +1,8 @@
 package com.footmorning.app.persistence;
 
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.footmorning.app.domain.MemberDTO;
@@ -12,40 +15,37 @@ import com.footmorning.app.domain.MemberDTO;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO {
-
+	@Inject
+	private SqlSession sqlSession;	
+	private static final String NAMESPACE = "com.footmorning.mappers.memberMapper";
+	
 	@Override
 	public void insertMember(MemberDTO dto) {
-		// TODO Auto-generated method stub
-
+		sqlSession.insert(NAMESPACE + ".insertMember");
 	}
 
 	@Override
 	public void updateMember(MemberDTO dto) {
-		// TODO Auto-generated method stub
-
+		sqlSession.update(NAMESPACE + ".updateMember");
 	}
 
 	@Override
 	public void deleteMember(String mem_no) {
-		// TODO Auto-generated method stub
-
+		sqlSession.delete(NAMESPACE + ".deleteMember");
 	}
 
 	@Override
 	public boolean isCorrectPW(String mem_email, String mem_pw) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public MemberDTO getMemberInfo(String mem_email) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean isMember(String mem_email) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

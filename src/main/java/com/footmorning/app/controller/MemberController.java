@@ -11,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.service.MemberService;
@@ -38,7 +38,7 @@ public class MemberController {
 	}
 
 	@RequestMapping(value="/memberLogin", method=RequestMethod.POST)
-	public String loginComplete(@Valid MemberDTO dto, BindingResult result, HttpServletRequest req) {
+	public String loginComplete(@Valid MemberDTO member, BindingResult result, HttpServletRequest req) {
 		return "index";
 	}
 	
@@ -53,8 +53,9 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/memberSignUp", method=RequestMethod.POST)
-	public String signupComplete(){
-		return "index";
+	public String signupComplete(@ModelAttribute MemberDTO member){
+		logger.info("signupComplete : " + member.toString());
+		return "member/login";
 	}
 	
 	@RequestMapping("/memberSearchID")
