@@ -1,0 +1,3 @@
+required.memberVO.userid=유저 ID를 입력해 주세요.
+required.memberVO.userpw=유저 pass를 입력해 주세요.
+login.memberVO=입력된 userid와 pass가 존재하지 않습니다.
