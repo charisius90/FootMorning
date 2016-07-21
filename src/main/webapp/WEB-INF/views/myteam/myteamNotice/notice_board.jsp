@@ -35,7 +35,7 @@
 					</tr>
 					<!-- 게시글 내용이 들어가는 부분 -->
 					<tr>
-						<td><a href="#">이번에 갔던 MT 사진입니다!</a></td>
+						<td><a href="/myclub/notice/read">이번에 갔던 MT 사진입니다!</a></td>
 						<td>2016-7-17</td>
 						<td>99</td>
 					</tr>
@@ -59,7 +59,7 @@
 					
 				<div class="container-fluid">
 					<div class="row">
-						<form>
+						<form action="/myclub/notice/register">
 							<!-- 검색하는 부분 -->
 							<div class="col-md-5 form-inline" style="float: left;">
 								<select class="btn btn-default input-group-add">
@@ -87,7 +87,7 @@
 								
 							<!-- 글쓰기 -->
 							<div style="float: right;">
-								<button class="btn btn-default" ><span class="glyphicon glyphicon-pencil"></span>글쓰기</button>
+								<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-pencil"></span>글쓰기</button>
 							</div>
 						
 						</form>

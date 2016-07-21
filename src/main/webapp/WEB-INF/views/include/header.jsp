@@ -32,7 +32,7 @@
 			<ul class="nav nav-justified" id="nav-ul">
 				<li><a href="../matching/matchingPage.jsp">매칭</a></li>
 				<li><a href="../club/clubPage.jsp">클럽</a></li>
-				<li><a href="../myteam/myteam.jsp">MYTEAM</a></li>
+				<li><a href="/myclub/main">MYTEAM</a></li>
 				<li><a href="#">커뮤니티</a></li>
 			</ul>
 		</div>

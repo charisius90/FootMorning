@@ -1,0 +1,30 @@
+.custom-border{
+	border: 1px solid gray;
+	border-radius: 1em 1em 1em 1em;
+}
+.custom-border .spacing {
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+.myteamheader{
+	margin-bottom: 10px;
+	
+}
+.form-control .size input{
+	width:10%;
+	size: 5;
+}
+
+.admin{
+    border: 2px solid none;
+    padding: 10px 40px;
+    background: #dddddd;
+    width: 300px;
+    border-radius: 5px;
+    width: 100%
+}
+
+.custom-textarea{
+	background-color:white;
+	border-radius:5px;
+}
