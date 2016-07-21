@@ -3,24 +3,27 @@
 
 <mapper namespace="com.footmorning.mappers.myclub.myclubNoticeMapper">
 	<insert id="create">
-		insert into tbl_board (title, content, writer) values(#{title},#{content}, #{writer})
-	</insert>
+      INSERT INTO 
+      myclub_notice(mem_no, myclub_notice_subject, myclub_notice_content) 
+      VALUES (#{mem_no}, #{myclub_notice_subject}, #{myclub_notice_content})
+   	</insert>
 
 	<select id="read" resultType="MyclubNoticeDTO">
-		select bno, title, content, writer, regdate, viewcnt from tbl_board	where bno = #{bno}
-	</select>
+      select * from myclub_notice where myclub_notice_no=#{bno}
+   </select>
 
-	<update id="update">
-		update tbl_board set title =#{title}, content =#{content} where bno = #{bno}
-	</update>
+   <update id="update">
+      update myclub_notice set myclub_notice_subject =#{myclub_notice_subject}, myclub_notice_content =#{myclub_notice_content} 
+      where myclub_notice_no = #{myclub_notice_no}
+   </update>
 
-	<delete id="delete">
-		delete from tbl_board where bno = #{bno}
-	</delete>
+   <delete id="delete">
+      delete from myclub_notice where myclub_notice_no = #{myclub_notice_no}
+   </delete>
 
 	<select id="listAll" resultType="MyclubNoticeDTO">
-		 <![CDATA[
-		 select bno, title, content, writer, regdate, viewcnt from tbl_board where bno > 0 order by bno desc, regdate desc
-		 ]]>
-	</select>
+       <![CDATA[
+       select * from myclub_notice where myclub_notice_no > 0 order by myclub_notice_no desc, myclub_notice_regdate desc
+       ]]>
+   </select>
 </mapper>

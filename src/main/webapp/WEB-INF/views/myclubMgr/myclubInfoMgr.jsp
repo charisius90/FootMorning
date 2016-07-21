@@ -16,14 +16,14 @@
 	<div class="row">
 		<div id="wrapper">
 			<div>
-				<%@ include file="../include/myteammgrsidebar.jsp" %>
+				<%@ include file="../include/myclubMgrSidebar.jsp" %>
 			</div>
 		<div id="page-content-wrapper">
 			<div class="col-md-9" style="margin:30px">
 				<div><h3>기본정보관리</h3></div>
 				<div class="myteamheader" align="right">
 					<!-- 버튼두개짜리 헤더  -->
-					<%@include file="../include/myteamheader.jsp" %>
+					<%@include file="../include/myclubHeader.jsp" %>
 				</div>
 				<div>
 					<div style="float:left">로 고&nbsp;&nbsp;</div>

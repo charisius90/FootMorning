@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,30 +31,21 @@
 				<table class="table table-boardead table-hover" style="text-align: center;">
 					<tr>
 						<td>제목</td>
+						<td>작성자</td>
 						<td>작성일</td>
 						<td>조회수</td>
 					</tr>
 					<!-- 게시글 내용이 들어가는 부분 -->
-					<tr>
-						<td><a href="/myclub/notice/read">이번에 갔던 MT 사진입니다!</a></td>
-						<td>2016-7-17</td>
-						<td>99</td>
-					</tr>
-					<tr>
-						<td><a href="#">이번에 갔던 MT 사진입니다!</a></td>
-						<td>2016-7-17</td>
-						<td>99</td>
-					</tr>
-					<tr>
-						<td><a href="#">이번에 갔던 MT 사진입니다!</a></td>
-						<td>2016-7-17</td>
-						<td>99</td>
-					</tr>
-					<tr>
-						<td><a href="#">이번에 갔던 MT 사진입니다!</a></td>
-						<td>2016-7-17</td>
-						<td>99</td>
-					</tr>
+					<c:forEach items="${list}" var="myclubDTO">
+               
+		               <tr>
+		                  <td><a href="/myclub/notice/read?myclub_notice_no=${myclubDTO.myclub_notice_no}">${myclubDTO.myclub_notice_subject}</a></td>
+		                  <td>${myclubDTO.mem_no}</td>
+		                  <td>${myclubDTO.myclub_notice_regdate}</td>
+		                  <td>0</td>
+		               </tr>
+               
+              		</c:forEach>
 				</table>
 				<br/>
 					

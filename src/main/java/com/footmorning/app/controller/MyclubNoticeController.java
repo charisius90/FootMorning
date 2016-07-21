@@ -1,8 +1,8 @@
 package com.footmorning.app.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,27 +10,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.footmorning.app.domain.MyclubNoticeDTO;
+import com.footmorning.app.service.MyclubNoticeService;
 
 @Controller
 public class MyclubNoticeController {
 private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping("/myclub/main")
-	public String home(Locale locale, Model model) {
-		logger.info("메인", locale);
-		
-		return "myclub/myclubMain";
-	}
+	@Inject
+	private MyclubNoticeService service;
 	
 	@RequestMapping("/myclub/notice/main")
-	public String notice(Locale locale, Model model) {
-		logger.info("공지사항", locale);
-		
-		return "/myclub/myclubNotice/myclubNoticeBoardMain";
-	}
+	public String notice(Model model) throws Exception {
+	      
+	      model.addAttribute("list", service.listAll());
+	      System.out.println(service.listAll().toString());
+	      return "/myclub/myclubNotice/myclubNoticeBoardMain";
+	 }
 	
 	@RequestMapping(value="/myclub/notice/register", method=RequestMethod.GET)
 	public String register(Locale locale, Model model) {
@@ -40,39 +38,73 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 	}
 	
 	@RequestMapping(value="/myclub/notice/register", method=RequestMethod.POST)
-	public String registerComplete(Locale locale, Model model) {
-		logger.info("등록", locale);
-		
-		return "myclub/myclubNotice/myclubNoticeBoardMain";
+	 public String registerComplete(MyclubNoticeDTO dto, RedirectAttributes rttr) throws Exception {
+	      logger.info("등록 완료 : " + dto.toString());
+	      service.register(dto);
+	      
+	      rttr.addFlashAttribute("msg", "SUCCESS");
+	      
+	      return "redirect:/myclub/notice/main";
 	}
 	
-	@RequestMapping("/myclub/notice/read")
-	public String read(Locale locale, Model model) {
-		logger.info("읽기", locale);
-		
-		return "myclub/myclubNotice/myclubNoticeBoardRead";
-	}
-	
-	@RequestMapping(value="/myclub/notice/update", method=RequestMethod.GET)
-	public String update(Locale locale, Model model) {
-		logger.info("수정", locale);
-		
-		return "myclub/myclubNotice/myclubNoticeBoardUpdate";
-	}
-	
-	@RequestMapping(value="/myclub/notice/update", method=RequestMethod.POST)
-	public String updateComplete(Locale locale, Model model) {
-		logger.info("수정", locale);
-		
-		return "myclub/myclubNotice/myclubNoticeBoardMain";
-	}
-	
-	@RequestMapping("/myclub/notice/delete")
-	public String delete(Locale locale, Model model) {
-		logger.info("삭제", locale);
-		
-		return "myclub/myclubNotice/myclubNoticeBoardMain";
-	}
+	   /**
+	    * 승한 read get
+	    * @param bno
+	    * @param model
+	    * @return
+	    * @throws Exception
+	    */
+	   @RequestMapping(value="/myclub/notice/read",method = RequestMethod.GET)
+	   public String read(Integer myclub_notice_no, Model model) throws Exception {
+	      model.addAttribute("dto",service.read(myclub_notice_no));
+	      
+	      return "myclub/myclubNotice/myclubNoticeBoardRead";
+	   }
+	   
+	   /**
+	    * 승한 업데이트 get
+	    * @param bno
+	    * @param model
+	    * @return
+	    * @throws Exception
+	    */
+	   @RequestMapping(value="/myclub/notice/update", method=RequestMethod.GET)
+	   public String update(Integer myclub_notice_no, Model model) throws Exception {
+	      model.addAttribute("dto",service.read(myclub_notice_no));
+	      
+	      return "myclub/myclubNotice/myclubNoticeBoardUpdate";
+	   }
+	   
+	   /**
+	    * 
+	    * 승한 update post
+	    * @param dto
+	    * @param rttr
+	    * @return
+	    * @throws Exception
+	    */
+	   @RequestMapping(value="/myclub/notice/update", method=RequestMethod.POST)
+	   public String updateComplete(MyclubNoticeDTO dto, RedirectAttributes rttr) throws Exception {
+	      service.modify(dto);
+	      
+	      rttr.addFlashAttribute("msg", "SUCCESS");
+	      
+	      return "redirect:/myclub/notice/main";
+	   }
+	   
+	   /**
+	    * 승한 delete get
+	    * @param bno
+	    * @param model
+	    * @return
+	    * @throws Exception
+	    */
+	   @RequestMapping("/myclub/notice/delete")
+	   public String delete(Integer myclub_notice_no, Model model) throws Exception {
+	      service.remove(myclub_notice_no);
+	      
+	      return "redirect:/myclub/notice/main";
+	   }
 	
 	
 }

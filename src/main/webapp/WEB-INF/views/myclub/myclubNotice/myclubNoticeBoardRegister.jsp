@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,19 +26,19 @@
 				<div class="container">
 					<div class="row">
 						<table class="table">
-							<tr>
-								<td>제목</td>
-								<td><input type="text" value="클럽글쓰기"/></td>
-							</tr>
-							<tr>
-								<td>작성자</td>
-								<td><input type="text" value="홍명보"/></td>
-							</tr>
-							<tr>
-								<td>내용</td>
-								<td><textarea rows="10" cols="100">글을 쓰는 부분입니다</textarea></td>
-							</tr>
-						</table>
+		                     <tr>
+		                        <td>제목</td>
+		                        <td><input type="text" name="myclub_notice_subject" /></td>
+		                     </tr>
+		                     <tr>
+		                        <td>작성자</td>
+		                        <td><input type="text" name="mem_no" value="1"/></td>
+		                     </tr>
+		                     <tr>
+		                        <td>내용</td>
+		                        <td><textarea rows="10" cols="100" name="myclub_notice_content"></textarea></td>
+		                     </tr>
+                 	 	</table>
 					</div>
 				</div>
 				<hr/>

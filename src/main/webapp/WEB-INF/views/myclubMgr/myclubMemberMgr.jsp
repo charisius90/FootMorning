@@ -17,14 +17,14 @@
 	<div class="row">
 		<div id="wrapper">
 			<div>
-				<%@ include file="../include/myteammgrsidebar.jsp" %>
+				<%@ include file="../include/myclubMgrSidebar.jsp" %>
 			</div>
 		<div id="page-content-wrapper">
 			<div class="col-md-9">
-			<h3>탈퇴멤버관리</h3>
+			<h3>클럽멤버관리</h3>
 			<div class="myteamheader" align="right">
 					<!-- 버튼두개짜리 헤더  -->
-					<%@include file="../include/myteamheader.jsp" %>
+					<%@include file="../include/myclubHeader.jsp" %>
 			</div>
 			<br/><br/>
 			<div class="row">
@@ -43,7 +43,7 @@
 					</div><!-- /input-group -->
 				</div><!-- /.col-lg-4 -->
 				<div style="float:right">
-					<input type="button" value="멤버탈퇴처리"/>
+					<input type="button" value="멤버등업처리"/>
 				</div>
 			</div><!-- /.row -->
 			<br/><br/>
@@ -51,17 +51,21 @@
 				<table class="table table-hover" text-align="center">
 					<thead>
 					<tr>
-						<th><input type="checkbox"/></th><th>E-Mail</th><th>이름</th><th>성별</th><th>가입일</th>
+						<th><input type="checkbox"/></th><th>닉네임</th><th>등급</th><th>성별</th>
+						<th>전화번호</th><th>주소</th><th>가입일</th>
 					</tr>
 					</thead>
 					<tr>
-						<td><input type="checkbox"/></th><th>ksy4035</td><td>김소영</td><td>여자</td><td>2016-07-01</td>
+						<td><input type="checkbox"/></th><th>ksy4035</td><td>클럽장</td><td>여자</td>
+						<td>010-7799-7470</td><td>서울 노원구 중계동</td><td>2016-07-01</td>
 					</tr>
 					<tr>
-						<td><input type="checkbox"/></th><th>비실이이</td><td>박규채</td><td>남자</td><td>2016-07-02</td>
+						<td><input type="checkbox"/></th><th>비실이이</td><td>운영자</td><td>남자</td>
+						<td>010-1234-5678</td><td>서울 광진구 자양동</td><td>2016-07-02</td>
 					</tr>
 					<tr>
-						<td><input type="checkbox"/></th><th>손니에스타</td><td>손승한</td><td>남자</td><td>2016-07-03</td>
+						<td><input type="checkbox"/></th><th>손니에스타</td><td>운영자</td><td>남자</td>
+						<td>010-1357-2468</td><td>서울 구로구 구로동</td><td>2016-07-03</td>
 					</tr>
 				</table>
 				
