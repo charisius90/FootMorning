@@ -5,4 +5,27 @@
 
 <mapper namespace="com.footmorning.mappers.comBoastMapper">
 	
+	<insert id="register" parameterType="com.footmoring.app.domain.ComBoastDTO">
+		insert into com_boast(mem_no, com_boast_subject, com_boast_content, com_boast_regdate, com_boast_count)
+		values(#{mem_no},#{com_boast_subject},#{com_boast_content},#{com_boast_count})
+	</insert>
+	
+	<select id="read">
+		select * from com_boast where com_boast_no=#{com_boast_no}
+	</select>
+	
+	<update id="update">
+		update com_boast set mem_no=#{mem_no}, com_boast_subject=#{com_boast_subject},com_boast_content=#{com_boast_content},
+		com_boast_count=#{com_boast_count} where com_boast_no=#{com_boast_no}	
+	</update>
+	
+	<delete id="delete">
+		delete * from com_boast 
+		where com_boast_no=#{com_boast_no}
+	</delete>
+	
+	<select id="listAll" resultType="ComBoastDTO">
+		select * from com_boast where com_boast_no>0 order by com_boast_no desc,regdate desc
+	</select>
+	
 </mapper>
