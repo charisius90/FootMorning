@@ -4,37 +4,46 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.footmorning.app.domain.ComBoastDTO;
 import com.footmorning.app.persistence.ComBoastDAO;
 
+/**
+ * 커뮤니티 자랑게시판 DAO
+ * @author 박수항
+ */
+@Repository
 public class ComBoastDAOImpl implements ComBoastDAO {
+	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	private static final String NAMESPACE = "com.charisius.mappers.comBoastMapper";
 
 	@Override
 	public void register(ComBoastDTO dto) throws Exception {
-		sqlSession.insert("register", dto);
+		sqlSession.insert(NAMESPACE + ".register", dto);
 	}
 
 	@Override
 	public ComBoastDTO read(Integer no) throws Exception {
-		return sqlSession.selectOne("read", no);
+		return sqlSession.selectOne(NAMESPACE + ".read", no);
 	}
 
 	@Override
 	public void update(ComBoastDTO dto) throws Exception {
-		sqlSession.update("update", dto);
+		sqlSession.update(NAMESPACE + ".update", dto);
 	}
 
 	@Override
 	public void delete(Integer no) throws Exception {
-		sqlSession.delete("delete", no);
+		sqlSession.delete(NAMESPACE + ".delete", no);
 	}
 
 	@Override
 	public List<ComBoastDTO> listAll() throws Exception {
-		return sqlSession.selectList("listAll");
+		return sqlSession.selectList(NAMESPACE + ".listAll");
 	}
 
 }

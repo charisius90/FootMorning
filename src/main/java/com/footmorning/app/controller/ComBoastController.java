@@ -32,43 +32,43 @@ public class ComBoastController {
 	public void registerGET(){}
 	@RequestMapping(value="/com/boast/comBoastRegister", method=RequestMethod.POST)
 	public String registerPOST(ComBoastDTO dto, RedirectAttributes rttr) throws Exception{
-		logger.info("registerPOST : " + dto.toString());
-		
-		service.register(dto);
-		
-		rttr.addFlashAttribute("msg", "SUCCESS");
+//		logger.info("registerPOST : " + dto.toString());
+//		
+//		service.register(dto);
+//		
+//		rttr.addFlashAttribute("msg", "SUCCESS");
 		return "redirect:/board/listAll";
 	}
 	
 	/**
 	 * 전체목록
 	 */
-	@RequestMapping(value="comBoastListAll")
-	public void listAll(Model model) throws Exception{
-		model.addAttribute("list", service.listAll());
+	@RequestMapping("comBoastListAll")
+	public void listAll() throws Exception{
+//		model.addAttribute("list", service.listAll());
 	}
 	
 	/**
 	 * 글읽기
 	 */
 	@RequestMapping("comBoastRead")
-	public void readGET(int bno, Model model) throws Exception{
-		model.addAttribute(service.read(bno));
+	public void readGET() throws Exception{
+//		model.addAttribute(service.read(bno));
 	}
 	
 	/**
 	 * 수정하기
 	 */
 	@RequestMapping("comBoastUpdate")
-	public void updateGET(int bno, Model model) throws Exception{
-		model.addAttribute(service.read(bno));
+	public void updateGET() throws Exception{
+//		model.addAttribute(service.read(bno));
 	}
 	@RequestMapping(value="comBoastUpdate", method=RequestMethod.POST)
-	public String updatePOST(ComBoastDTO dto, Model model) throws Exception{
-		logger.info("modifyPOST : " + dto);
-		
-		service.update(dto);
-		model.addAttribute(dto);
+	public String updatePOST() throws Exception{
+//		logger.info("modifyPOST : " + dto);
+//		
+//		service.update(dto);
+//		model.addAttribute(dto);
 		return "/com/boast/comBoastRead";
 	}
 	
@@ -76,8 +76,8 @@ public class ComBoastController {
 	 * 삭제하기
 	 */
 	@RequestMapping("comBoastDelete")
-	public String deleteGET(int bno) throws Exception{
-		service.delete(bno);
+	public String deleteGET() throws Exception{
+//		service.delete(bno);
 		return "redirect:/com/boast/comBoastListAll";
 	}
 }

@@ -11,6 +11,7 @@ import com.footmorning.app.service.ComBoastService;
 
 @Service
 public class ComBoastServiceImpl implements ComBoastService {
+	
 	@Autowired
 	private ComBoastDAO dao;
 
