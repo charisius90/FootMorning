@@ -33,36 +33,36 @@ public class MemberController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
-	@RequestMapping("/memberLogin")
+	@RequestMapping("memberLogin")
 	public void login(){
 	}
 
-	@RequestMapping(value="/memberLogin", method=RequestMethod.POST)
+	@RequestMapping(value="memberLogin", method=RequestMethod.POST)
 	public String loginComplete(@Valid MemberDTO member, BindingResult result, HttpServletRequest req) {
 		return "index";
 	}
 	
-	@RequestMapping("/memberLogout")
+	@RequestMapping("memberLogout")
 	public String logout(HttpServletRequest req){
 		req.getSession().invalidate();
 		return "index";
 	}
 	
-	@RequestMapping("/memberSignUp")
+	@RequestMapping("memberSignUp")
 	public void signup(){
 	}
 	
-	@RequestMapping(value="/memberSignUp", method=RequestMethod.POST)
-	public String signupComplete(@ModelAttribute MemberDTO member){
-		logger.info("signupComplete : " + member.toString());
+	@RequestMapping(value="memberSignUp", method=RequestMethod.POST)
+	public String signupComplete(MemberDTO member, String mem_pw_check){
+		logger.info("signupComplete : " + member.toString() + ", " + mem_pw_check);
 		return "/member/memberLogin";
 	}
 	
-	@RequestMapping("/memberSearchID")
+	@RequestMapping("memberSearchID")
 	public void searchID(){
 	}
 	
-	@RequestMapping("/memberSearchPW")
+	@RequestMapping("memberSearchPW")
 	public void searchPW(){
 	}
 	

@@ -69,6 +69,7 @@ table{border-spacing:10px;}
 									<input class="btn btn-default" type="reset" value="취소"></td>
 								</tr>
 							</table>
+						</form>
 					</div>
 				</div>
 			</div>
