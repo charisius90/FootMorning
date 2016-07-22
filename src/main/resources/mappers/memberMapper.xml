@@ -9,7 +9,7 @@
 	</select>
 	
 	<select id="getMemberInfo" resultType="MemberDTO">
-	
+		select * from member where mem_email=#{mem_email}
 	</select>
 	
 	<select id="isMember">
@@ -18,8 +18,8 @@
 	
 	<!-- mem_birth DB추가요청 -->
 	<insert id="insertMember" parameterType="MemberDTO">
-		insert into member(mem_email, mem_pw, mem_name, mem_gender, mem_phone, mem_addr)
-		 values(#{mem_email}, #{mem_pw}, #{mem_name}, #{mem_gender}, #{mem_phone}, #{mem_addr})
+		insert into member(mem_email, mem_pw, mem_name, mem_gender, mem_phone, mem_addr, mem_grade)
+		 values(#{mem_email}, #{mem_pw}, #{mem_name}, #{mem_gender}, #{mem_phone}, #{mem_addr}, '4')
 	</insert>
 	
 	<update id="updateMember" parameterType="MemberDTO">

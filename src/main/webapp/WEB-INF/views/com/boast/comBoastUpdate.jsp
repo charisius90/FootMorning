@@ -22,30 +22,36 @@
 				<br/><br/>
 				
 				<!-- 글쓰는 부분 -->
-				<div class="container">
-					<div class="row">
-						<table class="table">
-							<tr>
-								<td>제목</td>
-								<td><input type="text" value="클럽을 자랑해보자"/></td>
-							</tr>
-							<tr>
-								<td>작성자</td>
-								<td><input type="text" value="박규채"/></td>
-							</tr>
-							<tr>
-								<td>내용</td>
-								<td><textarea rows="10" cols="100">여기는 클럽자랑-수정하기입니다</textarea></td>
-							</tr>
-						</table>
+				<form method="POST" action="/com/boast/comBoastUpdate">
+				<input type="hidden" name="com_boast_no" value="${comBoastDTO.com_boast_no}"/>
+				<input type="hidden" name="mem_no" value="${comBoastDTO.mem_no}"/>
+				<input type="hidden" name="com_boast_regdate" value="${comBoastDTO.com_boast_regdate}"/>
+				<input type="hidden" name="com_boast_count" value="${comBoastDTO.com_boast_count}"/>
+					<div class="container">
+						<div class="row">
+							<table class="table">
+								<tr>
+									<td>제목</td>
+									<td><input type="text" name="com_boast_subject" value="${comBoastDTO.com_boast_subject}"/></td>
+								</tr>
+								<tr>
+									<td>작성자</td>
+									<td><input type="text" name="mem_no" value="${comBoastDTO.mem_no}"/></td>
+								</tr>
+								<tr>
+									<td>내용</td>
+									<td><textarea name="com_boast_content" rows="10" cols="100">${comBoastDTO.com_boast_content}</textarea></td>
+								</tr>
+							</table>
+						</div>
 					</div>
-				</div>
+				</form>
 				<hr/>
 				
 				<div align="right">
-					<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
-					<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
-					<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
+					<a href="/com/boast/comBoastListAll" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
+					<a href="javascript:fnSubmit()" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
+					<a href="/com/boast/comBoastRead?no=${comBoastDTO.com_boast_no}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
 				</div>		
 				</div>
 			</div>	
@@ -58,5 +64,10 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	function fnSubmit(){
+		$("form").submit();
+	}
+</script>
 </body>
 </html>

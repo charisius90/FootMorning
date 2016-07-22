@@ -19,7 +19,7 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	private static final String NAMESPACE = "com.charisius.mappers.comBoastMapper";
+	private static final String NAMESPACE = "com.footmorning.mappers.comBoastMapper";
 
 	@Override
 	public void register(ComBoastDTO dto) throws Exception {
