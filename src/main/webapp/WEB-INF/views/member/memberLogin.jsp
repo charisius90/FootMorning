@@ -1,11 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
 <!-- 부트스트랩은 모바일 우선이라서 metatag에 두항목을 추가하는데 일단은 없어도 됨 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
+<title>로그인 페이지</title>
 <link href="../resources/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 <link
@@ -14,6 +16,9 @@
 </head>
 <body bgcolor="#FAFAD2">
 	<%@ include file="../include/header.jsp"%>
+	
+	<spring:hasBindErrors name="memberDTO" />
+	<form:errors name="memberDTO" />
 
 	<div class="container-fluid">
 		<div class="row">

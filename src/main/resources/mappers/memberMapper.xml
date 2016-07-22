@@ -23,7 +23,7 @@
 	</insert>
 	
 	<update id="updateMember" parameterType="MemberDTO">
-
+		update member set 
 	</update>	
 	
 	<delete id="deleteMember" parameterType="string">

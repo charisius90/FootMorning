@@ -9,9 +9,8 @@
 <link href="../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
 <style>
-tr,td {padding:15px;}
-table{border-spacing:10px;}
-
+	tr,td {padding:15px;}
+	table{border-spacing:10px;}
 </style>
 </head>
 <body>
@@ -30,42 +29,42 @@ table{border-spacing:10px;}
 						<form method="post" action="/member/memberSignUp">
 							<table>
 								<tr>
-									<td>●&nbsp; E-Mail</td>
+									<td>E-Mail</td>
 									<td><input type="text" name="mem_email"
 										placeholder="E-Mail 입력" required></td>
 								</tr>
 								<tr>
-									<td>●&nbsp; 이름</td>
+									<td>이름</td>
 									<td><input type="text" name="mem_name"
 										placeholder="이름 입력" required></td>
 								</tr>
 								<tr>
-									<td>●&nbsp; 비밀번호</td>
+									<td>비밀번호</td>
 									<td><input type="password" name="mem_pw"
 										placeholder="비밀번호 입력" required></td>
 								</tr>
 								<tr>
-									<td>●&nbsp; 비밀번호 확인</td>
+									<td>비밀번호 확인</td>
 									<td><input type="password" name="mem_pw_check"
 										placeholder="비밀번호 재입력" required></td>
 								</tr>
 								<tr>
-									<td>●&nbsp; 생년월일</td>
+									<td>생년월일</td>
 									<td><input type="text" name="mem_birth" placeholder="생년월일 입력"
 										required></td>
 								</tr>
 								<tr>
-									<td>●&nbsp; 전화번호</td>
-									<td><input type="text" name="mem_phone" placeholder="전화번호입력"
-										required></td>
-								</tr>
-								<tr>
-									<td>●&nbsp; 성별</td>
+									<td>성별</td>
 									<td><input type="radio" name="mem_gender" value="male">&nbsp;남자&nbsp;&nbsp;&nbsp;&nbsp;
 									<input type="radio" name="mem_gender" value="female">&nbsp;여자</td>
 								</tr>
+								<tr>
+									<td>전화번호</td>
+									<td><input type="text" name="mem_phone" placeholder="전화번호입력"
+										required></td>
+								</tr>
 								<tr >
-									<td colspan="2" align="center"><input class="btn btn-default" type="submit" value="가입">&nbsp;&nbsp;
+									<td colspan="2" align="center"><input class="btn btn-primary" type="submit" value="가입">&nbsp;&nbsp;
 									<input class="btn btn-default" type="reset" value="취소"></td>
 								</tr>
 							</table>
