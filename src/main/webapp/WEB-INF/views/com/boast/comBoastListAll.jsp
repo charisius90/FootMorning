@@ -53,7 +53,7 @@
 							<!-- 검색하는 부분 -->
 							<div class="col-md-5 form-inline" style="float: left;">
 								<select class="btn btn-default input-group-add">
-									<option>제목 + 내용</option>
+									<option>제목+내용</option>
 									<option>제목</option>
 									<option>작성자</option>
 									</select>

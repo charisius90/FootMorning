@@ -27,19 +27,19 @@
 							<table class="table">
 								<tr>
 									<td class="span1">제목 - 국내 축구 토론방</td>
-									<td>토론을 해봅시다</td>
+									<td>${comDiscussionKorDTO.com_discussion_kor_subject}</td>
 									<td class="span1">조회수</td>
-									<td>99</td>
+									<td>${comDiscussionKorDTO.com_discussion_kor_count}</td>
 								</tr>
 								<tr>
 									<td>작성자</td>
-									<td>박규채</td>
+									<td>${comDiscussionKorDTO.com_discussion_kor_writer}</td>
 									<td>등록일</td>
-									<td>2016-07-18</td>
+									<td>${comDiscussionKorDTO.com_discussion_kor_regdate}</td>
 								</tr>
 								<tr>
 									<td>내용</td>
-									<td>5조는 뛰어난 인재들로 구성되어있습니다.
+									<td>${comDiscussionKorDTO.com_discussion_kor_content}
 									</td>
 								</tr>
 							</table>
@@ -67,12 +67,12 @@
 						</div> <!-- /row -->
 					</div>
 					<hr/>
-					
 					<div align="right">
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
+						<a href="/com/discussionkor/comDiscussionKorListAll" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
+						<a href="/com/discussionkor/comDiscussionKorUpdate?no=${comDiscussionKorDTO.com_discussion_kor_no}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>수정</a>
+						<a href="/com/discussionkor/comDiscussionKorDelete?no=${comDiscussionKorDTO.com_discussion_kor_no}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>삭제</a>
 					</div>		
+					<!-- 수항 2016:07:22 여기까지 수정하고 수업끝 -->
 				</div>
 			</div>
 		</div>

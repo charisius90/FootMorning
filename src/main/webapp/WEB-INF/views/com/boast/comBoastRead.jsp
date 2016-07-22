@@ -33,7 +33,7 @@
 							</tr>
 							<tr>
 								<td>작성자</td>
-								<td>${comBoastDTO.mem_no}</td>
+								<td>${comBoastDTO.com_boast_writer}</td>
 								<td>등록일</td>
 								<td>${comBoastDTO.com_boast_regdate}</td>
 							</tr>

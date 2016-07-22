@@ -11,12 +11,12 @@
 					data-target="#comm"> 커뮤니티 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
 					<ul id="comm" class="collapse">
 						<li><a href="/com/boast/comBoastListAll">클럽자랑</a></li>
-						<li><a href="#">축구갤러리</a></li>
-						<li><a href="#">축구동영상</a></li>
-						<li><a href="#">국내축구</a></li>
-						<li><a href="#">해외축구</a></li>
-						<li><a href="#">자유게시판</a></li>
-						<li><a href="#">Q&A게시판</a></li>
+						<li><a href="/com/gallery/comGalleryListAll">축구갤러리</a></li>
+						<li><a href="/com/video/comVideoListAll">축구동영상</a></li>
+						<li><a href="/com/discussionkor/comDiscussionKorListAll">국내축구</a></li>
+						<li><a href="/com/discussionworld/comDiscussionWorldListAll">해외축구</a></li>
+						<li><a href="/com/free/comFreeListAll">자유게시판</a></li>
+						<li><a href="/com/qna/comQnAListAll">Q&A게시판</a></li>
 					</ul>
 				</li>
 				<li><a href="javascript:;" data-toggle="collapse"

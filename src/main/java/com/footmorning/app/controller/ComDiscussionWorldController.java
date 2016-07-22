@@ -36,7 +36,7 @@ public class ComDiscussionWorldController {
 	/**
 	 * 전체목록
 	 */
-	@RequestMapping("comDiscussionListAll")
+	@RequestMapping("comDiscussionWorldListAll")
 	public void listAll(Model model) throws Exception{
 		model.addAttribute("list", service.listAll());
 	}

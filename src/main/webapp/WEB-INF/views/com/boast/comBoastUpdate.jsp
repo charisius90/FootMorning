@@ -36,7 +36,7 @@
 								</tr>
 								<tr>
 									<td>작성자</td>
-									<td><input type="text" name="mem_no" value="${comBoastDTO.mem_no}"/></td>
+									<td><input type="text" name="com_boast_writer" value="${comBoastDTO.com_boast_writer}"/></td>
 								</tr>
 								<tr>
 									<td>내용</td>
