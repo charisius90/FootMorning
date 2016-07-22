@@ -55,7 +55,7 @@ public class MemberController {
 	@RequestMapping(value="/memberSignUp", method=RequestMethod.POST)
 	public String signupComplete(@ModelAttribute MemberDTO member){
 		logger.info("signupComplete : " + member.toString());
-		return "member/login";
+		return "/member/memberLogin";
 	}
 	
 	@RequestMapping("/memberSearchID")
