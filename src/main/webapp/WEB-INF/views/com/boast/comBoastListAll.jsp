@@ -104,8 +104,8 @@
 	// 박수항
 	// 로그인 확인 후 글쓰기로 이동 혹은 로그인필요를 알리는 함수
 	function fnWrite(){
-		var member = "${member}";
-		if(member!=null && member!=""){
+		var user_key = "${USER_KEY}";
+		if(user_key!=null && user_key!=""){
 			location.replace("/com/boast/comBoastRegister");
 		}
 		else{

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.service.MemberService;
@@ -48,11 +49,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping("memberSignUp")
-	public void signup(){
-	}
+	public void signup(){}
 	
 	@RequestMapping(value="memberSignUp", method=RequestMethod.POST)
-	public String signupComplete(MemberDTO member, String mem_pw_check, RedirectAttributes rttr){
+	public String signupComplete(MemberDTO member, String mem_pw_check, HttpServletRequest req){
 		logger.info("signupComplete : " + member.toString() + ", " + mem_pw_check);
 		
 		if(member.getMem_pw().equals(mem_pw_check)){
@@ -63,6 +63,8 @@ public class MemberController {
 				System.out.println("existing member");
 				return "/member/memberSignUp";
 			}
+			MemberDTO dto = service.getMemberInfo(member.getMem_email());
+			WebUtils.setSessionAttribute(req, "USER_KEY", dto);
 			return "redirect:/";
 		}
 		

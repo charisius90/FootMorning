@@ -23,7 +23,7 @@
 				
 				<!-- 글쓰는 부분 -->
 				<form id="comBoastRegisterForm" role="form" method="POST" action="/com/boast/comBoastRegister">
-					<input type="hidden" name="mem_no" value="${member.mem_no}"/>
+					<input type="hidden" name="mem_no" value="${USER_KEY.mem_no}"/>
 					<div class="container">
 						<div class="row">
 							<table class="table">
