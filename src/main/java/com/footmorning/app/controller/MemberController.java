@@ -11,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.service.MemberService;
@@ -24,7 +24,6 @@ import com.footmorning.app.util.MemberValidation;
  * @author ±è¼Ò¿µ
  *
  */
-
 @Controller
 @RequestMapping("/member/*")
 public class MemberController {
@@ -53,9 +52,21 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="memberSignUp", method=RequestMethod.POST)
-	public String signupComplete(MemberDTO member, String mem_pw_check){
+	public String signupComplete(MemberDTO member, String mem_pw_check, RedirectAttributes rttr){
 		logger.info("signupComplete : " + member.toString() + ", " + mem_pw_check);
-		return "/member/memberLogin";
+		
+		if(member.getMem_pw().equals(mem_pw_check)){
+			try{
+				service.insertMember(member);
+			}
+			catch(Exception err){
+				System.out.println("existing member");
+				return "/member/memberSignUp";
+			}
+			return "redirect:/";
+		}
+		
+		return "/member/memberSignUp";
 	}
 	
 	@RequestMapping("memberSearchID")
