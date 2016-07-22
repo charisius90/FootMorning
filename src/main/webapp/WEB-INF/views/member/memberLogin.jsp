@@ -33,11 +33,11 @@
 									style="height: 40px; width: 430px; margin: 10px" placeholder="E-Mail 입력"></td>
 							</tr>
 							<tr>
-								<td><input type="password" name="mempw" value=""
+								<td><input type="password" name="mem_pw"
 									style="height: 40px; width: 430px; margin: 10px" placeholder="비밀번호 입력"></td>
 							</tr>
 							<tr>
-								<td><input type="button" name="login" value="로그인"
+								<td><input type="submit" value="로그인"
 									style="height: 40px; width: 430px; margin: 10px; background-color: border: solid 2px #808080; color: black; font-size: 16px; border: solid 1px #808080;"></td>
 							</tr>
 							<tr align="center">

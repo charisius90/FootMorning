@@ -30,11 +30,6 @@ table{border-spacing:10px;}
 						<form method="post" action="/member/memberSignUp">
 							<table>
 								<tr>
-									<td>●&nbsp; 성별</td>
-									<td><input type="radio" name="mem_gender" value="male">&nbsp;남자&nbsp;&nbsp;&nbsp;&nbsp;
-									<input type="radio" name="mem_gender" value="female">&nbsp;여자</td>
-								</tr>
-								<tr>
 									<td>●&nbsp; E-Mail</td>
 									<td><input type="text" name="mem_email"
 										placeholder="E-Mail 입력" required></td>
@@ -63,6 +58,11 @@ table{border-spacing:10px;}
 									<td>●&nbsp; 전화번호</td>
 									<td><input type="text" name="mem_phone" placeholder="전화번호입력"
 										required></td>
+								</tr>
+								<tr>
+									<td>●&nbsp; 성별</td>
+									<td><input type="radio" name="mem_gender" value="male">&nbsp;남자&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio" name="mem_gender" value="female">&nbsp;여자</td>
 								</tr>
 								<tr >
 									<td colspan="2" align="center"><input class="btn btn-default" type="submit" value="가입">&nbsp;&nbsp;

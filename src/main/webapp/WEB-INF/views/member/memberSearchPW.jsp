@@ -35,7 +35,7 @@
 									style="height: 40px; width: 430px; margin: 10px" placeholder="전화번호 입력"></td>
 							</tr>
 							<tr>
-								<td><input type="button" name="login" value="E-Mail 전송"
+								<td><input type="submit" value="E-Mail 전송"
 									style="height: 40px; width: 430px; margin: 10px; background-color: border: solid 2px #808080; color: black; font-size: 16px; border: solid 1px #808080;"></td>
 							</tr>
 						</table>
