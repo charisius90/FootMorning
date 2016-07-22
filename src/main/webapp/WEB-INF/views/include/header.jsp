@@ -21,8 +21,8 @@
 <nav class="nav-main navbar">
 		<div style="background-image: url('../resources/images/banner.jpg'); background-size: cover; height: 200px;">
 		<div class="banner" align="right" style="height: 24px; padding-top: 10px">
-			<a href="#"><i class="glyphicon glyphicon-log-in"></i> 로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="#"><i class="glyphicon glyphicon-user"></i> 회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="/member/memberLogin"><i class="glyphicon glyphicon-log-in"></i> 로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="/member/memberSignUp"><i class="glyphicon glyphicon-user"></i> 회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="#"><i class="glyphicon glyphicon-cog"></i> MYPAGE</a>&nbsp;&nbsp;&nbsp;&nbsp;
 		</div>
 	</div>

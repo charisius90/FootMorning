@@ -21,49 +21,25 @@
 				</div>
 				<div id="page-content-wrapper">
 					<div class="col-md-10">
-						<table align="center" height="90">
-							<tr>
-								<td><h1>비밀번호 찾기</h1></td>
-							</tr>
-						</table>
+						<div align="center"><h1>비밀번호 찾기</h1></div>
+						<form action="/member/memberSearchPW" method="post">
 						<table align="center" height="40" width="430" border="0"
 							style="border: solid 2px #87CEEEB; margin-top: 4%">
 
 							<tr>
-								<td>아이디 <input type="text" name="id" value=""
-									style="height: 40px; width: 430px;" placeholder="아이디 입력"></td>
+								<td><input type="text" name="mem_email"
+									style="height: 40px; width: 430px; margin: 10px" placeholder="E-Mail 입력"></td>
 							</tr>
-						</table>
-
-						<table align="center" height="40" width="430" border="0"
-							style="border: solid 2px #87CEEEB; margin-top: 1%">
-
 							<tr>
-								<td>이름 <input type="text" name="Name" value=""
-									style="height: 40px; width: 430px" placeholder="이름 입력"></td>
+								<td><input type="text" name="mem_phone"
+									style="height: 40px; width: 430px; margin: 10px" placeholder="전화번호 입력"></td>
 							</tr>
-
-						</table>
-						<table align="center" height="40" width="430" border="0"
-							style="border: solid 2px #87CEEEB; margin-top: 1%">
-
 							<tr>
-								<td>주민번호 <input type="text" name="RRN" value=""
-									style="height: 40px; width: 430px" placeholder="주민번호 입력"></td>
+								<td><input type="button" name="login" value="E-Mail 전송"
+									style="height: 40px; width: 430px; margin: 10px; background-color: border: solid 2px #808080; color: black; font-size: 16px; border: solid 1px #808080;"></td>
 							</tr>
-
 						</table>
-						
-						<table align="center" height="40" style="margin-top: 1%">
-							<tr>
-								<td><input type="button" name="login" value="찾기"
-									style="height: 50px; width: 430px; background-color: border: solid 2px #808080; margin-top: 4%; color: black; font-size: 16px; border: solid 1px #808080;"></td>
-							</tr>
-
-						</table>
-						<table align="center" height="0" width="440" border="1"
-							style="border: solid 1px #050099; margin-top: 2%">
-						</table>
+						</form>
 					</div>
 				</div>
 			</div>

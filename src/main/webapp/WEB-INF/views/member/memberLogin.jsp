@@ -23,52 +23,31 @@
 				</div>
 				<div id="page-content-wrapper">
 					<div class="col-md-10">
-						<table align="center" height="90">
-							<tr>
-								<td><h1>로그인페이지</h1></td>
-							</tr>
-						</table>
+						<div align="center"><h1>로그인 페이지</h1></div>
+						<form action="/member/memberLogin" method="post">
 						<table align="center" height="40" width="430" border="0"
 							style="border: solid 2px #87CEEEB; margin-top: 4%">
 
 							<tr>
-								<td><input type="text" name="id" value=""
-									style="height: 40px; width: 430px;" placeholder="아이디 입력"></td>
+								<td><input type="text" name="mem_email"
+									style="height: 40px; width: 430px; margin: 10px" placeholder="E-Mail 입력"></td>
 							</tr>
-						</table>
-
-						<table align="center" height="40" width="430" border="0"
-							style="border: solid 2px #87CEEEB; margin-top: 1%">
-
 							<tr>
-								<td><input type="password" name="pw" value=""
-									style="height: 40px; width: 430px" placeholder="비밀번호 입력"></td>
+								<td><input type="password" name="mempw" value=""
+									style="height: 40px; width: 430px; margin: 10px" placeholder="비밀번호 입력"></td>
 							</tr>
-
-						</table>
-						<table align="center" height="40" style="margin-top: 1%">
 							<tr>
 								<td><input type="button" name="login" value="로그인"
-									style="height: 50px; width: 430px; background-color: border: solid 2px #808080; margin-top: 4%; color: black; font-size: 16px; border: solid 1px #808080;"></td>
+									style="height: 40px; width: 430px; margin: 10px; background-color: border: solid 2px #808080; color: black; font-size: 16px; border: solid 1px #808080;"></td>
 							</tr>
-
-						</table>
-						<table align="center" height="0" width="440" border="1"
-							style="border: solid 1px #050099; margin-top: 2%">
-						</table>
-
-						<table align="center" height="50" style="margin-top: 1%"
-							class="mo">
-							<tr>
+							<tr align="center">
 								<td><a style="text-decoration: none;"
-									href="http://localhost:8080/app/member/signUp.jsp">회원가입 | </td>
-								<td><a style="text-decoration: none;"
-									href="http://localhost:8080/app/member/searchID.jsp">아이디 찾기 | </td>
-								<td><a style="text-decoration: none;"
-									href="http://localhost:8080/app/member/searchPsw.jsp">비밀번호 찾기</td>
+									href="/member/memberSignUp">회원가입</a>&nbsp;|&nbsp;
+								<a style="text-decoration: none;"
+									href="/member/memberSearchPW">비밀번호 찾기</a></td>
 							</tr>
-
 						</table>
+						</form>
 					</div>
 				</div>
 			</div>

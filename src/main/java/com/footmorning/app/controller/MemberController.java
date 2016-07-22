@@ -58,10 +58,6 @@ public class MemberController {
 		return "/member/memberLogin";
 	}
 	
-	@RequestMapping("memberSearchID")
-	public void searchID(){
-	}
-	
 	@RequestMapping("memberSearchPW")
 	public void searchPW(){
 	}
