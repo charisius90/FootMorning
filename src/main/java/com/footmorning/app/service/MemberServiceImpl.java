@@ -29,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void deleteMember(String mem_no) {
+	public void deleteMember(Integer mem_no) {
 		dao.deleteMember(mem_no);
 	}
 

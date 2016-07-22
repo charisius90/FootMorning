@@ -32,43 +32,44 @@ public class ComBoastController {
 	public void registerGET(){}
 	@RequestMapping(value="/com/boast/comBoastRegister", method=RequestMethod.POST)
 	public String registerPOST(ComBoastDTO dto, RedirectAttributes rttr) throws Exception{
-//		logger.info("registerPOST : " + dto.toString());
-//		
-//		service.register(dto);
-//		
-//		rttr.addFlashAttribute("msg", "SUCCESS");
-		return "redirect:/board/listAll";
+		
+		service.register(dto);
+		
+		rttr.addFlashAttribute("msg", "SUCCESS");
+		return "redirect:/com/boast/comBoastListAll";
 	}
 	
 	/**
 	 * 전체목록
 	 */
 	@RequestMapping("comBoastListAll")
-	public void listAll() throws Exception{
-//		model.addAttribute("list", service.listAll());
+	public void listAll(Model model) throws Exception{
+		model.addAttribute("list", service.listAll());
 	}
 	
 	/**
 	 * 글읽기
 	 */
 	@RequestMapping("comBoastRead")
-	public void readGET() throws Exception{
-//		model.addAttribute(service.read(bno));
+	public void readGET(int no, Model model) throws Exception{
+		ComBoastDTO dto = service.read(no);
+		dto.setCom_boast_count(Integer.toString(Integer.valueOf(dto.getCom_boast_count()).intValue() + 1));
+		service.update(dto);
+		model.addAttribute(dto);
 	}
 	
 	/**
 	 * 수정하기
 	 */
 	@RequestMapping("comBoastUpdate")
-	public void updateGET() throws Exception{
-//		model.addAttribute(service.read(bno));
+	public void updateGET(int no, Model model) throws Exception{
+		model.addAttribute(service.read(no));
 	}
 	@RequestMapping(value="comBoastUpdate", method=RequestMethod.POST)
-	public String updatePOST() throws Exception{
-//		logger.info("modifyPOST : " + dto);
-//		
-//		service.update(dto);
-//		model.addAttribute(dto);
+	public String updatePOST(ComBoastDTO dto, Model model) throws Exception{
+		service.update(dto);
+		
+		model.addAttribute(dto);
 		return "/com/boast/comBoastRead";
 	}
 	
@@ -76,8 +77,8 @@ public class ComBoastController {
 	 * 삭제하기
 	 */
 	@RequestMapping("comBoastDelete")
-	public String deleteGET() throws Exception{
-//		service.delete(bno);
+	public String deleteGET(int no) throws Exception{
+		service.delete(no);
 		return "redirect:/com/boast/comBoastListAll";
 	}
 }
