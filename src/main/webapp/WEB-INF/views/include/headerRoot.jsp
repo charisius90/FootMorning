@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,9 +23,14 @@
 <nav class="navbar navbar-default navbar-static-top">
 		<div style="background-image: url('../../resources/images/banner.jpg'); background-size: cover; height: 200px;">
 		<div class="banner" align="right" style="height: 24px; padding-top: 10px">
-			<a href="#"><i class="glyphicon glyphicon-log-in"></i> 로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="#"><i class="glyphicon glyphicon-user"></i> 회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="#"><i class="glyphicon glyphicon-cog"></i> MYPAGE</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<c:if test="${USER_KEY!=null}">
+				<a href="/member/memberLogout"><i class="glyphicon glyphicon-log-in"></i> 로그아웃</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="/mypage/myPageProfile"><i class="glyphicon glyphicon-cog"></i> MYPAGE</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			</c:if>
+			<c:if test="${USER_KEY==null}">
+				<a href="/member/memberLogin"><i class="glyphicon glyphicon-log-in"></i> 로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="/member/memberSignUp"><i class="glyphicon glyphicon-user"></i> 회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			</c:if>
 		</div>
 	</div>
 	<div class="container">
@@ -34,7 +40,7 @@
 				<li><a href="../matching/matchingPage.jsp">매칭</a></li>
 				<li><a href="../club/clubPage.jsp">클럽</a></li>
 				<li><a href="../myteam/myteam.jsp">MYTEAM</a></li>
-				<li><a href="#">커뮤니티</a></li>
+				<li><a href="/com/boast/comBoastListAll">커뮤니티</a></li>
 			</ul>
 		</div>
 	</div>

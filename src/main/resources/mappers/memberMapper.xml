@@ -4,16 +4,16 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.footmorning.mappers.memberMapper">
-	<select id="isCorrectPW">
-
+	<select id="getTime" resultType="String">
+		select now()
 	</select>
 	
 	<select id="getMemberInfo" resultType="MemberDTO">
 		select * from member where mem_email=#{mem_email}
 	</select>
 	
-	<select id="isMember">
-	
+	<select id="getWithPW" resultType="MemberDTO">
+		select * from member where mem_email=#{mem_email} and mem_pw=#{mem_pw}
 	</select>
 	
 	<!-- mem_birth DB추가요청 -->
@@ -23,7 +23,8 @@
 	</insert>
 	
 	<update id="updateMember" parameterType="MemberDTO">
-		update member set 
+		update member set mem_pw=#{mem_pw}, mem_phone=#{mem_phone}, mem_addr=#{mem_addr}, mem_grade=#{mem_grade}, mem_logdate=#{mem_logdate}, club_no=#{club_no}
+		where mem_no=#{mem_no}
 	</update>	
 	
 	<delete id="deleteMember" parameterType="string">

@@ -100,7 +100,7 @@ $(document).ready(
 		function(){
 			var gender = "${USER_KEY.mem_gender}"
 			
-			if(gender == "mail"){
+			if(gender == "male"){
 				$("#male").attr({checked:"checked"});
 			}
 			else{

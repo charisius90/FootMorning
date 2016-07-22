@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
+<link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
 </head>
 <body>
 <%@ include file="include/header.jsp" %>
@@ -21,7 +21,7 @@
 		<div id="page-content-wrapper">
 				<div class="col-md-10">
 					<div id="banner">
-						<div style="background-image: url('resources/images/banner.jpg'); background-size: cover; height: 200px;"></div>
+						<div style="background-image: url('/resources/images/banner.jpg'); background-size: cover; height: 200px;"></div>
 					</div>
 					<div id="matching">
 					<h4>매칭현황</h4>
@@ -57,23 +57,23 @@
 						<div class="row">
 						  <div class="col-xs-6 col-md-3">
 						    <a href="#" class="thumbnail">
-						      <img src="resources/images/vincent.jpg">
+						      <img src="/resources/images/vincent.jpg">
 	<!-- 					      <img src="resources/images/vincent.jsp" alt="..."> -->
 						    </a>
 						  </div>
 						  <div class="col-xs-6 col-md-3">
 						    <a href="#" class="thumbnail">
-						      <img src="resources/images/vincent.jpg">
+						      <img src="/resources/images/vincent.jpg">
 						    </a>
 						  </div>
 						  <div class="col-xs-6 col-md-3">
 						    <a href="#" class="thumbnail">
-						      <img src="resources/images/vincent.jpg">
+						      <img src="/resources/images/vincent.jpg">
 						    </a>
 						  </div>
 						  <div class="col-xs-6 col-md-3">
 						    <a href="#" class="thumbnail">
-						      <img src="resources/images/vincent.jpg">
+						      <img src="/resources/images/vincent.jpg">
 						    </a>
 						  </div>
 						</div>
@@ -123,6 +123,6 @@
 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

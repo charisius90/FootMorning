@@ -10,7 +10,7 @@
 				<li><a href="javascript:;" data-toggle="collapse"
 					data-target="#comm"> 커뮤니티 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
 					<ul id="comm" class="collapse">
-						<li><a href="#">클럽자랑</a></li>
+						<li><a href="/com/boast/comBoastListAll">클럽자랑</a></li>
 						<li><a href="#">축구갤러리</a></li>
 						<li><a href="#">축구동영상</a></li>
 						<li><a href="#">국내축구</a></li>

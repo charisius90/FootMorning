@@ -16,36 +16,36 @@ import com.footmorning.app.persistence.MemberDAO;
 @Service
 public class MemberServiceImpl implements MemberService {
 	@Inject
-	private MemberDAO dao; 
+	private MemberDAO memberDAO; 
 	
 	@Override
 	public void insertMember(MemberDTO dto) {
-		dao.insertMember(dto);
+		memberDAO.insertMember(dto);
 	}
 
 	@Override
 	public void updateMember(MemberDTO dto) {
-		dao.updateMember(dto);
+		memberDAO.updateMember(dto);
 	}
 
 	@Override
 	public void deleteMember(Integer mem_no) {
-		dao.deleteMember(mem_no);
-	}
-
-	@Override
-	public boolean isCorrectPW(String mem_email, String mem_pw) {
-		return dao.isCorrectPW(mem_email, mem_pw);
+		memberDAO.deleteMember(mem_no);
 	}
 
 	@Override
 	public MemberDTO getMemberInfo(String mem_email) {
-		return dao.getMemberInfo(mem_email);
+		return memberDAO.getMemberInfo(mem_email);
+	}
+	
+	@Override
+	public MemberDTO getWithPW(String mem_email, String mem_pw) {
+		return memberDAO.getWithPW(mem_email, mem_pw);
 	}
 
 	@Override
-	public boolean isMember(String mem_email) {
-		return dao.isMember(mem_email);
+	public String getTime() {
+		return memberDAO.getTime();
 	}
 
 }

@@ -2,6 +2,8 @@ package com.footmorning.app.util;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -13,10 +15,10 @@ import com.footmorning.app.persistence.MemberDAO;
  * @author ±è¼Ò¿µ
  *
  */
-
+@Component
 public class MemberValidation implements Validator {
 	@Inject
-	private MemberDAO dao;
+	private MemberDAO memberDAO;
 	
 	@Override
 	public boolean supports(Class<?> arg0) {
@@ -26,17 +28,18 @@ public class MemberValidation implements Validator {
 	@Override
 	public void validate(Object arg0, Errors arg1) {
 		MemberDTO dto = (MemberDTO)arg0;
-		
 		if(dto.getMem_email()==null || dto.getMem_email().trim().isEmpty()){
-			arg1.rejectValue("mem_email", "required");
+			arg1.rejectValue("userid", "required");
 		}
 		
 		if(dto.getMem_pw()==null || dto.getMem_pw().trim().isEmpty()){
-			arg1.rejectValue("mem_pw", "required");
+			arg1.rejectValue("userpw", "required");
 		}
 		
 		try{
-			dao.isCorrectPW(dto.getMem_email(), dto.getMem_pw());
+			System.out.println("MemValid : " + dto);
+			System.out.println("dao : " + memberDAO);
+			memberDAO.getWithPW(dto.getMem_email(), dto.getMem_pw());
 		}
 		catch(Exception err){
 			arg1.reject("login");
