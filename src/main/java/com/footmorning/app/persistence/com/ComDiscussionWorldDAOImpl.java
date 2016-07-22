@@ -40,7 +40,7 @@ public class ComDiscussionWorldDAOImpl implements ComDiscussionWorldDAO {
 
 	@Override
 	public List<ComDiscussionWorldDTO> listAll() throws Exception {
-		return sqlSession.selectList(NAMESPACE + "listAll");
+		return sqlSession.selectList(NAMESPACE + ".listAll");
 	}
 
 }

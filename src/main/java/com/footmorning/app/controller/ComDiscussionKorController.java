@@ -23,7 +23,7 @@ public class ComDiscussionKorController {
 	/**
 	 * 글쓰기
 	 */
-	@RequestMapping("comdisscssionKorRegister")
+	@RequestMapping("comDiscussionKorRegister")
 	public void registerGET(){}
 	@RequestMapping(value="comDiscussionKorRegister", method=RequestMethod.POST)
 	public String registerPOST(ComDiscussionKorDTO dto, RedirectAttributes rttr) throws Exception{
@@ -36,7 +36,7 @@ public class ComDiscussionKorController {
 	/**
 	 * 전체목록
 	 */
-	@RequestMapping("comDiscussionListAll")
+	@RequestMapping("comDiscussionKorListAll")
 	public void listAll(Model model) throws Exception{
 		model.addAttribute("list", service.listAll());
 	}

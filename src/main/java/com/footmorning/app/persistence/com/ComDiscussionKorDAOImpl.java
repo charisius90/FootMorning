@@ -40,7 +40,7 @@ public class ComDiscussionKorDAOImpl implements ComDiscussionKorDAO {
 
 	@Override
 	public List<ComDiscussionKorDTO> listAll() throws Exception {
-		return sqlSession.selectList(NAMESPACE + "listAll");
+		return sqlSession.selectList(NAMESPACE + ".listAll");
 	}
 
 }

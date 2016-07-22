@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +42,7 @@
 								<div class="col-sm-6 col-md-4">
 									<div class="thumbnail">
 										<a href="#">
-											<img src="../../resources/img/homelog.jpg" alt="...">
+											<img src="../../resources/images/koala.jpg" alt="...">
 										</a>
 								    	<div class="caption" align="left">
 								    		<span class="caption_title"><a href="#">Thumbnail Title Here</a></span><br/>

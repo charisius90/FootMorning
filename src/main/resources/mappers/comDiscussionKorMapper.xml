@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.comDiscussionKorMapper">
+	
+	<insert id="register" parameterType="ComDiscussionKorDTO">
+		insert into com_discussion_kor(mem_no, com_discussion_kor_subject, com_discussion_kor_content, com_discussion_kor_count)
+		values(#{mem_no},#{com_discussion_kor_subject},#{com_discussion_kor_content},#{com_discussion_kor_count})
+	</insert>
+	
+	<select id="read" resultType="ComDiscussionKorDTO">
+		select * from com_discussion_kor where com_discussion_kor_no=#{com_discussion_kor_no}
+	</select>
+	
+	<update id="update">
+		update com_discussion_kor set mem_no=#{mem_no}, com_discussion_kor_subject=#{com_discussion_kor_subject},com_discussion_kor_content=#{com_discussion_kor_content},
+		com_discussion_kor_count=#{com_discussion_kor_count} where com_discussion_kor_no=#{com_discussion_kor_no}	
+	</update>
+	
+	<delete id="delete">
+		delete * from com_discussion_kor 
+		where com_discussion_kor_no=#{com_discussion_kor_no}
+	</delete>
+	
+	<select id="listAll" resultType="ComDiscussionKorDTO">
+		select * from com_discussion_kor where com_discussion_kor_no>0 order by com_discussion_kor_no desc, com_discussion_kor_regdate desc
+	</select>
+	
+</mapper>

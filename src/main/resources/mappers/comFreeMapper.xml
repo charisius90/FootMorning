@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.comFreeMapper">
+	
+	<insert id="register" parameterType="ComFreeDTO">
+		insert into com_free(mem_no, com_free_subject, com_free_content, com_free_count)
+		values(#{mem_no},#{com_free_subject},#{com_free_content},#{com_free_count})
+	</insert>
+	
+	<select id="read" resultType="ComDiscussionWorldDTO">
+		select * from com_free where com_free_no=#{com_free_no}
+	</select>
+	
+	<update id="update">
+		update com_free set mem_no=#{mem_no}, com_free_subject=#{com_free_subject},com_free_content=#{com_free_content},
+		com_free_count=#{com_free_count} where com_free_no=#{com_free_no}	
+	</update>
+	
+	<delete id="delete">
+		delete * from com_free 
+		where com_free_no=#{com_free_no}
+	</delete>
+	
+	<select id="listAll" resultType="ComFreeDTO">
+		select * from com_free where com_free_no>0 order by com_free_no desc, com_free_regdate desc
+	</select>
+	
+</mapper>

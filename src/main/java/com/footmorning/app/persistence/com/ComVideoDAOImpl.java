@@ -40,7 +40,7 @@ public class ComVideoDAOImpl implements ComVideoDAO {
 
 	@Override
 	public List<ComVideoDTO> listAll() throws Exception {
-		return sqlSession.selectList(NAMESPACE + "listAll");
+		return sqlSession.selectList(NAMESPACE + ".listAll");
 	}
 
 }

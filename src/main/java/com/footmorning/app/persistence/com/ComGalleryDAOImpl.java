@@ -40,7 +40,7 @@ public class ComGalleryDAOImpl implements ComGalleryDAO {
 
 	@Override
 	public List<ComGalleryDTO> listAll() throws Exception {
-		return sqlSession.selectList(NAMESPACE + "listAll");
+		return sqlSession.selectList(NAMESPACE + ".listAll");
 	}
 
 }

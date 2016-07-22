@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +46,7 @@
 								<!-- 검색하는 부분 -->
 								<div class="col-lg-4" >
 									<div class="input-group" align="center">
-										<select >
+										<select style="float: left">
 											<option>제목+내용</option>
 									        <option>제목</option>
 									        <option>작성자</option>
@@ -63,7 +63,7 @@
 								<div class="col-sm-6 col-md-4">
 									<div class="thumbnail">
 										<a href="#">
-											<img src="../../resources/img/homelog.jpg" alt="..."/>
+											<img src="../../resources/images/koala.jpg" alt="..."/>
 <!-- 											<video width="340px"> -->
 <!-- 												<source src="../../resources/video/animation.mp4" type="video/mp4"> -->
 <!-- 												<p>Your browser does not support HTML5 video.</p> -->

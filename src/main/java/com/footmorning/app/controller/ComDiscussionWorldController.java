@@ -23,7 +23,7 @@ public class ComDiscussionWorldController {
 	/**
 	 * ±Û¾²±â
 	 */
-	@RequestMapping("comdisscssionWorldRegister")
+	@RequestMapping("comDisscssionWorldRegister")
 	public void registerGET(){}
 	@RequestMapping(value="comDiscussionWorldRegister", method=RequestMethod.POST)
 	public String registerPOST(ComDiscussionWorldDTO dto, RedirectAttributes rttr) throws Exception{

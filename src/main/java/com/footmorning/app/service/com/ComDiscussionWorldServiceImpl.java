@@ -2,9 +2,12 @@ package com.footmorning.app.service.com;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.footmorning.app.domain.ComDiscussionWorldDTO;
 import com.footmorning.app.service.ComDiscussionWorldService;
 
+@Service
 public class ComDiscussionWorldServiceImpl implements ComDiscussionWorldService {
 
 	@Override

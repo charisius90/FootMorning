@@ -40,7 +40,7 @@ public class ComFreeDAOImpl implements ComFreeDAO {
 
 	@Override
 	public List<ComFreeDTO> listAll() throws Exception {
-		return sqlSession.selectList(NAMESPACE + "listAll");
+		return sqlSession.selectList(NAMESPACE + ".listAll");
 	}
 
 }
