@@ -29,6 +29,7 @@
 						<h1>회원정보</h1><br/>
 
 						<form method="post" action="/mypage/myPageProfile">
+							<input type="hidden" name="" value=""/>
 							<table>
 								<tr>
 									<td>E-Mail</td>
@@ -40,10 +41,10 @@
 									<td><input type="text" name="mem_name"
 										value="${USER_KEY.mem_name}"></td>
 								</tr>
-								<%-- <tr>
+								<tr>
 									<td>생년월일</td>
 									<td><input type="text" name="mem_birth" value="${USER_KEY.mem_birth}"></td>
-								</tr> --%>
+								</tr>
 								<tr>
 									<td>성별</td>
 									<td>

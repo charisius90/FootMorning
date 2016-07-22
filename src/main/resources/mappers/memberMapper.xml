@@ -16,14 +16,13 @@
 		select * from member where mem_email=#{mem_email} and mem_pw=#{mem_pw}
 	</select>
 	
-	<!-- mem_birth DB추가요청 -->
 	<insert id="insertMember" parameterType="MemberDTO">
 		insert into member(mem_email, mem_pw, mem_name, mem_gender, mem_phone, mem_addr, mem_grade)
 		 values(#{mem_email}, #{mem_pw}, #{mem_name}, #{mem_gender}, #{mem_phone}, #{mem_addr}, '4')
 	</insert>
 	
 	<update id="updateMember" parameterType="MemberDTO">
-		update member set mem_pw=#{mem_pw}, mem_phone=#{mem_phone}, mem_addr=#{mem_addr}, mem_grade=#{mem_grade}, mem_logdate=#{mem_logdate}, club_no=#{club_no}
+		update member set mem_phone=#{mem_phone}, mem_addr=#{mem_addr}, mem_grade=#{mem_grade}, mem_logdate=#{mem_logdate}, club_no=#{club_no}
 		where mem_no=#{mem_no}
 	</update>	
 	
