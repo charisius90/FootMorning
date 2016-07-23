@@ -29,7 +29,7 @@
 						<h1>회원정보</h1><br/>
 
 						<form method="post" action="/mypage/myPageProfile">
-							<input type="hidden" name="" value=""/>
+							<input type="hidden" name="mem_no" value="${USER_KEY.mem_no}"/>
 							<table>
 								<tr>
 									<td>E-Mail</td>
@@ -97,6 +97,7 @@
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 <script>
+/* 현재 접속중인 회원의 등록되있는 성별값을 가져와서 라디오 버튼에 체크  */
 $(document).ready(
 		function(){
 			var gender = "${USER_KEY.mem_gender}"

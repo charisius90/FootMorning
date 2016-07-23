@@ -14,7 +14,14 @@ public class MemberDTO {
 	private String mem_logdate;
 	private String mem_backno;
 	private String club_no;
+	private String mem_birth;
 	
+	public String getMem_birth() {
+		return mem_birth;
+	}
+	public void setMem_birth(String mem_birth) {
+		this.mem_birth = mem_birth;
+	}
 	public String getMem_no() {
 		return mem_no;
 	}
@@ -102,7 +109,7 @@ public class MemberDTO {
 		", mem_addr=" + mem_addr + ", mem_grade=" + mem_grade + 
 		", mem_image=" + mem_image + ",	mem_regdate=" + mem_regdate +
 		", mem_logdate=" + mem_logdate + ",	mem_backno=" + mem_backno +
-		", club_no=" + club_no + "]";
+		", club_no=" + club_no + ", mem_birth=" + mem_birth + "]";
 	}
 	
 }

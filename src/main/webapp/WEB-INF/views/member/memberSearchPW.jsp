@@ -5,7 +5,7 @@
 <!-- 부트스트랩은 모바일 우선이라서 metatag에 두항목을 추가하는데 일단은 없어도 됨 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
+<title>비밀번호 찾기</title>
 <link href="../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css"
 	rel="stylesheet">
@@ -23,22 +23,22 @@
 					<div class="col-md-10">
 						<div align="center"><h1>비밀번호 찾기</h1></div>
 						<form action="/member/memberSearchPW" method="post">
-						<table align="center" height="40" width="430" border="0"
-							style="border: solid 2px #87CEEEB; margin-top: 4%">
-
-							<tr>
-								<td><input type="text" name="mem_email"
-									style="height: 40px; width: 430px; margin: 10px" placeholder="E-Mail 입력"></td>
-							</tr>
-							<tr>
-								<td><input type="text" name="mem_phone"
-									style="height: 40px; width: 430px; margin: 10px" placeholder="전화번호 입력"></td>
-							</tr>
-							<tr>
-								<td><input type="submit" value="E-Mail 전송"
-									style="height: 40px; width: 430px; margin: 10px; background-color: border: solid 2px #808080; color: black; font-size: 16px; border: solid 1px #808080;"></td>
-							</tr>
-						</table>
+							<table align="center" height="40" width="430" border="0"
+								style="border: solid 2px #87CEEEB; margin-top: 4%">
+	
+								<tr>
+									<td><input type="text" name="mem_email"
+										style="height: 40px; width: 430px; margin: 10px" placeholder="E-Mail 입력"></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="mem_phone"
+										style="height: 40px; width: 430px; margin: 10px" placeholder="전화번호 입력"></td>
+								</tr>
+								<tr>
+									<td><input type="submit" value="E-Mail 전송"
+										style="height: 40px; width: 430px; margin: 10px; font-size: 16px; border: solid 1px #808080;"></td>
+								</tr>
+							</table>
 						</form>
 					</div>
 				</div>
