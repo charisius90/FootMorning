@@ -7,8 +7,9 @@
 		<!-- Sidebar -->
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
-				<li><a href="http://localhost:8080/app/myPageProfile.jsp">회원정보</a></li>
-				<li><a href="http://localhost:8080/app/myPageNotice.jsp"">작성한 글</a></li>
+				<li><a href="/mypage/myPageProfile">회원정보</a></li>
+				<li><a href="/mypage/myPagePW">비밀번호 변경</a></li>
+				<li><a href="/mypage/myPageArticles">작성한 글</a></li>
 			</ul>
 		</div>
 		<!-- /#sidebar-wrapper -->

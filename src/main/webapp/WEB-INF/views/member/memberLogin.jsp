@@ -43,7 +43,7 @@
 							</tr>
 							<tr>
 								<td><input type="submit" value="로그인"
-									style="height: 40px; width: 430px; margin: 10px; background-color: border: solid 2px #808080; color: black; font-size: 16px; border: solid 1px #808080;"></td>
+									style="height: 40px; width: 430px; margin: 10px; font-size: 16px; border: solid 1px #808080;"></td>
 							</tr>
 							<tr align="center">
 								<td><a style="text-decoration: none;"
