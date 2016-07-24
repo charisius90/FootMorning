@@ -16,6 +16,7 @@
 	
 	<update id="update" parameterType="ComVideoDTO">
 		update com_video set mem_no=#{mem_no}, com_video_subject=#{com_video_subject},com_video_content=#{com_video_content},
+		com_video_writer=#{com_video_writer},
 		com_video_count=#{com_video_count} where com_video_no=#{com_video_no}	
 	</update>
 	

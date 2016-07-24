@@ -27,21 +27,19 @@
 						<table class="table">
 							<tr>
 								<td class="span1">제목 - 클럽자랑</td>
-								<td>클럽을 자랑해보자</td>
+								<td>${comFreeDTO.com_free_subject}</td>
 								<td class="span1">조회수</td>
-								<td>99</td>
+								<td>${comFreeDTO.com_free_count}</td>
 							</tr>
 							<tr>
 								<td>작성자</td>
-								<td>박규채</td>
+								<td>${comFreeDTO.com_free_writer}</td>
 								<td>등록일</td>
-								<td>2016-07-18</td>
+								<td>${comFreeDTO.com_free_regdate}</td>
 							</tr>
 							<tr>
 								<td>내용</td>
-								<td>kh오조 클럽은 매우 뛰어난 인재들로 구성되어있습니다.
-									자랑을 좀 하고 싶을정도입니다.
-								</td>
+								<td>${comFreeDTO.com_free_content}</td>
 							</tr>
 						</table>
 
@@ -68,9 +66,9 @@
 				<hr/>
 					
 					<div align="right">
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
+						<a href="/com/free/comFreeListAll" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
+						<a href="/com/free/comFreeUpdate?no=${comFreeDTO.com_free_no}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>수정</a>
+						<a href="/com/free/comFreeDelete?no=${comFreeDTO.com_free_no}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>삭제</a>
 					</div>		
 				</div>
 			</div>

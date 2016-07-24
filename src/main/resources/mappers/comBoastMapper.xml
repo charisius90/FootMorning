@@ -15,6 +15,7 @@
 	
 	<update id="update" parameterType="ComBoastDTO">
 		update com_boast set com_boast_subject=#{com_boast_subject},
+		com_boast_writer=#{com_boast_writer},
 		com_boast_content=#{com_boast_content}, com_boast_count=#{com_boast_count}
 		where com_boast_no=#{com_boast_no}
 	</update>

@@ -17,7 +17,6 @@
 
 <%@ include file="../../include/headerRoot.jsp" %>
 
-
 <div class="container-fluid">
 	<div class="row">
 		<div id="wrapper">

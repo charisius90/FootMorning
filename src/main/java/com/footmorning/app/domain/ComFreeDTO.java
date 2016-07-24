@@ -3,6 +3,7 @@ package com.footmorning.app.domain;
 public class ComFreeDTO {
 	private String com_free_no;
 	private String mem_no;
+	private String com_free_writer;
 	private String com_free_subject;
 	private String com_free_content;
 	private String com_free_regdate;
@@ -43,13 +44,19 @@ public class ComFreeDTO {
 	public void setCom_free_count(String com_free_count) {
 		this.com_free_count = com_free_count;
 	}
+	public String getCom_free_writer() {
+		return com_free_writer;
+	}
+	public void setCom_free_writer(String com_free_writer) {
+		this.com_free_writer = com_free_writer;
+	}
 	
 	@Override
 	public String toString() {
-		return "ComFreeDTO [com_free_no=" + com_free_no + ", mem_no=" + mem_no + ", com_free_subject="
+		return "ComFreeDTO [com_free_no=" + com_free_no + ", mem_no=" + mem_no
+				+ ", com_free_writer=" + com_free_writer + ", com_free_subject="
 				+ com_free_subject + ", com_free_content=" + com_free_content + ", com_free_regdate=" + com_free_regdate
 				+ ", com_free_count=" + com_free_count + "]";
 	}
-
 	
 }

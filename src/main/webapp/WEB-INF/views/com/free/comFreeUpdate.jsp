@@ -27,15 +27,15 @@
 						<table class="table">
 							<tr>
 								<td>제목</td>
-								<td><input type="text" value="자유게시판의 게시글"/></td>
+								<td><input type="text" name="com_free_subject" value="${comFreeDTO.com_free_subject}"/></td>
 							</tr>
 							<tr>
 								<td>작성자</td>
-								<td><input type="text" value="휴먼"/></td>
+								<td><input type="text" name="com_free_writer" value="${comFreeDTO.com_free_writer}"/></td>
 							</tr>
 							<tr>
 								<td>내용</td>
-								<td><textarea rows="10" cols="100">산은 산이고, 물은 물이로다.</textarea></td>
+								<td><textarea name="com_free_content" rows="10" cols="100">${comFreeDTO.com_free_content}</textarea></td>
 							</tr>
 						</table>
 					</div>
@@ -43,9 +43,9 @@
 				<hr/>
 				
 				<div align="right">
-					<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
-					<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
-					<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
+					<a href="/com/free/comFreeListAll" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
+					<a href="javascript:fnSubmit()" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
+					<a href="/com/free/comFreeRead?no=${comFreeDTO.com_free_no}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
 				</div>		
 				</div>
 			</div>	
@@ -58,5 +58,10 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	function fnSubmit(){
+		$("form").submit();
+	}
+</script>
 </body>
 </html>

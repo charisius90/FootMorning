@@ -3,6 +3,7 @@ package com.footmorning.app.domain;
 public class ComDiscussionWorldDTO {
 	private String com_discussion_world_no;
 	private String mem_no;
+	private String com_discussion_world_writer;
 	private String com_discussion_world_subject;
 	private String com_discussion_world_content;
 	private String com_discussion_world_regdate;
@@ -44,10 +45,17 @@ public class ComDiscussionWorldDTO {
 	public void setCom_discussion_world_count(String com_discussion_world_count) {
 		this.com_discussion_world_count = com_discussion_world_count;
 	}
+	public String getCom_discussion_world_writer() {
+		return com_discussion_world_writer;
+	}
+	public void setCom_discussion_world_writer(String com_discussion_world_writer) {
+		this.com_discussion_world_writer = com_discussion_world_writer;
+	}
 	
 	@Override
 	public String toString() {
 		return "ComDiscussionWorldDTO [com_discussion_world_no=" + com_discussion_world_no + ", mem_no=" + mem_no
+				+ ", com_discussion_world_writer=" + com_discussion_world_writer
 				+ ", com_discussion_world_subject=" + com_discussion_world_subject + ", com_discussion_world_content="
 				+ com_discussion_world_content + ", com_discussion_world_regdate=" + com_discussion_world_regdate
 				+ ", com_discussion_world_count=" + com_discussion_world_count + "]";

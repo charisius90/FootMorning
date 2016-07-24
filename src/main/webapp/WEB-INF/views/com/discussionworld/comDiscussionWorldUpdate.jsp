@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,30 +22,35 @@
 				<br/><br/>
 				
 				<!-- 글쓰는 부분 -->
+				<form method="POST" action="/com/discussionworld/comDiscussionWorldUpdate">
+				<input type="hidden" name="com_discussionworld_no" value="${comDiscussionWorldDTO.com_discussionworld_no}"/>
+				<input type="hidden" name="mem_no" value="${comDiscussionWorldDTO.mem_no}"/>
+				<input type="hidden" name="com_discussionworld_regdate" value="${comDiscussionWorldDTO.com_discussionworld_regdate}"/>
+				<input type="hidden" name="com_discussionworld_count" value="${comDiscussionWorldDTO.com_discussionworld_count}"/>
 				<div class="container">
 					<div class="row">
 						<table class="table">
 							<tr>
 								<td>제목</td>
-								<td><input type="text" value="해외 축구 수정"/></td>
+								<td><input type="text" name="com_discussion_world_subject" value="${comDiscussionWorldDTO.com_discussionworld_subject}"/></td>
 							</tr>
 							<tr>
 								<td>작성자</td>
-								<td><input type="text" value="사랑"/></td>
+								<td><input type="text" name="com_discussion_world_writer" value="${comDiscussionWorldDTO.com_discussionworld_subject}"/></td>
 							</tr>
 							<tr>
 								<td>내용</td>
-								<td><textarea rows="10" cols="100">수정을 해봅시다 해외축구를</textarea></td>
+								<td><textarea name="com_discussion_world_content" rows="10" cols="100">${comDiscussionWorldDTO.com_discussionworld_subject}</textarea></td>
 							</tr>
 						</table>
 					</div>
 				</div>
+				</form>
 				<hr/>
-				
 					<div align="right">
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
+						<a href="/com/discussionworld/comDiscussionWorldListAll" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
+						<a href="javascript:fnSubmit()" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
+						<a href="/com/discussionworld/comDiscussionWorldRead?no=${comDiscussionWorldDTO.com_discussionworld_no}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
 					</div>		
 				</div>	
 			</div>
@@ -58,5 +63,10 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	function fnSubmit(){
+		$("form").submit();
+	}
+</script>
 </body>
 </html>

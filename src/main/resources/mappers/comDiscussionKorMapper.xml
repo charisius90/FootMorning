@@ -16,6 +16,7 @@
 	
 	<update id="update">
 		update com_discussion_kor set mem_no=#{mem_no}, com_discussion_kor_subject=#{com_discussion_kor_subject},com_discussion_kor_content=#{com_discussion_kor_content},
+		com_discussion_kor_writer=#{com_discussion_kor_writer},
 		com_discussion_kor_count=#{com_discussion_kor_count} where com_discussion_kor_no=#{com_discussion_kor_no}	
 	</update>
 	

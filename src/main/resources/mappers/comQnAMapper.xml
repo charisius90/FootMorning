@@ -16,6 +16,7 @@
 	
 	<update id="update" parameterType="ComQnADTO">
 		update com_qna set mem_no=#{mem_no}, com_qna_subject=#{com_qna_subject}, com_qna_content=#{com_qna_content},
+		com_qna_writer=#{com_qna_writer},		
 		com_qna_count=#{com_qna_count} where com_qna_no=#{com_qna_no}	
 	</update>
 	

@@ -4,6 +4,7 @@ public class ComGalleryDTO {
 	
 	private String com_gallery_no;
 	private String mem_no;
+	private String com_gallery_writer;
 	private String com_gallery_subject;
 	private String com_gallery_content;
 	private String com_gallery_regdate;
@@ -45,15 +46,19 @@ public class ComGalleryDTO {
 	public void setCom_gallery_count(String com_gallery_count) {
 		this.com_gallery_count = com_gallery_count;
 	}
+	public String getCom_gallery_writer() {
+		return com_gallery_writer;
+	}
+	public void setCom_gallery_writer(String com_gallery_writer) {
+		this.com_gallery_writer = com_gallery_writer;
+	}
 	
 	@Override
 	public String toString() {
-		return "ComGalleryDTO [com_gallery_no=" + com_gallery_no + ", mem_no=" + mem_no + ", com_gallery_subject="
+		return "ComGalleryDTO [com_gallery_no=" + com_gallery_no + ", mem_no=" + mem_no
+				+ ", com_gallery_writer=" + com_gallery_writer + ", com_gallery_subject="
 				+ com_gallery_subject + ", com_gallery_content=" + com_gallery_content + ", com_gallery_regdate="
 				+ com_gallery_regdate + ", com_gallery_count=" + com_gallery_count + "]";
 	}
-	
-	
-
 	
 }

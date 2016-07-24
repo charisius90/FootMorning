@@ -35,30 +35,14 @@
 								<td>조회수</td>
 							</tr>
 							<!-- 게시글 내용이 들어가는 부분 -->
+							<c:forEach items="${list}" var="dto">
 							<tr>
-								<td>kh5조</td>
-								<td><a href="#">자유로운 영혼</a></td>
-								<td>2016-7-17</td>
-								<td>99</td>
+								<td>${dto.com_free_no}</td>
+								<td><a href="/com/free/comFreeRead?no=${dto.com_free_no}">${dto.com_free_subject}</a></td>
+								<td>${dto.com_free_regdate}</td>
+								<td>${dto.com_free_count}</td>
 							</tr>
-							<tr>
-								<td>kh5조</td>
-								<td><a href="#">여기는 바로!</a></td>
-								<td>2016-7-17</td>
-								<td>99</td>
-							</tr>
-							<tr>
-								<td>kh5조</td>
-								<td><a href="#">무엇이 문제일까요</a></td>
-								<td>2016-7-17</td>
-								<td>99</td>
-							</tr>
-							<tr>
-								<td>kh5조</td>
-								<td><a href="#">이번에 갔던 MT 사진입니다!</a></td>
-								<td>2016-7-17</td>
-								<td>99</td>
-							</tr>
+							</c:forEach>
 						</table>
 							
 					<div class="container-fluid">
@@ -67,7 +51,7 @@
 								<!-- 검색하는 부분 -->
 								<div class="col-md-5 form-inline" style="float: left;">
 									<select class="btn btn-default input-group-add">
-										<option>제목, 내용</option>
+										<option>제목+내용</option>
 										<option>제목</option>
 										<option>작성자</option>
 										</select>
@@ -107,5 +91,25 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	// 박수항
+	// 글 등록 완료 시 성공메시지 출력 구문
+	var msg = "${msg}";
+	if(msg == "success"){
+		alert("등록 성공");
+	}
+	
+	// 박수항
+	// 로그인 확인 후 글쓰기로 이동 혹은 로그인필요를 알리는 함수
+	function fnWrite(){
+		var user_key = "${USER_KEY}";
+		if(user_key!=null && user_key!=""){
+			location.replace("/com/boast/comBoastRegister");
+		}
+		else{
+			alert("로그인 하세요.");
+		}
+	}
+</script>
 </body>
 </html>

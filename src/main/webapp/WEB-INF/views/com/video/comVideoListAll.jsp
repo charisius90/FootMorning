@@ -40,7 +40,7 @@
 							<div class="row">
 								<!-- 글쓰기 -->
 								<div style="float: right;">
-									<button class="btn btn-default" ><span class="glyphicon glyphicon-pencil"></span>글쓰기</button>
+									<a href="javascript:fnWrite()" class="btn btn-default" ><span class="glyphicon glyphicon-pencil"></span>글쓰기</a>
 								</div>
 								
 								<!-- 검색하는 부분 -->
@@ -58,6 +58,7 @@
 									</div>
 								</div>
 							</div>
+							
 							<div class="row">
 					<c:forEach begin="1" end="12" step="1">
 								<div class="col-sm-6 col-md-4">
@@ -70,9 +71,9 @@
 <!-- 											</video> -->
 										</a>
 								    	<div class="caption" align="left">
-								    		<span class="caption_title"><a href="#">Thumbnail Title Here</a></span><br/>
-								    		<span class="caption_user"><a href="#">Username Here</a></span><br/>
-								    		<span class="caption_info">조회수 cnt / 게시일 0000.0.0</span>
+								    		<span class="caption_title"><a href="#">${comVideoDTO.com_video_subject}</a></span><br/>
+								    		<span class="caption_user"><a href="#">${comVideoDTO.com_video_writer}</a></span><br/>
+								    		<span class="caption_info">조회수 ${comVideoDTO.com_video_count} / 게시일 ${comVideoDTO.com_video_regdate}</span>
 								 		</div>
 								    </div>
 								</div>
@@ -92,5 +93,25 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	// 박수항
+	// 글 등록 완료 시 성공메시지 출력 구문
+	var msg = "${msg}";
+	if(msg == "success"){
+		alert("등록 성공");
+	}
+	
+	// 박수항
+	// 로그인 확인 후 글쓰기로 이동 혹은 로그인필요를 알리는 함수
+	function fnWrite(){
+		var user_key = "${USER_KEY}";
+		if(user_key!=null && user_key!=""){
+			location.replace("/com/video/comVideoRegister");
+		}
+		else{
+			alert("로그인 하세요.");
+		}
+	}
+</script>
 </body>
 </html>

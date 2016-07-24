@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,7 +72,6 @@
 						<a href="/com/discussionkor/comDiscussionKorUpdate?no=${comDiscussionKorDTO.com_discussion_kor_no}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>수정</a>
 						<a href="/com/discussionkor/comDiscussionKorDelete?no=${comDiscussionKorDTO.com_discussion_kor_no}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>삭제</a>
 					</div>		
-					<!-- 수항 2016:07:22 여기까지 수정하고 수업끝 -->
 				</div>
 			</div>
 		</div>

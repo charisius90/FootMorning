@@ -22,7 +22,7 @@
 				<br/><br/>
 				
 				<!-- 글쓰는 부분 -->
-				<form id="comBoastRegisterForm" role="form" method="POST" action="/com/boast/comBoastRegister">
+				<form method="POST" action="/com/boast/comBoastRegister">
 					<input type="hidden" name="mem_no" value="${USER_KEY.mem_no}"/>
 					<div class="container">
 						<div class="row">
@@ -33,7 +33,7 @@
 								</tr>
 								<tr>
 									<td>작성자</td>
-									<td><input type="text" value="${USER_KEY.mem_name}"/></td>
+									<td><input type="text" name="com_boast_writer" value="${USER_KEY.mem_name}"/></td>
 								</tr>
 								<tr>
 									<td>내용</td>
@@ -63,7 +63,7 @@
 <script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
 <script>
 	function fnSubmit(){
-		$("#comBoastRegisterForm").submit();
+		$("form").submit();
 	}
 </script>
 </body>

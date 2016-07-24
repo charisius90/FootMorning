@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,20 +27,19 @@
 						<table class="table">
 							<tr>
 								<td class="span1">제목 - Q&A 게시판</td>
-								<td>질문을 자랑해보자</td>
+								<td>${comQnAReadDTO.com_qna_subject}</td>
 								<td class="span1">조회수</td>
-								<td>99</td>
+								<td>${comQnAReadDTO.com_qna_count}</td>
 							</tr>
 							<tr>
 								<td>작성자</td>
-								<td>박규채</td>
+								<td>${comQnAReadDTO.com_qna_writer}</td>
 								<td>등록일</td>
-								<td>2016-07-18</td>
+								<td>${comQnAReadDTO.com_qna_regdate}</td>
 							</tr>
 							<tr>
 								<td>내용</td>
-								<td>질문의 내용이 매우 뛰어날까요
-								</td>
+								<td>${comQnAReadDTO.com_qna_content}</td>
 							</tr>
 						</table>
 						
@@ -65,12 +64,11 @@
 					</div> <!-- /row -->
 				</div>
 				<hr/>
-				
 					<div align="right">
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
-					</div>		
+						<a href="/com/qna/comQnAListAll" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
+						<a href="/com/qna/comQnAUpdate?no=${comQnADTO.com_qna_no}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>수정</a>
+						<a href="/com/qna/comQnADelete?no=${comQnADTO.com_qna_no}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>삭제</a>
+					</div>
 				</div>
 			</div>
 		</div>

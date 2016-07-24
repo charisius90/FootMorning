@@ -16,6 +16,7 @@
 	
 	<update id="update">
 		update com_gallery set mem_no=#{mem_no}, com_gallery_subject=#{com_gallery_subject},com_gallery_content=#{com_gallery_content},
+		com_gallery_writer=#{com_gallery_writer},
 		com_gallery_count=#{com_gallery_count} where com_gallery_no=#{com_gallery_no}	
 	</update>
 	

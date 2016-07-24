@@ -16,6 +16,7 @@
 	
 	<update id="update">
 		update com_free set mem_no=#{mem_no}, com_free_subject=#{com_free_subject},com_free_content=#{com_free_content},
+		com_free_writer=#{com_free_writer},
 		com_free_count=#{com_free_count} where com_free_no=#{com_free_no}	
 	</update>
 	

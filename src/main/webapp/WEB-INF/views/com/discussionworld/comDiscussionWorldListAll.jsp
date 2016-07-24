@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,6 @@
 
 <%@ include file="../../include/headerRoot.jsp" %>
 
-
 <div class="container-fluid">
 	<div class="row">
 		<div id="wrapper">
@@ -33,24 +33,15 @@
 								<td>작성일</td>
 								<td>조회수</td>
 							</tr>
+							<!-- 게시글 내용이 들어가는 부분 -->
+							<c:forEach items="${list}" var="dto">
 							<tr>
-								<td>홍명보</td>
-								<td><a href="#">축구!</a></td>
-								<td>2016-7-17</td>
-								<td>99</td>
+								<td>${dto.com_discussion_world_writer}</td>
+								<td><a href="/com/discussionworld/comDiscussionWorldRead?no=${dto.com_discussion_world_no}">${dto.com_discussion_kor_subject}</a></td>
+								<td>${dto.com_discussion_world_regdate}</td>
+								<td>${dto.com_discussion_world_count}</td>
 							</tr>
-							<tr>
-								<td>이영표</td>
-								<td><a href="#">여기가 토론방인가요?</a></td>
-								<td>2016-7-17</td>
-								<td>99</td>
-							</tr>
-							<tr>
-								<td>이동국</td>
-								<td><a href="#">해외축구의 관전포인트!</a></td>
-								<td>2016-7-17</td>
-								<td>99</td>
-							</tr>
+							</c:forEach>
 						</table>
 						<br/>
 						
@@ -60,14 +51,13 @@
 								<!-- 검색하는 부분 -->
 								<div class="col-md-5 form-inline" style="float: left;">
 									<select class="btn btn-default input-group-add">
-										<option>제목, 내용</option>
+										<option>제목+내용</option>
 										<option>제목</option>
 										<option>작성자</option>
 										</select>
 									<input class="form-control" type="text" value="" name="" />
 									<button class="btn btn-default input-group-add">검색</button>
 								</div>
-									
 									
 								<!-- 페이징-->
 								<div class="col-md-4">
@@ -84,7 +74,7 @@
 									
 								<!-- 글쓰기 -->
 								<div style="float: right;">
-									<button class="btn btn-default" ><span class="glyphicon glyphicon-pencil"></span>글쓰기</button>
+									<a href="javascript:fnWrite()" class="btn btn-default" ><span class="glyphicon glyphicon-pencil"></span>글쓰기</a>
 								</div>
 							
 							</form>
@@ -100,5 +90,25 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	// 박수항
+	// 글 등록 완료 시 성공메시지 출력 구문
+	var msg = "${msg}";
+	if(msg == "success"){
+		alert("등록 성공");
+	}
+	
+	// 박수항
+	// 로그인 확인 후 글쓰기로 이동 혹은 로그인필요를 알리는 함수
+	function fnWrite(){
+		var user_key = "${USER_KEY}";
+		if(user_key!=null && user_key!=""){
+			location.replace("/com/discussionkor/comDiscussionKorRegister");
+		}
+		else{
+			alert("로그인 하세요.");
+		}
+	}
+</script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,21 +27,19 @@
 						<table class="table">
 							<tr>
 								<td class="span1">제목 - 해외 축구 토론방</td>
-								<td>해외축구를 자랑해보자</td>
+								<td>${comDiscussionWorldDTO.com_discussion_world_subject}</td>
 								<td class="span1">조회수</td>
-								<td>99</td>
+								<td>${comDiscussionWorldfDTO.com_discussion_world_count}</td>
 							</tr>
 							<tr>
 								<td>작성자</td>
-								<td>박규채</td>
+								<td>${comDiscussionWorldDTO.com_discussion_world_writer}</td>
 								<td>등록일</td>
-								<td>2016-07-18</td>
+								<td>${comDiscussionWorldDTO.com_discussion_world_regdate}</td>
 							</tr>
 							<tr>
 								<td>내용</td>
-								<td>해외축구클럽은 매우 뛰어난 인재들로 구성되어있습니다.
-									자랑을 좀 하고 싶을정도입니다.
-								</td>
+								<td>${comDiscussionWorldDTO.com_discussion_world_content}</td>
 							</tr>
 						</table>
 						<br/>
@@ -68,9 +66,9 @@
 				<hr/>
 				
 					<div align="right">
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
-						<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
+						<a href="/com/discussionworld/comDiscussionWorldListAll" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
+						<a href="/com/discussionworld/comDiscussionWorldUpdate?no=${comDiscussionWorldDTO.com_discussion_world_no}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>수정</a>
+						<a href="/com/discussionworld/comDiscussionWorldDelete?no=${comDiscussionWorldDTO.com_discussion_world_no}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>삭제</a>
 					</div>		
 				</div>
 			</div>

@@ -3,6 +3,7 @@ package com.footmorning.app.domain;
 public class ComBoastDTO {
 	private String com_boast_no;
 	private String mem_no;
+	private String com_boast_writer;
 	private String com_boast_subject;
 	private String com_boast_content;
 	private String com_boast_regdate;
@@ -44,12 +45,19 @@ public class ComBoastDTO {
 	public void setCom_boast_count(String com_boast_count) {
 		this.com_boast_count = com_boast_count;
 	}
+	public String getCom_boast_writer() {
+		return com_boast_writer;
+	}
+	public void setCom_boast_writer(String com_boast_writer) {
+		this.com_boast_writer = com_boast_writer;
+	}
 	
 	@Override
 	public String toString() {
-		return "ComBoastDTO [com_boast_no=" + com_boast_no + ", mem_no=" + mem_no + ", com_boast_subject="
-				+ com_boast_subject + ", com_boast_content=" + com_boast_content + ", com_boast_regdate="
-				+ com_boast_regdate + ", com_boast_count=" + com_boast_count + "]";
+		return "ComBoastDTO [com_boast_no=" + com_boast_no + ", mem_no=" + mem_no + ", com_boast_writer="
+				+ com_boast_writer + ", com_boast_subject=" + com_boast_subject + ", com_boast_content="
+				+ com_boast_content + ", com_boast_regdate=" + com_boast_regdate + ", com_boast_count="
+				+ com_boast_count + "]";
 	}
 	
 }
