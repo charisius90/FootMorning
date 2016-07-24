@@ -29,15 +29,15 @@
 								style="border: solid 2px #87CEEEB; margin-top: 4%">
 	
 								<tr>
-									<td><input type="text" name="mem_oldPw"
+									<td><input type="password" name="mem_oldPw"
 										style="height: 40px; width: 430px; margin: 10px" placeholder="현재 비밀번호"></td>
 								</tr>
 								<tr>
-									<td><input type="text" name="mem_newPw"
+									<td><input type="password" name="mem_newPw"
 										style="height: 40px; width: 430px; margin: 10px" placeholder="새 비밀번호"></td>
 								</tr>
 								<tr>
-									<td><input type="text" name="mem_newPw_check"
+									<td><input type="password" name="mem_newPw_check"
 										style="height: 40px; width: 430px; margin: 10px" placeholder="새 비밀번호 확인"></td>
 								</tr>
 								<tr>
