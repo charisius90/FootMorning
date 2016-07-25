@@ -44,17 +44,17 @@
 						</table>
 						<br/>
 					<!-- 댓글 보이는 부분 -->
-					<div>
-						댓글: 어떻게 들어가죠
+					<div id="replyListDiv">
+						댓글 : 어떻게 들어가죠
 					</div>
 					<br/>
 					<!-- 댓글 다는 부분 -->
 						<div>
 							<form method="post" action="">댓글
-								<div class="row-fluid">
+								<div class="row" style="margin-bottom:10px">
 									<textarea id="parent_text" class="col-md-12" rows="5"></textarea>
 								</div>
-								<div align="right">
+								<div class="row" align="right">
 									<input class="btn btn-mini" type="button" onclick="" value="등록"/>
 								</div>
 							</form>

@@ -1,5 +1,10 @@
 package com.footmorning.app.domain;
 
+/**
+ * 
+ * @author ±è¼Ò¿µ
+ *
+ */
 public class ComBoastReplyDTO {
 	private String com_boast_re_no;
 	private String mem_no;

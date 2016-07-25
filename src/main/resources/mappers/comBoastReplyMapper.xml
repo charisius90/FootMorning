@@ -3,17 +3,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.footmorning.mappers.comBoastMapper">
-	<insert id="register" parameterType="com.footmorning.app.domain.ComBoastDTO">
+<mapper namespace="com.footmorning.mappers.comBoastReplyMapper">
+	<insert id="register" parameterType="com.footmorning.app.domain.ComBoastReplyDTO">
 		insert into com_boast(mem_no, com_boast_subject, com_boast_content, com_boast_count, com_boast_writer)
 		values(#{mem_no}, #{com_boast_subject}, #{com_boast_content}, #{com_boast_count}, #{com_boast_writer})
 	</insert>
 	
-	<select id="read" resultType="ComBoastDTO">
+	<select id="read" resultType="ComBoastReplyDTO">
 		select * from com_boast where com_boast_no=#{com_boast_no}
 	</select>
 	
-	<update id="update" parameterType="ComBoastDTO">
+	<update id="update" parameterType="ComBoastReplyDTO">
 		update com_boast set com_boast_subject=#{com_boast_subject},
 		com_boast_writer=#{com_boast_writer},
 		com_boast_content=#{com_boast_content}, com_boast_count=#{com_boast_count}
@@ -25,7 +25,7 @@
 		where com_boast_no=#{com_boast_no}
 	</delete>
 	
-	<select id="listAll" resultType="ComBoastDTO">
+	<select id="listAll" resultType="ComBoastReplyDTO">
 		select * from com_boast where com_boast_no>0 order by com_boast_no desc, com_boast_regdate desc
 	</select>
 	

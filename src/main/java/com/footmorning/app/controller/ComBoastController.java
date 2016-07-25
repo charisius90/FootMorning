@@ -30,11 +30,13 @@ public class ComBoastController {
 	 */
 	@RequestMapping("comBoastRegister")
 	public void registerGET(){}
-	@RequestMapping(value="/com/boast/comBoastRegister", method=RequestMethod.POST)
-	public String registerPOST(ComBoastDTO dto, RedirectAttributes rttr) throws Exception{
-		
+	
+	@RequestMapping(value = "/com/boast/comBoastRegister", method = RequestMethod.POST)
+	public String registerPOST(ComBoastDTO dto, RedirectAttributes rttr) throws Exception {
+		dto.setCom_boast_count("0");
+
 		service.register(dto);
-		
+
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		return "redirect:/com/boast/comBoastListAll";
 	}
