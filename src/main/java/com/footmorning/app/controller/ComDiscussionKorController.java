@@ -25,10 +25,12 @@ public class ComDiscussionKorController {
 	 */
 	@RequestMapping("comDiscussionKorRegister")
 	public void registerGET(){}
+	
 	@RequestMapping(value="comDiscussionKorRegister", method=RequestMethod.POST)
 	public String registerPOST(ComDiscussionKorDTO dto, RedirectAttributes rttr) throws Exception{
 		
 		service.register(dto);
+		
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		return "redirect:/com/discussionkor/comDiscussionKorListAll";
 	}

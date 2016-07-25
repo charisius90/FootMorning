@@ -23,12 +23,15 @@ public class ComDiscussionWorldController {
 	/**
 	 * ±Û¾²±â
 	 */
-	@RequestMapping("comDisscssionWorldRegister")
+	@RequestMapping("comDiscussionWorldRegister")
 	public void registerGET(){}
+	
 	@RequestMapping(value="comDiscussionWorldRegister", method=RequestMethod.POST)
 	public String registerPOST(ComDiscussionWorldDTO dto, RedirectAttributes rttr) throws Exception{
+		dto.setCom_discussion_world_count("0");
 		
 		service.register(dto);
+		
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		return "redirect:/com/discussionworld/comDiscussionWorldListAll";
 	}
@@ -48,7 +51,7 @@ public class ComDiscussionWorldController {
 	public void readGET(int no, Model model) throws Exception{
 		ComDiscussionWorldDTO dto = service.read(no);
 		dto.setCom_discussion_world_count(Integer.toString(Integer.valueOf(dto.getCom_discussion_world_count()).intValue()+ 1));
-		service.update(dto);
+		service.update(dto);		
 		model.addAttribute(dto);
 	}
 	

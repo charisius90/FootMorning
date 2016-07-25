@@ -6,8 +6,8 @@
 <mapper namespace="com.footmorning.mappers.comDiscussionKorMapper">
 	
 	<insert id="register" parameterType="ComDiscussionKorDTO">
-		insert into com_discussion_kor(mem_no, com_discussion_kor_subject, com_discussion_kor_content, com_discussion_kor_count)
-		values(#{mem_no},#{com_discussion_kor_subject},#{com_discussion_kor_content},#{com_discussion_kor_count})
+		insert into com_discussion_kor(mem_no, com_discussion_kor_subject, com_discussion_kor_content, com_discussion_kor_count, com_discussion_kor_writer)
+		values(#{mem_no},#{com_discussion_kor_subject},#{com_discussion_kor_content},#{com_discussion_kor_count}, #{com_discussion_kor_writer})
 	</insert>
 	
 	<select id="read" resultType="ComDiscussionKorDTO">
@@ -21,7 +21,7 @@
 	</update>
 	
 	<delete id="delete">
-		delete * from com_discussion_kor 
+		delete from com_discussion_kor 
 		where com_discussion_kor_no=#{com_discussion_kor_no}
 	</delete>
 	

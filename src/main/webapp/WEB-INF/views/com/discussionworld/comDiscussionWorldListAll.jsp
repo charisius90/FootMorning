@@ -37,7 +37,7 @@
 							<c:forEach items="${list}" var="dto">
 							<tr>
 								<td>${dto.com_discussion_world_writer}</td>
-								<td><a href="/com/discussionworld/comDiscussionWorldRead?no=${dto.com_discussion_world_no}">${dto.com_discussion_kor_subject}</a></td>
+								<td><a href="/com/discussionworld/comDiscussionWorldRead?no=${dto.com_discussion_world_no}">${dto.com_discussion_world_subject}</a></td>
 								<td>${dto.com_discussion_world_regdate}</td>
 								<td>${dto.com_discussion_world_count}</td>
 							</tr>
@@ -103,7 +103,7 @@
 	function fnWrite(){
 		var user_key = "${USER_KEY}";
 		if(user_key!=null && user_key!=""){
-			location.replace("/com/discussionkor/comDiscussionKorRegister");
+			location.replace("/com/discussionworld/comDiscussionWorldRegister");
 		}
 		else{
 			alert("로그인 하세요.");

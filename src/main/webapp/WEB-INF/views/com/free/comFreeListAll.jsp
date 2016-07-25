@@ -75,7 +75,7 @@
 									
 								<!-- 글쓰기 -->
 								<div style="float: right;">
-									<button class="btn btn-default" ><span class="glyphicon glyphicon-pencil"></span>글쓰기</button>
+									<a href="javascript:fnWrite()" class="btn btn-default" ><span class="glyphicon glyphicon-pencil"></span>글쓰기</a>
 								</div>
 							
 							</form>
@@ -104,7 +104,7 @@
 	function fnWrite(){
 		var user_key = "${USER_KEY}";
 		if(user_key!=null && user_key!=""){
-			location.replace("/com/boast/comBoastRegister");
+			location.replace("/com/free/comFreeRegister");
 		}
 		else{
 			alert("로그인 하세요.");

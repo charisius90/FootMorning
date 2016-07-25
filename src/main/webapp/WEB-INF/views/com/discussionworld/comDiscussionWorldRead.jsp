@@ -29,7 +29,7 @@
 								<td class="span1">제목 - 해외 축구 토론방</td>
 								<td>${comDiscussionWorldDTO.com_discussion_world_subject}</td>
 								<td class="span1">조회수</td>
-								<td>${comDiscussionWorldfDTO.com_discussion_world_count}</td>
+								<td>${comDiscussionWorldDTO.com_discussion_world_count}</td>
 							</tr>
 							<tr>
 								<td>작성자</td>

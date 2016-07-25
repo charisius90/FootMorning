@@ -21,7 +21,7 @@
 	</update>
 	
 	<delete id="delete">
-		delete * from com_gallery 
+		delete from com_gallery 
 		where com_gallery_no=#{com_gallery_no}
 	</delete>
 	

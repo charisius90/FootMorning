@@ -14,7 +14,7 @@ public class ComQnADAOImpl implements ComQnADAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	private static final String NAMESPACE = "com.charisius.mappers.comQnAMapper";
+	private static final String NAMESPACE = "com.footmorning.mappers.comQnAMapper";
 
 	@Override
 	public void register(ComQnADTO dto) throws Exception {

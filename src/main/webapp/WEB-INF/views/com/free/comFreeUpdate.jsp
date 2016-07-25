@@ -22,6 +22,12 @@
 				<br/><br/>
 				
 				<!-- 글쓰는 부분 -->
+				
+				<form method="POST" action="/com/free/comFreeUpdate">
+				<input type="hidden" name="com_free_no" value="${comFreeDTO.com_free_no}"/>
+				<input type="hidden" name="mem_no" value="${comFreeDTO.mem_no}"/>
+				<input type="hidden" name="com_free_regdate" value="${comFreeDTO.com_free_regdate}"/>
+				<input type="hidden" name="com_free_count" value="${comBoastDTO.com_free_count}"/>
 				<div class="container">
 					<div class="row">
 						<table class="table">
@@ -40,6 +46,7 @@
 						</table>
 					</div>
 				</div>
+				</form>
 				<hr/>
 				
 				<div align="right">

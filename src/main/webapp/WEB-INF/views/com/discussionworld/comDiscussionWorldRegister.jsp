@@ -29,11 +29,11 @@
 							<table class="table">
 								<tr>
 									<td>제목</td>
-									<td><input type="text" name="com_discussion_world_subject"/></td>
+									<td><input type="text" name="com_discussion_world_subject" value=""/></td>
 								</tr>
 								<tr>
 									<td>작성자</td>
-									<td><input type="text" name="com_discusstion_world_writer" value="${USER_KEY.mem_name}"/></td>
+									<td><input type="text" name="com_discussion_world_writer" value="${USER_KEY.mem_name}"/></td>
 								</tr>
 								<tr>
 									<td>내용</td>

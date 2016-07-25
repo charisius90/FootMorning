@@ -27,8 +27,10 @@ public class ComFreeController {
 	public void registerGET(){}
 	@RequestMapping(value="comFreeRegister", method=RequestMethod.POST)
 	public String registerPOST(ComFreeDTO dto, RedirectAttributes rttr) throws Exception{
+		dto.setCom_free_count("0");
 		
 		service.register(dto);
+		
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		return "redirect:/com/free/comFreeListAll";
 	}
