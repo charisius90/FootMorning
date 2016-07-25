@@ -5,7 +5,6 @@
 <title>Insert title here</title>
 <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
-
 </head>
 <body>
 

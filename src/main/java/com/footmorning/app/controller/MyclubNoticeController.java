@@ -26,20 +26,20 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 	public String notice(Model model) throws Exception {
 	      
 	      model.addAttribute("list", service.listAll());
-	      System.out.println(service.listAll().toString());
+//	      System.out.println(service.listAll().toString());
 	      return "/myclub/myclubNotice/myclubNoticeBoardMain";
 	 }
 	
 	@RequestMapping(value="/myclub/notice/register", method=RequestMethod.GET)
 	public String register(Locale locale, Model model) {
-		logger.info("등록", locale);
+//		logger.info("등록", locale);
 		
 		return "myclub/myclubNotice/myclubNoticeBoardRegister";
 	}
 	
 	@RequestMapping(value="/myclub/notice/register", method=RequestMethod.POST)
 	 public String registerComplete(MyclubNoticeDTO dto, RedirectAttributes rttr) throws Exception {
-	      logger.info("등록 완료 : " + dto.toString());
+//	      logger.info("등록 완료 : " + dto.toString());
 	      service.register(dto);
 	      
 	      rttr.addFlashAttribute("msg", "SUCCESS");
@@ -85,6 +85,7 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 	    */
 	   @RequestMapping(value="/myclub/notice/update", method=RequestMethod.POST)
 	   public String updateComplete(MyclubNoticeDTO dto, RedirectAttributes rttr) throws Exception {
+		   System.out.println("수정: " + dto.toString());
 	      service.modify(dto);
 	      
 	      rttr.addFlashAttribute("msg", "SUCCESS");

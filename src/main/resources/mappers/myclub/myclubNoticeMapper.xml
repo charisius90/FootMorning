@@ -10,16 +10,16 @@
 
 	<select id="read" resultType="MyclubNoticeDTO">
       select * from myclub_notice where myclub_notice_no=#{bno}
-   </select>
+   	</select>
 
-   <update id="update">
-      update myclub_notice set myclub_notice_subject =#{myclub_notice_subject}, myclub_notice_content =#{myclub_notice_content} 
-      where myclub_notice_no = #{myclub_notice_no}
-   </update>
+   	<update id="update">
+     	 update myclub_notice set myclub_notice_subject =#{myclub_notice_subject}, myclub_notice_content =#{myclub_notice_content} 
+     	 where myclub_notice_no = #{myclub_notice_no}
+   	</update>
 
-   <delete id="delete">
-      delete from myclub_notice where myclub_notice_no = #{myclub_notice_no}
-   </delete>
+   	<delete id="delete">
+     	 delete from myclub_notice where myclub_notice_no = #{myclub_notice_no}
+   	</delete>
 
 	<select id="listAll" resultType="MyclubNoticeDTO">
        <![CDATA[
