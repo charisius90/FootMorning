@@ -48,4 +48,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.getTime();
 	}
 
+	@Override
+	public String getPW(String mem_email, String mem_phone) {
+		return memberDAO.getPW(mem_email, mem_phone);
+	}
+
 }

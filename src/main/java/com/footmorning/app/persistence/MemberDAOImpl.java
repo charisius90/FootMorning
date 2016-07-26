@@ -47,6 +47,14 @@ public class MemberDAOImpl implements MemberDAO {
 		paramMap.put("mem_pw", mem_pw);
 		return sqlSession.selectOne(NAMESPACE + ".getWithPW", paramMap);
 	}
+	
+	@Override
+	public String getPW(String mem_email, String mem_phone) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("mem_email", mem_email);
+		paramMap.put("mem_phone", mem_phone);
+		return sqlSession.selectOne(NAMESPACE + ".getPW", paramMap);
+	}
 
 	@Override
 	public String getTime() {

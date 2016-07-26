@@ -9,4 +9,5 @@ public interface MemberService {
 	public void deleteMember(Integer mem_no);
 	public MemberDTO getMemberInfo(String mem_email);
 	public MemberDTO getWithPW(String mem_email, String mem_pw);
+	public String getPW(String mem_email, String mem_phone);
 }
