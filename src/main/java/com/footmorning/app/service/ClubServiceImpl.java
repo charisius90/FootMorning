@@ -42,6 +42,7 @@ public class ClubServiceImpl implements ClubService {
 
 	@Override
 	public List<ClubDTO> listAll() throws Exception {
+		System.out.println("clubserviceimpl dao : " + dao);
 		return dao.listAll();
 	}
 

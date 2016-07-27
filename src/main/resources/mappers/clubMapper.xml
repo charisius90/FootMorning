@@ -8,26 +8,26 @@
 	<insert id="insert" parameterType="ClubDTO">
 		insert into
 		club(club_name, club_image, club_content, club_loc, club_type, club_master)
-		values(#{name}, #{image}, #{content}, #{loc}, #{type}, #{master})
+		values(#{club_name}, #{club_image}, #{club_content}, #{club_loc}, #{club_type}, #{club_master})
 	</insert>
 	
 	<update id="update" parameterType="ClubDTO">
 		update club set
-		club_name=#{name},
-		club_image=#{image},
-		club_content=#{content},
-		club_loc=#{loc},
-		club_type=#{type},
-		club_master=#{master}
-		where club_no=#{no}		
+		club_name=#{club_name},
+		club_image=#{club_image},
+		club_content=#{club_content},
+		club_loc=#{club_loc},
+		club_type=#{club_type},
+		club_master=#{club_master}
+		where club_no=#{club_no}		
 	</update>
 	
 	<delete id="delete">
-		delete from club where com_no=#{no}
+		delete from club where club_no=#{no}
 	</delete>
 	
 	<select id="getClubInfo" resultType="ClubDTO">
-		select * from club where club_name=#{name}
+		select * from club where club_name=#{club_name}
 	</select>
 	
 	<select id="getWithNo" resultType="ClubDTO">

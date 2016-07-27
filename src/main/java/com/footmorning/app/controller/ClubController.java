@@ -35,8 +35,9 @@ public class ClubController {
 	public void listGET(Model model){
 		try {
 			List<ClubDTO> list = service.listAll();
+			System.out.println(list);
 			for(ClubDTO dto : list){
-				System.out.println("test : " + dto.getName());
+				System.out.println("test : " + dto.getClub_name());
 			}
 			
 			model.addAttribute("list", list);

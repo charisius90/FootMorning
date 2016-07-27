@@ -47,6 +47,7 @@ public class ClubDAOImpl implements ClubDAO {
 
 	@Override
 	public List<ClubDTO> listAll() throws Exception {
+		System.out.println("clubdaoimpl called");
 		return sqlSession.selectList(NAMESPACE + ".listAll");
 	}
 

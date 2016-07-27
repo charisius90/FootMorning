@@ -1,67 +1,68 @@
 package com.footmorning.app.domain;
 
 public class ClubDTO {
-	private String no;
-	private String name;
-	private String image;
-	private String content;
-	private String loc;
-	private String type;
-	private String regdate;
-	private String master;
+	private String club_no;
+	private String club_name;
+	private String club_image;
+	private String club_content;
+	private String club_loc;
+	private String club_type;
+	private String club_regdate;
+	private String club_master;
 	
-	public String getNo() {
-		return no;
+	public String getClub_no() {
+		return club_no;
 	}
-	public void setNo(String no) {
-		this.no = no;
+	public void setClub_no(String club_no) {
+		this.club_no = club_no;
 	}
-	public String getName() {
-		return name;
+	public String getClub_name() {
+		return club_name;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setClub_name(String club_name) {
+		this.club_name = club_name;
 	}
-	public String getImage() {
-		return image;
+	public String getClub_image() {
+		return club_image;
 	}
-	public void setImage(String image) {
-		this.image = image;
+	public void setClub_image(String club_image) {
+		this.club_image = club_image;
 	}
-	public String getContent() {
-		return content;
+	public String getClub_content() {
+		return club_content;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setClub_content(String club_content) {
+		this.club_content = club_content;
 	}
-	public String getLoc() {
-		return loc;
+	public String getClub_loc() {
+		return club_loc;
 	}
-	public void setLoc(String loc) {
-		this.loc = loc;
+	public void setClub_loc(String club_loc) {
+		this.club_loc = club_loc;
 	}
-	public String getType() {
-		return type;
+	public String getClub_type() {
+		return club_type;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public void setClub_type(String club_type) {
+		this.club_type = club_type;
 	}
-	public String getRegdate() {
-		return regdate;
+	public String getClub_regdate() {
+		return club_regdate;
 	}
-	public void setRegdate(String regdate) {
-		this.regdate = regdate;
+	public void setClub_regdate(String club_regdate) {
+		this.club_regdate = club_regdate;
 	}
-	public String getMaster() {
-		return master;
+	public String getClub_master() {
+		return club_master;
 	}
-	public void setMaster(String master) {
-		this.master = master;
+	public void setClub_master(String club_master) {
+		this.club_master = club_master;
 	}
 	
 	@Override
 	public String toString() {
-		return "ClubDTO [no=" + no + ", name=" + name + ", image=" + image + ", content=" + content + ", loc=" + loc
-				+ ", type=" + type + ", regdate=" + regdate + ", master=" + master + "]";
+		return "ClubDTO [club_no=" + club_no + ", club_name=" + club_name + ", club_image=" + club_image
+				+ ", club_content=" + club_content + ", club_loc=" + club_loc + ", club_type=" + club_type
+				+ ", club_regdate=" + club_regdate + ", club_master=" + club_master + "]";
 	}
 }
