@@ -6,10 +6,12 @@
 <mapper namespace="com.footmorning.mappers.comFreeMapper">
 	
 	<insert id="register" parameterType="ComFreeDTO">
-		insert into com_free(mem_no, com_free_subject, com_free_content,
-		 com_free_count, com_free_writer)
-		values(#{mem_no},#{com_free_subject},#{com_free_content},
-		#{com_free_count},#{com_free_writer})
+		insert into com_free(mem_no, com_free_subject, 
+		com_free_content,
+		com_free_count, 
+		com_free_writer)
+		values(#{mem_no}, #{com_free_subject}, #{com_free_content},
+		 #{com_free_count}, #{com_free_writer})
 	</insert>
 	
 	<select id="read" resultType="ComFreeDTO">
@@ -19,8 +21,9 @@
 	<update id="update" parameterType="ComFreeDTO">
 		update com_free set com_free_subject=#{com_free_subject},
 		com_free_writer=#{com_free_writer},
-		com_free_content=#{com_free_content}, com_free_count=#{com_free_count} 
-		where com_free_no=#{com_free_no}	
+		com_free_content=#{com_free_content}, 
+		com_free_count=#{com_free_count}
+		where com_free_no=#{com_free_no}
 	</update>
 	
 	<delete id="delete">

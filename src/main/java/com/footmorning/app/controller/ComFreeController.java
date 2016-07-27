@@ -64,7 +64,6 @@ public class ComFreeController {
 	@RequestMapping(value="comFreeUpdate", method=RequestMethod.POST)
 	public String updatePOST(ComFreeDTO dto, Model model) throws Exception{
 		service.update(dto);
-		
 		model.addAttribute(dto);
 		return "/com/free/comFreeRead";
 	}

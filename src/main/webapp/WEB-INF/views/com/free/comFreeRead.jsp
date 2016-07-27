@@ -18,7 +18,7 @@
 			</div>
 			<div class="col-md-10">
 				<div id="page-content-wrapper">
-				<h1>클럽자랑</h1> 			
+				<h1>자유게시판</h1> 			
 				<br/><br/>
 					
 				<!-- 게시글 읽는 부분 -->
@@ -26,7 +26,7 @@
 					<div class="row">
 						<table class="table">
 							<tr>
-								<td class="span1">제목 - 클럽자랑</td>
+								<td class="span1">제목 - 자유게시판	</td>
 								<td>${comFreeDTO.com_free_subject}</td>
 								<td class="span1">조회수</td>
 								<td>${comFreeDTO.com_free_count}</td>
