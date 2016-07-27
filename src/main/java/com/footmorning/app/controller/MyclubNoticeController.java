@@ -15,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.footmorning.app.domain.MyclubNoticeDTO;
 import com.footmorning.app.service.MyclubNoticeService;
+import com.footmorning.app.util.PageMaker;
+import com.footmorning.app.util.SearchCriteria;
 
 @Controller
 public class MyclubNoticeController {
@@ -23,9 +25,16 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 	private MyclubNoticeService service;
 	
 	@RequestMapping("/myclub/notice/main")
-	public String notice(Model model) throws Exception {
+	public String notice(SearchCriteria cri,Model model) throws Exception {
 	      
-	      model.addAttribute("list", service.listAll());
+		model.addAttribute("list", service.listSearchCriteria(cri));
+		
+		PageMaker pageMaker = new PageMaker();
+	    
+	    pageMaker.setCri(cri);
+	    pageMaker.setTotalCount(service.listSearchCount(cri));
+		
+	    model.addAttribute("pageMaker", pageMaker);
 //	      System.out.println(service.listAll().toString());
 	      return "/myclub/myclubNotice/myclubNoticeBoardMain";
 //	      	¾Ù¹üÀº myclubNoticeBoardMain2
@@ -59,6 +68,7 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 	   @RequestMapping(value="/myclub/notice/read",method = RequestMethod.GET)
 	   public String read(Integer myclub_notice_no, Model model) throws Exception {
 	      model.addAttribute("dto",service.read(myclub_notice_no));
+	      service.updateCount(myclub_notice_no);
 	      
 	      return "myclub/myclubNotice/myclubNoticeBoardRead";
 	   }

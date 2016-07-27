@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.footmorning.app.domain.MyclubNoticeDTO;
 import com.footmorning.app.persistence.MyclubNoticeDAO;
 import com.footmorning.app.service.MyclubNoticeService;
+import com.footmorning.app.util.Criteria;
+import com.footmorning.app.util.SearchCriteria;
 
 @Service
 public class MyclubNoticeServiceImpl implements MyclubNoticeService{
@@ -21,30 +23,36 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService{
 	}
 
 	/**
-	    * ½ÂÇÑ read
-	    */
-	   @Override
-	   public MyclubNoticeDTO read(Integer bno) throws Exception {
-	      // TODO Auto-generated method stub
-	      return dao.read(bno);
-	   }
-
-	   /**
-	    * ½ÂÇÑ update
-	    */
-	   @Override
-	   public void modify(MyclubNoticeDTO dto) throws Exception {
-	      dao.update(dto);
-	   }
+	 * ½ÂÇÑ read
+	 */
+	@Override
+	public MyclubNoticeDTO read(Integer bno) throws Exception {
+	   return dao.read(bno);
+	}
+	
+	@Override
+	public void countUpdate(Integer bno) throws Exception {
+		dao.updateCount(bno);
+	}
+	
+	
+	/**
+	 * ½ÂÇÑ update
+	 */
+	@Override
+	public void modify(MyclubNoticeDTO dto) throws Exception {
+	   dao.update(dto);
+	}
 	   
-	   /**
-	    * ½ÂÇÑ delete
-	    */
-	   @Override
-	   public void remove(Integer bno) throws Exception {
-	      dao.delete(bno);
-	   }
-
+	/**
+	 * ½ÂÇÑ delete
+	 */
+	@Override
+	public void remove(Integer bno) throws Exception {
+	   dao.delete(bno);
+	}
+	   
+	   
 	@Override
 	public List<MyclubNoticeDTO> listAll() throws Exception {
 		return getMyClubNotices(dao.listAll());
@@ -73,4 +81,37 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService{
 		}
 		return mainThumnail;
 	}
+
+	/**
+	 * 	±ÔÃ¤ listCountCriteria
+	 */
+	@Override
+	public int listCountCriteria(Criteria cri) throws Exception {
+		return dao.countPaging(cri);
+	}
+	
+	/**
+	 * 	±ÔÃ¤ listCriteria
+	 */
+	@Override
+	public List<MyclubNoticeDTO> listCriteria(Criteria cri) throws Exception {
+		return dao.listCriteria(cri);
+	}
+	
+	/**
+	 * 	±ÔÃ¤ listSearchCriteria
+	 */
+	@Override
+	public List<MyclubNoticeDTO> listSearchCriteria(SearchCriteria cri) throws Exception {
+		return dao.listSearchCriteria(cri);
+	}
+	
+	/**
+	 *  ±ÔÃ¤ listSearchCount
+	 */
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		return dao.listSearchCount(cri);
+	}
+
 }

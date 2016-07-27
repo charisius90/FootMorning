@@ -16,14 +16,82 @@
      	 update myclub_notice set myclub_notice_subject =#{myclub_notice_subject}, myclub_notice_content =#{myclub_notice_content} 
      	 where myclub_notice_no = #{myclub_notice_no}
    	</update>
+	
+	<update id="updatecount" parameterType="MyclubNoticeDTO">
+		update myclub_notice set myclub_notice_count = #{myclub_notice_count} + 1 where myclub_notice_no = #{myclub_notice_no};
+	</update>
 
    	<delete id="delete">
      	 delete from myclub_notice where myclub_notice_no = #{myclub_notice_no}
    	</delete>
-
+	
 	<select id="listAll" resultType="MyclubNoticeDTO">
        <![CDATA[
        select * from myclub_notice where myclub_notice_no > 0 order by myclub_notice_no desc, myclub_notice_regdate desc
        ]]>
    </select>
+
+	<select id="listPage" resultType="MyclubNoticeDTO">
+		<![CDATA[
+			select * from myclub_notice where myclub_notice_no > 0 
+				order by myclub_notice_no desc, myclub_notice_regdate desc limit #{page}, 10
+		]]>  
+	</select>
+
+    <select id="listCriteria" resultType="MyclubNoticeDTO">
+ 		<![CDATA[
+ 			select * from myclub_notice where myclub_notice_no > 0 
+ 				order by myclub_notice_no desc, myclub_notice_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>  
+	</select>
+   
+   
+   <select id="countPaging" resultType="int">
+ 		select count(myclub_notice_no) from myclub_notice
+   </select>
+   
+   
+   <!-- 반복되어 재사용되는 sql문은 이렇게 id를 부여하고 <sql></sql> 태그로 감싸면 include가 가능해진다. -->
+   <sql id="search">
+   		<if test="searchType != null" > 
+		   <if test="searchType == 't'.toString()">
+		     	and myclub_notice_subject like CONCAT('%', #{keyword}, '%')
+		   </if>
+		   
+		   <if test="searchType == 'c'.toString()">
+		     	and myclub_notice_content like CONCAT('%', #{keyword}, '%')
+		   </if>
+		   
+		   <if test="searchType == 'w'.toString()">
+		     	and mem_no like CONCAT('%', #{keyword}, '%')
+		   </if>     
+ 		</if>  
+	</sql>
+	
+	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, keyword ) -->
+	<select id="listSearch" resultType="MyclubNoticeDTO">
+		<![CDATA[  
+		  select * 
+		  from Myclub_Notice 
+		  where Myclub_Notice_no > 0 
+		]]>  
+		
+		  <include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by Myclub_Notice_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>  
+	</select>
+	  
+	  <!-- 검색 결과 게시물 총 갯수 계산 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(Myclub_Notice_no) 
+		  from Myclub_Notice 
+		  where Myclub_Notice_no > 0 
+		]]>
+		  <include refid="search"></include>
+	</select>   
+   
 </mapper>

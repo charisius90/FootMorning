@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.footmorning.app.domain.MyclubNoticeDTO;
 import com.footmorning.app.persistence.MyclubNoticeDAO;
+import com.footmorning.app.util.Criteria;
+import com.footmorning.app.util.SearchCriteria;
 
 @Repository
 public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
@@ -30,7 +32,12 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NAMESPACE + ".read", bno);
 	}
-
+	
+	@Override
+	public void updateCount(Integer bno) throws Exception {
+		sqlSession.selectOne(NAMESPACE + ".countUpdate", bno);
+	}
+	
 	/**
 	 * 승한 update
 	 */
@@ -50,6 +57,37 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	@Override
 	public List<MyclubNoticeDTO> listAll() throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listAll");
+	}
+	/**
+	 *  규채 countPaging
+	 */
+	@Override
+	public int countPaging(Criteria cri) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".countPaging", cri);
+	}
+	
+	/**
+	 * 	규채 listCriteria
+	 */
+	@Override
+	public List<MyclubNoticeDTO> listCriteria(Criteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listCriteria", cri);
+	}
+	
+	/**
+	 *  규채 listSearchCriteria
+	 */
+	@Override
+	public List<MyclubNoticeDTO> listSearchCriteria(SearchCriteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listSearch" , cri);
+	}
+	
+	/**
+	 *  규채 listSearchCount
+	 */
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".listSearchCount", cri);
 	}
 
 }
