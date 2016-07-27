@@ -23,7 +23,7 @@ public class ComQnADTO {
 		this.mem_no = mem_no;
 	}
 	public String getCom_qna_subject() {
-		return com_qna_subject;
+		return com_qna_subject;	
 	}
 	public void setCom_qna_subject(String com_qna_subject) {
 		this.com_qna_subject = com_qna_subject;

@@ -23,10 +23,10 @@
 				
 				<!-- 글쓰는 부분 -->
 				<form method="POST" action="/com/discussionworld/comDiscussionWorldUpdate">
-				<input type="hidden" name="com_discussionworld_no" value="${comDiscussionWorldDTO.com_discussion_world_no}"/>
+				<input type="hidden" name="com_discussion_world_no" value="${comDiscussionWorldDTO.com_discussion_world_no}"/>
 				<input type="hidden" name="mem_no" value="${comDiscussionWorldDTO.mem_no}"/>
-				<input type="hidden" name="com_discussionworld_regdate" value="${comDiscussionWorldDTO.com_discussion_world_regdate}"/>
-				<input type="hidden" name="com_discussionworld_count" value="${comDiscussionWorldDTO.com_discussion_world_count}"/>
+				<input type="hidden" name="com_discussion_world_regdate" value="${comDiscussionWorldDTO.com_discussion_world_regdate}"/>
+				<input type="hidden" name="com_discussion_world_count" value="${comDiscussionWorldDTO.com_discussion_world_count}"/>
 				<div class="container">
 					<div class="row">
 						<table class="table">

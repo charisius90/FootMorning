@@ -8,6 +8,7 @@ public class ComFreeDTO {
 	private String com_free_content;
 	private String com_free_regdate;
 	private String com_free_count;
+	
 	public String getCom_free_no() {
 		return com_free_no;
 	}

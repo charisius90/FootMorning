@@ -19,13 +19,15 @@
 	</select>
 	
 	<update id="update" parameterType="ComDiscussionWorldDTO">
-		update com_discussion_world set mem_no=#{mem_no}, 
+		update com_discussion_world set
 		com_discussion_world_subject=#{com_discussion_world_subject},
 		com_discussion_world_content=#{com_discussion_world_content},
 		com_discussion_world_writer=#{com_discussion_world_writer},
 		com_discussion_world_count=#{com_discussion_world_count} 
 		where com_discussion_world_no=#{com_discussion_world_no}	
 	</update>
+	
+	
 	
 	<delete id="delete">
 		delete from com_discussion_world 

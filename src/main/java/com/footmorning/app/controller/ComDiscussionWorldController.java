@@ -1,5 +1,7 @@
 package com.footmorning.app.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +73,15 @@ public class ComDiscussionWorldController {
 	public String updatePOST(ComDiscussionWorldDTO dto, Model model) throws Exception{
 		System.out.println("controller : " + dto);
 		service.update(dto);
+		
+		//test
+		System.out.println("test start");
+		List<ComDiscussionWorldDTO> list = service.listAll();
+		for(ComDiscussionWorldDTO param : list){
+			System.out.println(param);
+		}
+		System.out.println("test end");
+		//test
 		
 		model.addAttribute(dto);
 		return "/com/discussionworld/comDiscussionWorldRead";

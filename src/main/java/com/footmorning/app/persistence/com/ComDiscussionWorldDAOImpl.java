@@ -29,7 +29,6 @@ public class ComDiscussionWorldDAOImpl implements ComDiscussionWorldDAO {
 
 	@Override
 	public void update(ComDiscussionWorldDTO dto) throws Exception {
-		System.out.println("dao : " + dto);
 		sqlSession.update(NAMESPACE + ".update", dto);
 	}
 

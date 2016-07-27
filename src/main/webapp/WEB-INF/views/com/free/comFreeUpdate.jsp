@@ -27,7 +27,7 @@
 				<input type="hidden" name="com_free_no" value="${comFreeDTO.com_free_no}"/>
 				<input type="hidden" name="mem_no" value="${comFreeDTO.mem_no}"/>
 				<input type="hidden" name="com_free_regdate" value="${comFreeDTO.com_free_regdate}"/>
-				<input type="hidden" name="com_free_count" value="${comBoastDTO.com_free_count}"/>
+				<input type="hidden" name="com_free_count" value="${comFreeDTO.com_free_count}"/>
 				<div class="container">
 					<div class="row">
 						<table class="table">
