@@ -1,24 +1,21 @@
 package com.footmorning.app.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MemberService;
 
+/**
+ * @author 박수항
+ */
 @Controller
 @RequestMapping("/club/*")
 public class ClubController {
@@ -27,6 +24,7 @@ public class ClubController {
 	@Autowired
 	private MemberService memberService;
 	
+	// 회원 Grade용 final 변수들
 	public static final String GRADE_ADMIN = "0";
 	public static final String GRADE_MASTER = "1";
 	public static final String GRADE_MANAGER = "2";
@@ -36,7 +34,13 @@ public class ClubController {
 	@RequestMapping("clubList")
 	public void listGET(Model model){
 		try {
-			model.addAttribute("list", service.listAll());
+			List<ClubDTO> list = service.listAll();
+			for(ClubDTO dto : list){
+				System.out.println("test : " + dto.getName());
+			}
+			
+			model.addAttribute("list", list);
+			System.out.println("hi");
 		}
 		catch (Exception err) {
 			System.out.println("clubListAll : " + err);
@@ -61,29 +65,7 @@ public class ClubController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		Map<String, String> map = new HashMap<>();
-//		map.put("mem_email", mem_email);
-//		map.put("club_name", dto.getName());
-//		rttr.addFlashAttribute("data", map);
-//		model.addAllAttributes(map);
-		return "redirect:/club/clubList";
+		return "redirect:/myclub/myclubMain";
 	}
 	
-//	@RequestMapping("registerSuccess")
-//	public String registerSuccess(String club_name, String mem_email, String data){
-//		try {
-//			System.out.println("1 : " + club_name + " / 2 : " + mem_email + ", " + data);
-//			ClubDTO clubDTO = service.getClubInfo(club_name);
-//			System.out.println("clubDTO : " + clubDTO);
-//			MemberDTO memberDTO = memberService.getMemberInfo(mem_email);
-//			memberDTO.setClub_no(clubDTO.getNo());
-//			memberDTO.setMem_grade(GRADE_MASTER);
-//			memberService.updateMember(memberDTO);
-//		}
-//		catch (Exception e) {
-//			e.printStackTrace();
-//			return "/club/clubRegister";
-//		}
-//		return "/club/clubList";
-//	}
 }

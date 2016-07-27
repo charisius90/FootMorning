@@ -15,5 +15,6 @@ public interface ClubService {
 	public void update(ClubDTO dto);
 	public void delete(Integer no);
 	public ClubDTO getClubInfo(String name) throws Exception;
+	public ClubDTO getWithNo(Integer no) throws Exception;
 	public List<ClubDTO> listAll() throws Exception;
 }

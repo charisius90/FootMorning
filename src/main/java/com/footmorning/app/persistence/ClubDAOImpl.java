@@ -50,4 +50,9 @@ public class ClubDAOImpl implements ClubDAO {
 		return sqlSession.selectList(NAMESPACE + ".listAll");
 	}
 
+	@Override
+	public ClubDTO getWithNo(Integer no) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".getWithNo", no);
+	}
+
 }

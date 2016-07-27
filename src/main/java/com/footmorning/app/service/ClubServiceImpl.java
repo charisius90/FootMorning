@@ -45,4 +45,9 @@ public class ClubServiceImpl implements ClubService {
 		return dao.listAll();
 	}
 
+	@Override
+	public ClubDTO getWithNo(Integer no) throws Exception {
+		return dao.getWithNo(no);
+	}
+
 }

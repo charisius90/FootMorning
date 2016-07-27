@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,19 +44,11 @@
 						<th>NO</th><th>로고</th><th>클럽명</th><th>지역</th><th>클럽소개</th>
 					</tr>
 					</thead>
-					<tr>
-						<td>1</td><td>로고</td><td>맨유</td><td>서울</td><td>맨유가 오라면 와야지</td>
-					</tr>
-					<tr>
-						<td>2</td><td>로고</td><td>첼시</td><td>부산</td><td>맨더빅아</td>
-					</tr>
-					<tr>
-						<td>3</td><td>로고</td><td>아스날</td><td>광주</td><td>리빅아</td>
-					</tr>
-					<tr>
-						<td>4</td><td>로고</td><td>리버풀</td><td>서울</td><td>4스날</td>
-					</tr>
-					
+					<c:forEach items="${list}" var="club">
+						<tr>
+							<td>${club.no}</td><td><a href="#"><img src="${club.image}" alt="logo위치"/></a></td><td>${club.name}</td><td>${club.loc}</td><td>${club.content}</td>
+						</tr>
+					</c:forEach>
 				</table>
 					<nav align="center">
 						<ul class="pagination">
@@ -80,18 +73,20 @@
 </div><!-- /.container -->
 
 <script>
-	$(function(){
-		$("#datepicker").datepicker(
-			{
-				dateFormat: "yymmdd",
-				changeMonth: true,
-				changeYear: true,
-				minDate: "0",
-				maxDate: "+1y",
-			}		
-		);
-	});
-
+// 	$(function(){
+// 		$("#datepicker").datepicker(
+// 			{
+// 				dateFormat: "yymmdd",
+// 				changeMonth: true,
+// 				changeYear: true,
+// 				minDate: "0",
+// 				maxDate: "+1y",
+// 			}		
+// 		);
+// 	});
+	
+	var test = "${list}";
+	alert(test);
 </script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
