@@ -29,15 +29,15 @@
 							<table class="table">
 								<tr>
 									<td>제목</td>
-									<td><input type="text" name="com_discussionkor_subject"/></td>
+									<td><input type="text" name="com_discussion_kor_subject"/></td>
 								</tr>
 								<tr>
 									<td>작성자</td>
-									<td><input type="text" name="com_discussionkor_writer" value="${USER_KEY.mem_name}" /></td>
+									<td><input type="text" name="com_discussion_kor_writer" value="${USER_KEY.mem_name}" /></td>
 								</tr>
 								<tr>
 									<td>내용</td>
-									<td><textarea name="com_discussionkor_content" rows="10" cols="100"></textarea></td>
+									<td><textarea name="com_discussion_kor_content" rows="10" cols="100"></textarea></td>
 								</tr>
 							</table>
 						</div>

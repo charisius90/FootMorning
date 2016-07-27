@@ -12,10 +12,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.footmorning.app.domain.ComDiscussionWorldDTO;
 import com.footmorning.app.service.ComDiscussionWorldService;
 
+/**
+ * 커뮤니티 자랑게시판 컨트롤러
+ * @author 박수항
+ *
+ */
 @Controller
 @RequestMapping("/com/discussionworld/*")
 public class ComDiscussionWorldController {
-	private static Logger Logger = LoggerFactory.getLogger(ComDiscussionWorldController.class);
+	private static Logger logger = LoggerFactory.getLogger(ComDiscussionWorldController.class);
 	
 	@Autowired
 	private ComDiscussionWorldService service;
@@ -26,12 +31,12 @@ public class ComDiscussionWorldController {
 	@RequestMapping("comDiscussionWorldRegister")
 	public void registerGET(){}
 	
-	@RequestMapping(value="comDiscussionWorldRegister", method=RequestMethod.POST)
-	public String registerPOST(ComDiscussionWorldDTO dto, RedirectAttributes rttr) throws Exception{
+	@RequestMapping(value = "comDiscussionWorldRegister", method = RequestMethod.POST)
+	public String registerPOST(ComDiscussionWorldDTO dto, RedirectAttributes rttr) throws Exception {
 		dto.setCom_discussion_world_count("0");
-		
+
 		service.register(dto);
-		
+
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		return "redirect:/com/discussionworld/comDiscussionWorldListAll";
 	}
@@ -50,8 +55,8 @@ public class ComDiscussionWorldController {
 	@RequestMapping("comDiscussionWorldRead")
 	public void readGET(int no, Model model) throws Exception{
 		ComDiscussionWorldDTO dto = service.read(no);
-		dto.setCom_discussion_world_count(Integer.toString(Integer.valueOf(dto.getCom_discussion_world_count()).intValue()+ 1));
-		service.update(dto);		
+		dto.setCom_discussion_world_count(Integer.toString(Integer.valueOf(dto.getCom_discussion_world_count()).intValue() + 1));
+		service.update(dto);
 		model.addAttribute(dto);
 	}
 	
@@ -64,6 +69,7 @@ public class ComDiscussionWorldController {
 	}
 	@RequestMapping(value="comDiscussionWorldUpdate", method=RequestMethod.POST)
 	public String updatePOST(ComDiscussionWorldDTO dto, Model model) throws Exception{
+		System.out.println("controller : " + dto);
 		service.update(dto);
 		
 		model.addAttribute(dto);

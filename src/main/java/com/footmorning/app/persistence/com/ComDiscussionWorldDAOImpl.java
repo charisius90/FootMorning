@@ -14,22 +14,22 @@ public class ComDiscussionWorldDAOImpl implements ComDiscussionWorldDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
+	
 	private static final String NAMESPACE = "com.footmorning.mappers.comDiscussionWorldMapper";
 	
 	@Override
 	public void register(ComDiscussionWorldDTO dto) throws Exception {
 		sqlSession.insert(NAMESPACE+".register", dto);
-
 	}
 
 	@Override
 	public ComDiscussionWorldDTO read(Integer no) throws Exception {
-	
-		return sqlSession.selectOne(NAMESPACE +".read", no );
+		return sqlSession.selectOne(NAMESPACE+".read", no);
 	}
 
 	@Override
 	public void update(ComDiscussionWorldDTO dto) throws Exception {
+		System.out.println("dao : " + dto);
 		sqlSession.update(NAMESPACE + ".update", dto);
 	}
 

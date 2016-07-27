@@ -38,7 +38,7 @@
 								<tr>
 									<td>내용</td>
 									<td><textarea name="com_discussion_world_content" rows="10" cols="100"></textarea></td>
-								</tr>
+								</tr>	
 							</table>
 						</div>
 					</div>

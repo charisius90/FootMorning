@@ -12,10 +12,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.footmorning.app.domain.ComDiscussionKorDTO;
 import com.footmorning.app.service.ComDiscussionKorService;
 
+/**
+ * 커뮤니티 자랑게시판 컨트롤러
+ * @author 박수항
+ *
+ */
 @Controller
 @RequestMapping("/com/discussionkor/*")
 public class ComDiscussionKorController {
-	private static Logger Logger = LoggerFactory.getLogger(ComDiscussionKorController.class);
+	private static Logger logger = LoggerFactory.getLogger(ComDiscussionKorController.class);
 	
 	@Autowired
 	private ComDiscussionKorService service;
@@ -26,11 +31,12 @@ public class ComDiscussionKorController {
 	@RequestMapping("comDiscussionKorRegister")
 	public void registerGET(){}
 	
-	@RequestMapping(value="comDiscussionKorRegister", method=RequestMethod.POST)
-	public String registerPOST(ComDiscussionKorDTO dto, RedirectAttributes rttr) throws Exception{
-		
+	@RequestMapping(value = "comDiscussionKorRegister", method = RequestMethod.POST)
+	public String registerPOST(ComDiscussionKorDTO dto, RedirectAttributes rttr) throws Exception {
+		dto.setCom_discussion_kor_count("0");
+
 		service.register(dto);
-		
+
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		return "redirect:/com/discussionkor/comDiscussionKorListAll";
 	}
@@ -49,7 +55,7 @@ public class ComDiscussionKorController {
 	@RequestMapping("comDiscussionKorRead")
 	public void readGET(int no, Model model) throws Exception{
 		ComDiscussionKorDTO dto = service.read(no);
-		dto.setCom_discussion_kor_count(Integer.toString(Integer.valueOf(dto.getCom_discussion_kor_count()).intValue()+ 1));
+		dto.setCom_discussion_kor_count(Integer.toString(Integer.valueOf(dto.getCom_discussion_kor_count()).intValue() + 1));
 		service.update(dto);
 		model.addAttribute(dto);
 	}

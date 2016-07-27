@@ -17,35 +17,36 @@
 
 <%@ include file="../../include/headerRoot.jsp" %>
 
-
 <div class="container-fluid">
 	<div class="row">
 		<div id="wrapper">
 			<div>
 				<%@ include file="../../include/communitysidebar.jsp" %>
 			</div>
-				<div class="col-md-10">
-					<div id="page-content-wrapper">
-						<h1>국내 축구 토론방</h1>
-						<table class="table table-boardead table-hover" style="text-align: center;">
-							<tr>
-								<td>작성자</td>
-								<td>제목</td>
-								<td>작성일</td>
-								<td>조회수</td>
-							</tr>
-							<!-- 게시글 내용이 들어가는 부분 -->
-							<c:forEach items="${list}" var="dto">
-							<tr>
-								<td>${dto.com_discussion_kor_writer}</td>
-								<td><a href="/com/discussionkor/comDiscussionKorRead?no=${dto.com_discussion_kor_no}">${dto.com_discussion_kor_subject}</a></td>
-								<td>${dto.com_discussion_kor_regdate}</td>
-								<td>${dto.com_discussion_kor_count}</td>
-							</tr>
-							</c:forEach>
-						</table>
+		<div id="page-content-wrapper">
+			<div class="col-md-10">
+				<h1>국내 축구 토론방</h1>
+				<br/>
+				<table class="table table-boardead table-hover" style="text-align: center;">
+					<tr>
+						<td>작성자</td>
+						<td>제목</td>
+						<td>작성일</td>
+						<td>조회수</td>
+					</tr>
+					<!-- 게시글 내용이 들어가는 부분 -->
+					<c:forEach items="${list}" var="dto">
+					<tr>
+						<td>${dto.com_discussion_kor_writer}</td>
+						<td><a href="/com/discussionkor/comDiscussionKorRead?no=${dto.com_discussion_kor_no}">${dto.com_discussion_kor_subject}</a></td>
+						<td>${dto.com_discussion_kor_regdate}</td>
+						<td>${dto.com_discussion_kor_count}</td>
+					</tr>
+					</c:forEach>
+				</table>
+				<br/>
 					
-					<div class="container-fluid">
+				<div class="container-fluid">
 					<div class="row">
 						<form>
 							<!-- 검색하는 부분 -->
@@ -81,10 +82,10 @@
 						</form>
 					</div>
 				</div> <!-- /container-fluid -->
-				
-				</div><!-- /col-md-10 -->
+
+				</div> <!-- /col-md-10 -->
 			</div> <!-- /page-content-wrapper -->
-		</div>
+		</div> 
 	</div> <!-- /row -->
 </div> <!-- /container-fluid -->
 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->

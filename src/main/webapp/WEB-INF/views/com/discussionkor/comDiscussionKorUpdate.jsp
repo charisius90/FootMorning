@@ -23,24 +23,24 @@
 				
 				<!-- 글쓰는 부분 -->
 				<form method="POST" action="/com/discussionkor/comDiscussionKorUpdate">
-				<input type="hidden" name="com_discussionkor_no" value="${comDiscussionKorDTO.com_discussionkor_no}"/>
+				<input type="hidden" name="com_discussion_kor_no" value="${comDiscussionKorDTO.com_discussion_kor_no}"/>
 				<input type="hidden" name="mem_no" value="${comDiscussionKorDTO.mem_no}"/>
-				<input type="hidden" name="com_discussionkor_regdate" value="${comDiscussionKorDTO.com_discussionkor_regdate}"/>
-				<input type="hidden" name="com_discussionkor_count" value="${comDiscussionKorDTO.com_discussionkor_count}"/>
+				<input type="hidden" name="com_discussion_kor_regdate" value="${comDiscussionKorDTO.com_discussion_kor_regdate}"/>
+				<input type="hidden" name="com_discussion_kor_count" value="${comDiscussionKorDTO.com_discussion_kor_count}"/>
 				<div class="container">
 					<div class="row">
 						<table class="table">
 							<tr>
 								<td>제목</td>
-								<td><input type="text" name="com_discussionkor_subject" value="${comDiscussionKorDTO.com_discussionkor_subject}"/></td>
+								<td><input type="text" name="com_discussion_kor_subject" value="${comDiscussionKorDTO.com_discussion_kor_subject}"/></td>
 							</tr>
 							<tr>
 								<td>작성자</td>
-								<td><input type="text" name="com_discussionkor_writer" value="${comDiscussionKorDTO.com_discussionkor_writer}"/></td>
+								<td><input type="text" name="com_discussion_kor_writer" value="${comDiscussionKorDTO.com_discussion_kor_writer}"/></td>
 							</tr>
 							<tr>
 								<td>내용</td>
-								<td><textarea name="com_discussionkor_content" rows="10" cols="100">${comDiscussionKorDTO.com_discussionkor_writer}</textarea></td>
+								<td><textarea name="com_discussion_kor_content" rows="10" cols="100">${comDiscussionKorDTO.com_discussion_kor_content}</textarea></td>
 							</tr>
 						</table>
 					</div>
@@ -50,7 +50,7 @@
 					<div align="right">
 						<a href="/com/discussionkor/comDiscussionKorListAll" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
 						<a href="javascript:fnSubmit()" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
-						<a href="/com/discussionkor/comDiscussionKorRead?no=${comDiscussionKorDTO.com_discussionkor_no}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
+						<a href="/com/discussionkor/comDiscussionKorRead?no=${comDiscussionKorDTO.com_discussion_kor_no}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
 					</div>
 				</div>	
 			</div>

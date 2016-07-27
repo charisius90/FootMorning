@@ -23,24 +23,24 @@
 				
 				<!-- 글쓰는 부분 -->
 				<form method="POST" action="/com/discussionworld/comDiscussionWorldUpdate">
-				<input type="hidden" name="com_discussionworld_no" value="${comDiscussionWorldDTO.com_discussionworld_no}"/>
+				<input type="hidden" name="com_discussionworld_no" value="${comDiscussionWorldDTO.com_discussion_world_no}"/>
 				<input type="hidden" name="mem_no" value="${comDiscussionWorldDTO.mem_no}"/>
-				<input type="hidden" name="com_discussionworld_regdate" value="${comDiscussionWorldDTO.com_discussionworld_regdate}"/>
-				<input type="hidden" name="com_discussionworld_count" value="${comDiscussionWorldDTO.com_discussionworld_count}"/>
+				<input type="hidden" name="com_discussionworld_regdate" value="${comDiscussionWorldDTO.com_discussion_world_regdate}"/>
+				<input type="hidden" name="com_discussionworld_count" value="${comDiscussionWorldDTO.com_discussion_world_count}"/>
 				<div class="container">
 					<div class="row">
 						<table class="table">
 							<tr>
 								<td>제목</td>
-								<td><input type="text" name="com_discussion_world_subject" value="${comDiscussionWorldDTO.com_discussionworld_subject}"/></td>
+								<td><input type="text" name="com_discussion_world_subject" value="${comDiscussionWorldDTO.com_discussion_world_subject}"/></td>
 							</tr>
 							<tr>
 								<td>작성자</td>
-								<td><input type="text" name="com_discussion_world_writer" value="${comDiscussionWorldDTO.com_discussionworld_subject}"/></td>
+								<td><input type="text" name="com_discussion_world_writer" value="${comDiscussionWorldDTO.com_discussion_world_writer}"/></td>
 							</tr>
 							<tr>
 								<td>내용</td>
-								<td><textarea name="com_discussion_world_content" rows="10" cols="100">${comDiscussionWorldDTO.com_discussionworld_subject}</textarea></td>
+								<td><textarea name="com_discussion_world_content" rows="10" cols="100">${comDiscussionWorldDTO.com_discussion_world_content}</textarea></td>
 							</tr>
 						</table>
 					</div>
@@ -50,7 +50,7 @@
 					<div align="right">
 						<a href="/com/discussionworld/comDiscussionWorldListAll" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
 						<a href="javascript:fnSubmit()" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>등록</a>
-						<a href="/com/discussionworld/comDiscussionWorldRead?no=${comDiscussionWorldDTO.com_discussionworld_no}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
+						<a href="/com/discussionworld/comDiscussionWorldRead?no=${comDiscussionWorldDTO.com_discussion_world_no}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
 					</div>		
 				</div>	
 			</div>

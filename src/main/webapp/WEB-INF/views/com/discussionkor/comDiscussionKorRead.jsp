@@ -11,39 +11,37 @@
 <%@ include file="../../include/headerRoot.jsp" %>
 
 <div class="container-fluid">
-		<div class="row">
-			<div id="wrapper">
-				<div>
-					<%@ include file="../../include/communitysidebar.jsp" %>
-				</div>
-				<div class="col-md-10">
-					<div id="page-content-wrapper">
-					<h1>국내 축구 토론방</h1> 			
-					<br/><br/>
-					
-					<!-- 게시글 읽는 부분 -->
-					<div class="container">
-						<div class="row">
-							<table class="table">
-								<tr>
-									<td class="span1">제목 - 국내 축구 토론방</td>
-									<td>${comDiscussionKorDTO.com_discussion_kor_subject}</td>
-									<td class="span1">조회수</td>
-									<td>${comDiscussionKorDTO.com_discussion_kor_count}</td>
-								</tr>
-								<tr>
-									<td>작성자</td>
-									<td>${comDiscussionKorDTO.com_discussion_kor_writer}</td>
-									<td>등록일</td>
-									<td>${comDiscussionKorDTO.com_discussion_kor_regdate}</td>
-								</tr>
-								<tr>
-									<td>내용</td>
-									<td>${comDiscussionKorDTO.com_discussion_kor_content}
-									</td>
-								</tr>
-							</table>
-						
+	<div class="row">
+		<div id="wrapper">
+			<div>
+				<%@ include file="../../include/communitysidebar.jsp" %>
+			</div>
+			<div class="col-md-10">
+				<div id="page-content-wrapper">
+				<h1>국내 축구 토론방</h1> 			
+				<br/><br/>
+				
+				<!-- 게시글 읽는 부분 -->
+				<div class="container">
+					<div class="row">
+						<table class="table">
+							<tr>
+								<td class="span1">제목 - 국내 축구 토론방</td>
+								<td>${comDiscussionKorDTO.com_discussion_kor_subject}</td>
+								<td class="span1">조회수</td>
+								<td>${comDiscussionKorDTO.com_discussion_kor_count}</td>
+							</tr>
+							<tr>
+								<td>작성자</td>
+								<td>${comDiscussionKorDTO.com_discussion_kor_writer}</td>
+								<td>등록일</td>
+								<td>${comDiscussionKorDTO.com_discussion_kor_regdate}</td>
+							</tr>
+							<tr>
+								<td>내용</td>
+								<td>${comDiscussionKorDTO.com_discussion_kor_content}</td>
+							</tr>
+						</table>
 						<br/>
 					<!-- 댓글 보이는 부분 -->
 					<div>
@@ -61,12 +59,12 @@
 								</div>
 							</form>
 						</div>
-													
-							
-							
-						</div> <!-- /row -->
-					</div>
-					<hr/>
+												
+						
+					</div> <!-- /row -->
+				</div>
+				<hr/>
+				
 					<div align="right">
 						<a href="/com/discussionkor/comDiscussionKorListAll" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
 						<a href="/com/discussionkor/comDiscussionKorUpdate?no=${comDiscussionKorDTO.com_discussion_kor_no}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>수정</a>

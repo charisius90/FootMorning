@@ -14,18 +14,17 @@ public class ComDiscussionKorDAOImpl implements ComDiscussionKorDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
+	
 	private static final String NAMESPACE = "com.footmorning.mappers.comDiscussionKorMapper";
 	
 	@Override
 	public void register(ComDiscussionKorDTO dto) throws Exception {
 		sqlSession.insert(NAMESPACE+".register", dto);
-
 	}
 
 	@Override
 	public ComDiscussionKorDTO read(Integer no) throws Exception {
-	
-		return sqlSession.selectOne(NAMESPACE +".read", no );
+		return sqlSession.selectOne(NAMESPACE+".read", no);
 	}
 
 	@Override

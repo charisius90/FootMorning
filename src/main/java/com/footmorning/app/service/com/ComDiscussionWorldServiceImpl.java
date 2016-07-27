@@ -27,6 +27,7 @@ public class ComDiscussionWorldServiceImpl implements ComDiscussionWorldService 
 
 	@Override
 	public void update(ComDiscussionWorldDTO dto) throws Exception {
+		System.out.println("service : " + dto);
 		dao.update(dto);
 	}
 

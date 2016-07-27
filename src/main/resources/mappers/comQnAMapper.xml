@@ -6,8 +6,10 @@
 <mapper namespace="com.footmorning.mappers.comQnAMapper">
 	
 	<insert id="register" parameterType="ComQnADTO">
-		insert into com_qna(mem_no, com_qna_subject, com_qna_content,
-		 com_qna_count, com_qna_writer)
+		insert into com_qna(mem_no, com_qna_subject, 
+		com_qna_content,
+		com_qna_count, 
+		com_qna_writer)
 		values(#{mem_no}, #{com_qna_subject}, #{com_qna_content},
 		 #{com_qna_count}, #{com_qna_writer})
 	</insert>
@@ -17,9 +19,11 @@
 	</select>
 	
 	<update id="update" parameterType="ComQnADTO">
-		update com_qna set com_qna_subject=#{com_qna_subject},
+		update com_qna set mem_no=#{mem_no},
+		com_qna_subject=#{com_qna_subject},
+		com_qna_content=#{com_qna_content}, 
 		com_qna_writer=#{com_qna_writer},
-		com_qna_content=#{com_qna_content}, com_qna_count=#{com_qna_count}
+		com_qna_count=#{com_qna_count}
 		where com_qna_no=#{com_qna_no}
 	</update>
 	
