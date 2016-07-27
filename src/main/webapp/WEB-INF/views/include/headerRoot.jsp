@@ -39,7 +39,7 @@
 			<ul class="nav nav-justified">
 				<li><a href="../matching/matchingPage.jsp">매칭</a></li>
 				<li><a href="/club/clubList">클럽</a></li>
-				<li><a href="../myteam/myteam.jsp">MYTEAM</a></li>
+				<li><a href="/myclub/main">MYCLUB</a></li>
 				<li><a href="/com/boast/comBoastListAll">커뮤니티</a></li>
 			</ul>
 		</div>

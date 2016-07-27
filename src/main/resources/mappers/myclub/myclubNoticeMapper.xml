@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.myclub.myclubNoticeMapper">
+	<insert id="create">
+      INSERT INTO 
+      myclub_notice(mem_no, myclub_notice_subject, myclub_notice_content) 
+      VALUES (#{mem_no}, #{myclub_notice_subject}, #{myclub_notice_content})
+   	</insert>
+
+	<select id="read" resultType="MyclubNoticeDTO">
+      select * from myclub_notice where myclub_notice_no=#{bno}
+   	</select>
+
+   	<update id="update">
+     	 update myclub_notice set myclub_notice_subject =#{myclub_notice_subject}, myclub_notice_content =#{myclub_notice_content} 
+     	 where myclub_notice_no = #{myclub_notice_no}
+   	</update>
+
+   	<delete id="delete">
+     	 delete from myclub_notice where myclub_notice_no = #{myclub_notice_no}
+   	</delete>
+
+	<select id="listAll" resultType="MyclubNoticeDTO">
+       <![CDATA[
+       select * from myclub_notice where myclub_notice_no > 0 order by myclub_notice_no desc, myclub_notice_regdate desc
+       ]]>
+   </select>
+</mapper>
