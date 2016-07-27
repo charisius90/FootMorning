@@ -26,8 +26,8 @@
         <beans:property name="host" value="smtp.gmail.com" />
         <beans:property name="port" value="587" />
         <beans:property name="defaultEncoding" value="utf-8"/>
-        <beans:property name="username" value="ksy4035@gmail.com" />
-        <beans:property name="password" value="rlathdud84" />
+        <beans:property name="username" value="foootmorning@gmail.com" />
+        <beans:property name="password" value="12345good" />
 
         <beans:property name="javaMailProperties">
             <beans:props>
