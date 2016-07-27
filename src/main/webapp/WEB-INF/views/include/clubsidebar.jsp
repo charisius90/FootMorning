@@ -20,7 +20,7 @@
 <body>
 		<!-- Sidebar -->
 		<div id="sidebar-wrapper">
-			<a href="../club/newclubPage.jsp">
+			<a href="/club/clubRegister">
 			<div id="new_club"><br/><br/>클럽 만들기</div></a>
 			<div id="club_menu" class="tabbable" style="height:200px;  margin-bottom: 10px"">
 				<ul class="nav nav-tabs nav-justified" id="club_category">

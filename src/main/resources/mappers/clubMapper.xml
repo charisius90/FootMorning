@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.clubMapper">
+	
+	<insert id="insert" parameterType="ClubDTO">
+		insert into
+		club(club_name, club_image, club_content, club_loc, club_type, club_master)
+		values(#{name}, #{image}, #{content}, #{loc}, #{type}, #{master})
+	</insert>
+	
+	<update id="update" parameterType="ClubDTO">
+		update club set
+		club_name=#{name},
+		club_image=#{image},
+		club_content=#{content},
+		club_loc=#{loc},
+		club_type=#{type},
+		club_master=#{master}
+		where club_no=#{no}		
+	</update>
+	
+	<delete id="delete">
+		delete from club where com_no=#{no}
+	</delete>
+	
+	<select id="getClubInfo" resultType="ClubDTO">
+		select * from club where club_name=#{name}
+	</select>
+	
+	<select id="listAll" resultType="ClubDTO">
+		select * from club order by club_no desc, club_regdate desc
+	</select>
+	
+</mapper>

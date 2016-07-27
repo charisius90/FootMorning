@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false" session="true"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
@@ -38,8 +38,14 @@
 									style="height: 40px; width: 430px; margin: 10px" placeholder="E-Mail 입력"></td>
 							</tr>
 							<tr>
+								<td><form:errors path="memberDTO.mem_email"/></td>
+							</tr>
+							<tr>
 								<td><input type="password" name="mem_pw"
 									style="height: 40px; width: 430px; margin: 10px" placeholder="비밀번호 입력"></td>
+							</tr>
+							<tr>
+								<td><form:errors path="memberDTO.mem_pw"/></td>
 							</tr>
 							<tr>
 								<td><input type="submit" value="로그인"
@@ -50,6 +56,9 @@
 									href="/member/memberSignUp">회원가입</a>&nbsp;|&nbsp;
 								<a style="text-decoration: none;"
 									href="/member/memberSearchPW">비밀번호 찾기</a></td>
+							</tr>
+							<tr>
+								<td style="color: red;"><form:errors path="memberDTO"/></td>
 							</tr>
 						</table>
 						</form>

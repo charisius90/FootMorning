@@ -34,18 +34,23 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberDTO getMemberInfo(String mem_email) {
+	public MemberDTO getMemberInfo(String mem_email) throws Exception{
 		return memberDAO.getMemberInfo(mem_email);
 	}
 	
 	@Override
-	public MemberDTO getWithPW(String mem_email, String mem_pw) {
+	public MemberDTO getWithPW(String mem_email, String mem_pw) throws Exception{
 		return memberDAO.getWithPW(mem_email, mem_pw);
 	}
 
 	@Override
 	public String getTime() {
 		return memberDAO.getTime();
+	}
+
+	@Override
+	public String getPW(String mem_email, String mem_phone) {
+		return memberDAO.getPW(mem_email, mem_phone);
 	}
 
 }
