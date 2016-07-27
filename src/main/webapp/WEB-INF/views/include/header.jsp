@@ -38,7 +38,7 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav nav-justified" id="nav-ul">
 				<li><a href="../matching/matchingPage.jsp">매칭</a></li>
-				<li><a href="../club/clubPage.jsp">클럽</a></li>
+				<li><a href="/club/clubList">클럽</a></li>
 				<li><a href="../myteam/myteam.jsp">MYTEAM</a></li>
 				<li><a href="/com/boast/comBoastListAll">커뮤니티</a></li>
 			</ul>

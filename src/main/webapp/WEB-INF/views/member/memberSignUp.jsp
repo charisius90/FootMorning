@@ -1,4 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false" session="true"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +17,9 @@
 </head>
 <body>
 <%@ include file="../include/header.jsp" %>
+
+<spring:hasBindErrors name="memberDTO" />
+<form:errors name="memberDTO" />
 
 	<div class="container-fluid">
 		<div class="row">
@@ -34,6 +39,9 @@
 										placeholder="E-Mail 입력" required></td>
 								</tr>
 								<tr>
+									<td><form:errors path="memberDTO.mem_email" /></td>
+								</tr>
+								<tr>
 									<td>이름</td>
 									<td><input type="text" name="mem_name"
 										placeholder="이름 입력" required></td>
@@ -42,6 +50,9 @@
 									<td>비밀번호</td>
 									<td><input type="password" name="mem_pw"
 										placeholder="비밀번호 입력" required></td>
+								</tr>
+								<tr>
+									<td><form:errors path="memberDTO.mem_pw" /></td>
 								</tr>
 								<tr>
 									<td>비밀번호 확인</td>

@@ -56,6 +56,9 @@ public class MemberController {
 		
 		try {
 			MemberDTO dto = service.getWithPW(member.getMem_email(), member.getMem_pw());
+			if(dto == null){
+				return "/member/memberLogin";
+			}
 			WebUtils.setSessionAttribute(req, "USER_KEY", dto);
 		}
 		catch (Exception err) {
@@ -85,8 +88,9 @@ public class MemberController {
 	
 	@RequestMapping(value="memberSignUp", method=RequestMethod.POST)
 	public String signupComplete(MemberDTO member, String mem_pw_check, HttpServletRequest req){
+//	public String signupComplete(@Valid MemberDTO member, BindingResult result, String mem_pw_check, HttpServletRequest req){
 		logger.info("signupComplete : " + member.toString() + ", " + mem_pw_check);
-		
+		System.out.println("signUP!!!");
 		if(member.getMem_pw().equals(mem_pw_check)){
 			try{
 				service.insertMember(member);
@@ -95,8 +99,15 @@ public class MemberController {
 				System.out.println("existing member");
 				return "/member/memberSignUp";
 			}
-			MemberDTO dto = service.getMemberInfo(member.getMem_email());
-			WebUtils.setSessionAttribute(req, "USER_KEY", dto);
+			
+			try {
+				MemberDTO dto = service.getMemberInfo(member.getMem_email());
+				WebUtils.setSessionAttribute(req, "USER_KEY", dto);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				return "/member/memberSignUp";
+			}
 			return "redirect:/";
 		}
 		

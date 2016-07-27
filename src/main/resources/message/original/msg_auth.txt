@@ -1,3 +1,6 @@
-required.memberVO.userid=유저 ID를 입력해 주세요.
-required.memberVO.userpw=유저 pass를 입력해 주세요.
-login.memberVO=입력된 userid와 pass가 존재하지 않습니다.
+required.memberDTO.mem_email=Email을 입력해 주세요.
+required.memberDTO.mem_pw=Password를 입력해 주세요.
+login.memberDTO=입력된 Email과 Password가 존재하지 않습니다.
+signup.memberDTO=이미 존재하는 회원입니다.
+invalid.memberDTO.mem_email=잘못된 Email 형식 입니다. (예: admin@footmorning.com)
+invalid.memberDTO.mem_pw=비밀번호는 문자, 숫자, 특수문자 조합 8글자 이상 16글자 이하만 가능합니다.

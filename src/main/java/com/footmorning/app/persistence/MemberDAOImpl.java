@@ -36,16 +36,29 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	
 	@Override
-	public MemberDTO getMemberInfo(String mem_email) {
-		return sqlSession.selectOne(NAMESPACE + ".getMemberInfo", mem_email);
+	public MemberDTO getMemberInfo(String mem_email) throws Exception{
+		MemberDTO dto = sqlSession.selectOne(NAMESPACE + ".getMemberInfo", mem_email);
+		
+		if(dto == null){
+			throw new Exception();
+		}
+		
+		return dto; 
 	}
 
 	@Override
-	public MemberDTO getWithPW(String mem_email, String mem_pw) {
+	public MemberDTO getWithPW(String mem_email, String mem_pw) throws Exception {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("mem_email", mem_email);
 		paramMap.put("mem_pw", mem_pw);
-		return sqlSession.selectOne(NAMESPACE + ".getWithPW", paramMap);
+		
+		MemberDTO dto = sqlSession.selectOne(NAMESPACE + ".getWithPW", paramMap);
+		
+		if(dto == null){
+			throw new Exception();
+		}
+		
+		return dto;
 	}
 	
 	@Override
