@@ -11,7 +11,7 @@ public interface MyclubNoticeDAO {
 
 	public MyclubNoticeDTO read(Integer bno) throws Exception;
 	
-	public void updateCount(Integer bno) throws Exception;
+	public void updateCount(Integer myclub_notice_no) throws Exception;
 
 	public void update(MyclubNoticeDTO dto) throws Exception;
 

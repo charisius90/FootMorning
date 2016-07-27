@@ -12,7 +12,7 @@ public interface MyclubNoticeService {
 
 	public MyclubNoticeDTO read(Integer bno) throws Exception;
 	
-	public void updateCount(Integer bno) throws Exception;
+	public void updateCount(Integer myclub_notice_no) throws Exception;
 	
 	public void modify(MyclubNoticeDTO dto) throws Exception;
 

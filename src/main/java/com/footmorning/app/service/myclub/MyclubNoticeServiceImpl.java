@@ -31,8 +31,8 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService{
 	}
 	
 	@Override
-	public void updateCount(Integer bno) throws Exception {
-		dao.updateCount(bno);
+	public void updateCount(Integer myclub_notice_no) throws Exception {
+		dao.updateCount(myclub_notice_no);
 	}
 	
 	

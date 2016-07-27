@@ -17,8 +17,8 @@
      	 where myclub_notice_no = #{myclub_notice_no}
    	</update>
 	
-	<update id="updatecount" parameterType="MyclubNoticeDTO">
-		update myclub_notice set myclub_notice_count = #{myclub_notice_count} + 1 where myclub_notice_no = #{myclub_notice_no};
+	<update id="updateCount" parameterType="MyclubNoticeDTO">
+		update myclub_notice set myclub_notice_count = myclub_notice_count + 1 where myclub_notice_no = #{myclub_notice_no};
 	</update>
 
    	<delete id="delete">

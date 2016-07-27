@@ -28,14 +28,14 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	 * ½ÂÇÑ read
 	 */
 	@Override
-	public MyclubNoticeDTO read(Integer bno) throws Exception {
+	public MyclubNoticeDTO read(Integer myclub_notice_no) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne(NAMESPACE + ".read", bno);
+		return sqlSession.selectOne(NAMESPACE + ".read", myclub_notice_no);
 	}
 	
 	@Override
-	public void updateCount(Integer bno) throws Exception {
-		sqlSession.selectOne(NAMESPACE + ".countUpdate", bno);
+	public void updateCount(Integer myclub_notice_no) throws Exception {
+		sqlSession.selectOne(NAMESPACE + ".updateCount", myclub_notice_no);
 	}
 	
 	/**
