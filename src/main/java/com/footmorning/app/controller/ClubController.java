@@ -2,11 +2,14 @@ package com.footmorning.app.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.MemberDTO;
@@ -51,18 +54,18 @@ public class ClubController {
 	@RequestMapping("clubRegister")
 	public void registerGET(){}
 	
-	@RequestMapping(value="clubRegister", method=RequestMethod.POST)
-	public String registerPOST(ClubDTO dto, String mem_email, Model model){
+	@RequestMapping(value = "clubRegister", method = RequestMethod.POST)
+	public String registerPOST(ClubDTO dto, String mem_email, Model model, HttpServletRequest req) {
 		System.out.println("check : " + dto);
 		service.insert(dto);
-		
+
 		// 클럽 등록자 회원등급은 클럽마스터로 변경
 		try {
 			MemberDTO member = memberService.getMemberInfo(mem_email);
 			member.setMem_grade(GRADE_MASTER);
 			memberService.updateMember(member);
-		}
-		catch (Exception e) {
+			WebUtils.setSessionAttribute(req, "USER_KEY", member);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -31,35 +31,37 @@
 						<%@include file="../include/myclubHeader.jsp" %>
 					</div>
 				</div>
-				<div class="col-md-10">
-					<div class="custom-border" align="center">
-						<table class="spacing" style="margin: 50px;">
-						  <tr>
-						  	<td rowspan="5"><img  src="../resources/images/real.jpg" width="600" height="400"></td>
-						  	<td><strong>${myclubDto.club_name}에 오신것을 환영합니다.</strong></td>
-						  </tr>
-						  <tr>
-						  	<td align="right">회원수 ${club_member_count}&nbsp;|&nbsp;클럽개설일 ${myclubDto.club_regdate}</td>
-						  </tr>
-						  <tr>
-						  	<td>
-						  		<!-- 클럽소개 -->
-						  		<strong>클럽소개</strong>
-						  	</td>
-						  </tr>
-						  <tr>
-						  <!-- img 들어갈곳 -->
-						    <td style="vertical-align: text-top;">
-						    <!-- text들어갈곳 -->
-						   ${myclubDto.club_content}
-						    </td>
-						  </tr>
-						  <tr>
-						  	<!-- 클럽장 텍스트 -->
-						  	<td align="right">클럽장 : ${club_master_name}</td>
-						  </tr>
-						</table>
-					</div>
+				<div class="col-md-10" style="border:1px solid gray; padding:50px; border-radius:15px">
+						<div class="col-md-6" id="clubMainImg" style="float:left">
+							<img  src="../resources/images/real.jpg" width="100%" height="400px">
+						</div>
+						<div class="col-md-6">
+							<table class="table">
+							  <tr>
+							  	<td><strong><span style="color:blue">${myclubDto.club_name}</span>에 오신것을 환영합니다.</strong></td>
+							  </tr>
+							  <tr>
+							  	<td align="right">회원수 <span style="color:red">${club_member_count}</span>&nbsp;&nbsp;|&nbsp;&nbsp;클럽개설일 <span style="color:red">${myclubDto.club_regdate}</span></td>
+							  </tr>
+							  <tr>
+							  	<td>
+							  		<!-- 클럽소개 -->
+							  		<strong>클럽소개</strong>
+							  	</td>
+							  </tr>
+							  <tr>
+							  <!-- img 들어갈곳 -->
+							    <td style="vertical-align: text-top;">
+							    <!-- text들어갈곳 -->
+							   ${myclubDto.club_content}
+							    </td>
+							  </tr>
+							  <tr>
+							  	<!-- 클럽장 텍스트 -->
+							  	<td align="right"><strong>클럽장 : ${club_master_name}</strong></td>
+							  </tr>
+							</table>
+						</div>
 				</div>
 				<div class="col-md-10">
 					<div class="col-md-6">

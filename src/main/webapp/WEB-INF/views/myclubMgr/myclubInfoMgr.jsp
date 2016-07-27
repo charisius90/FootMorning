@@ -8,6 +8,16 @@
 <title>Insert title here</title>
 <link href="../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
+<style>
+	#preview {
+		border: 1px solid gray;
+		width: 300px;
+		height: 300px;
+	}
+	
+	#inputs >tr{
+	}
+</style>
 </head>
 <body>
 <%@ include file="../include/header.jsp" %>
@@ -19,30 +29,45 @@
 				<%@ include file="../include/myclubMgrSidebar.jsp" %>
 			</div>
 		<div id="page-content-wrapper">
-			<div class="col-md-9" style="margin:30px">
-				<div><h3>기본정보관리</h3></div>
-				<div class="myteamheader" align="right">
-					<!-- 버튼두개짜리 헤더  -->
-					<%@include file="../include/myclubHeader.jsp" %>
-				</div>
-				<div>
-					<div style="float:left">로 고&nbsp;&nbsp;</div>
-					<a href="#">
-					<div style="border:gray 1px solid; background-color:white; width:168px;
-					 height:168px; padding:2px; overflow:hidden; cursor:pointer; cursor:hand;">
+			<div class="col-md-12" style="margin:10px;">
+					<div class="col-md-12" style="padding-bottom: 20px;"><h3>기본정보관리</h3></div><br/><br/>
+					<div id="preview_wrapper" class="col-md-3" style="float: left;">
+						<label>로고 미리보기</label><br/>
+						<div id="preview"></div>
 					</div>
-					</a><br/>
-					클 럽 명&nbsp;&nbsp;<input type="text" />&nbsp;&nbsp;<input type="button" value="중복확인"/><br/><br/>
-					클럽주소&nbsp;&nbsp;<input type="text" style="width:500px"/><br/><br/>
-					클럽지역&nbsp;&nbsp;<input type="text" />&nbsp;&nbsp;<input type="button" value="지역찾기"/><br/><br/>
-					클럽설명&nbsp;&nbsp;<textarea cols="100" rows="5"></textarea><br/><br/>
-					클럽유형&nbsp;&nbsp;<input type="radio">공개&nbsp;&nbsp;<input type="radio">비공개
-				</div><br/><br/>
-				<div align="center">
-					<button class="btn btn-primary">수정</button>&nbsp;&nbsp;&nbsp;
-					<button class="btn btn-default">취소</button>
+					<div class="col-md-6" style="margin-top: 20px;">
+						<form method="post" action="clubRegister">
+							<input type="hidden" name="club_master" value="${USER_KEY.mem_no}"/>
+							<input type="hidden" name="mem_email" value="${USER_KEY.mem_email}"/>
+							<table id="inputs" class="table table-hover">
+								<tr>
+									<td><span>클럽로고</span></td>
+									<td><input id="file" type="file" name="club_image"/></td>
+								</tr>
+								<tr>
+									<td><span>클럽명</span></td>
+									<td><input id="name" type="text" name="club_name" /><input type="button" value="중복확인"/></td>
+								</tr>
+								<tr>
+									<td><span>클럽지역</span></td>
+									<td><input id="loc" type="text" name="club_loc"/><input id="addr" type="button" value="지역찾기"/></td>
+								</tr>
+								<tr>
+									<td><span>클럽설명</span></td>
+									<td><textarea id="content" name="club_content" cols="50" rows="5"></textarea></td>
+								</tr>
+								<tr>
+									<td><span>클럽유형</span></td>
+									<td><input type="radio" name="club_type" value="1" checked="checked">공개&nbsp;&nbsp;<input type="radio" name="club_type" value="0">비공개</td>
+								</tr>
+							</table>
+							<div align="right">
+								<button class="btn btn-primary" type="submit">수정</button>&nbsp;&nbsp;&nbsp;
+								<button class="btn btn-default" type="reset">취소</button>
+							</div>
+						</form>
+					</div>
 				</div>
-			</div>
 		</div>
 	</div>
 	</div>

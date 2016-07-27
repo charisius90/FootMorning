@@ -27,14 +27,14 @@
 				</li>
 				<li class="divider"></li>
 				<li><a href="javascript:;" data-toggle="collapse"
-					data-target="#mattch"> 경기 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
-					<ul id="mattch" class="collapse">
+					data-target="#match"> 경기 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
+					<ul id="match" class="collapse">
 						<li><a href="#">일정 및 결과</a></li>
-						<li><a href="#">기록실</a></li>
+						<li><a href="/myclub/myclubRecord">기록실</a></li>
 					</ul>
 				</li>
 				<li class="divider"></li>
-				<li><a href="#">현금출납부</a></li>
+				<li><a href="/myclub/myclubCashBook">현금출납부</a></li>
 			</ul>
 	</div>
 	<!-- /#sidebar-wrapper -->

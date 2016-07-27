@@ -5,7 +5,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a class="btn btn-default" role="button" href="#"><i class="glyphicon glyphicon-home"></i>홈</a>
-<a class="btn btn-default" role="button" href="#"><i class="glyphicon glyphicon-cog"></i>관리</a>
+<a class="btn btn-default" role="button" href="myclub/myclubMain"><i class="glyphicon glyphicon-home"></i>홈</a>
+<a class="btn btn-default" role="button" href="/myclubMgr/myclubInfoMgr"><i class="glyphicon glyphicon-cog"></i>관리</a>
 </body>
 </html>

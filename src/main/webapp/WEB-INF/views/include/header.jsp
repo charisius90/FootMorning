@@ -20,8 +20,8 @@
 }
 </style>
 <body>
-<nav class="nav-main navbar">
-		<div style="background-image: url('../resources/images/banner.jpg'); background-size: cover; height: 200px;">
+<nav class="nav-main navbar" style="border-bottom-width: 0px; border-radius:0px">
+	<div style="background-image: url('../resources/images/banner.jpg'); background-size: cover; height: 200px;">
 		<div class="banner" align="right" style="height: 24px; padding-top: 10px">
 			<c:if test="${USER_KEY!=null}">
 				<a href="/member/memberLogout"><i class="glyphicon glyphicon-log-in"></i> 로그아웃</a>&nbsp;&nbsp;&nbsp;&nbsp;

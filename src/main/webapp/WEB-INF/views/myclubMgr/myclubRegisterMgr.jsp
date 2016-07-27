@@ -21,7 +21,7 @@
 			</div>
 		<div id="page-content-wrapper">
 			<div class="col-md-9">
-			<h3>가입정보관리</h3>
+			<h3>가입신청관리</h3>
 			<div class="myteamheader" align="right">
 					<!-- 버튼두개짜리 헤더  -->
 					<%@include file="../include/myclubHeader.jsp" %>
