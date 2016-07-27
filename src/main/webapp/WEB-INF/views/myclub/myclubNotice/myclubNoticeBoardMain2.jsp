@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +12,10 @@
 		margin-bottom: 0px;
 	}
 </style>
+<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+<script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -26,27 +30,20 @@
 			</div>
 		<div id="page-content-wrapper">
 			<div class="col-md-10">
-				<h1>공지사항</h1>
-				<br/>
-				<table class="table table-boardead table-hover" style="text-align: center;">
-					<tr>
-						<td>제목</td>
-						<td>작성자</td>
-						<td>작성일</td>
-						<td>조회수</td>
-					</tr>
+				<div class="row">
+				<h1>앨범</h1><br/>
 					<!-- 게시글 내용이 들어가는 부분 -->
-					<c:forEach items="${list}" var="myclubDTO">
-               
-		               <tr>
-		                  <td><a href="/myclub/notice/read?myclub_notice_no=${myclubDTO.myclub_notice_no}">${myclubDTO.myclub_notice_subject}</a></td>
-		                  <td>${myclubDTO.mem_no}</td>
-		                  <td>${myclubDTO.myclub_notice_regdate}</td>
-		                  <td>0</td>
-		               </tr>
-               
+					<c:forEach items="${list}" var="myclubDTO" varStatus="status">
+		                  <c:if test="${not empty myclubDTO.myclub_notice_main_thumnail}">
+			                  <div class="col-xs-6 col-md-3" >
+									<a href="MediaTest.jsp" class="thumbnail" style="height: 180px">${myclubDTO.myclub_notice_no}
+								   	<img src="${myclubDTO.myclub_notice_main_thumnail}" style="max-width: 200px; max-height: 140px" /></a>
+							 	제목 : ${myclubDTO.myclub_notice_subject}<br/>
+		                		작성자 : ${myclubDTO.mem_no}<br/>
+		                		날짜 : ${myclubDTO.myclub_notice_regdate}<br/><br/>
+							  </div></c:if>
               		</c:forEach>
-				</table>
+              	</div>
 				<br/>
 					
 				<div class="container-fluid">
@@ -89,9 +86,5 @@
 		</div> 
 	</div> <!-- /row -->
 </div> <!-- /container-fluid -->
-<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-<script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -28,6 +28,8 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 	      model.addAttribute("list", service.listAll());
 //	      System.out.println(service.listAll().toString());
 	      return "/myclub/myclubNotice/myclubNoticeBoardMain";
+//	      	¾Ù¹üÀº myclubNoticeBoardMain2
+//	      return "/myclub/myclubNotice/myclubNoticeBoardMain2";
 	 }
 	
 	@RequestMapping(value="/myclub/notice/register", method=RequestMethod.GET)

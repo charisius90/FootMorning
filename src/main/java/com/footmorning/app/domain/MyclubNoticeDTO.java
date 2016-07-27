@@ -8,6 +8,7 @@ public class MyclubNoticeDTO {
 	private String myclub_notice_content;
 	private String myclub_notice_regdate;
 	private int myclub_notice_count;
+	private String myclub_notice_main_thumnail;
 	
 	public int getMyclub_notice_no() {
 		return myclub_notice_no;
@@ -44,6 +45,12 @@ public class MyclubNoticeDTO {
 	}
 	public void setMyclub_notice_count(int myclub_notice_count) {
 		this.myclub_notice_count = myclub_notice_count;
+	}
+	public String getMyclub_notice_main_thumnail() {
+		return myclub_notice_main_thumnail;
+	}
+	public void setMyclub_notice_main_thumnail(String myclub_notice_main_thumnail) {
+		this.myclub_notice_main_thumnail = myclub_notice_main_thumnail;
 	}
 	@Override
 	public String toString() {

@@ -47,7 +47,30 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService{
 
 	@Override
 	public List<MyclubNoticeDTO> listAll() throws Exception {
-		return dao.listAll();
+		return getMyClubNotices(dao.listAll());
 	}
-
+	
+//	½æ³×ÀÏ
+	private List<MyclubNoticeDTO> getMyClubNotices(List<MyclubNoticeDTO> list) {
+		for(MyclubNoticeDTO dto : list) {
+			dto.setMyclub_notice_main_thumnail(getMainThumnail(dto.getMyclub_notice_content()));
+		}
+		return list;
+	}
+	
+//	½æ³×ÀÏ
+	private String getMainThumnail(String content) {
+		String mainThumnail = "";
+		
+		if(content.contains("img src=")) {
+			int startIndex = content.indexOf("img src=") + 9;
+//			System.out.println(content.charAt(startIndex));
+			int endIndex = content.indexOf("\"", startIndex) - 1;
+			if(startIndex < endIndex) {
+				mainThumnail = content.substring(startIndex, endIndex);
+			}
+//			System.out.println(mainThumnail);
+		}
+		return mainThumnail;
+	}
 }
