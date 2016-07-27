@@ -34,7 +34,7 @@
                      </tr>
                      <tr>
                         <td>작성자</td>
-                        <td>박규채</td>
+                        <td>${dto.myclub_notice_writer}</td>
                         <td>등록일</td>
                         <td>${dto.myclub_notice_regdate}</td>
                      </tr>

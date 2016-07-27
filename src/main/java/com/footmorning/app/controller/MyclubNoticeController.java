@@ -52,6 +52,7 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
 	 public String registerComplete(MyclubNoticeDTO dto, RedirectAttributes rttr) throws Exception {
 //	      logger.info("등록 완료 : " + dto.toString());
 	      service.register(dto);
+	      System.out.println("등록: " + dto.toString());
 	      
 	      rttr.addFlashAttribute("msg", "SUCCESS");
 	      

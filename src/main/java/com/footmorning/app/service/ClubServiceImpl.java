@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.persistence.ClubDAO;
 import com.footmorning.app.persistence.MemberDAO;
+import com.footmorning.app.service.ClubService;
 
 @Service
 public class ClubServiceImpl implements ClubService {

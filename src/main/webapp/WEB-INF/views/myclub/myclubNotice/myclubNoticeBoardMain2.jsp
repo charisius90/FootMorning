@@ -39,7 +39,7 @@
 									<a href="MediaTest.jsp" class="thumbnail" style="height: 180px">${myclubDTO.myclub_notice_no}
 								   	<img src="${myclubDTO.myclub_notice_main_thumnail}" style="max-width: 200px; max-height: 140px" /></a>
 							 	제목 : ${myclubDTO.myclub_notice_subject}<br/>
-		                		작성자 : ${myclubDTO.mem_no}<br/>
+		                		작성자 : ${myclubDTO.myclub_notice_writer}<br/>
 		                		날짜 : ${myclubDTO.myclub_notice_regdate}<br/><br/>
 							  </div></c:if>
               		</c:forEach>

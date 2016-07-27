@@ -4,6 +4,7 @@ public class MyclubNoticeDTO {
 
 	private int myclub_notice_no;
 	private int mem_no;
+	private String myclub_notice_writer;
 	private String myclub_notice_subject;
 	private String myclub_notice_content;
 	private String myclub_notice_regdate;
@@ -52,11 +53,18 @@ public class MyclubNoticeDTO {
 	public void setMyclub_notice_main_thumnail(String myclub_notice_main_thumnail) {
 		this.myclub_notice_main_thumnail = myclub_notice_main_thumnail;
 	}
+	public String getMyclub_notice_writer() {
+		return myclub_notice_writer;
+	}
+	public void setMyclub_notice_writer(String myclub_notice_writer) {
+		this.myclub_notice_writer = myclub_notice_writer;
+	}
 	@Override
 	public String toString() {
 		return "MyclubNoticeDTO [myclub_notice_no=" + myclub_notice_no + ", mem_no=" + mem_no
-				+ ", myclub_notice_subject=" + myclub_notice_subject + ", myclub_notice_content="
-				+ myclub_notice_content + ", myclub_notice_regdate=" + myclub_notice_regdate + ", myclub_notice_count="
-				+ myclub_notice_count + "]";
+				+ ", myclub_notice_writer=" + myclub_notice_writer + ", myclub_notice_subject=" + myclub_notice_subject
+				+ ", myclub_notice_content=" + myclub_notice_content + ", myclub_notice_regdate="
+				+ myclub_notice_regdate + ", myclub_notice_count=" + myclub_notice_count
+				+ ", myclub_notice_main_thumnail=" + myclub_notice_main_thumnail + "]";
 	}
 }

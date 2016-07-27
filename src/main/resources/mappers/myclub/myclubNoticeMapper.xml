@@ -4,8 +4,8 @@
 <mapper namespace="com.footmorning.mappers.myclub.myclubNoticeMapper">
 	<insert id="create">
       INSERT INTO 
-      myclub_notice(mem_no, myclub_notice_subject, myclub_notice_content) 
-      VALUES (#{mem_no}, #{myclub_notice_subject}, #{myclub_notice_content})
+      myclub_notice(mem_no, myclub_notice_writer, myclub_notice_subject, myclub_notice_content) 
+      VALUES (#{mem_no}, #{myclub_notice_writer}, #{myclub_notice_subject}, #{myclub_notice_content})
    	</insert>
 
 	<select id="read" resultType="MyclubNoticeDTO">

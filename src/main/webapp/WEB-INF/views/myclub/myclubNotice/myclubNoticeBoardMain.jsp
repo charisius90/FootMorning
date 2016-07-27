@@ -47,7 +47,7 @@
 		               	  <td></td>
 		               	  <td>${myclubDTO.myclub_notice_no}</td>
 		                  <td><a href="/myclub/notice/read?myclub_notice_no=${myclubDTO.myclub_notice_no}">${myclubDTO.myclub_notice_subject}</a></td>
-		                  <td>${myclubDTO.mem_no}</td>
+		                  <td>${myclubDTO.myclub_notice_writer}</td>
 		                  <td>${myclubDTO.myclub_notice_regdate}</td>
 		                  <td>${myclubDTO.myclub_notice_count}</td>
 		               </tr>
