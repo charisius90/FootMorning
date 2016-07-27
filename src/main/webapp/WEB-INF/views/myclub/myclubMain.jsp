@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +24,7 @@
 					<!-- 메인폼  -->
 					<div align="left">
 						<!-- 팀 타이틀이 들어갈 장소 -->
-						<h2>TEAMTITLE</h2>
+						<h2>${myclubDto.club_name}</h2>
 					</div>
 					<div class="myteamheader" align="right">
 						<!-- 버튼두개짜리 헤더  -->
@@ -33,13 +33,13 @@
 				</div>
 				<div class="col-md-10">
 					<div class="custom-border" align="center">
-						<table class="spacing" style="margin: 50px">
+						<table class="spacing" style="margin: 50px;">
 						  <tr>
-						  	<td colspan="2"><strong>ClubTitle에 오신것을 환영합니다.</strong></td>
+						  	<td rowspan="5"><img  src="../resources/images/real.jpg" width="600" height="400"></td>
+						  	<td><strong>${myclubDto.club_name}에 오신것을 환영합니다.</strong></td>
 						  </tr>
 						  <tr>
-						  	<td rowspan="4"><img  src="../resources/images/real.jpg" width="600" height="400"></td>
-						  	<td align="right">회원수 47 | 클럽개설일 2016.07.12</td>
+						  	<td align="right">회원수 ${club_member_count}&nbsp;|&nbsp;클럽개설일 ${myclubDto.club_regdate}</td>
 						  </tr>
 						  <tr>
 						  	<td>
@@ -51,22 +51,12 @@
 						  <!-- img 들어갈곳 -->
 						    <td style="vertical-align: text-top;">
 						    <!-- text들어갈곳 -->
-						    ----------------------------------------------------------
-						    ----------------------------------------------------------
-						    ----------------------------------------------------------
-						    ----------------------------------------------------------
-						    ----------------------------------------------------------
-						    ----------------------------------------------------------
-						    ----------------------------------------------------------
-						    ----------------------------------------------------------
-						    ----------------------------------------------------------
-						    ----------------------------------------------------------
-						    ----------------------------------------------------------
+						   ${myclubDto.club_content}
 						    </td>
 						  </tr>
 						  <tr>
 						  	<!-- 클럽장 텍스트 -->
-						  	<td align="right">클럽장 : 우종민</td>
+						  	<td align="right">클럽장 : ${club_master_name}</td>
 						  </tr>
 						</table>
 					</div>
@@ -121,5 +111,9 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	var test = "${myclub}";
+	console.log(test);
+</script>
 </body>
 </html>

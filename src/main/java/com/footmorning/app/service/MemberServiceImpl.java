@@ -53,4 +53,14 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.getPW(mem_email, mem_phone);
 	}
 
+	@Override
+	public int getWithClubno(Integer club_no) {
+		return memberDAO.getWithClubno(club_no);
+	}
+
+	@Override
+	public MemberDTO getWithNo(Integer mem_no) throws Exception {
+		return memberDAO.getWithNo(mem_no);
+	}
+
 }

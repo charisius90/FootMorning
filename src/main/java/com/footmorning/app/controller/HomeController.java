@@ -35,11 +35,4 @@ public class HomeController {
 		
 		return "index";
 	}
-	
-	@RequestMapping("/myclub/main")
-	public String myclub(Locale locale, Model model) {
-		logger.info("∏ﬁ¿Œ", locale);
-		
-		return "myclub/myclubMain";
-	}
 }

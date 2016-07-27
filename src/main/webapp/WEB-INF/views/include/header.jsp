@@ -39,7 +39,9 @@
 			<ul class="nav nav-justified" id="nav-ul">
 				<li><a href="../matching/matchingPage.jsp">매칭</a></li>
 				<li><a href="/club/clubList">클럽</a></li>
-				<li><a href="/myclub/main">MYCLUB</a></li>
+				<c:if test="${USER_KEY.club_no!=null}">
+					<li><a href="/myclub/myclubMain">MYCLUB</a></li>
+				</c:if>
 				<li><a href="/com/boast/comBoastListAll">커뮤니티</a></li>
 			</ul>
 		</div>

@@ -74,4 +74,14 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectOne(NAMESPACE + ".getTime");
 	}
 
+	@Override
+	public int getWithClubno(Integer club_no) {
+		return sqlSession.selectOne(NAMESPACE + ".getWithClubno", club_no);
+	}
+
+	@Override
+	public MemberDTO getWithNo(Integer mem_no) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".getWithNo", mem_no);
+	}
+
 }
