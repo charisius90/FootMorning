@@ -15,6 +15,8 @@ import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MemberService;
+import com.footmorning.app.util.ClubPageMaker;
+import com.footmorning.app.util.SearchClubCriteria;
 
 /**
  * @author ¹Ú¼öÇ×
@@ -35,20 +37,23 @@ public class ClubController {
 	public static final String GRADE_NORMAL = "4";
 	
 	@RequestMapping("clubList")
-	public void listGET(Model model){
+	public void listGET(SearchClubCriteria clubcri, Model model){
 		try {
-			List<ClubDTO> list = service.listAll();
-			System.out.println(list);
-			for(ClubDTO dto : list){
-				System.out.println("test : " + dto.getClub_name());
-			}
+			model.addAttribute("list", service.listSearchClubCriteria(clubcri));
 			
-			model.addAttribute("list", list);
-			System.out.println("hi");
+			System.out.println(service.listSearchClubCriteria(clubcri).toString());
+			
+			ClubPageMaker cpageMaker = new ClubPageMaker();
+			
+			cpageMaker.setClubCri(clubcri);
+			cpageMaker.setTotalCount(service.listSearchClubCount(clubcri));
+			
+			model.addAttribute("cpageMaker", cpageMaker);
 		}
 		catch (Exception err) {
 			System.out.println("clubListAll : " + err);
 		}
+		
 	}
 	
 	@RequestMapping("clubRegister")
