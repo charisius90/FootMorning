@@ -1,28 +1,57 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <style>
-	#sidebar-wrapper{background: #fff}
+	#sidebar-wrapper{
+		background: #fff;
+		padding-left: 10px;
+	}
+	
 	.tab-content{padding: 10px}
 	
 	#new_club{
-	height:100px; 
-	text-align:center;
-	background:#ffcccc; 
-	border-radius:5px;
-	padding:5px;
-	margin-bottom: 10px;
-	margin-top:20px;
+		cursor:pointer;
+		height:100px; 
+		text-align:center;
+		background:#ffcccc; 
+		border-radius:5px;
+		padding:5px;
+		padding-top:35px;
+		margin-bottom: 10px;
+		margin-top:20px;
+	}
+	
+	#new_club:hover {
+		background:#ffd5d5;
+	}
+	
+	#new_club:hover >span{
+		color: #135a97;
+	}
+	
+	#new_club >span{
+		font-size: x-large;
+		font-weight: bolder;
+		color: #337ab7;
 	}
 </style>
 </head>
 <body>
 		<!-- Sidebar -->
 		<div id="sidebar-wrapper">
-			<a href="/club/clubRegister">
-			<div id="new_club"><br/><br/>클럽 만들기</div></a>
-			<div id="club_menu" class="tabbable" style="height:200px;  margin-bottom: 10px"">
+			<c:if test="${USER_KEY.club_no == null}">
+				<div id="new_club" onclick="location.href='/club/clubRegister'">
+					<span>클럽 만들기</span>
+				</div>
+			</c:if>
+			<c:if test="${USER_KEY.club_no != null}">
+				<div id="new_club" onclick="location.href='/myclub/myclubMain'">
+					<span>소속 클럽 가기</span>
+				</div>
+			</c:if>
+			<div id="club_menu" class="tabbable" style="height:200px;  margin-bottom: 10px">
 				<ul class="nav nav-tabs nav-justified" id="club_category">
 					<li class="active" data-order="0"><a href="#tab1" data-toggle="tab">신규클럽</a></li>
 					<li data-order="1"><a href="#tab2" data-toggle="tab">추천클럽</a></li>

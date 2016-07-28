@@ -34,7 +34,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="navbar-header"><a class="navbar-brand" href="#">로고들어갈위치</a></div>
+		<div class="navbar-header"><a class="navbar-brand" href="/">로고들어갈위치</a></div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav nav-justified" id="nav-ul">
 				<li><a href="../matching/matchingPage.jsp">매칭</a></li>
@@ -48,5 +48,9 @@
 	</div>
 <!-- /#wrapper -->
 </nav>
+<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

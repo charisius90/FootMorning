@@ -22,7 +22,7 @@
 	<div class="row">
 		<div id="wrapper">
 			<div>
-				<%@ include file="../../include/communitysidebar.jsp" %>
+				<%@ include file="../../include/myclubSidebar.jsp" %>
 			</div>
 		<div id="page-content-wrapper">
 			<div class="col-md-10">

@@ -54,8 +54,8 @@ public class ClubController {
 	@RequestMapping("clubRegister")
 	public void registerGET(){}
 	
-	@RequestMapping(value = "clubRegister", method = RequestMethod.POST)
-	public String registerPOST(ClubDTO dto, String mem_email, Model model, HttpServletRequest req) {
+	@RequestMapping(value="clubRegister", method=RequestMethod.POST)
+	public String registerPOST(ClubDTO dto, String mem_email, Model model, HttpServletRequest req){
 		System.out.println("check : " + dto);
 		service.insert(dto);
 
@@ -65,8 +65,8 @@ public class ClubController {
 			member.setMem_grade(GRADE_MASTER);
 			memberService.updateMember(member);
 			WebUtils.setSessionAttribute(req, "USER_KEY", member);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "redirect:/myclub/myclubMain";

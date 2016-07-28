@@ -10,13 +10,22 @@
 <link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
 <style>
 	#preview {
-		border: 1px solid gray;
+		cursor: pointer;
 		width: 300px;
 		height: 300px;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 4px;
 	}
 	
-	#inputs >tr{
+	td >span {
+		color: darkblue;
 	}
+	
+	div >span {
+		color: red;
+	}
+	
 </style>
 </head>
 <body>
@@ -33,10 +42,10 @@
 					<div class="col-md-12" style="padding-bottom: 20px;"><h3>클럽 생성</h3></div><br/><br/>
 					<div id="preview_wrapper" class="col-md-3" style="float: left;">
 						<label>로고 미리보기</label><br/>
-						<div id="preview"></div>
+						<div id="preview" onclick="fnFile()"></div>
 					</div>
 					<div class="col-md-6" style="margin-top: 20px;">
-						<form method="post" action="clubRegister">
+						<form method="post" action="/club/clubRegister">
 							<input type="hidden" name="club_master" value="${USER_KEY.mem_no}"/>
 							<input type="hidden" name="mem_email" value="${USER_KEY.mem_email}"/>
 							<table id="inputs" class="table table-hover">
@@ -72,18 +81,20 @@
 		</div>
 	</div>
 </div>
-<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
-	// @박수항
+	function fnFile(){
+		$("#file").click();
+	}
+
+	//@author 박수항
 	$(function(){
 		
 		// 업로드 없이 이미지 미리보기 기능
 		var $file = $("#file"),
 			$preview = $("#preview");
+		
+		$preview.html("<div align='center' style='margin-top:120px;'><span>'이 곳' 혹은 '파일 선택' 버튼을</span><br/><span>클릭하고 이미지를 등록하세요.</span></div>");
 		
 		$file.change(function(e){
 			e.preventDefault();
@@ -95,16 +106,11 @@
 				var img = new Image();
 				img.src = event.target.result;
 				
-				if(img.width > 300){
-					img.width = 300;
-				}
+				$preview.html(img);
 				
-				if(img.height > 300){
-					img.height = 300;
-				}
-				
-				$preview.html("");
-				$preview.append(img);
+				var $img = $("img");
+				$img.width("290");
+				$img.height("290");
 			};
 			
 			reader.readAsDataURL(file);

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.footmorning.mappers.clubMapper">
 	
-	<insert id="insert" parameterType="ClubDTO">
+	<insert id="insert" parameterType="com.footmorning.app.domain.ClubDTO">
 		insert into
 		club(club_name, club_image, club_content, club_loc, club_type, club_master)
 		values(#{club_name}, #{club_image}, #{club_content}, #{club_loc}, #{club_type}, #{club_master})

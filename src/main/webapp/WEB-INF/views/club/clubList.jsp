@@ -52,9 +52,11 @@
 								</tr>
 								</thead>
 								<c:forEach items="${list}" var="club">
-									<tr>
+									<tr id="row_${club.club_no}">
 										<td>${club.club_no}</td>
-										<td><a href="javascript:fnTest('${club.club_no}')"><img class="logo" src="${club.club_image}" alt="logo위치"/></a></td>
+										<td>
+											<a href="/myclub/myclubMain?no=${club.club_no}"><img class="logo" src="${club.club_image}" alt="logo위치"/></a>
+										</td>
 										<td>${club.club_name}</td>
 										<td>${club.club_loc}</td>
 										<td>${club.club_content}</td>
@@ -84,7 +86,8 @@
 		</div>
 	</div><!-- /.row -->
 </div><!-- /.container -->
-
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 <script>
 // 	$(function(){
 // 		$("#datepicker").datepicker(
@@ -98,17 +101,6 @@
 // 		);
 // 	});
 	
-	function fnTest(no){
-		var test = "${list}";
-		alert(no + " : " + test);
-	}
-	
-	function fnTest2(){
-		alert("test2 called");
-	}
 </script>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
