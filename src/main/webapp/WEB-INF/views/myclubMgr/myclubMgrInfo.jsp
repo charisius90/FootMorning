@@ -54,9 +54,12 @@
 						<div id="preview" onclick="fnFile()"></div>
 					</div>
 					<div class="col-md-6" style="margin-top: 20px;">
-						<form method="post" action="clubRegister">
+						<form method="post" action="/myclubMgr/myclubMgrInfo">
+							<input type="hidden" name="club_no" value="${CLUB_KEY.club_no}"/>
+							<input type="hidden" name="club_regdate" value="${CLUB_KEY.club_regdate}"/>
 							<input type="hidden" name="club_master" value="${USER_KEY.mem_no}"/>
-							<input type="hidden" name="mem_email" value="${USER_KEY.mem_email}"/>
+							<input type="hidden" name="club_master_name" value="${CLUB_KEY.club_master_name}"/>
+							<input type="hidden" name="club_mem_count" value="${CLUB_KEY.club_mem_count}"/>
 							<table id="inputs" class="table table-hover">
 								<tr>
 									<td><span>클럽로고</span></td>
@@ -64,19 +67,19 @@
 								</tr>
 								<tr>
 									<td><span>클럽명</span></td>
-									<td><input id="name" type="text" name="club_name" /><input type="button" value="중복확인"/></td>
+									<td><input id="name" type="text" name="club_name" value="${CLUB_KEY.club_name}" /><input type="button" value="중복확인"/></td>
 								</tr>
 								<tr>
 									<td><span>클럽지역</span></td>
-									<td><input id="loc" type="text" name="club_loc"/><input id="addr" type="button" value="지역찾기"/></td>
+									<td><input id="loc" type="text" name="club_loc" value="${CLUB_KEY.club_loc}"/><input id="addr" type="button" value="지역찾기"/></td>
 								</tr>
 								<tr>
 									<td><span>클럽설명</span></td>
-									<td><textarea id="content" name="club_content" cols="50" rows="5"></textarea></td>
+									<td><textarea id="content" name="club_content" cols="50" rows="5">${CLUB_KEY.club_content}</textarea></td>
 								</tr>
 								<tr>
 									<td><span>클럽유형</span></td>
-									<td><input type="radio" name="club_type" value="1" checked="checked">공개&nbsp;&nbsp;<input type="radio" name="club_type" value="0">비공개</td>
+									<td><input id="r1" type="radio" name="club_type" value="1" checked="checked">공개&nbsp;&nbsp;<input id="r2" type="radio" name="club_type" value="0">비공개</td>
 								</tr>
 							</table>
 							<div align="right">
@@ -98,7 +101,15 @@
 
 	//@author 박수항
 	$(function(){
-		
+		var type = "${CLUB_KEY.club_type}";
+// 		if(type == 0){
+// 			$("r1").attr("checked", null);
+// 			$("r2").attr("checked", "checked");
+// 		}
+		if(type == 1){
+			$("r1").attr("checked", null);
+			$("r2").attr("checked", "checked");
+		}
 		// 업로드 없이 이미지 미리보기 기능
 		var $file = $("#file"),
 			$preview = $("#preview");

@@ -1,21 +1,50 @@
 package com.footmorning.app.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.util.WebUtils;
+
+import com.footmorning.app.domain.ClubDTO;
+import com.footmorning.app.domain.MemberDTO;
+import com.footmorning.app.service.ClubService;
 
 @Controller
 @RequestMapping("/myclubMgr/*")
 public class MyclubMgrController {
+	@Autowired
+	private ClubService service;
+	
 	/**
-	 * ±âº»Á¤º¸°ü¸®
+	 * ê¸°ë³¸ì •ë³´ ë³€ê²½ í˜ì´ì§€
 	 */
 	@RequestMapping("myclubMgrInfo")
-	public void myclubInfoMgr(){
+	public String myclubInfoMgr(HttpServletRequest req){
+		MemberDTO member = (MemberDTO)WebUtils.getSessionAttribute(req, "USER_KEY");
+		ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
 		
+		// íšŒì›ë“±ê¸‰
+		int grade = Integer.parseInt(member.getMem_grade());
+		// ìê¸° í´ëŸ½ ê´€ë¦¬í˜ì´ì§€ ì´ë™ ìš”ì²­ì¸ì§€ í™•ì¸
+		boolean flag = member.getClub_no().equals(club.getClub_no());
+		if(grade<3 && flag){
+			return "/myclubMgr/myclubMgrInfo";
+		}
+		
+		return "/myclub/myclubMain";
+	}
+	
+	@RequestMapping(value="myclubMgrInfo", method=RequestMethod.POST)
+	public void myclubInfoMgrComplete(ClubDTO dto){
+		System.out.println("myclubMgrInfo : " + dto);
+		service.update(dto);
 	}
 	
 	/**
-	 * °¡ÀÔÁ¶°Ç°ü¸®
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("myclubJoinConditionMgr")
 	public void myclubJoinConditionMgr(){
@@ -23,7 +52,7 @@ public class MyclubMgrController {
 	}
 	
 	/**
-	 * Å¬·´´ë¹®°ü¸®
+	 * Å¬ï¿½ï¿½ï¿½ë¹®ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("myclubClubMainMgr")
 	public void myclubClubMainMgr(){
@@ -31,7 +60,7 @@ public class MyclubMgrController {
 	}
 	
 	/**
-	 * Å¬·´¸Ş´º°ü¸®
+	 * Å¬ï¿½ï¿½ï¿½Ş´ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("myclubClubMenuMgr")
 	public void myclubClubMenuMgr(){
@@ -39,7 +68,7 @@ public class MyclubMgrController {
 	}
 	
 	/**
-	 * Å¬·´¸â¹ö°ü¸®
+	 * Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("myclubMemberMgr")
 	public void myclubMemberMgr(){
@@ -47,7 +76,7 @@ public class MyclubMgrController {
 	}
 	
 	/**
-	 * °¡ÀÔ½ÅÃ»°ü¸®
+	 * ï¿½ï¿½ï¿½Ô½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("myclubRegisterMgr")
 	public void myclubRegisterMgr(){
@@ -55,7 +84,7 @@ public class MyclubMgrController {
 	}
 	
 	/**
-	 * µî±Ş/Á÷Ã¥°ü¸®
+	 * ï¿½ï¿½ï¿½/ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("myclubMemberGradeMgr")
 	public void myclubMemberGradeMgr(){
@@ -63,7 +92,7 @@ public class MyclubMgrController {
 	}
 	
 	/**
-	 * Å»Åğ¸â¹ö°ü¸®
+	 * Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("myclubOutMemberMgr")
 	public void myclubOutMemberMgr(){
@@ -71,7 +100,7 @@ public class MyclubMgrController {
 	}
 	
 	/**
-	 * Å¬·´Æó¼â
+	 * Å¬ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	@RequestMapping("myclubClubClosingMgr")
 	public void myclubClubClosingMgr(){
@@ -79,7 +108,7 @@ public class MyclubMgrController {
 	}
 	
 	/**
-	 * Å¬·´¾çµµ
+	 * Å¬ï¿½ï¿½ï¿½çµµ
 	 */
 	@RequestMapping("myclubClubTransferMgr")
 	public void myclubClubTransferMgr(){
