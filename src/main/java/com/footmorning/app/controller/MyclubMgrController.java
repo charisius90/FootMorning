@@ -9,7 +9,7 @@ public class MyclubMgrController {
 	/**
 	 * 기본정보관리
 	 */
-	@RequestMapping("myclubInfoMgr")
+	@RequestMapping("myclubMgrInfo")
 	public void myclubInfoMgr(){
 		
 	}

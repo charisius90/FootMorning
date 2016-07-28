@@ -10,12 +10,20 @@
 <link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
 <style>
 	#preview {
-		border: 1px solid gray;
+		cursor: pointer;
 		width: 300px;
 		height: 300px;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 4px;
 	}
 	
-	#inputs >tr{
+	td >span {
+		color: darkblue;
+	}
+	
+	div >span {
+		color: red;
 	}
 </style>
 </head>
@@ -30,10 +38,20 @@
 			</div>
 		<div id="page-content-wrapper">
 			<div class="col-md-12" style="margin:10px;">
-					<div class="col-md-12" style="padding-bottom: 20px;"><h3>기본정보관리</h3></div><br/><br/>
+					<div class="col-md-10" style="padding-bottom: 20px;">
+							<!-- 메인폼  -->
+						<div align="left">
+							<!-- 팀 타이틀이 들어갈 장소 -->
+							<h3>기본정보관리</h3>
+						</div>
+						<div class="myteamheader" align="right">
+							<!-- 버튼두개짜리 헤더  -->
+							<%@include file="../include/myclubHeader.jsp" %>
+						</div>
+					</div><br/><br/>
 					<div id="preview_wrapper" class="col-md-3" style="float: left;">
 						<label>로고 미리보기</label><br/>
-						<div id="preview"></div>
+						<div id="preview" onclick="fnFile()"></div>
 					</div>
 					<div class="col-md-6" style="margin-top: 20px;">
 						<form method="post" action="clubRegister">
@@ -72,5 +90,53 @@
 	</div>
 	</div>
 	</div>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+	function fnFile(){
+		$("#file").click();
+	}
+
+	//@author 박수항
+	$(function(){
+		
+		// 업로드 없이 이미지 미리보기 기능
+		var $file = $("#file"),
+			$preview = $("#preview");
+		
+		$preview.html("<div align='center' style='margin-top:120px;'><span>'이 곳' 혹은 '파일 선택' 버튼을</span><br/><span>클릭하고 이미지를 등록하세요.</span></div>");
+		
+		$file.change(function(e){
+			e.preventDefault();
+			
+			var file = $file[0].files[0],
+				reader = new FileReader();
+			
+			reader.onload = function (event) {
+				var img = new Image();
+				img.src = event.target.result;
+				
+				$preview.html(img);
+				
+				var $img = $("img");
+				$img.width("290");
+				$img.height("290");
+			};
+			
+			reader.readAsDataURL(file);
+			
+			return false;
+		});
+		
+		// 주소 찾기 API
+		$("#addr").click(function(){
+		    new daum.Postcode({
+		        oncomplete: function(data) {
+		            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+		            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+		        }
+		    }).open();
+		});
+	});
+</script>
 </body>
 </html>

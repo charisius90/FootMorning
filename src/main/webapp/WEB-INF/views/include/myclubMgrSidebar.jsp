@@ -16,7 +16,7 @@
 				<li><a href="javascript:;" data-toggle="collapse"
 					data-target="#nomalmgr"> 기본정보관리 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
 					<ul id="nomalmgr" class="collapse">
-						<li><a href="/myclubMgr/myclubInfoMgr">기본정보관리</a></li>
+						<li><a href="/myclubMgr/myclubMgrInfo">기본정보관리</a></li>
 						<li><a href="/myclubMgr/myclubJoinConditionMgr">가입정보관리</a></li>
 					</ul>
 				</li>
