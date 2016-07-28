@@ -41,7 +41,7 @@ public class MyclubController {
 		ClubDTO club = service.getWithNo(no);
 		MemberDTO master = memberService.getWithNo(Integer.parseInt(club.getClub_master()));
 		
-		model.addAttribute("CLUB", club);
+		WebUtils.setSessionAttribute(req, "CLUB_KEY", club);
 		model.addAttribute("MASTER", master);
 	}
 	
