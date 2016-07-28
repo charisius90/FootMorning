@@ -2,6 +2,7 @@ package com.footmorning.app.service;
 
 import java.util.List;
 
+import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.MyclubNoticeDTO;
 import com.footmorning.app.domain.MyclubNoticeReplyDTO;
 import com.footmorning.app.util.Criteria;
@@ -18,13 +19,13 @@ public interface MyclubNoticeService {
 
 	public List<MyclubNoticeDTO> listAll() throws Exception;
 
-	public List<MyclubNoticeDTO> listCriteria(Criteria cri) throws Exception;	// ±ÔÃ¤
+	public List<MyclubNoticeDTO> listCriteria(Criteria cri) throws Exception;	// ï¿½ï¿½Ã¤
 	
-	public int listCountCriteria(Criteria cri) throws Exception;	// ±ÔÃ¤
+	public int listCountCriteria(Criteria cri) throws Exception;	// ï¿½ï¿½Ã¤
 
-	public List<MyclubNoticeDTO> listSearchCriteria(SearchCriteria cri) throws Exception; // ±ÔÃ¤
+	public List<MyclubNoticeDTO> listSearchCriteria(SearchCriteria cri) throws Exception; // ï¿½ï¿½Ã¤
 
-	public int listSearchCount(SearchCriteria cri) throws Exception;	// ±ÔÃ¤
+	public int listSearchCount(SearchCriteria cri) throws Exception;	// ï¿½ï¿½Ã¤
 	
 	public void createReply(MyclubNoticeReplyDTO dto) throws Exception;
 

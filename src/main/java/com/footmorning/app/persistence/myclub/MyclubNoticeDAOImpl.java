@@ -26,7 +26,7 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	}
 
 	/**
-	 * ½ÂÇÑ read
+	 * ï¿½ï¿½ï¿½ï¿½ read
 	 */
 	@Override
 	public MyclubNoticeDTO read(Integer bno) throws Exception {
@@ -35,7 +35,7 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	}
 
 	/**
-	 * ½ÂÇÑ update
+	 * ï¿½ï¿½ï¿½ï¿½ update
 	 */
 	@Override
 	public void update(MyclubNoticeDTO dto) throws Exception {
@@ -43,7 +43,7 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	}
 
 	/**
-	 * ½ÂÇÑ delete
+	 * ï¿½ï¿½ï¿½ï¿½ delete
 	 */
 	@Override
 	public void delete(Integer bno) throws Exception {
@@ -56,7 +56,7 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	}
 
 	/**
-	 * ±ÔÃ¤ countPaging
+	 * ï¿½ï¿½Ã¤ countPaging
 	 */
 	@Override
 	public int countPaging(Criteria cri) throws Exception {
@@ -64,7 +64,7 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	}
 
 	/**
-	 * ±ÔÃ¤ listCriteria
+	 * ï¿½ï¿½Ã¤ listCriteria
 	 */
 	@Override
 	public List<MyclubNoticeDTO> listCriteria(Criteria cri) throws Exception {
@@ -72,7 +72,7 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	}
 
 	/**
-	 * ±ÔÃ¤ listSearchCriteria
+	 * ï¿½ï¿½Ã¤ listSearchCriteria
 	 */
 	@Override
 	public List<MyclubNoticeDTO> listSearchCriteria(SearchCriteria cri) throws Exception {
@@ -80,7 +80,7 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	}
 
 	/**
-	 * ±ÔÃ¤ listSearchCount
+	 * ï¿½ï¿½Ã¤ listSearchCount
 	 */
 	@Override
 	public int listSearchCount(SearchCriteria cri) throws Exception {
@@ -88,7 +88,7 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	}
 
 	/**
-	 * ½ÂÇÑ,º´Çö reply start
+	 * ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ reply start
 	 */
 	/**
 	 * pos +1 , parent_reply insert
@@ -101,7 +101,7 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	}
 
 	/**
-	 * ´ë´ñ±Û insert
+	 * ï¿½ï¿½ï¿½ï¿½ insert
 	 */
 	@Override
 	public void createReReply(MyclubNoticeReplyDTO dto) {
@@ -129,7 +129,7 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 		return sqlSession.selectOne(NAMESPACE + ".parentInfo", no);
 	}
 
-	// »ç¿ë¾ÈÇÔ;
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½;
 	@Override
 	public void updateReply(MyclubNoticeReplyDTO dto) throws Exception {
 		// TODO Auto-generated method stub
@@ -137,7 +137,7 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	}
 
 	/**
-	 * ¸®ÇÃ »èÁ¦
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 */
 	@Override
 	public void deleteReply(MyclubNoticeReplyDTO dto) throws Exception {
@@ -146,7 +146,7 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	}
 
 	/**
-	 * °Ô½Ã±Û¿¡ µû¸¥ ÀüÃ¼ ¸®ÇÃ ¸®½ºÆ®
+	 * ï¿½Ô½Ã±Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	 */
 	@Override
 	public List<MyclubNoticeReplyDTO> listAllReply(Integer bno) throws Exception {

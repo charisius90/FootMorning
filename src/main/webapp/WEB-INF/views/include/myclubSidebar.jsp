@@ -14,7 +14,7 @@
 <!-- Sidebar -->
 	<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
-				<li class="active"><a href="/myclub/notice/main"> 공지사항</a></li>
+				<li class="active"><a href="/myclub/notice/main">공지사항</a></li>
 				<li class="divider"></li>
 				<li><a href="javascript:;" data-toggle="collapse"
 					data-target="#comm">커뮤니티<i class="glyphicon glyphicon-triangle-bottom"></i></a>

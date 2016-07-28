@@ -18,9 +18,9 @@ public interface MyclubNoticeDAO {
 
 	public List<MyclubNoticeDTO> listAll() throws Exception;
 
-	public List<MyclubNoticeDTO> listCriteria(Criteria cri) throws Exception; // ±ÔÃ¤
+	public List<MyclubNoticeDTO> listCriteria(Criteria cri) throws Exception; // ï¿½ï¿½Ã¤
 
-	public int countPaging(Criteria cri) throws Exception; // ±ÔÃ¤
+	public int countPaging(Criteria cri) throws Exception; // ï¿½ï¿½Ã¤
 
 	public List<MyclubNoticeDTO> listSearchCriteria(SearchCriteria cri) throws Exception;
 

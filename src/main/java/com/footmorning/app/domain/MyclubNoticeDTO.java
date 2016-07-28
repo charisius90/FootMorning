@@ -10,6 +10,7 @@ public class MyclubNoticeDTO {
 	private int myclub_notice_count;
 	private String myclub_notice_main_thumnail;
 	private String myclub_notice_writer;
+	private int club_no;
 	
 	public int getMyclub_notice_no() {
 		return myclub_notice_no;
@@ -59,13 +60,19 @@ public class MyclubNoticeDTO {
 	public void setMyclub_notice_writer(String myclub_notice_writer) {
 		this.myclub_notice_writer = myclub_notice_writer;
 	}
+	public int getClub_no() {
+		return club_no;
+	}
+	public void setClub_no(int club_no) {
+		this.club_no = club_no;
+	}
 	@Override
 	public String toString() {
 		return "MyclubNoticeDTO [myclub_notice_no=" + myclub_notice_no + ", mem_no=" + mem_no
 				+ ", myclub_notice_subject=" + myclub_notice_subject + ", myclub_notice_content="
 				+ myclub_notice_content + ", myclub_notice_regdate=" + myclub_notice_regdate + ", myclub_notice_count="
 				+ myclub_notice_count + ", myclub_notice_main_thumnail=" + myclub_notice_main_thumnail
-				+ ", myclub_notice_writer=" + myclub_notice_writer + "]";
+				+ ", myclub_notice_writer=" + myclub_notice_writer + ", club_no=" + club_no + "]";
 	}
 	
 }

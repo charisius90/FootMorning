@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.footmorning.app.domain.ClubDTO;
+import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.domain.MyclubNoticeDTO;
 import com.footmorning.app.domain.MyclubNoticeReplyDTO;
 import com.footmorning.app.service.MyclubNoticeService;
@@ -27,32 +30,37 @@ public class MyclubNoticeController {
 	private MyclubNoticeService service;
 
 	@RequestMapping("/myclub/notice/main")
-	public String notice(SearchCriteria cri, Model model) throws Exception {
+	public String notice(SearchCriteria cri, Model model, HttpServletRequest req) throws Exception {
+		HttpSession session = req.getSession();
+		
+		ClubDTO dto = (ClubDTO)session.getAttribute("CLUB_KEY");
 
+		
+		cri.setClub_no(dto.getClub_no());
 		model.addAttribute("list", service.listSearchCriteria(cri));
 
-		PageMaker pageMaker = new PageMaker();
 
+		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listSearchCount(cri));
 
 		model.addAttribute("pageMaker", pageMaker);
 		// System.out.println(service.listAll().toString());
 		return "/myclub/myclubNotice/myclubNoticeBoardMain";
-		// ¾Ù¹üÀº myclubNoticeBoardMain2
+		// ï¿½Ù¹ï¿½ï¿½ï¿½ myclubNoticeBoardMain2
 		// return "/myclub/myclubNotice/myclubNoticeBoardMain2";
 	}
 
 	@RequestMapping(value = "/myclub/notice/register", method = RequestMethod.GET)
 	public String register(Locale locale, Model model) {
-		// logger.info("µî·Ï", locale);
+		// logger.info("ï¿½ï¿½ï¿½", locale);
 
 		return "myclub/myclubNotice/myclubNoticeBoardRegister";
 	}
 
 	@RequestMapping(value = "/myclub/notice/register", method = RequestMethod.POST)
 	public String registerComplete(MyclubNoticeDTO dto, RedirectAttributes rttr) throws Exception {
-		// logger.info("µî·Ï ¿Ï·á : " + dto.toString());
+		// logger.info("ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ : " + dto.toString());
 		service.register(dto);
 
 		rttr.addFlashAttribute("msg", "SUCCESS");
@@ -61,7 +69,7 @@ public class MyclubNoticeController {
 	}
 
 	/**
-	 * ½ÂÇÑ read get
+	 * ï¿½ï¿½ï¿½ï¿½ read get
 	 * 
 	 * @param bno
 	 * @param model
@@ -78,7 +86,7 @@ public class MyclubNoticeController {
 	}
 
 	/**
-	 * ½ÂÇÑ ¾÷µ¥ÀÌÆ® get
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® get
 	 * 
 	 * @param bno
 	 * @param model
@@ -94,7 +102,7 @@ public class MyclubNoticeController {
 
 	/**
 	 * 
-	 * ½ÂÇÑ update post
+	 * ï¿½ï¿½ï¿½ï¿½ update post
 	 * 
 	 * @param dto
 	 * @param rttr
@@ -103,7 +111,7 @@ public class MyclubNoticeController {
 	 */
 	@RequestMapping(value = "/myclub/notice/update", method = RequestMethod.POST)
 	public String updateComplete(MyclubNoticeDTO dto, RedirectAttributes rttr) throws Exception {
-		System.out.println("¼öÁ¤: " + dto.toString());
+		System.out.println("ï¿½ï¿½ï¿½ï¿½: " + dto.toString());
 		service.modify(dto);
 
 		rttr.addFlashAttribute("msg", "SUCCESS");
@@ -112,7 +120,7 @@ public class MyclubNoticeController {
 	}
 
 	/**
-	 * ½ÂÇÑ delete get
+	 * ï¿½ï¿½ï¿½ï¿½ delete get
 	 * 
 	 * @param bno
 	 * @param model
@@ -127,7 +135,7 @@ public class MyclubNoticeController {
 	}
 
 	/**
-	 * ½ÂÇÑ,º´Çö reply add post
+	 * ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ reply add post
 	 * 
 	 * @param dto
 	 * @param rttr
@@ -142,11 +150,11 @@ public class MyclubNoticeController {
 		String content = req.getParameter("myclub_notice_re_content");
 		int myclub_notice_no = Integer.parseInt(req.getParameter("myclub_notice_no"));
 
-		// ÃßÈÄ ¼¼¼Ç
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int mem_no = Integer.parseInt(req.getParameter("mem_no"));
 		String myclub_notice_re_writer = req.getParameter("myclub_notice_re_writer");
 
-		// DTO°´Ã¼»ý¼ºÈÄ ÁÖÀÔ
+		// DTOï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		MyclubNoticeReplyDTO dto = new MyclubNoticeReplyDTO();
 		dto.setMyclub_notice_no(myclub_notice_no);
 		dto.setMyclub_notice_re_content(content);
@@ -169,17 +177,17 @@ public class MyclubNoticeController {
 			service.createReReply(dto);
 		}
 
-		// Å×½ºÆ®
+		// ï¿½×½ï¿½Æ®
 		// System.out.println(service.listAllReply(myclub_notice_no).toString());
 
-		// ´ñ±Û¸®½ºÆ®
+		// ï¿½ï¿½Û¸ï¿½ï¿½ï¿½Æ®
 		req.setAttribute("replydto", service.listAllReply(myclub_notice_no));
 
 		return "/myclub/myclubNotice/json/myclubNoticeReplyJson";
 	}
 
 	/**
-	 * ½ÂÇÑ,º´Çö ¸®ÇÃ»èÁ¦
+	 * ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
 	 * 
 	 * @param req
 	 * @param model
@@ -192,16 +200,16 @@ public class MyclubNoticeController {
 		int re_no = Integer.parseInt(req.getParameter("re_no"));
 		// System.out.println(re_no);
 
-		// ºÎ¸ð info
+		// ï¿½Î¸ï¿½ info
 		MyclubNoticeReplyDTO dto = service.MyclubNoticeParentPos(re_no);
 
-		// »èÁ¦½Ã dto set
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dto set
 		dto.setMyclub_notice_re_writer("999");
 		dto.setMyclub_notice_re_no(re_no);
-		dto.setMyclub_notice_re_content("ÇØ´ç ´ñ±ÛÀº ÀÌ¹Ì »èÁ¦µÇ¾ú½À´Ï´Ù.");
+		dto.setMyclub_notice_re_content("ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 
 		// System.out.println(dto.toString());
-		// »èÁ¦ È£Ãâ
+		// ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
 		service.deleteReply(dto);
 
 		req.setAttribute("result", true);
