@@ -17,23 +17,23 @@
 					data-target="#nomalmgr"> 기본정보관리 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
 					<ul id="nomalmgr" class="collapse">
 						<li><a href="/myclubMgr/myclubMgrInfo">기본정보관리</a></li>
-						<li><a href="/myclubMgr/myclubJoinConditionMgr">가입정보관리</a></li>
+						<li><a href="/myclubMgr/myclubMgrJoinCondition">가입조건관리</a></li>
 					</ul>
 				</li>
 				<li><a href="javascript:;" data-toggle="collapse"
 					data-target="#clubmain"> 클럽메인관리 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
 					<ul id="clubmain" class="collapse">
-						<li><a href="/myclubMgr/myclubClubMainMgr">클럽대문관리</a></li>
-						<li><a href="/myclubMgr/myclubClubMenuMgr">클럽메뉴관리</a></li>
+						<li><a href="/myclubMgr/myclubMgrMain">클럽대문관리</a></li>
+						<li><a href="/myclubMgr/myclubMgrMenu">클럽메뉴관리</a></li>
 					</ul>
 				</li>
 				<li><a href="javascript:;" data-toggle="collapse"
 					data-target="#membermgr"> 멤버관리 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
 					<ul id="membermgr" class="collapse">
-						<li><a href="/myclubMgr/myclubMemberMgr">클럽멤버관리</a></li>
-						<li><a href="/myclubMgr/myclubRegisterMgr">가인신청관리</a></li>
-						<li><a href="/myclubMgr/myclubMemberGradeMgr">등급/직책관리</a></li>
-						<li><a href="/myclubMgr/myclubOutMemberMgr">탈퇴멤버관리</a></li>
+						<li><a href="/myclubMgr/myclubMgrMember">클럽멤버관리</a></li>
+						<li><a href="/myclubMgr/myclubMgrRegister">가입신청관리</a></li>
+						<li><a href="/myclubMgr/myclubMgrMemberGrade">등급/직책관리</a></li>
+						<li><a href="/myclubMgr/myclubMgrOutMember">탈퇴멤버관리</a></li>
 					</ul>
 				</li>				
 				<li><a href="javascript:;" data-toggle="collapse"
@@ -45,8 +45,8 @@
 				<li><a href="javascript:;" data-toggle="collapse"
 					data-target="#operationclub"> 클럽운영 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
 					<ul id="operationclub" class="collapse">
-						<li><a href="/myclubMgr/myclubClubClosingMgr">클럽폐쇄</a></li>
-						<li><a href="/myclubMgr/myclubClubTransferMgr">클럽양도</a></li>
+						<li><a href="/myclubMgr/myclubMgrClosing">클럽폐쇄</a></li>
+						<li><a href="/myclubMgr/myclubMgrTransfer">클럽양도</a></li>
 					</ul>
 				</li>				
 			</ul>

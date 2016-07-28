@@ -128,7 +128,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * ��й�ȣ ã�� ������(�̸��Ϸ� �ӽú�й�ȣ ���� & ��й�ȣ ����)
+	 * 비밀번호 찾기 페이지(임시비밀번호 생성 후 이메일 전송)
 	 */
 	@Autowired
 	private EmailSender emailSender;
@@ -142,16 +142,17 @@ public class MemberController {
         String mem_phone = dto.getMem_phone();
         
         if(service.getPW(mem_email, mem_phone) != null) {
-        	// �������ڿ� ����(���ĺ�+���� 8�ڸ�)
+        	// 임시비밀번호 생성(영문+숫자 8자리 조합)
         	String mem_pw_new = RandomStringUtils.randomAlphanumeric(8);
-        	
+        	// 임시비밀번호로 DB수정
         	MemberDTO member = service.getMemberInfo(mem_email);
         	member.setMem_pw(mem_pw_new);
         	service.updateMember(member);
-        	
-            email.setContent("�ӽú�й�ȣ�� "+mem_pw_new+" �Դϴ�.");
+        	String mem_name = member.getMem_name();
+        	// 이메일 발송
+            email.setContent("임시비밀번호는 "+mem_pw_new+" 입니다.");
             email.setReceiver(mem_email);
-            email.setSubject("��й�ȣ ã�� �����Դϴ�.");
+            email.setSubject(mem_name + "님 비밀번호 찾기 메일입니다.");
             emailSender.SendEmail(email);
             
             mav= new ModelAndView("redirect:/member/memberLogin");

@@ -44,74 +44,74 @@ public class MyclubMgrController {
 	}
 	
 	/**
-	 * �������ǰ���
+	 * 가입조건관리
 	 */
-	@RequestMapping("myclubJoinConditionMgr")
-	public void myclubJoinConditionMgr(){
+	@RequestMapping("myclubMgrJoinCondition")
+	public void myclubMgrJoinCondition(){
 		
 	}
 	
 	/**
-	 * Ŭ���빮����
+	 * 클럽대문관리
 	 */
-	@RequestMapping("myclubClubMainMgr")
-	public void myclubClubMainMgr(){
+	@RequestMapping("myclubMgrMain")
+	public void myclubMgrMain(){
 		
 	}
 	
 	/**
-	 * Ŭ���޴�����
+	 * 클럽메뉴관리
 	 */
-	@RequestMapping("myclubClubMenuMgr")
-	public void myclubClubMenuMgr(){
+	@RequestMapping("myclubMgrMenu")
+	public void myclubMgrMenu(){
 		
 	}
 	
 	/**
-	 * Ŭ���������
+	 * 클럽멤버관리
 	 */
-	@RequestMapping("myclubMemberMgr")
-	public void myclubMemberMgr(){
+	@RequestMapping("myclubMgrMember")
+	public void myclubMgrMember(){
 		
 	}
 	
 	/**
-	 * ���Խ�û����
+	 * 가입신청관리
 	 */
-	@RequestMapping("myclubRegisterMgr")
-	public void myclubRegisterMgr(){
+	@RequestMapping("myclubMgrRegister")
+	public void myclubMgrRegister(){
 		
 	}
 	
 	/**
-	 * ���/��å����
+	 * 직책/등급관리
 	 */
-	@RequestMapping("myclubMemberGradeMgr")
-	public void myclubMemberGradeMgr(){
+	@RequestMapping("myclubMgrMemberGrade")
+	public void myclubMgrMemberGrade(){
 		
 	}
 	
 	/**
-	 * Ż��������
+	 * 탈퇴멤버관리
 	 */
-	@RequestMapping("myclubOutMemberMgr")
-	public void myclubOutMemberMgr(){
+	@RequestMapping("myclubMgrOutMember")
+	public void myclubMgrOutMember(){
 		
 	}
 	
 	/**
-	 * Ŭ�����
+	 * 클럽폐쇄
 	 */
-	@RequestMapping("myclubClubClosingMgr")
-	public void myclubClubClosingMgr(){
+	@RequestMapping("myclubMgrClosing")
+	public void myclubMgrClosing(){
 		
 	}
 	
 	/**
-	 * Ŭ���絵
+	 * 클럽양도
 	 */
-	@RequestMapping("myclubClubTransferMgr")
-	public void myclubClubTransferMgr(){
+	@RequestMapping("myclubMgrTransfer")
+	public void myclubMgrTransfer(){
 		
 	}
 }
