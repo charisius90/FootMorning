@@ -47,7 +47,7 @@
 				</div>
 			</c:if>
 			<c:if test="${USER_KEY.club_no != null}">
-				<div id="new_club" onclick="location.href='/myclub/myclubMain'">
+				<div id="new_club" onclick="location.href='/myclub/myclubMain?no=${USER_KEY.club_no}'">
 					<span>소속 클럽 가기</span>
 				</div>
 			</c:if>
