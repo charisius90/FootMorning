@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.footmorning.app.domain.MyclubNoticeDTO;
+import com.footmorning.app.domain.MyclubNoticeReplyDTO;
 import com.footmorning.app.persistence.MyclubNoticeDAO;
 
 @Repository
@@ -51,5 +52,68 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 	public List<MyclubNoticeDTO> listAll() throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listAll");
 	}
-
+	
+	   /**
+	    * 승한,병현 reply start
+	    */
+	   /**
+	    * pos +1 , parent_reply insert
+	    */
+	   @Override
+	   public void createReply(MyclubNoticeReplyDTO dto) throws Exception {
+	      sqlSession.update(NAMESPACE+".updatePos");
+	      sqlSession.insert(NAMESPACE+".createReply",dto);
+	      
+	   }
+	   /**
+	    * 대댓글 insert
+	    */
+	   @Override
+	   public void createReReply(MyclubNoticeReplyDTO dto) {
+	      sqlSession.insert(NAMESPACE+".createReReply",dto);
+	      
+	   }
+	   
+	//   @Override
+	//   public void updatePos(Integer pos) {
+//	      sqlSession.update(NAMESPACE+".replyUpdatePos", pos);
+	//   }
+	   /**
+	    * rereply pos update
+	    */
+	   @Override
+	   public void updatePos(MyclubNoticeReplyDTO dto) {
+	      sqlSession.update(NAMESPACE+".replyUpdatePos", dto);
+	   }
+	   
+	   /**
+	    * parentInfo
+	    */
+	   @Override
+	   public MyclubNoticeReplyDTO MyclubNoticeParentPos(Integer no) {
+	      return sqlSession.selectOne(NAMESPACE+".parentInfo", no);
+	   }
+	   
+	   //사용안함;
+	   @Override
+	   public void updateReply(MyclubNoticeReplyDTO dto) throws Exception {
+	      // TODO Auto-generated method stub
+	      
+	   }
+	   
+	   /**
+	    * 리플 삭제
+	    */
+	   @Override
+	   public void deleteReply(MyclubNoticeReplyDTO dto) throws Exception {
+	         sqlSession.update(NAMESPACE+".deleteReply",dto);
+	      
+	   }
+	   /**
+	    * 게시글에 따른 전체 리플 리스트
+	    */
+	   @Override
+	   public List<MyclubNoticeReplyDTO> listAllReply(Integer bno) throws Exception {
+	      return sqlSession.selectList(NAMESPACE+".listReply",bno);
+	   }
 }

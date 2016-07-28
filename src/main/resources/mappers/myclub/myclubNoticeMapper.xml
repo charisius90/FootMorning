@@ -3,27 +3,73 @@
 
 <mapper namespace="com.footmorning.mappers.myclub.myclubNoticeMapper">
 	<insert id="create">
-      INSERT INTO 
-      myclub_notice(mem_no, myclub_notice_subject, myclub_notice_content) 
-      VALUES (#{mem_no}, #{myclub_notice_subject}, #{myclub_notice_content})
-   	</insert>
+		INSERT INTO
+		myclub_notice(mem_no, myclub_notice_subject, myclub_notice_content)
+		VALUES (#{mem_no}, #{myclub_notice_subject}, #{myclub_notice_content})
+	</insert>
 
 	<select id="read" resultType="MyclubNoticeDTO">
-      select * from myclub_notice where myclub_notice_no=#{bno}
-   	</select>
+		select * from myclub_notice where myclub_notice_no=#{bno}
+	</select>
 
-   	<update id="update">
-     	 update myclub_notice set myclub_notice_subject =#{myclub_notice_subject}, myclub_notice_content =#{myclub_notice_content} 
-     	 where myclub_notice_no = #{myclub_notice_no}
-   	</update>
+	<update id="update">
+		update myclub_notice set myclub_notice_subject =#{myclub_notice_subject},
+		myclub_notice_content =#{myclub_notice_content}
+		where myclub_notice_no = #{myclub_notice_no}
+	</update>
 
-   	<delete id="delete">
-     	 delete from myclub_notice where myclub_notice_no = #{myclub_notice_no}
-   	</delete>
+	<delete id="delete">
+		delete from myclub_notice where myclub_notice_no = #{myclub_notice_no}
+	</delete>
 
 	<select id="listAll" resultType="MyclubNoticeDTO">
        <![CDATA[
        select * from myclub_notice where myclub_notice_no > 0 order by myclub_notice_no desc, myclub_notice_regdate desc
        ]]>
-   </select>
+	</select>
+
+	<insert id="createReply" parameterType="MyclubNoticeReplyDTO">
+		INSERT INTO myclub_notice_reply(myclub_notice_no, mem_no, myclub_notice_re_writer,
+		myclub_notice_re_content, myclub_notice_re_pos,
+		myclub_notice_re_depth,myclub_notice_re_group)
+		VALUES (#{myclub_notice_no}, #{mem_no}, #{myclub_notice_re_writer},
+		#{myclub_notice_re_content},0,0,null);
+	</insert>
+
+	<insert id="createReReply" parameterType="MyclubNoticeReplyDTO">
+		INSERT INTO myclub_notice_reply(myclub_notice_no, mem_no, myclub_notice_re_writer,
+		myclub_notice_re_content, myclub_notice_re_pos,
+		myclub_notice_re_depth,myclub_notice_re_group)
+		VALUES (#{myclub_notice_no}, #{mem_no}, #{myclub_notice_re_writer},
+		#{myclub_notice_re_content},#{myclub_notice_re_pos}+1,#{myclub_notice_re_depth}+1,null);
+	</insert>
+
+	<select id="listReply" resultType="MyclubNoticeReplyDTO">
+		select * from myclub_notice_reply where myclub_notice_no=#{myclub_notice_no}
+		order by myclub_notice_re_pos desc;
+	</select>
+
+	<select id="parentInfo" resultType="MyclubNoticeReplyDTO">
+		select * from myclub_notice_reply where myclub_notice_re_no=#{no};
+	</select>
+
+	<update id="updatePos">
+		update myclub_notice_reply set myclub_notice_re_pos=myclub_notice_re_pos+1;
+	</update>
+
+	<update id="replyUpdatePos">
+		update myclub_notice_reply set myclub_notice_re_pos=myclub_notice_re_pos+1
+		where myclub_notice_re_pos > #{myclub_notice_re_pos}
+	</update>
+
+	<!-- <delete id="deleteReply"> -->
+	<!-- delete from myclub_notice_reply where myclub_notice_re_no=#{myclub_notice_re_no}; -->
+	<!-- </delete> -->
+
+	<update id="deleteReply">
+		UPDATE myclub_notice_reply SET
+		myclub_notice_re_writer=#{myclub_notice_re_writer},
+		myclub_notice_re_content=#{myclub_notice_re_content} WHERE
+		myclub_notice_re_no=#{myclub_notice_re_no};
+	</update>
 </mapper>
