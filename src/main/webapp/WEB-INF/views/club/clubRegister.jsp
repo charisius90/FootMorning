@@ -47,6 +47,8 @@
 					<div class="col-md-6" style="margin-top: 20px;">
 						<form method="post" action="/club/clubRegister">
 							<input type="hidden" name="club_master" value="${USER_KEY.mem_no}"/>
+							<input type="hidden" name="club_master_name" value="${USER_KEY.mem_name}"/>
+							<input type="hidden" name="club_mem_count" value="1"/>
 							<input type="hidden" name="mem_email" value="${USER_KEY.mem_email}"/>
 							<table id="inputs" class="table table-hover">
 								<tr>

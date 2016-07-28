@@ -7,8 +7,8 @@
 	
 	<insert id="insert" parameterType="com.footmorning.app.domain.ClubDTO">
 		insert into
-		club(club_name, club_image, club_content, club_loc, club_type, club_master)
-		values(#{club_name}, #{club_image}, #{club_content}, #{club_loc}, #{club_type}, #{club_master})
+		club(club_name, club_image, club_content, club_loc, club_type, club_master, club_master_name, club_mem_count)
+		values(#{club_name}, #{club_image}, #{club_content}, #{club_loc}, #{club_type}, #{club_master}, #{club_master_name}, #{club_mem_count})
 	</insert>
 	
 	<update id="update" parameterType="ClubDTO">
@@ -18,8 +18,10 @@
 		club_content=#{club_content},
 		club_loc=#{club_loc},
 		club_type=#{club_type},
-		club_master=#{club_master}
-		where club_no=#{club_no}		
+		club_master=#{club_master},
+		club_master_name=#{club_master_name},
+		club_mem_count=#{club_mem_count}
+		where club_no=#{club_no}
 	</update>
 	
 	<delete id="delete">

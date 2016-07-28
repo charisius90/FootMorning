@@ -24,7 +24,7 @@
 					<!-- 메인폼  -->
 					<div align="left">
 						<!-- 팀 타이틀이 들어갈 장소 -->
-						<h2>${myclubDto.club_name}</h2>
+						<h2>${CLUB.club_name}</h2>
 					</div>
 					<div class="myteamheader" align="right">
 						<!-- 버튼두개짜리 헤더  -->
@@ -38,10 +38,10 @@
 						<div class="col-md-6">
 							<table class="table">
 							  <tr>
-							  	<td><strong><span style="color:blue">${myclubDto.club_name}</span>에 오신것을 환영합니다.</strong></td>
+							  	<td><strong><span style="color:blue">${CLUB.club_name}</span>에 오신것을 환영합니다.</strong></td>
 							  </tr>
 							  <tr>
-							  	<td align="right">회원수 <span style="color:red">${club_member_count}</span>&nbsp;&nbsp;|&nbsp;&nbsp;클럽개설일 <span style="color:red">${myclubDto.club_regdate}</span></td>
+							  	<td align="right">회원수 <span style="color:red">${CLUB.club_mem_count}</span>&nbsp;&nbsp;|&nbsp;&nbsp;클럽개설일 <span style="color:red">${CLUB.club_regdate}</span></td>
 							  </tr>
 							  <tr>
 							  	<td>
@@ -53,12 +53,12 @@
 							  <!-- img 들어갈곳 -->
 							    <td style="vertical-align: text-top;">
 							    <!-- text들어갈곳 -->
-							   ${myclubDto.club_content}
+							   ${CLUB.club_content}
 							    </td>
 							  </tr>
 							  <tr>
 							  	<!-- 클럽장 텍스트 -->
-							  	<td align="right"><strong>클럽장 : ${club_master_name}</strong></td>
+							  	<td align="right"><strong>클럽장 : ${CLUB.club_master_name}</strong></td>
 							  </tr>
 							</table>
 						</div>

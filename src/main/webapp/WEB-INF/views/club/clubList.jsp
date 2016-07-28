@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -9,7 +9,12 @@
 <title>Insert title here</title>
 <link href="../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
-
+<style>
+	.logo{
+		width: 50px;
+		height: 50px;
+	}
+</style>
 </head>
 <body>
 <%@ include file="../include/header.jsp" %>
@@ -56,10 +61,10 @@
 					<c:forEach items="${list}" var="clubDTO">
 						<tr>
 							<td>${clubDTO.club_no}</td>
-							<td>${clubDTO.club_image}</td>
-							<td>${clubDTO.club_name}</td>
-							<td>${clubDTO.club_master}</td>
-							<td>클럽인원</td>
+							<td><a href="/myclub/myclubMain?no=${clubDTO.club_no}"><img class="logo" src="${club.club_image}" alt="LOGO 위치"/></a></td>
+							<td><a href="/myclub/myclubMain?no=${clubDTO.club_no}">${clubDTO.club_name}</a></td>
+							<td><a href="#${clubDTO.club_master}">${clubDTO.club_master_name}</a></td>
+							<td>${clubDTO.club_mem_count}</td>
 							<td>${clubDTO.club_loc}</td>
 							<td>${clubDTO.club_content}</td>
 						</tr>

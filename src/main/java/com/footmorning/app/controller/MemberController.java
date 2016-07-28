@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.MemberDTO;
+import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MemberService;
 import com.footmorning.app.util.Email;
 import com.footmorning.app.util.EmailSender;
@@ -31,7 +32,7 @@ import com.footmorning.app.util.MemberValidation;
 
 /**
  * 
- * @author ±è¼Ò¿µ, ¹Ú¼öÇ×
+ * @author ê¹€ì†Œì˜, ë°•ìˆ˜í•­
  *
  */
 @Controller
@@ -40,10 +41,13 @@ public class MemberController {
 	@Inject
 	private MemberService service;
 	
+	@Inject
+	private ClubService clubService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@RequestMapping("memberLogin")
-	public void login(HttpServletRequest req, String LAST_PAGE){
+	public void login(HttpServletRequest req){
 //		WebUtils.setSessionAttribute(req, "LAST_PAGE", LAST_PAGE);
 	}
 
@@ -60,6 +64,11 @@ public class MemberController {
 				return "/member/memberLogin";
 			}
 			WebUtils.setSessionAttribute(req, "USER_KEY", dto);
+			
+			if(dto.getClub_no() != null){
+				int club_no = Integer.parseInt(dto.getClub_no());
+				WebUtils.setSessionAttribute(req, "CLUB_KEY", clubService.getWithNo(club_no));
+			}
 		}
 		catch (Exception err) {
 			result.reject("login");
@@ -72,12 +81,12 @@ public class MemberController {
 	public String logout(HttpServletRequest req){
 		HttpSession session = req.getSession();
 		
-		// ÃÖÁ¾ Á¢¼Ó ½Ã°£ ÀúÀå
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
 		MemberDTO dto = (MemberDTO)session.getAttribute("USER_KEY");
 		dto.setMem_logdate(service.getTime());
 		service.updateMember(dto);
 		
-		// ·Î±×¾Æ¿ô
+		// ï¿½Î±×¾Æ¿ï¿½
 		session.invalidate();
 		
 		return "redirect:/";
@@ -119,7 +128,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * ºñ¹Ğ¹øÈ£ Ã£±â ÆäÀÌÁö(ÀÌ¸ŞÀÏ·Î ÀÓ½Ãºñ¹Ğ¹øÈ£ Àü¼Û & ºñ¹Ğ¹øÈ£ º¯°æ)
+	 * ï¿½ï¿½Ğ¹ï¿½È£ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Ì¸ï¿½ï¿½Ï·ï¿½ ï¿½Ó½Ãºï¿½Ğ¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½ & ï¿½ï¿½Ğ¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½)
 	 */
 	@Autowired
 	private EmailSender emailSender;
@@ -133,16 +142,16 @@ public class MemberController {
         String mem_phone = dto.getMem_phone();
         
         if(service.getPW(mem_email, mem_phone) != null) {
-        	// ·£´ı¹®ÀÚ¿­ »ı¼º(¾ËÆÄºª+¼ıÀÚ 8ÀÚ¸®)
+        	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Äºï¿½+ï¿½ï¿½ï¿½ï¿½ 8ï¿½Ú¸ï¿½)
         	String mem_pw_new = RandomStringUtils.randomAlphanumeric(8);
         	
         	MemberDTO member = service.getMemberInfo(mem_email);
         	member.setMem_pw(mem_pw_new);
         	service.updateMember(member);
         	
-            email.setContent("ÀÓ½Ãºñ¹Ğ¹øÈ£´Â "+mem_pw_new+" ÀÔ´Ï´Ù.");
+            email.setContent("ï¿½Ó½Ãºï¿½Ğ¹ï¿½È£ï¿½ï¿½ "+mem_pw_new+" ï¿½Ô´Ï´ï¿½.");
             email.setReceiver(mem_email);
-            email.setSubject("ºñ¹Ğ¹øÈ£ Ã£±â ¸ŞÀÏÀÔ´Ï´Ù.");
+            email.setSubject("ï¿½ï¿½Ğ¹ï¿½È£ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
             emailSender.SendEmail(email);
             
             mav= new ModelAndView("redirect:/member/memberLogin");

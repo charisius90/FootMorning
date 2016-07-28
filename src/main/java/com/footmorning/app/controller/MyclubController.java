@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.MemberDTO;
@@ -20,7 +21,7 @@ import com.footmorning.app.service.MemberService;
 
 /**
  * 
- * @author ±Ëº“øµ
+ * @author ÍπÄÏÜåÏòÅ
  *
  */
 @Controller
@@ -34,22 +35,14 @@ public class MyclubController {
 	private static final Logger logger = LoggerFactory.getLogger(MyclubController.class);
 	
 	@RequestMapping("myclubMain")
-	public void myclubMain(HttpServletRequest req, Model model) throws NumberFormatException, Exception{
-		HttpSession session = req.getSession();
-		MemberDTO memberDto = (MemberDTO) session.getAttribute("USER_KEY");
+	public void myclubMain(HttpServletRequest req, Model model, int no) throws NumberFormatException, Exception{
+		MemberDTO memberDto = (MemberDTO)WebUtils.getSessionAttribute(req, "USER_KEY");
 		
-		// ≈¨∑¥π¯»£∑Œ ≈¨∑¥¡§∫∏ ∞°¡Æø¿±‚
-		int club_no = Integer.parseInt(memberDto.getClub_no());
-		ClubDTO myclubDto = service.getWithNo(club_no);
-		// ≈¨∑¥¿Â¿« ¿Ã∏ß 
-		MemberDTO masterDto = memberService.getWithNo(Integer.parseInt(myclubDto.getClub_master()));
-		String club_master_name = masterDto.getMem_name();
-		// ≈¨∑¥»∏ø¯ºˆ
-		int club_member_count = memberService.getWithClubno(club_no);
+		ClubDTO club = service.getWithNo(no);
+		MemberDTO master = memberService.getWithNo(Integer.parseInt(club.getClub_master()));
 		
-		model.addAttribute("myclubDto", myclubDto);
-		model.addAttribute("club_member_count", club_member_count);
-		model.addAttribute("club_master_name", club_master_name);
+		model.addAttribute("CLUB", club);
+		model.addAttribute("MASTER", master);
 	}
 	
 	@RequestMapping("myclubRecord")

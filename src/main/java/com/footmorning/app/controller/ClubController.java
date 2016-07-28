@@ -1,7 +1,5 @@
 package com.footmorning.app.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,7 @@ import com.footmorning.app.util.ClubPageMaker;
 import com.footmorning.app.util.SearchClubCriteria;
 
 /**
- * @author ¹Ú¼öÇ×
+ * @author ë°•ìˆ˜í•­
  */
 @Controller
 @RequestMapping("/club/*")
@@ -29,7 +27,7 @@ public class ClubController {
 	@Autowired
 	private MemberService memberService;
 	
-	// È¸¿ø Grade¿ë final º¯¼öµé
+	// íšŒì› ë“±ê¸‰ íŒŒì´ë„ ë³€ìˆ˜ ëª¨ìŒ
 	public static final String GRADE_ADMIN = "0";
 	public static final String GRADE_MASTER = "1";
 	public static final String GRADE_MANAGER = "2";
@@ -64,9 +62,9 @@ public class ClubController {
 		System.out.println("check : " + dto);
 		service.insert(dto);
 
-		// Å¬·´ µî·ÏÀÚ È¸¿øµî±ŞÀº Å¬·´¸¶½ºÅÍ·Î º¯°æ
+		MemberDTO member = null;
 		try {
-			MemberDTO member = memberService.getMemberInfo(mem_email);
+			member = memberService.getMemberInfo(mem_email);
 			member.setMem_grade(GRADE_MASTER);
 			memberService.updateMember(member);
 			WebUtils.setSessionAttribute(req, "USER_KEY", member);
@@ -74,7 +72,7 @@ public class ClubController {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/myclub/myclubMain";
+		return "redirect:/myclub/myclubMain?no=" + member.getClub_no();
 	}
 	
 }
