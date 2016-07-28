@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.footmorning.app.domain.MyclubNoticeDTO;
 import com.footmorning.app.domain.MyclubNoticeReplyDTO;
 import com.footmorning.app.service.MyclubNoticeService;
+import com.footmorning.app.util.PageMaker;
+import com.footmorning.app.util.SearchCriteria;
 
 @Controller
 public class MyclubNoticeController {
@@ -25,9 +27,16 @@ public class MyclubNoticeController {
 	private MyclubNoticeService service;
 
 	@RequestMapping("/myclub/notice/main")
-	public String notice(Model model) throws Exception {
+	public String notice(SearchCriteria cri, Model model) throws Exception {
 
-		model.addAttribute("list", service.listAll());
+		model.addAttribute("list", service.listSearchCriteria(cri));
+
+		PageMaker pageMaker = new PageMaker();
+
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.listSearchCount(cri));
+
+		model.addAttribute("pageMaker", pageMaker);
 		// System.out.println(service.listAll().toString());
 		return "/myclub/myclubNotice/myclubNoticeBoardMain";
 		// 举裹篮 myclubNoticeBoardMain2
@@ -62,8 +71,8 @@ public class MyclubNoticeController {
 	@RequestMapping(value = "/myclub/notice/read", method = RequestMethod.GET)
 	public String read(Integer myclub_notice_no, Model model) throws Exception {
 		model.addAttribute("dto", service.read(myclub_notice_no));
-		
-		model.addAttribute("replydto",service.listAllReply(myclub_notice_no));
+
+		model.addAttribute("replydto", service.listAllReply(myclub_notice_no));
 
 		return "myclub/myclubNotice/myclubNoticeBoardRead";
 	}
@@ -79,7 +88,7 @@ public class MyclubNoticeController {
 	@RequestMapping(value = "/myclub/notice/update", method = RequestMethod.GET)
 	public String update(Integer myclub_notice_no, Model model) throws Exception {
 		model.addAttribute("dto", service.read(myclub_notice_no));
-
+		System.out.println(service.read(myclub_notice_no).toString());
 		return "myclub/myclubNotice/myclubNoticeBoardUpdate";
 	}
 
@@ -128,7 +137,7 @@ public class MyclubNoticeController {
 	@RequestMapping(value = "/myclub/noticeReply/register", method = RequestMethod.POST)
 	public String registerReply(Model model, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
 
-		 System.out.println("controller called...");
+		System.out.println("controller called...");
 		String parent_no = req.getParameter("parent_no");
 		String content = req.getParameter("myclub_notice_re_content");
 		int myclub_notice_no = Integer.parseInt(req.getParameter("myclub_notice_no"));
@@ -136,7 +145,7 @@ public class MyclubNoticeController {
 		// 眠饶 技记
 		int mem_no = Integer.parseInt(req.getParameter("mem_no"));
 		String myclub_notice_re_writer = req.getParameter("myclub_notice_re_writer");
-		
+
 		// DTO按眉积己饶 林涝
 		MyclubNoticeReplyDTO dto = new MyclubNoticeReplyDTO();
 		dto.setMyclub_notice_no(myclub_notice_no);
@@ -204,6 +213,5 @@ public class MyclubNoticeController {
 		return "/myclub/myclubNotice/json/myclubNoticeReplyDeleteJson";
 
 	}
-	
-	
+
 }

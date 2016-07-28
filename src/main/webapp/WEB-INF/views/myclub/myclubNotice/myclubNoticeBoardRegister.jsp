@@ -27,6 +27,7 @@
 				<%@ include file="../../include/communitysidebar.jsp" %>
 			</div>
 			<form name="f1" method="post" action="/myclub/notice/register">
+		    <input type="hidden" name="mem_no" value="${USER_KEY.mem_no}"/>
 			<div class="col-md-10">
 				<div id="page-content-wrapper">
 				<h1>클럽자랑-글쓰기</h1> 			
@@ -42,7 +43,7 @@
 		                     </tr>
 		                     <tr>
 		                        <td>작성자</td>
-		                        <td><input type="text" name="mem_no" value="1"/></td>
+		                        <td><input type="text" name="myclub_notice_writer" value="${USER_KEY.mem_name}"/></td>
 		                     </tr>
 		                     <tr>
 		                        <td>내용</td>

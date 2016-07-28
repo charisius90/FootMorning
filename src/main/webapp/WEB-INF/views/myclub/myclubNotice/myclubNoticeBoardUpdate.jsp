@@ -34,7 +34,7 @@
                      </tr>
                      <tr>
                         <td>작성자</td>
-                        <td><input type="text"  value="${dto.mem_no}"/></td>
+                        <td><input type="text"  value="${dto.myclub_notice_writer}"/></td>
                      </tr>
                      <tr>
                         <td>내용</td>

@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.footmorning.app.domain.MyclubNoticeDTO;
 import com.footmorning.app.domain.MyclubNoticeReplyDTO;
+import com.footmorning.app.util.Criteria;
+import com.footmorning.app.util.SearchCriteria;
 
 public interface MyclubNoticeService {
 	public void register(MyclubNoticeDTO dto) throws Exception;
@@ -16,6 +18,14 @@ public interface MyclubNoticeService {
 
 	public List<MyclubNoticeDTO> listAll() throws Exception;
 
+	public List<MyclubNoticeDTO> listCriteria(Criteria cri) throws Exception;	// 규채
+	
+	public int listCountCriteria(Criteria cri) throws Exception;	// 규채
+
+	public List<MyclubNoticeDTO> listSearchCriteria(SearchCriteria cri) throws Exception; // 규채
+
+	public int listSearchCount(SearchCriteria cri) throws Exception;	// 규채
+	
 	public void createReply(MyclubNoticeReplyDTO dto) throws Exception;
 
 	public void createReReply(MyclubNoticeReplyDTO dto);

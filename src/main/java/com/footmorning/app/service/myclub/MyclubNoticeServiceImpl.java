@@ -10,6 +10,8 @@ import com.footmorning.app.domain.MyclubNoticeDTO;
 import com.footmorning.app.domain.MyclubNoticeReplyDTO;
 import com.footmorning.app.persistence.MyclubNoticeDAO;
 import com.footmorning.app.service.MyclubNoticeService;
+import com.footmorning.app.util.Criteria;
+import com.footmorning.app.util.SearchCriteria;
 
 @Service
 public class MyclubNoticeServiceImpl implements MyclubNoticeService {
@@ -50,7 +52,7 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 	public List<MyclubNoticeDTO> listAll() throws Exception {
 		return getMyClubNotices(dao.listAll());
 	}
-
+	
 	// 썸네일
 	private List<MyclubNoticeDTO> getMyClubNotices(List<MyclubNoticeDTO> list) {
 		for (MyclubNoticeDTO dto : list) {
@@ -75,6 +77,38 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 		return mainThumnail;
 	}
 
+	/**
+	 * 	규채 listCountCriteria
+	 */
+	@Override
+	public int listCountCriteria(Criteria cri) throws Exception {
+		return dao.countPaging(cri);
+	}
+	
+	/**
+	 * 	규채 listCriteria
+	 */
+	@Override
+	public List<MyclubNoticeDTO> listCriteria(Criteria cri) throws Exception {
+		return dao.listCriteria(cri);
+	}
+	
+	/**
+	 * 	규채 listSearchCriteria
+	 */
+	@Override
+	public List<MyclubNoticeDTO> listSearchCriteria(SearchCriteria cri) throws Exception {
+		return dao.listSearchCriteria(cri);
+	}
+	
+	/**
+	 *  규채 listSearchCount
+	 */
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		return dao.listSearchCount(cri);
+	}
+	
 	/**
 	 * 승한,병현 reply service dao와 동일
 	 */
