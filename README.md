@@ -1,7 +1,3 @@
 # FootMorning
-KH
-
-line2
-±è¼Ò¿µ		line2_title
-¹Ú¼öÇ×		line2_title
-¿ìÁ¾¹Î		line2_title
+KH ì •ë³´êµìœ¡ì› 5ì¡°
+Final Project

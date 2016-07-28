@@ -60,6 +60,20 @@
 							  	<!-- 클럽장 텍스트 -->
 							  	<td align="right"><strong>클럽장 : ${CLUB_KEY.club_master_name}</strong></td>
 							  </tr>
+							  <tr>
+							  	<td align="center">
+							  		<form id="registerForm" method="post" action="/myclubMgr/clubRequest">
+							  			<input type="hidden" name="club_no" value="${CLUB_KEY.club_no}"/>
+							  			<input type="hidden" name="mem_no" value="${USER_KEY.mem_no}"/>
+							  			<input type="hidden" name="mem_gender" value="${USER_KEY.mem_gender}"/>
+							  			<input type="hidden" name="mem_email" value="${USER_KEY.mem_email}"/>
+							  			<input type="hidden" name="mem_phone" value="${USER_KEY.mem_phone}"/>
+							  			<input type="hidden" name="mem_name" value="${USER_KEY.mem_name}"/>
+							  			<input type="hidden" name="mem_birth" value="${USER_KEY.mem_birth}"/>
+							  			<button type="submit">가입신청</button>
+							  		</form>
+							  	</td>
+							  </tr>
 							</table>
 						</div>
 				</div>

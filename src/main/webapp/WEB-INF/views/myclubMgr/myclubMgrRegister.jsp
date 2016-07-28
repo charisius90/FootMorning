@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,8 +30,8 @@
 			<br/><br/>
 			<div class="row">
 				<div style="float:right">
-					<input type="button" value="가입신청승인"/>
-					<input type="button" value="가입신청거절"/>	
+					<input type="button" value="가입신청승인" onclick="fnProc(1)"/>
+					<input type="button" value="가입신청거절" onclick="fnProc(0)"/>	
 				</div>
 			</div><!-- /.row -->
 			<br/><br/>
@@ -38,22 +39,24 @@
 				<table class="table table-hover" text-align="center">
 					<thead>
 					<tr>
-						<th><input type="checkbox"/></th><th>E-Mail</th><th>이름</th>
-						<th>생년월일</th><th>가입신청일</th>
+						<th><input type="checkbox"/></th>
+						<th>E-Mail</th>
+						<th>이름</th>
+						<th>생년월일</th>
+						<th>성별</th>
+						<th>가입신청일</th>
 					</tr>
 					</thead>
-					<tr>
-						<td><input type="checkbox"/></td><td>ksy4035@hanmail.net</td><td>김소영</td>
-						<td>84/01/27</td><td>16/07/01</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"/></td><td>abc@naver.com</td><td>박규채</td>
-						<td>89/07/21</td><td>16/07/02</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"/></td><td>acssh@naver.com</td><td>손승한</td>
-						<td>89/07/21</td><td>16/07/03</td>
-					</tr>
+					<c:forEach items="${req}" var="dto">
+						<tr>
+							<td><input type="checkbox" name="no" value="${dto.mem_no}"/></td>
+							<td>${dto.mem_email}</td>
+							<td>${dto.mem_name}</td>
+							<td>${dto.mem_birth}</td>
+							<td>${dto.mem_gender}</td>
+							<td>${dto.club_mem_regdate}</td>
+						</tr>
+					</c:forEach>
 				</table>
 					<nav align="center">
 						<ul class="pagination">
@@ -77,8 +80,15 @@
 	</div><!-- /.row -->
 </div><!-- /.container -->
 
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 <script>
+	function fnProc(){
+		// jquery로 선택된 체크박스들의 mem_no를 모두 가져와 post방식으로 서버에 전송
+	}
 	$(function(){
+		
 		$("#datepicker").datepicker(
 			{
 				dateFormat: "yymmdd",
@@ -91,8 +101,5 @@
 	});
 
 </script>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

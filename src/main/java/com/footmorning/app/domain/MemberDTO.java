@@ -15,6 +15,7 @@ public class MemberDTO {
 	private String mem_backno;
 	private String club_no;
 	private String mem_birth;
+	private String mem_club_regdate;
 	
 	public String getMem_birth() {
 		return mem_birth;
@@ -100,6 +101,12 @@ public class MemberDTO {
 	public void setClub_no(String club_no) {
 		this.club_no = club_no;
 	}
+	public String getMem_club_regdate() {
+		return mem_club_regdate;
+	}
+	public void setMem_club_regdate(String mem_club_regdate) {
+		this.mem_club_regdate = mem_club_regdate;
+	}
 	
 	@Override
 	public String toString() {
@@ -109,7 +116,7 @@ public class MemberDTO {
 		", mem_addr=" + mem_addr + ", mem_grade=" + mem_grade + 
 		", mem_image=" + mem_image + ",	mem_regdate=" + mem_regdate +
 		", mem_logdate=" + mem_logdate + ",	mem_backno=" + mem_backno +
-		", club_no=" + club_no + ", mem_birth=" + mem_birth + "]";
+		", club_no=" + club_no + ", mem_birth=" + mem_birth + ", mem_club_regdate=" + mem_club_regdate + "]";
 	}
 	
 }

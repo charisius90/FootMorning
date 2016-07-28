@@ -4,12 +4,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.ClubDTO;
+import com.footmorning.app.domain.ClubMemberDTO;
 import com.footmorning.app.domain.MemberDTO;
+import com.footmorning.app.service.ClubMemberService;
 import com.footmorning.app.service.ClubService;
 
 @Controller
@@ -17,6 +20,19 @@ import com.footmorning.app.service.ClubService;
 public class MyclubMgrController {
 	@Autowired
 	private ClubService service;
+	@Autowired
+	private ClubMemberService clubMemberService;
+	
+	/**
+	 * @박수항
+	 * 가입신청 테스트용(컨트롤러 위치 변경해야함)
+	 */
+	@RequestMapping(value="clubRequest", method=RequestMethod.POST)
+	public String requestPOST(ClubMemberDTO dto){
+		System.out.println(dto);
+		clubMemberService.insert(dto);
+		return "redirect:/myclub/myclubMain?no=" + dto.getClub_no();
+	}
 	
 	/**
 	 * 기본정보 변경 페이지
@@ -79,9 +95,19 @@ public class MyclubMgrController {
 	 * 가입신청관리
 	 */
 	@RequestMapping("myclubMgrRegister")
-	public void myclubMgrRegister(){
-		
+	public void myclubMgrRegister(HttpServletRequest req, Model model){
+		try {
+			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+			model.addAttribute("req", clubMemberService.listRequest(Integer.parseInt(club.getClub_no())));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+	
+	@RequestMapping(value="myclubMgrRegister", method=RequestMethod.POST)
+	public void myclubMgrRegisterComplete(){}
+	
 	
 	/**
 	 * 직책/등급관리

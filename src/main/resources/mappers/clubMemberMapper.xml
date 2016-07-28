@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.clubMemberMapper">
+	
+	<insert id="insert" parameterType="com.footmorning.app.domain.ClubMemberDTO">
+		insert into
+		club_member(club_no, mem_no, mem_gender, mem_email, mem_phone, mem_name, mem_birth)
+		values(#{club_no}, #{mem_no}, #{mem_gender}, #{mem_email}, #{mem_phone}, #{mem_name}, #{mem_birth})
+	</insert>
+	
+	<update id="update" parameterType="ClubMemberDTO">
+		update club_member set
+		club_no=#{club_no},
+		mem_no=#{mem_no},
+		mem_gender=#{mem_gender},
+		mem_email=#{mem_email},
+		mem_phone=#{mem_phone},
+		mem_name=#{mem_name},
+		mem_birth=#{mem_birth},
+		club_mem_regdate=#{club_mem_regdate},
+		club_mem_flag=#{club_mem_flag}
+		where club_no=#{club_no} and mem_no=#{mem_no}
+	</update>
+	
+	<delete id="delete" parameterType="ClubMemberDTO">
+		delete from club_member where club_no=#{club_no} and mem_no=#{mem_no}
+	</delete>
+	
+	<select id="listAll" resultType="ClubMemberDTO">
+		select * from club_member where club_no=#{club_no} order by club_mem_regdate desc
+	</select>
+	
+	<select id="listMember" resultType="ClubMemberDTO">
+		select * from club_member where club_no=#{club_no} and club_mem_flag='TRUE' order by club_mem_regdate desc
+	</select>
+	
+	<select id="listRequest" resultType="ClubMemberDTO">
+		select * from club_member where club_no=#{club_no} and club_mem_flag='FALSE' order by club_mem_regdate desc
+	</select>
+
+</mapper>
