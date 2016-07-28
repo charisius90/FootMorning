@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.footmorning.app.domain.ClubDTO;
+import com.footmorning.app.util.SearchClubCriteria;
 
 /**
  * 
@@ -54,6 +55,16 @@ public class ClubDAOImpl implements ClubDAO {
 	@Override
 	public ClubDTO getWithNo(Integer no) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + ".getWithNo", no);
+	}
+	
+	@Override
+	public List<ClubDTO> listSearchClubCriteria(SearchClubCriteria clubcri) {
+		return sqlSession.selectList(NAMESPACE + ".listSearchClub", clubcri);
+	}
+
+	@Override
+	public int listSearchClubCount(SearchClubCriteria clubcri) {
+		return sqlSession.selectOne(NAMESPACE + ".listSearchClubCount", clubcri);
 	}
 
 }

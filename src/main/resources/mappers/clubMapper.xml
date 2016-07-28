@@ -37,5 +37,40 @@
 	<select id="listAll" resultType="ClubDTO">
 		select * from club order by club_no desc, club_regdate desc
 	</select>
+
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and club_name like CONCAT('%', #{keyword}, '%')
+			</if>
+			
+			<if test="searchType == 'c'.toString()">
+				and club_master like CONCAT('%', #{keyword}, '%')
+			</if>
+			
+			<if test="searchType == 'l'.toString()">
+				and club_loc like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+	
+	<select id="listSearchClub" resultType="ClubDTO">
+		<![CDATA[
+			select * from club where club_no > 0 and club_type = 1
+		]]>
+		
+		<include refid="search"></include>
+		
+		<![CDATA[
+		order by club_no desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+	
+	<select id="listSearchClubCount" resultType="int">
+		<![CDATA[
+			select count(club_no) from club where club_no > 0 
+		]]>
+		<include refid="search"></include>
+	</select>
 	
 </mapper>
