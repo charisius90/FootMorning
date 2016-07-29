@@ -29,6 +29,14 @@ public class MyclubMgrController {
 	@Autowired
 	private MemberService memberService;
 	
+	// 회원 등급 파이널 변수 모음
+	public static final String GRADE_ADMIN = "0"; // 서비스 운영진
+	public static final String GRADE_MASTER = "1"; // 클럽마스터
+	public static final String GRADE_MANAGER = "2"; // 클럽매니저
+	public static final String GRADE_STAFF = "3"; // 클럽스탭
+	public static final String GRADE_MEMBER = "4"; // 클럽소속회원
+	public static final String GRADE_NORMAL = "5"; // 일반회원
+	
 	/**
 	 * @박수항
 	 * 가입신청 테스트용(컨트롤러 위치 변경해야함)
@@ -96,8 +104,22 @@ public class MyclubMgrController {
 	 * 클럽멤버관리
 	 */
 	@RequestMapping("myclubMgrMember")
-	public void myclubMgrMember(){
-		
+	public void myclubMgrMember(HttpServletRequest req, Model model){
+		try {
+			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+			model.addAttribute("list", clubMemberService.listMember(Integer.parseInt(club.getClub_no())));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="myclubMgrMember", method=RequestMethod.POST)
+	public String myclubMgrMemberComplete(@RequestParam(value="mem_no") List<String> memberList, Model model){
+		for(String mem_no : memberList){
+			
+		}
+		return "redirect:/myclubMgr/myclubMgrMember";
 	}
 	
 	/**
@@ -116,17 +138,21 @@ public class MyclubMgrController {
 	
 	@RequestMapping(value="myclubMgrRegister", method=RequestMethod.POST)
 	public String myclubMgrRegisterComplete(@RequestParam(value="mem_no") List<String> memberList, String type, Model model){
+		// 가입신청승인
 		if(type.equals("approval")){
 			for(String mem_no : memberList){
 				try{
 					// 클럽멤버 테이블에 삽입
 					ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt(mem_no));
 					clubMember.setClub_mem_flag("TRUE");
+					clubMember.setMem_grade(GRADE_MEMBER);
 		            clubMemberService.update(clubMember);
 		            
-		            // 멤버 테이블에 클럽번호 컬럼 업데이트
+		            // 멤버 테이블에 클럽번호, 등급, 클럽가입일 컬럼 업데이트
 		            MemberDTO member = memberService.getWithNo(Integer.parseInt(mem_no));
 		            member.setClub_no(clubMember.getClub_no());
+		            member.setMem_grade(GRADE_MEMBER);
+		            member.setMem_club_regdate(clubMember.getClub_mem_regdate());
 		            memberService.updateMember(member);
 				}
 				catch(Exception e){
@@ -134,6 +160,7 @@ public class MyclubMgrController {
 				}
 			}
 		}
+		// 가입신청거절
 		else{
 			for(String mem_no : memberList){
 				try{

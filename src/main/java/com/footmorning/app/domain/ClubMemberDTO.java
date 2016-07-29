@@ -9,6 +9,7 @@ public class ClubMemberDTO {
 	private String mem_phone;
 	private String mem_name;
 	private String mem_birth;
+	private String mem_grade;
 	private String club_mem_regdate;
 	private String club_mem_flag;
 	
@@ -60,6 +61,12 @@ public class ClubMemberDTO {
 	public void setMem_birth(String mem_birth) {
 		this.mem_birth = mem_birth;
 	}
+	public String getMem_grade() {
+		return mem_grade;
+	}
+	public void setMem_grade(String mem_grade) {
+		this.mem_grade = mem_grade;
+	}
 	public String getClub_mem_regdate() {
 		return club_mem_regdate;
 	}
@@ -77,8 +84,8 @@ public class ClubMemberDTO {
 	public String toString() {
 		return "ClubMemberDTO [club_mem_no=" + club_mem_no + ", club_no=" + club_no + ", mem_no=" + mem_no
 				+ ", mem_gender=" + mem_gender + ", mem_email=" + mem_email + ", mem_phone=" + mem_phone + ", mem_name="
-				+ mem_name + ", mem_birth=" + mem_birth + ", club_mem_regdate=" + club_mem_regdate + ", club_mem_flag="
-				+ club_mem_flag + "]";
+				+ mem_name + ", mem_birth=" + mem_birth + ", mem_grade=" + mem_grade + ", club_mem_regdate=" + club_mem_regdate
+				+ ", club_mem_flag=" + club_mem_flag + "]";
 	}
 	
 }

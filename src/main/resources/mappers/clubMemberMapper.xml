@@ -5,10 +5,10 @@
 
 <mapper namespace="com.footmorning.mappers.clubMemberMapper">
 	
-	<insert id="insert" parameterType="com.footmorning.app.domain.MemberDTO">
+	<insert id="insert" parameterType="com.footmorning.app.domain.ClubMemberDTO">
 		insert into
-		club_member(club_no, mem_no, mem_gender, mem_email, mem_phone, mem_name, mem_birth)
-		values(#{club_no}, #{mem_no}, #{mem_gender}, #{mem_email}, #{mem_phone}, #{mem_name}, #{mem_birth})
+		club_member(club_no, mem_no, mem_gender, mem_email, mem_phone, mem_name, mem_birth, mem_grade)
+		values(#{club_no}, #{mem_no}, #{mem_gender}, #{mem_email}, #{mem_phone}, #{mem_name}, #{mem_birth}, #{mem_grade})
 	</insert>
 	
 	<update id="update" parameterType="ClubMemberDTO">
@@ -20,6 +20,7 @@
 		mem_phone=#{mem_phone},
 		mem_name=#{mem_name},
 		mem_birth=#{mem_birth},
+		mem_grade=#{mem_grade},
 		club_mem_regdate=#{club_mem_regdate},
 		club_mem_flag=#{club_mem_flag}
 		where club_no=#{club_no} and mem_no=#{mem_no}

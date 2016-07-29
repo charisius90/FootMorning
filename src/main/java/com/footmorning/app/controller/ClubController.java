@@ -28,11 +28,12 @@ public class ClubController {
 	private MemberService memberService;
 	
 	// 회원 등급 파이널 변수 모음
-	public static final String GRADE_ADMIN = "0";
-	public static final String GRADE_MASTER = "1";
-	public static final String GRADE_MANAGER = "2";
-	public static final String GRADE_STAFF = "3";
-	public static final String GRADE_NORMAL = "4";
+	public static final String GRADE_ADMIN = "0"; // 서비스 운영진
+	public static final String GRADE_MASTER = "1"; // 클럽마스터
+	public static final String GRADE_MANAGER = "2"; // 클럽매니저
+	public static final String GRADE_STAFF = "3"; // 클럽스탭
+	public static final String GRADE_MEMBER = "4"; // 클럽소속회원
+	public static final String GRADE_NORMAL = "5"; // 일반회원
 	
 	@RequestMapping("clubList")
 	public void listGET(SearchClubCriteria clubcri, Model model){

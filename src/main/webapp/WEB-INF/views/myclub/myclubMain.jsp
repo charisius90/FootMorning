@@ -70,6 +70,7 @@
 							  			<input type="hidden" name="mem_phone" value="${USER_KEY.mem_phone}"/>
 							  			<input type="hidden" name="mem_name" value="${USER_KEY.mem_name}"/>
 							  			<input type="hidden" name="mem_birth" value="${USER_KEY.mem_birth}"/>
+							  			<input type="hidden" name="mem_grade" value="${USER_KEY.mem_grade}"/>
 							  			<button type="submit">가입신청</button>
 							  		</form>
 							  	</td>

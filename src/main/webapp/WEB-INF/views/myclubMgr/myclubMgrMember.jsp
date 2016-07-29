@@ -48,26 +48,39 @@
 			</div><!-- /.row -->
 			<br/><br/>
 			<div class="row">
-				<table class="table table-hover" text-align="center">
-					<thead>
-					<tr>
-						<th><input type="checkbox"/></th><th>닉네임</th><th>등급</th><th>성별</th>
-						<th>전화번호</th><th>주소</th><th>가입일</th>
-					</tr>
-					</thead>
-					<tr>
-						<td><input type="checkbox"/></th><th>ksy4035</td><td>클럽장</td><td>여자</td>
-						<td>010-7799-7470</td><td>서울 노원구 중계동</td><td>2016-07-01</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"/></th><th>비실이이</td><td>운영자</td><td>남자</td>
-						<td>010-1234-5678</td><td>서울 광진구 자양동</td><td>2016-07-02</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"/></th><th>손니에스타</td><td>운영자</td><td>남자</td>
-						<td>010-1357-2468</td><td>서울 구로구 구로동</td><td>2016-07-03</td>
-					</tr>
-				</table>
+				<form method="post" action="/myclubMgr/myclubMgrMember">
+					<table class="table table-hover" text-align="center">
+						<thead>
+						<tr>
+							<th><input type="checkbox"/></th>
+							<th>E-Mail</th>
+							<th>회원등급</th>
+							<th>이름</th>
+							<th>생년월일</th>
+							<th>성별</th>
+							<th>클럽가입일</th>
+						</tr>
+						</thead>
+						<c:forEach items="${list}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="mem_no" id="checked_member" value="${dto.mem_no}"/></td>
+								<td>${dto.mem_email}</td>
+								<td>
+									<select name="select_grade" style="height:30px">
+										<option value='1'>마스터</option>
+										<option value='2'>매니저</option>
+										<option value='3'>스탭</option>
+										<option value='4'>일반회원</option>
+									</select>
+								</td>
+								<td>${dto.mem_name}</td>
+								<td>${dto.mem_birth}</td>
+								<td>${dto.mem_gender}</td>
+								<td>${dto.club_mem_regdate}</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</form>
 				
 				<div style="float:right">
 					<button class="btn btn-primary">수정</button>
@@ -97,6 +110,14 @@
 </div><!-- /.container -->
 
 <script>
+	$(document).ready(
+		function(){
+			var grade = "${dto.mem_grade}";
+			console.log(grade);
+			$("#select_grade").val(grade).attr("selected", "selected");
+		}
+	);
+
 	$(function(){
 		$("#datepicker").datepicker(
 			{
