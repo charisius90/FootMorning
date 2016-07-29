@@ -40,12 +40,12 @@ public class ClubMemberServiceImpl implements ClubMemberService {
 
 	@Override
 	public List<ClubMemberDTO> listMember(Integer club_no) throws Exception {
-		return dao.listAll(club_no);
+		return dao.listMember(club_no);
 	}
 	
 	@Override
 	public List<ClubMemberDTO> listRequest(Integer club_no) throws Exception {
-		return dao.listAll(club_no);
+		return dao.listRequest(club_no);
 	}
 
 	@Override
