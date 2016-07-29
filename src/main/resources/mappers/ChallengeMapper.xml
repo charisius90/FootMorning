@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.ChallengeMapper">
+
+	<insert id="register" parameterType="ChallengeDTO">
+	
+	INSERT INTO challenge (sender_club_no, receiver_club_no, challenge_content, game_no, game_flag, club_ability)
+	VALUES(
+	#{sender_club_no},
+	#{receiver_club_no},
+	#{challenge_content},
+	#{game_no},
+	#{game_flag},
+	#{club_ability});
+	</insert>
+	
+</mapper>

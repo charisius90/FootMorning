@@ -14,17 +14,37 @@
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
-	$(function(){
-		$("#datepicker, #datepicker2").datepicker(
-			{
-				dateFormat: "yyyy/mm/dd",
-				changeMonth: true,
-				changeYear: true,
-				minDate: "0",
-				maxDate: "+1y",
-			}		
-		);
-	});
+// 	$(function(){
+// 		$("#datepicker, #datepicker2").datepicker(
+// 			{
+// 				dateFormat: "yyyy/mm/dd",
+// 				changeMonth: true,
+// 				changeYear: true,
+// 				minDate: "0",
+// 				maxDate: "+1y",
+// 			}		
+// 		);
+// 	});
+	function fnModal(game_no ,game_date , game_time , game_addr , club_name, club_no){
+		
+// 		alert("date?"+game_date);
+// 		alert("time?"+game_time);
+// 		alert("addr?"+game_addr);
+// 		alert("gameNo?"+club_name+","+game_no);
+		
+		//open modal
+		$('#send_chellenge_modal').modal('show');
+		
+		$("#game_no").val(game_no);
+		$("#challengeDate").text(game_date);
+		$("#challengeTime").text(game_time);
+		$("#challengeAddr").text(game_addr);
+		//추후에 
+		$("#receiver_club_name").val(club_name);
+		$("#receiver_club_no").val(club_no);
+		
+		
+	}
 </script>
 </head>
 <body>
@@ -66,19 +86,18 @@
 					
 					
 					
-					
-					
 					<c:forEach items="${list}" var="dto">
 						<tr>
-							<td>${dto.game_no}</td><td><fmt:formatDate value="${dto.game_date}" pattern="yyyy-MM-dd"/></td><td>${dto.game_time}</td><td>${dto.game_addr}</td>
-							<td>${dto.club_name}</td><td>${dto.club_master_name}</td><td><c:forEach begin="1" end="${dto.club_ability}"><i class="glyphicon glyphicon-star"></i></c:forEach></td><td><input type="button" value="보내기" data-toggle="modal" data-target="#send_chellenge_modal"/></td>
+							<td>${dto.game_no}</td>
+							<td><fmt:formatDate value="${dto.game_date}" pattern="yyyy-MM-dd"/></td>
+							<td>${dto.game_time}</td>
+							<td>${dto.game_addr}</td>
+							<td>${dto.club_name}</td>
+							<td>${dto.club_master_name}</td>
+							<td><c:forEach begin="1" end="${dto.club_ability}"><i class="glyphicon glyphicon-star"></i></c:forEach></td>
+							<td><input type="button" value="보내기" onclick="fnModal(${dto.game_no},'${dto.game_date}','${dto.game_time}','${dto.game_addr}','${dto.club_name}',${dto.club_no})"/></td>
 						</tr>
 					</c:forEach>
-					
-					
-					
-					
-					
 					
 					
 					
@@ -137,6 +156,12 @@
 		</div>
 	</div>
 	
+	
+	
+	
+	
+	
+	
 	<!-- 도전장보내기 모달창 -->
 	<div id="send_chellenge_modal" class="modal fade" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -147,28 +172,44 @@
 						aria-hidden="true">×</button>
 					<h3 id="myModalLabel">도전장 보내기</h3>
 				</div>
-				<div class="modal-body" align="center">
-					<div>
-						날짜&nbsp;<input type="text" id="datepicker2"/><br/><br/>
-						시간&nbsp;<select name="time" style="width:170px">
-							<option></option>
-							<option></option>
-						</select><br/><br/>
-						클럽명&nbsp;<input type="text" /><br/><br/>
-						장소&nbsp;<input type="text" /><br/><br/>
-						실력&nbsp;<select name="time" style="width:170px">
-							<option></option>
-							<option></option>
-						</select>
+				<form method="post" action="/challenge/register">
+				
+				
+					<input type="hidden" name="game_no" id="game_no"/>
+					<input type="hidden" name="receiver_club_no" id="receiver_club_no"/>
+					<input type="hidden" name="sender_club_no" id="sender_club_no" value="${USER_KEY.club_no}"/>
+					<input type="hidden" name="game_flag" id="game_flag" value="AWAY"/>
+					
+					
+					<div class="modal-body" align="center">
+						<div>
+							날짜&nbsp;<div id="challengeDate"></div><br/><br/>
+							시간&nbsp;<div id="challengeTime"></div><br/><br/>
+							지역&nbsp;<div id="challengeAddr"></div><br/><br/>
+							HOME팀&nbsp;<input type="text" id="receiver_club_name"/><br/><br/>
+							AWAY팀&nbsp;<input type="text" id="sender_club_name" value="${USER_KEY.club_no}"/><br/><br/>
+							실력&nbsp;<select name="club_ability" style="width:170px">
+										<option value="1">★</option>
+										<option value="2">★★</option>
+										<option value="3">★★★</option>
+										<option value="4">★★★★</option>
+										<option value="5">★★★★★</option>
+							</select><br/><br/>
+							<textarea name="challenge_content" rows="10" cols="20" style="width: 170px" placeholder="한마디"></textarea>
+						</div>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-primary">보내기</button>
-					<button class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
-				</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary" type="submit">보내기</button>
+						<button class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
+	
+	
+	
+	
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

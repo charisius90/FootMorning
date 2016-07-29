@@ -14,10 +14,6 @@ public class MatchDTO {
 	   private int club_ability;
 	   private String club_master_name;
 	   
-	   
-	   
-	   
-	   
 	public String getClub_master_name() {
 		return club_master_name;
 	}
