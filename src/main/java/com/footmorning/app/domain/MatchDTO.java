@@ -12,10 +12,18 @@ public class MatchDTO {
 	   private int game_score;
 	   private String club_name;
 	   private int club_ability;
+	   private String club_master_name;
 	   
 	   
 	   
 	   
+	   
+	public String getClub_master_name() {
+		return club_master_name;
+	}
+	public void setClub_master_name(String club_master_name) {
+		this.club_master_name = club_master_name;
+	}
 	public int getClub_ability() {
 		return club_ability;
 	}
@@ -74,6 +82,8 @@ public class MatchDTO {
 	public String toString() {
 		return "MatchDTO [game_no=" + game_no + ", game_date=" + game_date + ", game_time=" + game_time + ", game_addr="
 				+ game_addr + ", game_flag=" + game_flag + ", club_no=" + club_no + ", game_score=" + game_score
-				+ ", club_name=" + club_name + ", club_ability=" + club_ability + "]";
+				+ ", club_name=" + club_name + ", club_ability=" + club_ability + ", club_master_name="
+				+ club_master_name + "]";
 	}
+	
 }

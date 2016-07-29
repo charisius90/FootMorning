@@ -59,7 +59,7 @@
 					<thead>
 						<tr>
 							<th>NO</th><th>날짜</th><th>시간</th><th>지역</th>
-							<th>클럽명</th><th>실력</th><th>도전장</th>
+							<th>클럽명</th><th>클럽장</th><th>실력</th><th>도전장</th>
 							
 						</tr>
 					</thead>
@@ -71,7 +71,7 @@
 					<c:forEach items="${list}" var="dto">
 						<tr>
 							<td>${dto.game_no}</td><td><fmt:formatDate value="${dto.game_date}" pattern="yyyy-MM-dd"/></td><td>${dto.game_time}</td><td>${dto.game_addr}</td>
-							<td>${dto.club_name}</td><td><c:forEach begin="1" end="${dto.club_ability}"><i class="glyphicon glyphicon-star"></i></c:forEach></td><td><input type="button" value="보내기" data-toggle="modal" data-target="#send_chellenge_modal"/></td>
+							<td>${dto.club_name}</td><td>${dto.club_master_name}</td><td><c:forEach begin="1" end="${dto.club_ability}"><i class="glyphicon glyphicon-star"></i></c:forEach></td><td><input type="button" value="보내기" data-toggle="modal" data-target="#send_chellenge_modal"/></td>
 						</tr>
 					</c:forEach>
 					
