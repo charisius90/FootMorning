@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,10 +25,6 @@
 			}		
 		);
 	});
-	
-	function mach_regi(){
-		location.href="matchingRegisterPage.jsp";
-	}
 </script>
 </head>
 <body>
@@ -55,33 +53,34 @@
 					<button type="button" data-toggle="modal" data-target="#detail_search_modal">상세검색</button>
 					<br/><br/><br/><br/>
 			</div><!-- /.row -->
-			
 			<div class="row">
-				<div align="right"><input type="button" value="매칭등록" onclick="mach_regi()"/></div>
+				<div align="right"><a class="btn btn-default" href="/matching/register" type="button">매칭등록</a></div>
 				<table class="table table-hover" text-align="center">
 					<thead>
-					<tr>
-						<th>NO</th><th>날짜</th><th>시간</th><th>지역</th>
-						<th>장소</th><th>클럽명</th><th>실력</th><th>도전장</th>
-						
-					</tr>
+						<tr>
+							<th>NO</th><th>날짜</th><th>시간</th><th>지역</th>
+							<th>클럽명</th><th>실력</th><th>도전장</th>
+							
+						</tr>
 					</thead>
-					<tr>
-						<td>1</td><td>7/14</td><td>12:00</td><td>서울</td>
-						<td>경기장1</td><td>맨유</td><td>★★</td><td><input type="button" value="보내기" data-toggle="modal" data-target="#send_chellenge_modal"/></td>
-					</tr>
-					<tr>
-						<td>2</td><td>7/14</td><td>13:00</td><td>부산</td>
-						<td>경기장2</td><td>첼시</td><td>★★★★</td><td><input type="button" value="보내기" data-toggle="modal" data-target="#send_chellenge_modal"/></td>
-					</tr>
-					<tr>
-						<td>3</td><td>7/15</td><td>15:00</td><td>광주</td>
-						<td>미정</td><td>아스날</td><td>★</td><td><input type="button" value="보내기" data-toggle="modal" data-target="#send_chellenge_modal"/></td>
-					</tr>
-					<tr>
-						<td>4</td><td>7/18</td><td>16:00</td><td>서울</td>
-						<td>경기장3</td><td>리버풀</td><td>★★★</td><td><input type="button" value="보내기" data-toggle="modal" data-target="#send_chellenge_modal"/></td>
-					</tr>
+					
+					
+					
+					
+					
+					<c:forEach items="${list}" var="dto">
+						<tr>
+							<td>${dto.game_no}</td><td><fmt:formatDate value="${dto.game_date}" pattern="yyyy-MM-dd"/></td><td>${dto.game_time}</td><td>${dto.game_addr}</td>
+							<td>${dto.club_name}</td><td><c:forEach begin="1" end="${dto.club_ability}"><i class="glyphicon glyphicon-star"></i></c:forEach></td><td><input type="button" value="보내기" data-toggle="modal" data-target="#send_chellenge_modal"/></td>
+						</tr>
+					</c:forEach>
+					
+					
+					
+					
+					
+					
+					
 					
 				</table>
 					<nav align="center">

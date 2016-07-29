@@ -37,7 +37,7 @@
 		<div class="navbar-header"><a class="navbar-brand" href="/">로고들어갈위치</a></div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav nav-justified">
-				<li><a href="../matching/matchingPage.jsp">매칭</a></li>
+				<li><a href="/matching/main">매칭</a></li>
 				<li><a href="/club/clubList">클럽</a></li>
 				<c:if test="${USER_KEY.club_no!=null}">
 					<li><a href="/myclub/myclubMain?no=${USER_KEY.club_no}">MYCLUB</a></li>

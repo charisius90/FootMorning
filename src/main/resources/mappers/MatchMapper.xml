@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.MatchMapper">
+	
+	<insert id="register" parameterType="MatchDTO">
+		INSERT INTO game(game_date,game_time,game_addr, game_flag, club_no, club_ability) 
+		VALUES (
+		#{game_date},
+		#{game_time},
+		#{game_addr},
+		#{game_flag},
+		#{club_no},
+		#{club_ability});
+	</insert>
+	
+	<select id="listAll" resultType="MatchDTO">
+	
+	
+		select * from game inner join club on game.club_no=club.club_no
+		where game_no > 0 order by game_no desc;	
+		
+	</select>
+	
+</mapper>
