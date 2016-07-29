@@ -36,6 +36,7 @@
 			</div><!-- /.row -->
 			<br/><br/>
 			<div class="row">
+				<form id="req_form" method="post">
 				<table class="table table-hover" text-align="center">
 					<thead>
 					<tr>
@@ -49,7 +50,7 @@
 					</thead>
 					<c:forEach items="${req}" var="dto">
 						<tr>
-							<td><input type="checkbox" name="no" id="checked_member" value="${dto.mem_no}"/></td>
+							<td><input type="checkbox" name="mem_no" id="checked_member" value="${dto.mem_no}"/></td>
 							<td>${dto.mem_email}</td>
 							<td>${dto.mem_name}</td>
 							<td>${dto.mem_birth}</td>
@@ -58,6 +59,7 @@
 						</tr>
 					</c:forEach>
 				</table>
+				</form>
 					<nav align="center">
 						<ul class="pagination">
 							<li><a href="#" aria-label="Previous">
@@ -87,17 +89,7 @@
 	function fnProc(type){
 		// jquery로 선택된 체크박스들의 mem_no를 모두 가져와 post방식으로 서버에 전송
 		if(type==1){
-			var param = [];
-			$('#checked_member:checked').each(function(i){ 
-		        param.push($(this).val());
-		        console.log(param);
-			});
-		    $.ajax({
-		    url : '/myclubMgr/myclubMgrRegister',
-		    type : 'post',
-		    dataType : 'text',
-		    data : {mem_no : param}
-		    });
+		    $('#req_form').submit();
 		}
 		else{
 	

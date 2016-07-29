@@ -115,13 +115,13 @@ public class MyclubMgrController {
 	}
 	
 	@RequestMapping(value="myclubMgrRegister", method=RequestMethod.POST)
-	public String myclubMgrRegisterComplete(@RequestParam(value="mem_no[]") List<String> memberList, HttpServletRequest req, Model model){
-		ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+	public String myclubMgrRegisterComplete(@RequestParam(value="mem_no") List<String> memberList, Model model){
 		for(String mem_no : memberList){
 			try {
 				ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt(mem_no));
 				clubMember.setClub_mem_flag("TRUE");
 				clubMemberService.update(clubMember);
+				System.out.println("clubMember : " + clubMember.toString());
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
