@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.footmorning.app.domain.ChallengeDTO;
 import com.footmorning.app.service.ChallengeService;
@@ -18,17 +19,14 @@ public class ChallengeController {
 	private ChallengeService service;
 
 	@RequestMapping(value="/challenge/register",method=RequestMethod.POST)
-	public String ChallengeRegister(ChallengeDTO dto,HttpServletRequest req,Model model) throws Exception{
+	public String ChallengeRegister(ChallengeDTO dto,RedirectAttributes rttr) throws Exception{
 		
-//		ChallengeDTO dto =new ChallengeDTO();
-//		dto.setSender_club_no(Integer.parseInt(req.getParameter("sender_club_no")));
-//		dto.setReceiver_club_no(Integer.parseInt(req.getParameter("receiver_club_no")));
-//		dto.setChallenge_content(req.getParameter("challenge_content"));
-//		dto.setGame_no(Integer.parseInt(req.getParameter("game_no")));
-//		dto.setGame_flag(req.getParameter("game_flag"));
-//		dto.setClub_ability(Integer.parseInt(req.getParameter("club_ability")));
 		System.out.println(dto.toString());
 		service.ChallengRegister(dto);
+		
+		rttr.addFlashAttribute("msg", "SUCCESS");
+		
+		
 		return "redirect:/matching/main";
 	}
 }
