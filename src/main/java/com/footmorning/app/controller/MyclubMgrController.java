@@ -119,9 +119,15 @@ public class MyclubMgrController {
 		if(type.equals("approval")){
 			for(String mem_no : memberList){
 				try{
+					// 클럽멤버 테이블에 삽입
 					ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt(mem_no));
 					clubMember.setClub_mem_flag("TRUE");
 		            clubMemberService.update(clubMember);
+		            
+		            // 멤버 테이블에 클럽번호 컬럼 업데이트
+		            MemberDTO member = memberService.getWithNo(Integer.parseInt(mem_no));
+		            member.setClub_no(clubMember.getClub_no());
+		            memberService.updateMember(member);
 				}
 				catch(Exception e){
 					 e.printStackTrace();
