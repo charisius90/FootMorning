@@ -31,6 +31,11 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 		// TODO Auto-generated method stub
 		return dao.read(bno);
 	}
+	
+	@Override
+	public void updateCount(Integer myclub_notice_no) throws Exception {
+		dao.updateCount(myclub_notice_no);
+	}
 
 	/**
 	 * ���� update

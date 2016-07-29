@@ -33,6 +33,11 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NAMESPACE + ".read", bno);
 	}
+	
+	@Override
+	public void updateCount(Integer myclub_notice_no) throws Exception {
+		sqlSession.selectOne(NAMESPACE + ".updateCount", myclub_notice_no);
+	}
 
 	/**
 	 * ���� update

@@ -78,6 +78,8 @@ public class MyclubNoticeController {
 	 */
 	@RequestMapping(value = "/myclub/notice/read", method = RequestMethod.GET)
 	public String read(Integer myclub_notice_no, Model model) throws Exception {
+		service.updateCount(myclub_notice_no);
+		
 		model.addAttribute("dto", service.read(myclub_notice_no));
 
 		model.addAttribute("replydto", service.listAllReply(myclub_notice_no));

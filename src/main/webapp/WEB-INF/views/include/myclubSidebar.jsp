@@ -19,7 +19,7 @@
 				<li><a href="javascript:;" data-toggle="collapse"
 					data-target="#comm">커뮤니티<i class="glyphicon glyphicon-triangle-bottom"></i></a>
 					<ul id="comm" class="collapse">
-						<li><a href="#">자유게시판</a></li>
+						<li><a href="/myclub/free/main">자유게시판</a></li>
 						<li><a href="#">앨범</a></li>
 						<li><a href="#">동영상</a></li>
 						<li><a href="#">방명록</a></li>

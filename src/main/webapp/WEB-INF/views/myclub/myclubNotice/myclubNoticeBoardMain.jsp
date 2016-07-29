@@ -29,25 +29,29 @@
 				<h1>공지사항</h1>
 				<br/>
 				<table class="table table-boardead table-hover" style="text-align: center;">
-					<tr>
-						<td style="width: 26px;"></td>
-						<td style="width: 216px;">글번호</td>
-						<td style="width: 316px;">제목</td>
-						<td style="width: 216px;">작성자</td>
-						<td style="width: 216px;">작성일</td>
-						<td style="width: 116px;">조회수</td>
-					</tr>
+					<thead  style="background-color:#F7F7F7">
+						<tr>
+							<td style="width: 26px;"></td>
+							<td style="width: 216px;">글번호</td>
+							<td style="width: 316px;">제목</td>
+							<td style="width: 216px;">작성자</td>
+							<td style="width: 216px;">작성일</td>
+							<td style="width: 116px;">조회수</td>
+						</tr>
+					</thead>
 					<!-- 게시글 내용이 들어가는 부분 -->
-					<c:forEach items="${list}" var="myclubDTO">
-		               <tr align="center">
-		               	  <td></td>
-		               	  <td>${myclubDTO.myclub_notice_no}</td>
-		                  <td><a href="/myclub/notice/read?myclub_notice_no=${myclubDTO.myclub_notice_no}">${myclubDTO.myclub_notice_subject}</a></td>
-		                  <td>${myclubDTO.myclub_notice_writer}</td>
-		                  <td>${myclubDTO.myclub_notice_regdate}</td>
-		                  <td>${myclubDTO.myclub_notice_count}</td>
-		               </tr>
-              		</c:forEach>
+					<tbody>
+						<c:forEach items="${list}" var="myclubDTO">
+			               <tr align="center">
+			               	  <td></td>
+			               	  <td>${myclubDTO.myclub_notice_no}</td>
+			                  <td><a href="/myclub/notice/read?myclub_notice_no=${myclubDTO.myclub_notice_no}">${myclubDTO.myclub_notice_subject}</a></td>
+			                  <td>${myclubDTO.myclub_notice_writer}</td>
+			                  <td>${myclubDTO.myclub_notice_regdate}</td>
+			                  <td>${myclubDTO.myclub_notice_count}</td>
+			               </tr>
+	              		</c:forEach>
+					</tbody>
 				</table>
 				<br/>
 					

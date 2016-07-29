@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.myclub.myclubFreeMapper">
+	<insert id="create">
+		INSERT INTO myclub_free(mem_no, myclub_free_writer, club_no,
+		myclub_free_subject, myclub_free_content)
+		VALUES (#{mem_no}, #{myclub_free_writer}, #{club_no},
+		#{myclub_free_subject}, #{myclub_free_content})
+	</insert>
+	
+	<select id="read" resultType="MyclubFreeDTO">
+		select * from myclub_free where
+		myclub_free_no=#{bno}
+	</select>
+
+	<update id="update">
+		update myclub_free set myclub_free_subject
+		=#{myclub_free_subject},
+		myclub_free_content
+		=#{myclub_free_content}
+		where myclub_free_no = #{myclub_free_no}
+	</update>
+	
+	<update id="updateCount" parameterType="MyclubFreeDTO">
+		update myclub_free set myclub_free_count = myclub_free_count + 1 where myclub_free_no = #{myclub_free_no};
+	</update>
+
+	<delete id="delete">
+		delete from myclub_free where myclub_free_no =
+		#{myclub_free_no}
+	</delete>
+
+	<select id="listAll" resultType="MyclubFreeDTO">
+       <![CDATA[
+       select * from myclub_free where myclub_free_no > 0 order by myclub_free_no desc, myclub_free_regdate desc
+       ]]>
+	</select>
+
+	<select id="listPage" resultType="MyclubFreeDTO">
+		<![CDATA[
+			select * from myclub_free where myclub_free_no > 0 
+				order by myclub_free_no desc, myclub_free_regdate desc limit #{page}, 10
+		]]>
+	</select>
+
+	<select id="listCriteria" resultType="MyclubfreeDTO">
+ 		<![CDATA[
+ 			select * from myclub_free where myclub_free_no > 0 
+ 				order by myclub_free_no desc, myclub_free_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+
+	<select id="countPaging" resultType="int">
+		select count(myclub_free_no) from myclub_free
+	</select>
+
+
+	<!-- 반복되어 재사용되는 sql문은 이렇게 id를 부여하고 <sql></sql> 태그로 감싸면 include가 가능해진다. -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and myclub_free_subject like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'c'.toString()">
+				and myclub_free_content like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'w'.toString()">
+				and myclub_free_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
+		keyword ) -->
+	<select id="listSearch"  resultType="MyclubFreeDTO">
+		<![CDATA[  
+		  select * 
+		  from Myclub_Free 
+		  where Myclub_Free_no > 0 and club_no = #{club_no} 
+		]]>
+
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by Myclub_Free_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<!-- 검색 결과 게시물 총 갯수 계산 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(Myclub_Free_no) 
+		  from Myclub_Free 
+		  where Myclub_Free_no > 0 and club_no = #{club_no}
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<insert id="createReply" parameterType="MyclubFreeReplyDTO">
+		INSERT INTO
+		myclub_free_reply(myclub_free_no, mem_no, myclub_free_re_writer,
+		myclub_free_re_content, myclub_free_re_pos,
+		myclub_free_re_depth,myclub_free_re_group)
+		VALUES
+		(#{myclub_free_no}, #{mem_no}, #{myclub_free_re_writer},
+		#{myclub_free_re_content},0,0,null);
+	</insert>
+
+	<insert id="createReReply" parameterType="MyclubFreeReplyDTO">
+		INSERT INTO
+		myclub_free_reply(myclub_free_no, mem_no, myclub_free_re_writer,
+		myclub_free_re_content, myclub_free_re_pos,
+		myclub_free_re_depth,myclub_free_re_group)
+		VALUES
+		(#{myclub_free_no}, #{mem_no}, #{myclub_free_re_writer},
+		#{myclub_free_re_content},#{myclub_free_re_pos}+1,#{myclub_free_re_depth}+1,null);
+	</insert>
+
+	<select id="listReply" resultType="MyclubFreeReplyDTO">
+		select * from
+		myclub_free_reply where myclub_free_no=#{myclub_free_no}
+		order by
+		myclub_free_re_pos desc;
+	</select>
+
+	<select id="parentInfo" resultType="MyclubFreeReplyDTO">
+		select * from
+		myclub_free_reply where myclub_free_re_no=#{no};
+	</select>
+
+	<update id="updatePos">
+		update myclub_free_reply set
+		myclub_free_re_pos=myclub_free_re_pos+1;
+	</update>
+
+	<update id="replyUpdatePos">
+		update myclub_free_reply set
+		myclub_free_re_pos=myclub_free_re_pos+1
+		where myclub_free_re_pos
+		> #{myclub_free_re_pos}
+	</update>
+
+	<update id="deleteReply">
+		UPDATE myclub_free_reply SET
+		myclub_free_re_writer=#{myclub_free_re_writer},
+		myclub_free_re_content=#{myclub_free_re_content} WHERE
+		myclub_free_re_no=#{myclub_free_re_no};
+	</update>
+</mapper>
