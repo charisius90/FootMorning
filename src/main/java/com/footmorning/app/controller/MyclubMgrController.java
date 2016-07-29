@@ -115,17 +115,28 @@ public class MyclubMgrController {
 	}
 	
 	@RequestMapping(value="myclubMgrRegister", method=RequestMethod.POST)
-	public String myclubMgrRegisterComplete(@RequestParam(value="mem_no") List<String> memberList, Model model){
-		for(String mem_no : memberList){
-			try {
-				ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt(mem_no));
-				clubMember.setClub_mem_flag("TRUE");
-				clubMemberService.update(clubMember);
-				System.out.println("clubMember : " + clubMember.toString());
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
+	public String myclubMgrRegisterComplete(@RequestParam(value="mem_no") List<String> memberList, String type, Model model){
+		if(type.equals("approval")){
+			for(String mem_no : memberList){
+				try{
+					ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt(mem_no));
+					clubMember.setClub_mem_flag("TRUE");
+		            clubMemberService.update(clubMember);
+				}
+				catch(Exception e){
+					 e.printStackTrace();
+				}
+			}
+		}
+		else{
+			for(String mem_no : memberList){
+				try{
+					ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt(mem_no));
+					clubMemberService.delete(clubMember);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
 			}
 		}
 		return "redirect:/myclubMgr/myclubMgrRegister";

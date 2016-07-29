@@ -37,28 +37,28 @@
 			<br/><br/>
 			<div class="row">
 				<form id="req_form" method="post">
-				<table class="table table-hover" text-align="center">
-					<thead>
-					<tr>
-						<th><input type="checkbox"/></th>
-						<th>E-Mail</th>
-						<th>이름</th>
-						<th>생년월일</th>
-						<th>성별</th>
-						<th>가입신청일</th>
-					</tr>
-					</thead>
-					<c:forEach items="${req}" var="dto">
+					<table class="table table-hover" text-align="center">
+						<thead>
 						<tr>
-							<td><input type="checkbox" name="mem_no" id="checked_member" value="${dto.mem_no}"/></td>
-							<td>${dto.mem_email}</td>
-							<td>${dto.mem_name}</td>
-							<td>${dto.mem_birth}</td>
-							<td>${dto.mem_gender}</td>
-							<td>${dto.club_mem_regdate}</td>
+							<th><input type="checkbox"/></th>
+							<th>E-Mail</th>
+							<th>이름</th>
+							<th>생년월일</th>
+							<th>성별</th>
+							<th>가입신청일</th>
 						</tr>
-					</c:forEach>
-				</table>
+						</thead>
+						<c:forEach items="${req}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="mem_no" id="checked_member" value="${dto.mem_no}"/></td>
+								<td>${dto.mem_email}</td>
+								<td>${dto.mem_name}</td>
+								<td>${dto.mem_birth}</td>
+								<td>${dto.mem_gender}</td>
+								<td>${dto.club_mem_regdate}</td>
+							</tr>
+						</c:forEach>
+					</table>
 				</form>
 					<nav align="center">
 						<ul class="pagination">
@@ -87,14 +87,16 @@
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 <script>
 	function fnProc(type){
-		// jquery로 선택된 체크박스들의 mem_no를 모두 가져와 post방식으로 서버에 전송
-		if(type==1){
-		    $('#req_form').submit();
-		}
-		else{
-	
-		}
-	}
+	    // jquery로 선택된 체크박스들의 mem_no를 모두 가져와 post방식으로 서버에 전송
+	    var $form = $("#req_form");
+	    if(type==1){
+	       $form.attr("action", "/myclubMgr/myclubMgrRegister?type=approval");
+	    }
+	    else{
+	       $form.attr("action", "/myclubMgr/myclubMgrRegister?type=deny");
+	    }
+	    $form.submit();
+	 }
 	
 	$(function(){
 		
