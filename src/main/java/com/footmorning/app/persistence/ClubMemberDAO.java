@@ -15,4 +15,5 @@ public interface ClubMemberDAO {
 	public List<ClubMemberDTO> listAll(Integer club_no) throws Exception;
 	public List<ClubMemberDTO> listMember(Integer club_no) throws Exception;
 	public List<ClubMemberDTO> listRequest(Integer club_no) throws Exception;
+	public ClubMemberDTO getWithMemno(Integer mem_no) throws Exception;
 }

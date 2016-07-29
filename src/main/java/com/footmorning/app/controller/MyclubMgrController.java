@@ -1,5 +1,7 @@
 package com.footmorning.app.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.ClubDTO;
@@ -14,6 +17,7 @@ import com.footmorning.app.domain.ClubMemberDTO;
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.service.ClubMemberService;
 import com.footmorning.app.service.ClubService;
+import com.footmorning.app.service.MemberService;
 
 @Controller
 @RequestMapping("/myclubMgr/*")
@@ -22,6 +26,8 @@ public class MyclubMgrController {
 	private ClubService service;
 	@Autowired
 	private ClubMemberService clubMemberService;
+	@Autowired
+	private MemberService memberService;
 	
 	/**
 	 * @박수항
@@ -54,9 +60,12 @@ public class MyclubMgrController {
 	}
 	
 	@RequestMapping(value="myclubMgrInfo", method=RequestMethod.POST)
-	public void myclubInfoMgrComplete(ClubDTO dto){
+	public String myclubInfoMgrComplete(ClubDTO dto, HttpServletRequest req){
 		System.out.println("myclubMgrInfo : " + dto);
 		service.update(dto);
+		WebUtils.setSessionAttribute(req, "CLUB_KEY", dto);
+		
+		return "redirect:/myclubMgr/myclubMgrInfo";
 	}
 	
 	/**
@@ -106,7 +115,21 @@ public class MyclubMgrController {
 	}
 	
 	@RequestMapping(value="myclubMgrRegister", method=RequestMethod.POST)
-	public void myclubMgrRegisterComplete(){}
+	public String myclubMgrRegisterComplete(@RequestParam(value="mem_no[]") List<String> memberList, HttpServletRequest req, Model model){
+		ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+		for(String mem_no : memberList){
+			try {
+				ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt(mem_no));
+				clubMember.setClub_mem_flag("TRUE");
+				clubMemberService.update(clubMember);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "redirect:/myclubMgr/myclubMgrRegister";
+	}
 	
 	
 	/**

@@ -49,7 +49,7 @@
 					</thead>
 					<c:forEach items="${req}" var="dto">
 						<tr>
-							<td><input type="checkbox" name="no" value="${dto.mem_no}"/></td>
+							<td><input type="checkbox" name="no" id="checked_member" value="${dto.mem_no}"/></td>
 							<td>${dto.mem_email}</td>
 							<td>${dto.mem_name}</td>
 							<td>${dto.mem_birth}</td>
@@ -84,9 +84,26 @@
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 <script>
-	function fnProc(){
+	function fnProc(type){
 		// jquery로 선택된 체크박스들의 mem_no를 모두 가져와 post방식으로 서버에 전송
+		if(type==1){
+			var param = [];
+			$('#checked_member:checked').each(function(i){ 
+		        param.push($(this).val());
+		        console.log(param);
+			});
+		    $.ajax({
+		    url : '/myclubMgr/myclubMgrRegister',
+		    type : 'post',
+		    dataType : 'text',
+		    data : {mem_no : param}
+		    });
+		}
+		else{
+	
+		}
 	}
+	
 	$(function(){
 		
 		$("#datepicker").datepicker(

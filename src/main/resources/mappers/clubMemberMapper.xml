@@ -5,7 +5,7 @@
 
 <mapper namespace="com.footmorning.mappers.clubMemberMapper">
 	
-	<insert id="insert" parameterType="com.footmorning.app.domain.ClubMemberDTO">
+	<insert id="insert" parameterType="com.footmorning.app.domain.MemberDTO">
 		insert into
 		club_member(club_no, mem_no, mem_gender, mem_email, mem_phone, mem_name, mem_birth)
 		values(#{club_no}, #{mem_no}, #{mem_gender}, #{mem_email}, #{mem_phone}, #{mem_name}, #{mem_birth})
@@ -24,6 +24,10 @@
 		club_mem_flag=#{club_mem_flag}
 		where club_no=#{club_no} and mem_no=#{mem_no}
 	</update>
+	
+	<select id="getWithMemno" resultType="ClubMemberDTO">
+		select * from club_member where mem_no=#{mem_no}
+	</select>
 	
 	<delete id="delete" parameterType="ClubMemberDTO">
 		delete from club_member where club_no=#{club_no} and mem_no=#{mem_no}

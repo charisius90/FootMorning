@@ -48,5 +48,10 @@ public class ClubMemberDAOImpl implements ClubMemberDAO {
 	public List<ClubMemberDTO> listRequest(Integer club_no) throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listRequest", club_no);
 	}
+
+	@Override
+	public ClubMemberDTO getWithMemno(Integer mem_no) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".getWithMemno", mem_no);
+	}
 	
 }

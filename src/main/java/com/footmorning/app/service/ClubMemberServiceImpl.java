@@ -47,5 +47,10 @@ public class ClubMemberServiceImpl implements ClubMemberService {
 	public List<ClubMemberDTO> listRequest(Integer club_no) throws Exception {
 		return dao.listAll(club_no);
 	}
+
+	@Override
+	public ClubMemberDTO getWithMemno(Integer mem_no) throws Exception {
+		return dao.getWithMemno(mem_no);
+	}
 	
 }
