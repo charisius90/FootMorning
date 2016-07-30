@@ -1,5 +1,7 @@
 package com.footmorning.app.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
 import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.ClubMemberDTO;
 import com.footmorning.app.domain.MemberDTO;
@@ -119,10 +124,21 @@ public class MyclubMgrController {
 	}
 	
 	@RequestMapping(value="myclubMgrMember", method=RequestMethod.POST)
-	public String myclubMgrMemberComplete(@RequestBody String jsonData){
-		System.out.println("RTESSETSETTS");
-		System.out.println(jsonData);
-		System.out.println("RTESSETSETTS");
+	public String myclubMgrMemberComplete(@RequestBody List<Map<String, Object>> list){
+        
+		ClubMemberDTO dto = null;
+		
+		for(Map map : list){
+			try {
+				dto = clubMemberService.getWithMemno(Integer.parseInt((String)map.get("mem_no")));
+				dto.setMem_grade((String)map.get("mem_grade"));
+				clubMemberService.update(dto);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+         
 		return "redirect:/myclubMgr/myclubMgrMember";
 	}
 

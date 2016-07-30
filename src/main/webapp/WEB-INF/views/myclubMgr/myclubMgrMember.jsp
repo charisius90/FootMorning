@@ -123,10 +123,11 @@
 		});
 		
 		member.data = memberArr
-		var paramJSON = JSON.stringify(member);
+		var paramJSON = JSON.stringify(memberArr);
 		$.ajax({
 			url:"/myclubMgr/myclubMgrMember",
 			type:"POST",
+			contentType : "application/json; charset=utf-8",
 			data:paramJSON,
 			success:function(data){
 				alert("success : " + data);
