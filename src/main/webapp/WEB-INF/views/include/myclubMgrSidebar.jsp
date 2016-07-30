@@ -20,20 +20,24 @@
 						<li><a href="/myclubMgr/myclubMgrJoinCondition">가입조건관리</a></li>
 					</ul>
 				</li>
-				<li><a href="javascript:;" data-toggle="collapse"
-					data-target="#clubmain"> 클럽메인관리 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
-					<ul id="clubmain" class="collapse">
-						<li><a href="/myclubMgr/myclubMgrMain">클럽대문관리</a></li>
-						<li><a href="/myclubMgr/myclubMgrMenu">클럽메뉴관리</a></li>
-					</ul>
-				</li>
+<!-- 				<li><a href="javascript:;" data-toggle="collapse" -->
+<!-- 					data-target="#clubmain"> 클럽메인관리 <i class="glyphicon glyphicon-triangle-bottom"></i></a> -->
+<!-- 					<ul id="clubmain" class="collapse"> -->
+<!-- 						<li><a href="/myclubMgr/myclubMgrMain">클럽대문관리</a></li> -->
+<!-- 						<li><a href="/myclubMgr/myclubMgrMenu">클럽메뉴관리</a></li> -->
+<!-- 					</ul> -->
+<!-- 				</li> -->
 				<li><a href="javascript:;" data-toggle="collapse"
 					data-target="#membermgr"> 멤버관리 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
 					<ul id="membermgr" class="collapse">
-						<li><a href="/myclubMgr/myclubMgrMember">클럽멤버관리</a></li>
+						<li><a href="/myclubMgr/myclubMgrMember">멤버등급관리</a></li>
 						<li><a href="/myclubMgr/myclubMgrRegister">가입신청관리</a></li>
-						<li><a href="/myclubMgr/myclubMgrMemberGrade">등급/직책관리</a></li>
-						<li><a href="/myclubMgr/myclubMgrOutMember">탈퇴멤버관리</a></li>
+						<li><a href="/myclubMgr/myclubMgrMemberGrade">등급권한관리</a></li>
+						<li><a href="/myclubMgr/myclubMgrOutMember">멤버탈퇴관리</a></li>
+<!-- 						<li><a href="/myclubMgr/myclubMgrMember">클럽멤버관리</a></li> -->
+<!-- 						<li><a href="/myclubMgr/myclubMgrRegister">가입신청관리</a></li> -->
+<!-- 						<li><a href="/myclubMgr/myclubMgrMemberGrade">등급/직책관리</a></li> -->
+<!-- 						<li><a href="/myclubMgr/myclubMgrOutMember">탈퇴멤버관리</a></li> -->
 					</ul>
 				</li>				
 				<li><a href="javascript:;" data-toggle="collapse"

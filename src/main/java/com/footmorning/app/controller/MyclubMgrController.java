@@ -79,6 +79,15 @@ public class MyclubMgrController {
 	@RequestMapping(value="myclubMgrInfo", method=RequestMethod.POST)
 	public String myclubInfoMgrComplete(ClubDTO dto, HttpServletRequest req){
 		System.out.println("myclubMgrInfo : " + dto);
+		if(dto.getClub_image()==null){
+			try {
+				ClubDTO club = service.getClubInfo(dto.getClub_name());
+				dto.setClub_image(club.getClub_image());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		service.update(dto);
 		WebUtils.setSessionAttribute(req, "CLUB_KEY", dto);
 		
@@ -93,21 +102,21 @@ public class MyclubMgrController {
 		
 	}
 	
-	/**
-	 * 클럽대문관리
-	 */
-	@RequestMapping("myclubMgrMain")
-	public void myclubMgrMain(){
-		
-	}
-	
-	/**
-	 * 클럽메뉴관리
-	 */
-	@RequestMapping("myclubMgrMenu")
-	public void myclubMgrMenu(){
-		
-	}
+//	/**
+//	 * 클럽대문관리
+//	 */
+//	@RequestMapping("myclubMgrMain")
+//	public void myclubMgrMain(){
+//		
+//	}
+//	
+//	/**
+//	 * 클럽메뉴관리
+//	 */
+//	@RequestMapping("myclubMgrMenu")
+//	public void myclubMgrMenu(){
+//		
+//	}
 	
 	/**
 	 * 클럽멤버관리
@@ -124,22 +133,28 @@ public class MyclubMgrController {
 	}
 	
 	@RequestMapping(value="myclubMgrMember", method=RequestMethod.POST)
-	public String myclubMgrMemberComplete(@RequestBody List<Map<String, Object>> list){
+	public @ResponseBody List myclubMgrMemberComplete(@RequestBody List<Map<String, Object>> list){
         
 		ClubMemberDTO dto = null;
-		
+		MemberDTO member = null;
 		for(Map map : list){
 			try {
+				// club_member 테이블 grade 수정
 				dto = clubMemberService.getWithMemno(Integer.parseInt((String)map.get("mem_no")));
 				dto.setMem_grade((String)map.get("mem_grade"));
 				clubMemberService.update(dto);
+				
+				// member 테이블 grade 수정
+				member = memberService.getWithNo(Integer.parseInt((String)map.get("mem_no")));
+				member.setMem_grade((String)map.get("mem_grade"));
+				memberService.updateMember(member);
 			}
 			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-         
-		return "redirect:/myclubMgr/myclubMgrMember";
+        return list;
+//		return "redirect:/myclubMgr/myclubMgrMember";
 	}
 
 	
@@ -206,11 +221,17 @@ public class MyclubMgrController {
 	}
 	
 	/**
-	 * 탈퇴멤버관리
+	 * 탈퇴관리
 	 */
 	@RequestMapping("myclubMgrOutMember")
-	public void myclubMgrOutMember(){
-		
+	public void myclubMgrOutMember(HttpServletRequest req, Model model){
+		try {
+			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+			model.addAttribute("list", clubMemberService.listMember(Integer.parseInt(club.getClub_no())));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

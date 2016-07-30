@@ -71,11 +71,11 @@
 								</tr>
 								<tr>
 									<td><span>클럽지역</span></td>
-									<td><input id="loc" type="text" name="club_loc" value="${CLUB_KEY.club_loc}"/><input id="addr" type="button" value="지역찾기"/></td>
+									<td><input id="loc" type="text" name="club_loc" value="${CLUB_KEY.club_loc}" placeholder="연고지를 등록하세요"/><input id="addr" type="button" value="지역찾기"/></td>
 								</tr>
 								<tr>
 									<td><span>클럽설명</span></td>
-									<td><textarea id="content" name="club_content" cols="50" rows="5">${CLUB_KEY.club_content}</textarea></td>
+									<td><textarea id="content" name="club_content" cols="50" rows="5" placeholder="가입을 위한 설명글을 등록하세요">${CLUB_KEY.club_content}</textarea></td>
 								</tr>
 								<tr>
 									<td><span>클럽유형</span></td>
@@ -83,7 +83,7 @@
 								</tr>
 							</table>
 							<div align="right">
-								<button class="btn btn-primary" type="submit">수정</button>&nbsp;&nbsp;&nbsp;
+								<button class="btn btn-primary" type="button" onclick="fnSubmit()">수정</button>&nbsp;&nbsp;&nbsp;
 								<button class="btn btn-default" type="reset">취소</button>
 							</div>
 						</form>
@@ -95,26 +95,41 @@
 	</div>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
+	//@author 박수항
+	function fnSubmit(){
+		var $file = $("#file");
+		if($file.val()==null || $file.val()==""){
+			$file.parent().html("<span style='color:red'>새 로고를 전송하지 않습니다.</span>");
+		}
+		$("form").submit();
+	}
+
 	function fnFile(){
 		$("#file").click();
 	}
 
-	//@author 박수항
 	$(function(){
 		var type = "${CLUB_KEY.club_type}";
-// 		if(type == 0){
-// 			$("r1").attr("checked", null);
-// 			$("r2").attr("checked", "checked");
-// 		}
-		if(type == 1){
-			$("r1").attr("checked", null);
-			$("r2").attr("checked", "checked");
+		
+		if(type == '0'){
+			$("#r1").prop("checked", false);
+			$("#r2").prop("checked", true);
 		}
-		// 업로드 없이 이미지 미리보기 기능
+		
+		// 업로드 없이 클라이언트페이지에서 이미지 미리보기 기능
 		var $file = $("#file"),
 			$preview = $("#preview");
 		
-		$preview.html("<div align='center' style='margin-top:120px;'><span>'이 곳' 혹은 '파일 선택' 버튼을</span><br/><span>클릭하고 이미지를 등록하세요.</span></div>");
+		var image = "${CLUB_KEY.club_image}";
+		if(image!=null && image!=""){
+			var img = new Image();
+			img.src = image;
+			img.alt = "이미지를 불러 올 수 없습니다.";
+			$preview.html(img);
+		}
+		else{
+			$preview.html("<div align='center' style='margin-top:120px;'><span>'이 곳' 혹은 '파일 선택' 버튼을</span><br/><span>클릭하고 이미지를 등록하세요.</span></div>");
+		}
 		
 		$file.change(function(e){
 			e.preventDefault();
@@ -142,8 +157,7 @@
 		$("#addr").click(function(){
 		    new daum.Postcode({
 		        oncomplete: function(data) {
-		            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-		            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+		            $("#loc").val(data.sido + " " + data.sigungu);
 		        }
 		    }).open();
 		});

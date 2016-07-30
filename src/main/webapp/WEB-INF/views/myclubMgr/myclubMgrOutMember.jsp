@@ -42,31 +42,32 @@
 	     				</span>
 					</div><!-- /input-group -->
 				</div><!-- /.col-lg-4 -->
-				<div style="float:right">
-					<input type="button" value="멤버탈퇴처리"/>
-				</div>
 			</div><!-- /.row -->
 			<br/><br/>
 			<div class="row">
 				<table class="table table-hover" text-align="center">
 					<thead>
 					<tr>
-						<th><input type="checkbox"/></th><th>E-Mail</th><th>이름</th><th>성별</th><th>가입일</th>
+						<th><input type="checkbox"/></th>
+						<th>E-Mail</th>
+						<th>이름</th>
+						<th>성별</th>
+						<th>가입일</th>
 					</tr>
 					</thead>
-					<tr>
-						<td><input type="checkbox"/></th><th>ksy4035</td><td>김소영</td><td>여자</td><td>2016-07-01</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"/></th><th>비실이이</td><td>박규채</td><td>남자</td><td>2016-07-02</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"/></th><th>손니에스타</td><td>손승한</td><td>남자</td><td>2016-07-03</td>
-					</tr>
+					<c:forEach items="${list}" var="dto">
+						<tr>
+							<td><input type="checkbox" name="mem_no" id="checked_member_${dto.mem_no}" value="${dto.mem_no}"/></td>
+							<td>${dto.mem_email}</td>
+							<td>${dto.mem_name}</td>
+							<td>${dto.mem_gender}</td>
+							<td>${dto.club_mem_regdate}</td>
+						</tr>
+					</c:forEach>
 				</table>
 				
 				<div style="float:right">
-					<button class="btn btn-primary">수정</button>
+					<button class="btn btn-primary">선택회원방출</button>
 				</div>
 				</div><!-- /.row -->	
 				<div class="row">

@@ -42,49 +42,44 @@
 	     				</span>
 					</div><!-- /input-group -->
 				</div><!-- /.col-lg-4 -->
-				<div style="float:right">
-					<input type="button" value="멤버등업처리" onclick="fnSubmit()"/>
-				</div>
 			</div><!-- /.row -->
 			<br/><br/>
 			<div class="row">
-				<form method="post" action="/myclubMgr/myclubMgrMember">
-					<table class="table table-hover" text-align="center">
-						<thead>
+				<table class="table table-hover" text-align="center">
+					<thead>
+					<tr>
+						<th><input id="checkAll" type="checkbox"/></th>
+						<th>E-Mail</th>
+						<th>회원등급</th>
+						<th>이름</th>
+						<th>생년월일</th>
+						<th>성별</th>
+						<th>클럽가입일</th>
+					</tr>
+					</thead>
+					<c:forEach items="${list}" var="dto">
 						<tr>
-							<th><input id="checkAll" type="checkbox"/></th>
-							<th>E-Mail</th>
-							<th>회원등급</th>
-							<th>이름</th>
-							<th>생년월일</th>
-							<th>성별</th>
-							<th>클럽가입일</th>
+							<td><input type="checkbox" name="mem_no" id="checked_member_${dto.mem_no}" value="${dto.mem_no}"/></td>
+							<td>${dto.mem_email}</td>
+							<td id="col_select">
+								<input id="hidden_grade" type="hidden" name="grade" value="${dto.mem_grade}">
+								<select id="select_grade" name="mem_grade" style="height:30px" onchange="fnDoCheck(${dto.mem_no})">
+									<option id="master" value='1'>마스터</option>
+									<option id="manager" value='2'>매니저</option>
+									<option id="staff" value='3'>스탭</option>
+									<option id="member" value='4'>일반</option>
+								</select>
+							</td>
+							<td>${dto.mem_name}</td>
+							<td>${dto.mem_birth}</td>
+							<td>${dto.mem_gender}</td>
+							<td>${dto.club_mem_regdate}</td>
 						</tr>
-						</thead>
-						<c:forEach items="${list}" var="dto">
-							<tr>
-								<td><input type="checkbox" name="mem_no" id="checked_member_${dto.mem_no}" value="${dto.mem_no}"/></td>
-								<td>${dto.mem_email}</td>
-								<td id="col_select">
-									<input id="hidden_grade" type="hidden" name="grade" value="${dto.mem_grade}">
-									<select id="select_grade" name="mem_grade" style="height:30px" onchange="fnDoCheck(${dto.mem_no})">
-										<option id="master" value='1'>마스터</option>
-										<option id="manager" value='2'>매니저</option>
-										<option id="staff" value='3'>스탭</option>
-										<option id="member" value='4'>일반</option>
-									</select>
-								</td>
-								<td>${dto.mem_name}</td>
-								<td>${dto.mem_birth}</td>
-								<td>${dto.mem_gender}</td>
-								<td>${dto.club_mem_regdate}</td>
-							</tr>
-						</c:forEach>
-					</table>
-				</form>
+					</c:forEach>
+				</table>
 				
 				<div style="float:right">
-					<button class="btn btn-primary">수정</button>
+					<button class="btn btn-primary" onclick="fnSubmit()">선택회원수정</button>
 				</div>
 				</div><!-- /.row -->	
 				<div class="row">
@@ -112,25 +107,25 @@
 
 <script>
 	function fnSubmit(){
-		var member = new Object();
 		var memberArr = new Array();
 		
+		// 체크된 멤버의 번호와 수정된 등급을 JSON으로 변환
 		$("[name=mem_no]:checked").each(function(i, e){
 			var member = new Object();
 			member.mem_no = $(e).val();
 			member.mem_grade = $(e).parent().siblings("td:has(select)").children("select").val();
 			memberArr.push(member);
 		});
-		
-		member.data = memberArr
 		var paramJSON = JSON.stringify(memberArr);
+		
+		// json데이터 전송
 		$.ajax({
 			url:"/myclubMgr/myclubMgrMember",
 			type:"POST",
 			contentType : "application/json; charset=utf-8",
 			data:paramJSON,
 			success:function(data){
-				alert("success : " + data);
+				alert(data.length + "명 수정 완료");
 			}
 		});
 	}

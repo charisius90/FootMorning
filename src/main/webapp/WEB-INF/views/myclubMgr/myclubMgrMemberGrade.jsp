@@ -8,6 +8,13 @@
 <title>Insert title here</title>
 <link href="../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
+<style>
+	td >div {
+		width: 80px;
+		float: left;
+		padding-top: 1px;
+	}
+</style>
 </head>
 <body>
 <%@ include file="../include/header.jsp" %>
@@ -20,7 +27,7 @@
 			</div>
 		<div id="page-content-wrapper">
 			<div class="col-md-9" style="margin:30px">
-				<div><h3>등급/직책관리</h3></div>
+				<div><h3>등급/권한관리</h3></div>
 				<div class="myteamheader" align="right">
 					<!-- 버튼두개짜리 헤더  -->
 					<%@include file="../include/myclubHeader.jsp" %>
@@ -29,38 +36,37 @@
 				<div class="row">
 					<table class="table table-hover">
 						<tr>
-							<th>임시회원</th>
+							<th>방문자권한</th>
 							<td>
 								등업되지 않은 임시회원이며, 다음 권한을 부여할 수가 있습니다.<br/>
 								<input type="checkbox"/>&nbsp;글쓰기 권한 사용
 							</td>
 						</tr>
 						<tr>
-							<th>직 책</th>
+							<th>등급별권한</th>
 							<td>
-								1.일반회원&nbsp;&nbsp;<input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
-								2.정회원2&nbsp;&nbsp;<input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
-								3.정회원3&nbsp;&nbsp;<input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
-								4.정회원4&nbsp;&nbsp;<input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
-								5.정회원5&nbsp;&nbsp;<input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
+								<div>1.일반회원</div><input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
+								<div>2.스태프</div><input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
+								<div>3.매니저</div><input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
+								<div>4.마스터</div><input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
 							</td>
 							
 						</tr>
-						<tr>
-							<th>스텝회원</th>
-							<td>
-								1.총무<br/>
-								<input type="checkbox"/>&nbsp;회원관리&nbsp;&nbsp;<input type="checkbox"/>&nbsp;게시판 관리(쓰기, 삭제) 권한 사용<br/>
-								2.운영자1<br/>
-								<input type="checkbox"/>&nbsp;회원관리&nbsp;&nbsp;<input type="checkbox"/>&nbsp;게시판 관리(쓰기, 삭제) 권한 사용<br/>
-								3.운영자2<br/>
-								<input type="checkbox"/>&nbsp;회원관리&nbsp;&nbsp;<input type="checkbox"/>&nbsp;게시판 관리(쓰기, 삭제) 권한 사용<br/>
-							</td>
-						</tr>					
+<!-- 						<tr> -->
+<!-- 							<th>스텝회원</th> -->
+<!-- 							<td> -->
+<!-- 								1.총무<br/> -->
+<!-- 								<input type="checkbox"/>&nbsp;회원관리&nbsp;&nbsp;<input type="checkbox"/>&nbsp;게시판 관리(쓰기, 삭제) 권한 사용<br/> -->
+<!-- 								2.운영자1<br/> -->
+<!-- 								<input type="checkbox"/>&nbsp;회원관리&nbsp;&nbsp;<input type="checkbox"/>&nbsp;게시판 관리(쓰기, 삭제) 권한 사용<br/> -->
+<!-- 								3.운영자2<br/> -->
+<!-- 								<input type="checkbox"/>&nbsp;회원관리&nbsp;&nbsp;<input type="checkbox"/>&nbsp;게시판 관리(쓰기, 삭제) 권한 사용<br/> -->
+<!-- 							</td> -->
+<!-- 						</tr>					 -->
 					</table>
 				</div>
-				<div align="center">
-					<button class="btn btn-primary">등록확인</button>&nbsp;&nbsp;&nbsp;
+				<div align="right">
+					<button class="btn btn-primary">권한변경</button>&nbsp;&nbsp;&nbsp;
 				</div>
 			</div>
 		</div>
