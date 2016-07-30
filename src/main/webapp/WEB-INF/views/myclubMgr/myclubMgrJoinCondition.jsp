@@ -46,11 +46,37 @@ $(function() {
 				<div class="col-md-10">
 					<div style="margin-left: 10%;">
 						<form action="" method="post">
-						성별조건 :
-							<input type="radio" name="gender" value="gebderall" >&nbsp;&nbsp;모두&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="radio" name="gender" value="male" >&nbsp;&nbsp;남자&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="radio" name="gender" value="female" >&nbsp;&nbsp;여자&nbsp;&nbsp;&nbsp;&nbsp;
-							<br/><br/><br/>
+							<table id="inputs" class="table table-hover">
+								<tr>
+									<td><span>성별조건</span></td>
+									<td><input type="radio" name="gender" value="all" checked="checked"/>모두</td>
+									<td><input type="radio" name="gender" value="male"/>남자</td>
+									<td><input type="radio" name="gender" value="female"/>여자</td>
+								</tr>
+								<tr>
+									<td><span>연령조건</span></td>
+									<td><input type="radio" name="age" value="all" />모두</td>
+									<td><input type="radio" name="age" value="select" ></td>
+									<td><input type="text" id="datepicker0" name="date" placeholder="선택" /></td>
+								</tr>
+								<tr>
+									<td><span>클럽지역</span></td>
+									<td><input id="loc" type="text" name="club_loc" value="${CLUB_KEY.club_loc}"/><input id="addr" type="button" value="지역찾기"/></td>
+								</tr>
+								<tr>
+									<td><span>클럽설명</span></td>
+									<td><textarea id="content" name="club_content" cols="50" rows="5">${CLUB_KEY.club_content}</textarea></td>
+								</tr>
+								<tr>
+									<td><span>클럽유형</span></td>
+									<td><input id="r1" type="radio" name="club_type" value="1" checked="checked">공개&nbsp;&nbsp;<input id="r2" type="radio" name="club_type" value="0">비공개</td>
+								</tr>
+							</table>						
+<!-- 						성별조건 : -->
+<!-- 							<input type="radio" name="gender" value="gebderall" >&nbsp;&nbsp;모두&nbsp;&nbsp;&nbsp;&nbsp; -->
+<!-- 							<input type="radio" name="gender" value="male" >&nbsp;&nbsp;남자&nbsp;&nbsp;&nbsp;&nbsp; -->
+<!-- 							<input type="radio" name="gender" value="female" >&nbsp;&nbsp;여자&nbsp;&nbsp;&nbsp;&nbsp; -->
+<!-- 							<br/><br/><br/> -->
 						연령조건 : 	
 							<input type="radio" name="age" id="ageall" >&nbsp;&nbsp;모두&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="radio" name="age" id="allselect" >&nbsp;&nbsp;<input type="text" id="datepicker0" placeholder="선택"> 이후 출생자만 가입
