@@ -43,7 +43,7 @@
 					</div><!-- /input-group -->
 				</div><!-- /.col-lg-4 -->
 				<div style="float:right">
-					<input type="button" value="멤버등업처리"/>
+					<input type="button" value="멤버등업처리" onclick="fnSubmit()"/>
 				</div>
 			</div><!-- /.row -->
 			<br/><br/>
@@ -52,7 +52,7 @@
 					<table class="table table-hover" text-align="center">
 						<thead>
 						<tr>
-							<th><input type="checkbox"/></th>
+							<th><input id="checkAll" type="checkbox"/></th>
 							<th>E-Mail</th>
 							<th>회원등급</th>
 							<th>이름</th>
@@ -63,14 +63,15 @@
 						</thead>
 						<c:forEach items="${list}" var="dto">
 							<tr>
-								<td><input type="checkbox" name="mem_no" id="checked_member" value="${dto.mem_no}"/></td>
+								<td><input type="checkbox" name="mem_no" id="checked_member_${dto.mem_no}" value="${dto.mem_no}"/></td>
 								<td>${dto.mem_email}</td>
-								<td>
-									<select name="select_grade" style="height:30px">
-										<option value='1'>마스터</option>
-										<option value='2'>매니저</option>
-										<option value='3'>스탭</option>
-										<option value='4'>일반회원</option>
+								<td id="col_select">
+									<input id="hidden_grade" type="hidden" name="grade" value="${dto.mem_grade}">
+									<select id="select_grade" name="mem_grade" style="height:30px" onchange="fnDoCheck(${dto.mem_no})">
+										<option id="master" value='1'>마스터</option>
+										<option id="manager" value='2'>매니저</option>
+										<option id="staff" value='3'>스탭</option>
+										<option id="member" value='4'>일반</option>
 									</select>
 								</td>
 								<td>${dto.mem_name}</td>
@@ -110,24 +111,75 @@
 </div><!-- /.container -->
 
 <script>
-	$(document).ready(
-		function(){
-			var grade = "${dto.mem_grade}";
-			console.log(grade);
-			$("#select_grade").val(grade).attr("selected", "selected");
-		}
-	);
+	function fnSubmit(){
+		var member = new Object();
+		var memberArr = new Array();
+		
+		$("[name=mem_no]:checked").each(function(i, e){
+			var member = new Object();
+			member.mem_no = $(e).val();
+			member.mem_grade = $(e).parent().siblings("td:has(select)").children("select").val();
+			memberArr.push(member);
+		});
+		
+		member.data = memberArr
+		var paramJSON = JSON.stringify(member);
+		$.ajax({
+			url:"/myclubMgr/myclubMgrMember",
+			type:"POST",
+			data:paramJSON,
+			success:function(data){
+				alert("success : " + data);
+			}
+		});
+	}
+
+	// select태그가 사용자에 의해 수정된 경우 checkbox 체크
+	function fnDoCheck(mem_no){
+		$("#checked_member_" + mem_no).prop("checked", true);
+	}
 
 	$(function(){
-		$("#datepicker").datepicker(
-			{
-				dateFormat: "yymmdd",
-				changeMonth: true,
-				changeYear: true,
-				minDate: "0",
-				maxDate: "+1y",
-			}		
-		);
+		
+		// 전체선택에 체크한 경우 변환
+		$("#checkAll").click(function(){
+			var check = $(this).prop("checked");
+			if(check){
+				$("input:checkbox").each(function(i, e){
+					$(e).prop("checked", true);
+				})
+			}
+			else{
+				$("input:checkbox").each(function(i, e){
+					$(e).prop("checked", false);
+				})
+			}
+		});
+		
+		// select태그를 가지고 있는 td태그를 찾아 아래와 같이 반복문 활용
+		$("td:has(select)").each(function(i, e){
+			// 서버에서 전달받은 grade
+			var grade = $(e).children().eq(0).val();
+			
+			// select태그 지정
+			var $target = $(e).children().eq(1).children();
+			
+			// 1:마스터 / 2:매니저 / 3:스탭 / 4:일반
+			switch(grade){
+			case '1':
+				$target.eq(0).attr("selected", "selected");
+				break;				
+			case '2':
+				$target.eq(1).attr("selected", "selected");
+				break;
+			case '3':
+				$target.eq(2).attr("selected", "selected");
+				break;
+			case '4':
+				$target.eq(3).attr("selected", "selected");
+				break;
+			}
+		});
 	});
 
 </script>

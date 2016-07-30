@@ -1,15 +1,19 @@
 package com.footmorning.app.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.ClubDTO;
@@ -115,12 +119,13 @@ public class MyclubMgrController {
 	}
 	
 	@RequestMapping(value="myclubMgrMember", method=RequestMethod.POST)
-	public String myclubMgrMemberComplete(@RequestParam(value="mem_no") List<String> memberList, Model model){
-		for(String mem_no : memberList){
-			
-		}
+	public String myclubMgrMemberComplete(@RequestBody String jsonData){
+		System.out.println("RTESSETSETTS");
+		System.out.println(jsonData);
+		System.out.println("RTESSETSETTS");
 		return "redirect:/myclubMgr/myclubMgrMember";
 	}
+
 	
 	/**
 	 * 가입신청관리
