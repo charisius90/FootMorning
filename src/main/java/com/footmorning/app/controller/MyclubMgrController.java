@@ -121,7 +121,7 @@ public class MyclubMgrController {
 		}
 	}
 	@RequestMapping(value="myclubMgrJoinCondition", method=RequestMethod.POST)
-	public void myclubMgrJoinConditionComplete(HttpServletRequest req, ClubConfigDTO config, String sign, String age){
+	public String myclubMgrJoinConditionComplete(HttpServletRequest req, ClubConfigDTO config, String sign, String age){
 		sign =  sign.toUpperCase();
 		if(sign.equals("TRUE")){
 			config.setConfig_reject_from(CONFIG_REJECT_FROM_TRUE);
@@ -138,6 +138,7 @@ public class MyclubMgrController {
 		}
 		
 		clubConfigService.update(config);
+		return "redirect:/myclubMgr/myclubMgrJoinCondition";
 	}
 	
 //	/**

@@ -946,3 +946,15 @@ CREATE TABLE CLUB_CONFIG
     constraint foreign key (club_no) references club(club_no)
 )
 ;
+
+
+DELIMITER $$
+
+DROP TRIGGER IF EXISTS finaltest.club_AFTER_INSERT$$
+USE `finaltest`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `finaltest`.`club_AFTER_INSERT` AFTER INSERT ON `club` FOR EACH ROW
+BEGIN
+	update member set club_no=new.club_no where mem_no=new.club_master;
+    insert into club_config(club_no) values(new.club_no);
+END$$
+DELIMITER ;

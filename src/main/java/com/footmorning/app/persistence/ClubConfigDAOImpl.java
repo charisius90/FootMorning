@@ -26,7 +26,7 @@ public class ClubConfigDAOImpl implements ClubConfigDAO {
 
 	@Override
 	public void update(ClubConfigDTO dto) {
-		sqlSession.update(NAMESPACE + ".insert", dto);
+		sqlSession.update(NAMESPACE + ".update", dto);
 	}
 
 	@Override
