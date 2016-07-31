@@ -925,6 +925,7 @@ CREATE TABLE CLUB_MEMBER
     mem_gender				 varchar(10) null,
     mem_email				 varchar(50) null,
     mem_phone				 varchar(20) null,
+    mem_grade				 int null,
     mem_name				 varchar(20) null,
     mem_birth				 varchar(20) null,
     club_mem_regdate		 timestamp default now(),
@@ -932,3 +933,16 @@ CREATE TABLE CLUB_MEMBER
     constraint foreign key (mem_no) references member(mem_no),
     constraint foreign key (club_no) references club(club_no)
 );
+
+CREATE TABLE CLUB_CONFIG
+(
+	config_no			 int auto_increment primary key,
+    config_reject_from	 date default '2000-01-01',
+	config_reject_to	 date default '2000-01-01',
+    config_gender		 varchar(10) default 'BOTH',
+    config_birth_from	 date default '1000-01-01',
+    config_birth_to		 date default '9999-12-31',
+   	club_no				 int,
+    constraint foreign key (club_no) references club(club_no)
+)
+;

@@ -1,7 +1,5 @@
 package com.footmorning.app.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
+import com.footmorning.app.domain.ClubConfigDTO;
 import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.ClubMemberDTO;
 import com.footmorning.app.domain.MemberDTO;
+import com.footmorning.app.service.ClubConfigService;
 import com.footmorning.app.service.ClubMemberService;
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MemberService;
@@ -36,9 +32,14 @@ public class MyclubMgrController {
 	@Autowired
 	private ClubMemberService clubMemberService;
 	@Autowired
+	private ClubConfigService clubConfigService;
+	@Autowired
 	private MemberService memberService;
-	
-	// 회원 등급 파이널 변수 모음
+
+	/**
+	 * 회원 등급 파이널 변수 모음
+	 * @Author 박수항
+	 */
 	public static final String GRADE_ADMIN = "0"; // 서비스 운영진
 	public static final String GRADE_MASTER = "1"; // 클럽마스터
 	public static final String GRADE_MANAGER = "2"; // 클럽매니저
@@ -47,7 +48,18 @@ public class MyclubMgrController {
 	public static final String GRADE_NORMAL = "5"; // 일반회원
 	
 	/**
-	 * @박수항
+	 * 회원 가입신청 조건 파이널 변수 모음
+	 * @Author 박수항
+	 */
+	public static final String CONFIG_REJECT_FROM_TRUE = "1000-01-01"; // 항상 허용
+	public static final String CONFIG_REJECT_TO_TRUE = "1000-01-01"; // 항상 허용
+	public static final String CONFIG_REJECT_FROM_FALSE = "1000-01-01"; // 항상 거부
+	public static final String CONFIG_REJECT_TO_FALSE = "9999-12-31"; // 항상 거부
+	public static final String CONFIG_BIRTH_FROM_ALL = "1000-01-01"; // 모든 연령 허용
+	public static final String CONFIG_BIRTH_TO_ALL = "9999-12-31"; // 모든 연령 허용
+	
+	/**
+	 * @Author 박수항
 	 * 가입신청 테스트용(컨트롤러 위치 변경해야함)
 	 */
 	@RequestMapping(value="clubRequest", method=RequestMethod.POST)
@@ -96,10 +108,36 @@ public class MyclubMgrController {
 	
 	/**
 	 * 가입조건관리
+	 * @Author 박수항
 	 */
 	@RequestMapping("myclubMgrJoinCondition")
-	public void myclubMgrJoinCondition(){
+	public void myclubMgrJoinCondition(HttpServletRequest req, Model model){
+		try {
+			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+			model.addAttribute("CONFIG", clubConfigService.getWithClubNo(Integer.parseInt(club.getClub_no())));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping(value="myclubMgrJoinCondition", method=RequestMethod.POST)
+	public void myclubMgrJoinConditionComplete(HttpServletRequest req, ClubConfigDTO config, String sign, String age){
+		sign =  sign.toUpperCase();
+		if(sign.equals("TRUE")){
+			config.setConfig_reject_from(CONFIG_REJECT_FROM_TRUE);
+			config.setConfig_reject_to(CONFIG_REJECT_TO_TRUE);
+		}
+		else if(sign.equals("FALSE")){
+			config.setConfig_reject_from(CONFIG_REJECT_FROM_FALSE);
+			config.setConfig_reject_to(CONFIG_REJECT_TO_FALSE);
+		}
 		
+		if(age.toUpperCase().equals("ALL")){
+			config.setConfig_birth_from(CONFIG_BIRTH_FROM_ALL);
+			config.setConfig_birth_to(CONFIG_BIRTH_TO_ALL);
+		}
+		
+		clubConfigService.update(config);
 	}
 	
 //	/**

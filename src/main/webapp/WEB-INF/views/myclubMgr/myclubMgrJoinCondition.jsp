@@ -14,15 +14,10 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!-- 부트스트랩 데이트피커 -->
+<link href="../resources/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 </head>
 <body>
-<script>
-$(function() {
-	  $( "#datepicker0, #datepicker1, #datepicker2" ).datepicker({
-	    dateFormat: 'yy-mm-dd'
-	  });
-	});
-</script>
 <%@ include file="../include/header.jsp" %>
 
 <div class="container-fluid">
@@ -45,71 +40,31 @@ $(function() {
 				</div>
 				<div class="col-md-10">
 					<div style="margin-left: 10%;">
-						<form action="" method="post">
+						<form action="/myclubMgr/myclubMgrJoinCondition" method="post">
+							<input type="hidden" name="club_no" value="${CLUB_KEY.club_no}"/>
 							<table id="inputs" class="table table-hover">
 								<tr>
+									<td><span>가입신청여부</span></td>
+									<td><input type="radio" name="sign" value="TRUE" checked />항상허용</td>
+									<td><input type="radio" name="sign" value="FALSE" />항상거부</td>
+									<td><input type="radio" name="sign" value="TERM" />거부기간설정 <input type="text" id="dateFrom" name="config_reject_from" placeholder="자동 거부 시작일"> ~ <input type="text" id="dateTo" name="config_reject_to" placeholder="자동 거부 종료일"></td>
+								</tr>
+								<tr>
 									<td><span>성별조건</span></td>
-									<td><input type="radio" name="gender" value="all" checked="checked"/>모두</td>
-									<td><input type="radio" name="gender" value="male"/>남자</td>
-									<td><input type="radio" name="gender" value="female"/>여자</td>
+									<td><input type="radio" name="config_gender" value="BOTH" checked="checked"/>모두</td>
+									<td><input type="radio" name="config_gender" value="MALE"/>남자</td>
+									<td><input type="radio" name="config_gender" value="FEMALE"/>여자</td>
 								</tr>
 								<tr>
 									<td><span>연령조건</span></td>
-									<td><input type="radio" name="age" value="all" />모두</td>
-									<td><input type="radio" name="age" value="select" ></td>
-									<td><input type="text" id="datepicker0" name="date" placeholder="선택" /></td>
-								</tr>
-								<tr>
-									<td><span>클럽지역</span></td>
-									<td><input id="loc" type="text" name="club_loc" value="${CLUB_KEY.club_loc}"/><input id="addr" type="button" value="지역찾기"/></td>
-								</tr>
-								<tr>
-									<td><span>클럽설명</span></td>
-									<td><textarea id="content" name="club_content" cols="50" rows="5">${CLUB_KEY.club_content}</textarea></td>
-								</tr>
-								<tr>
-									<td><span>클럽유형</span></td>
-									<td><input id="r1" type="radio" name="club_type" value="1" checked="checked">공개&nbsp;&nbsp;<input id="r2" type="radio" name="club_type" value="0">비공개</td>
-								</tr>
-							</table>						
-<!-- 						성별조건 : -->
-<!-- 							<input type="radio" name="gender" value="gebderall" >&nbsp;&nbsp;모두&nbsp;&nbsp;&nbsp;&nbsp; -->
-<!-- 							<input type="radio" name="gender" value="male" >&nbsp;&nbsp;남자&nbsp;&nbsp;&nbsp;&nbsp; -->
-<!-- 							<input type="radio" name="gender" value="female" >&nbsp;&nbsp;여자&nbsp;&nbsp;&nbsp;&nbsp; -->
-<!-- 							<br/><br/><br/> -->
-						연령조건 : 	
-							<input type="radio" name="age" id="ageall" >&nbsp;&nbsp;모두&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="radio" name="age" id="allselect" >&nbsp;&nbsp;<input type="text" id="datepicker0" placeholder="선택"> 이후 출생자만 가입
-							<br/><br/><br/>
-							<table>
-								<tr>
-									<td rowspan="3" valign="top">가입신청여부 : </td>
-									<td>
-										<input type="radio" name="sign" id="true" >&nbsp;&nbsp;가입신청을 받습니다.<br/>
-										<br/>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="radio" name="sign" id="false" >&nbsp;&nbsp;아래의 기간동안은 받지 않습니다.
-										<br/><br/>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										조회기간 : <input type="text" id="datepicker1"> ~ <input type="text" id="datepicker2">
-										<br/><br/>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2" align="right">
-										<button class="btn btn-default" type="submit">등록</button>
-									</td>
+									<td><input type="radio" name="age" value="ALL" checked/>모두</td>
+									<td colspan="2"><input type="radio" name="age" value="select" >연령선택 <input type="text" name="config_birth_from" placeholder="가입가능 최소 나이" /> ~ <input type="text" name="config_birth_to" placeholder="가입가능 최고 나이" /></td>
 								</tr>
 							</table>
 						</form>
 					</div>
-					<div class="col-md-10">
+					<div align="right">
+						<button class="btn btn-primary" onclick="fnSubmit()">가입조건변경</button>&nbsp;&nbsp;&nbsp;
 					</div>
 				</div>	
 			</div>
@@ -117,6 +72,47 @@ $(function() {
 	</div>
 </div>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+<!-- 라이브러리 로드 순서는 아래와 같다. cdnjs 저장소에서 라이브러리를 로드하였다. -->
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="../resources/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+	function fnSubmit(){
+		$("form").submit();
+	}
+	
+	$(function(){
+		// 페이지 로딩 시 기존 설정으로 자동 세팅
+		var gender = "${CONFIG.config_gender}";
+		var reject_from = "${CONFIG.config_reject_from}";
+		var reject_to = "${CONFIG.config_reject_to}";
+		var birth_from = "${CONFIG.config_birth_from}";
+		var birth_to = "${CONFIG.config_birth_to}";
+		
+		if(gender == "MALE"){
+			$("input [value=MALE]")
+		}
+		
+		// input태그 선택시 자동으로 체크박스가 체크되게 하는 코드
+		$("#dateFrom, #dateTo").click(function(){
+			$("[value=term]").prop("checked", true);
+		});
+		$("[name=age_min], [name=age_max]").click(function(){
+			$("[value=select]").prop("checked", true);
+		});
+		
+		// 데이트피커 연결
+		$("#dateFrom, #dateTo").datetimepicker({
+			language : "ko", // 화면에 출력될 언어를 한국어로 설정한다.
+			pickTime : false, // 사용자로부터 시간 선택을 허용하려면 true를 설정하거나 pickTime 옵션을 생략한다.
+			defalutDate : new Date() // 기본값으로 오늘 날짜를 입력한다. 기본값을 해제하려면 defaultDate 옵션을 생략한다.
+		});
+
+		$("[name=age_min], [name=age_max]").datetimepicker({
+			language : 'ko',
+			pickTime : false,
+			defalutDate : new Date()
+		});
+	})
+</script>
 </body>
 </html>
