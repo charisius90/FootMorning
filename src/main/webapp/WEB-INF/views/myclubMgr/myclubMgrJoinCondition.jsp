@@ -58,7 +58,7 @@
 								<tr>
 									<td><span>연령조건</span></td>
 									<td><input type="radio" name="age" value="ALL" checked/>모두</td>
-									<td colspan="2"><input type="radio" name="age" value="select" >연령선택 <input type="text" name="config_birth_from" placeholder="가입가능 최소 나이" /> ~ <input type="text" name="config_birth_to" placeholder="가입가능 최고 나이" /></td>
+									<td colspan="2"><input type="radio" name="age" value="SELECT" >연령선택 <input type="text" name="config_birth_from" placeholder="가입가능 최소 나이" /> ~ <input type="text" name="config_birth_to" placeholder="가입가능 최고 나이" /></td>
 								</tr>
 							</table>
 						</form>
@@ -80,8 +80,8 @@
 		$("form").submit();
 	}
 	
-	$(function(){
-		// 페이지 로딩 시 기존 설정으로 자동 세팅
+	function fnInitCheckBox(){
+		// 모든 조건을 기존 설정으로 세팅
 		var gender = "${CONFIG.config_gender}";
 		var reject_from = "${CONFIG.config_reject_from}";
 		var reject_to = "${CONFIG.config_reject_to}";
@@ -89,8 +89,36 @@
 		var birth_to = "${CONFIG.config_birth_to}";
 		
 		if(gender == "MALE"){
-			$("input [value=MALE]")
+			$("input [value=MALE]").prop("checked", true);
 		}
+		else if(gender == "FEMALE"){
+			$("input [value=FEMALE]").prop("checked", true);
+		}
+		
+		if(reject_from=="1000-01-01" && reject_to=="9999-12-31"){
+			$("input [value=FALSE]").prop("checked", true);
+		}
+		else if(reject_from=="1000-01-01" && reject_to="1000-01-01"){
+			$("input [value=TRUE]").prop("checked", true);
+		}
+		else{
+			$("input [value=TERM]").prop("checked", true);
+			$("input [name=config_reject_from]").val(reject_from);
+			$("input [name=config_reject_to]").val(reject_to);
+		}
+		
+		if(birth_from=="1000-01-01" && birth_to=="9999-12-31"){
+			$("input [value=ALL]").prop("checked", true);
+		}		
+		else{
+			$("input [value=SELECT]").prop("checked", true);
+			$("input [name=config_birth_from]").val(birth_from);
+			$("input [name=config_birth_to]").val(birth_to);
+		}
+	}
+	
+	$(function(){
+		fnInitCheckBox();
 		
 		// input태그 선택시 자동으로 체크박스가 체크되게 하는 코드
 		$("#dateFrom, #dateTo").click(function(){
