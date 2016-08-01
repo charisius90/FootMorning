@@ -106,8 +106,10 @@
 </div><!-- /.container -->
 
 <script>
-	var data = ${data};
-	alert(data + "명이 방출되었습니다.");
+	var data = "${data}";
+	if(data != ""){
+		alert(data + "명이 방출되었습니다.");
+	}
 	
 	$(function(){
 		// 전체선택에 체크한 경우 변환
@@ -124,9 +126,6 @@
 				})
 			}
 		});
-	});
-
-	$(function(){
 		$("#datepicker").datepicker(
 			{
 				dateFormat: "yymmdd",
