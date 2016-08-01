@@ -3,10 +3,9 @@
 
 <mapper namespace="com.footmorning.mappers.myclub.myclubNoticeMapper">
 	<insert id="create">
-		INSERT INTO
-		myclub_notice(mem_no, myclub_notice_writer,
+		INSERT INTO myclub_notice(mem_no, myclub_notice_writer, club_no,
 		myclub_notice_subject, myclub_notice_content)
-		VALUES (#{mem_no}, #{myclub_notice_writer},
+		VALUES (#{mem_no}, #{myclub_notice_writer}, #{club_no},
 		#{myclub_notice_subject}, #{myclub_notice_content})
 	</insert>
 
@@ -14,6 +13,10 @@
 		select * from myclub_notice where
 		myclub_notice_no=#{bno}
 	</select>
+	
+	<update id="updateCount" parameterType="MyclubNoticeDTO">
+		update myclub_notice set myclub_notice_count = myclub_notice_count + 1 where myclub_notice_no = #{myclub_notice_no};
+	</update>
 
 	<update id="update">
 		update myclub_notice set myclub_notice_subject
@@ -73,11 +76,13 @@
 
 	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
 		keyword ) -->
-	<select id="listSearch" resultType="MyclubNoticeDTO">
+	<select id="listSearch"  resultType="MyclubNoticeDTO">
 		<![CDATA[  
-		  select * 
-		  from Myclub_Notice 
-		  where Myclub_Notice_no > 0 
+		  select 
+			A.*, 
+			(SELECT COUNT(*) FROM myclub_notice_reply B WHERE B.myclub_notice_no=A.myclub_notice_no) as replycount
+		  from Myclub_Notice A
+		  where Myclub_Notice_no > 0 and club_no = #{club_no} 
 		]]>
 
 		<include refid="search"></include>
@@ -93,7 +98,7 @@
 		<![CDATA[  
 		  select count(Myclub_Notice_no) 
 		  from Myclub_Notice 
-		  where Myclub_Notice_no > 0 
+		  where Myclub_Notice_no > 0 and club_no = #{club_no}
 		]]>
 		<include refid="search"></include>
 	</select>
@@ -152,4 +157,5 @@
 		myclub_notice_re_content=#{myclub_notice_re_content} WHERE
 		myclub_notice_re_no=#{myclub_notice_re_no};
 	</update>
+		
 </mapper>

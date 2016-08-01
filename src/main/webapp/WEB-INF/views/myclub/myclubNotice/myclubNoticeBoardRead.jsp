@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +50,7 @@ function displayReplyDiv(parent_no, rev_no) {
    <div class="row">
       <div id="wrapper">
          <div>
-            <%@ include file="../../include/communitysidebar.jsp" %>
+            <%@ include file="../../include/myclubSidebar.jsp" %>
          </div>
          <div class="col-md-10">
             <div id="page-content-wrapper">
@@ -59,21 +61,24 @@ function displayReplyDiv(parent_no, rev_no) {
             <div class="container">
                <div class="row">
                   <table class="table">
-                     <tr>
-                        <td class="span1">제목</td>
-                        <td>${dto.myclub_notice_subject}</td>
-                        <td class="span1">조회수</td>
-                        <td>${dto.myclub_notice_count}</td>
+                     <tr align="center">
+                        <td style="width: 8%;" bgcolor="F7F7F7" valign="middle">제목</td>
+                        <td style="width: 50%;" colspan="8">${dto.myclub_notice_subject}</td>
                      </tr>
-                     <tr>
-                        <td>작성자</td>
-                        <td>${dto.myclub_notice_writer}</td>
-                        <td>등록일</td>
-                        <td>${dto.myclub_notice_regdate}</td>
+                     <tr align="center">
+                      	<td style="width: 8%" bgcolor="F7F7F7">글번호</td>
+                     	<td style="width: 8%" colspan="1">${dto.myclub_notice_no}</td>
+                        <td style="width: 8%" bgcolor="F7F7F7">조회수</td>
+                        <td style="width: 8%">${dto.myclub_notice_count}</td>
                      </tr>
-                     <tr>
-                        <td>내용</td>
-                        <td>${dto.myclub_notice_content}</td>
+                     <tr align="center">
+                        <td bgcolor="F7F7F7">작성자</td>
+                        <td colspan="1">${dto.myclub_notice_writer}</td>
+                        <td bgcolor="F7F7F7">등록일</td>
+                        <td><fmt:formatDate value="${dto.myclub_notice_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+                     </tr>
+                     <tr style="border-left: none; border-right: none;">
+                         <td colspan="10" class="col-sm-5" style="text-align: left;">${dto.myclub_notice_content}</td>
                      </tr>
                   </table>
                   <br/>
@@ -137,7 +142,10 @@ function displayReplyDiv(parent_no, rev_no) {
                </div><!-- /row -->
             </div>
             
+            <br/>
             <hr/>
+            <br/>
+            
                <div align="right">
                   <a href="/myclub/notice/main" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
                   <a href="/myclub/notice/update?myclub_notice_no=${dto.myclub_notice_no}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>수정</a>

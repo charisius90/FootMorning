@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.myclub.myclubVideoMapper">
+	<insert id="create">
+		INSERT INTO myclub_video(mem_no, myclub_video_writer, club_no,
+		myclub_video_subject, myclub_video_content)
+		VALUES (#{mem_no}, #{myclub_video_writer}, #{club_no},
+		#{myclub_video_subject}, #{myclub_video_content})
+	</insert>
+	
+	<select id="read" resultType="MyclubVideoDTO">
+		select * from myclub_video where
+		myclub_video_no=#{bno}
+	</select>
+
+	<update id="update">
+		update myclub_video set myclub_video_subject
+		=#{myclub_video_subject},
+		myclub_video_content
+		=#{myclub_video_content}
+		where myclub_video_no = #{myclub_video_no}
+	</update>
+	
+	<update id="updateCount" parameterType="MyclubVideoDTO">
+		update myclub_video set myclub_video_count = myclub_video_count + 1 where myclub_video_no = #{myclub_video_no};
+	</update>
+
+	<delete id="delete">
+		delete from myclub_video where myclub_video_no =
+		#{myclub_video_no}
+	</delete>
+
+	<select id="listAll" resultType="MyclubVideoDTO">
+       <![CDATA[
+       select * from myclub_video where myclub_video_no > 0 order by myclub_video_no desc, myclub_video_regdate desc
+       ]]>
+	</select>
+
+	<select id="listPage" resultType="MyclubVideoDTO">
+		<![CDATA[
+			select * from myclub_video where myclub_video_no > 0 
+				order by myclub_video_no desc, myclub_video_regdate desc limit #{page}, 10
+		]]>
+	</select>
+
+	<select id="listCriteria" resultType="MyclubVideoDTO">
+ 		<![CDATA[
+ 			select * from myclub_video where myclub_video_no > 0 
+ 				order by myclub_video_no desc, myclub_video_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+
+	<select id="countPaging" resultType="int">
+		select count(myclub_video_no) from myclub_video
+	</select>
+
+
+	<!-- 반복되어 재사용되는 sql문은 이렇게 id를 부여하고 <sql></sql> 태그로 감싸면 include가 가능해진다. -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and myclub_video_subject like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'c'.toString()">
+				and myclub_video_content like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'w'.toString()">
+				and myclub_video_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
+		keyword ) -->
+	<select id="listSearch"  resultType="MyclubVideoDTO">
+		<![CDATA[  
+		  select A.*,
+		  (SELECT COUNT(*) FROM myclub_video_reply B WHERE B.myclub_video_no=A.myclub_video_no) as replycount 
+		  from Myclub_video A
+		  where Myclub_video_no > 0 and club_no = #{club_no} 
+		]]>
+
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by Myclub_video_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<!-- 검색 결과 게시물 총 갯수 계산 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(Myclub_video_no) 
+		  from Myclub_video 
+		  where Myclub_video_no > 0 and club_no = #{club_no}
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<insert id="createReply" parameterType="MyclubVideoReplyDTO">
+		INSERT INTO
+		myclub_video_reply(myclub_video_no, mem_no, myclub_video_re_writer,
+		myclub_video_re_content, myclub_video_re_pos,
+		myclub_video_re_depth,myclub_video_re_group)
+		VALUES
+		(#{myclub_video_no}, #{mem_no}, #{myclub_video_re_writer},
+		#{myclub_video_re_content},0,0,null);
+	</insert>
+
+	<insert id="createReReply" parameterType="MyclubVideoReplyDTO">
+		INSERT INTO
+		myclub_video_reply(myclub_video_no, mem_no, myclub_video_re_writer,
+		myclub_video_re_content, myclub_video_re_pos,
+		myclub_video_re_depth,myclub_video_re_group)
+		VALUES
+		(#{myclub_video_no}, #{mem_no}, #{myclub_video_re_writer},
+		#{myclub_video_re_content},#{myclub_video_re_pos}+1,#{myclub_video_re_depth}+1,null);
+	</insert>
+
+	<select id="listReply" resultType="MyclubVideoReplyDTO">
+		select * from
+		myclub_video_reply where myclub_video_no=#{myclub_video_no}
+		order by
+		myclub_video_re_pos desc;
+	</select>
+
+	<select id="parentInfo" resultType="MyclubVideoReplyDTO">
+		select * from
+		myclub_video_reply where myclub_video_re_no=#{no};
+	</select>
+
+	<update id="updatePos">
+		update myclub_video_reply set
+		myclub_video_re_pos=myclub_video_re_pos+1;
+	</update>
+
+	<update id="replyUpdatePos">
+		update myclub_video_reply set
+		myclub_video_re_pos=myclub_video_re_pos+1
+		where myclub_video_re_pos
+		> #{myclub_video_re_pos}
+	</update>
+
+	<update id="deleteReply">
+		UPDATE myclub_video_reply SET
+		myclub_video_re_writer=#{myclub_video_re_writer},
+		myclub_video_re_content=#{myclub_video_re_content} WHERE
+		myclub_video_re_no=#{myclub_video_re_no};
+	</update>
+</mapper>

@@ -1,32 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.footmorning.mappers.comVideoMapper">
-	
-	<insert id="register" parameterType="ComVideoDTO">
-		insert into com_video(mem_no, com_video_subject, com_video_content, com_video_count)
-		values(#{mem_no},#{com_video_subject},#{com_video_content},#{com_video_count})
+	<insert id="create">
+		INSERT INTO com_video(mem_no, com_video_writer,
+		com_video_subject, com_video_content)
+		VALUES (#{mem_no}, #{com_video_writer},
+		#{com_video_subject}, #{com_video_content})
 	</insert>
 	
 	<select id="read" resultType="ComVideoDTO">
-		select * from com_video where com_video_no=#{com_video_no}
+		select * from com_video where
+		com_video_no=#{bno}
 	</select>
-	
-	<update id="update" parameterType="ComVideoDTO">
-		update com_video set mem_no=#{mem_no}, com_video_subject=#{com_video_subject},com_video_content=#{com_video_content},
-		com_video_writer=#{com_video_writer},
-		com_video_count=#{com_video_count} where com_video_no=#{com_video_no}	
+
+	<update id="update">
+		update com_video set com_video_subject
+		=#{com_video_subject},
+		com_video_content
+		=#{com_video_content}
+		where com_video_no = #{com_video_no}
 	</update>
 	
+	<update id="updateCount" parameterType="ComVideoDTO">
+		update com_video set com_video_count = com_video_count + 1 where com_video_no = #{com_video_no};
+	</update>
+
 	<delete id="delete">
-		delete from com_video 
-		where com_video_no=#{com_video_no}
+		delete from com_video where com_video_no =
+		#{com_video_no}
 	</delete>
-	
+
 	<select id="listAll" resultType="ComVideoDTO">
-		select * from com_video where com_video_no>0 order by com_video_no desc, com_video_regdate desc
+       <![CDATA[
+       select * from com_video where com_video_no > 0 order by com_video_no desc, com_video_regdate desc
+       ]]>
 	</select>
-	
+
+	<select id="listPage" resultType="ComVideoDTO">
+		<![CDATA[
+			select * from com_video where com_video_no > 0 
+				order by com_video_no desc, com_video_regdate desc limit #{page}, 10
+		]]>
+	</select>
+
+	<select id="listCriteria" resultType="ComVideoDTO">
+ 		<![CDATA[
+ 			select * from com_video where com_video_no > 0 
+ 				order by com_video_no desc, com_video_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+
+	<select id="countPaging" resultType="int">
+		select count(com_video_no) from com_video
+	</select>
+
+
+	<!-- 반복되어 재사용되는 sql문은 이렇게 id를 부여하고 <sql></sql> 태그로 감싸면 include가 가능해진다. -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and com_video_subject like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'c'.toString()">
+				and com_video_content like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'w'.toString()">
+				and com_video_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
+		keyword ) -->
+	<select id="listSearch"  resultType="ComVideoDTO">
+		<![CDATA[  
+		  select 
+		  A.*,
+		  (SELECT COUNT(*) FROM com_video_reply B WHERE B.com_video_no=A.com_video_no) as replycount 
+		  from com_video A
+		  where com_video_no > 0
+		]]>
+
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by com_video_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<!-- 검색 결과 게시물 총 갯수 계산 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(com_video_no) 
+		  from com_video 
+		  where com_video_no > 0
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<insert id="createReply" parameterType="ComVideoReplyDTO">
+		INSERT INTO
+		com_video_reply(com_video_no, mem_no, com_video_re_writer,
+		com_video_re_content, com_video_re_pos,
+		com_video_re_depth, com_video_re_group)
+		VALUES
+		(#{com_video_no}, #{mem_no}, #{com_video_re_writer},
+		#{com_video_re_content},0,0,null);
+	</insert>
+
+	<insert id="createReReply" parameterType="ComVideoReplyDTO">
+		INSERT INTO
+		com_video_reply(com_video_no, mem_no, com_video_re_writer,
+		com_video_re_content, com_video_re_pos,
+		com_video_re_depth, com_video_re_group)
+		VALUES
+		(#{com_video_no}, #{mem_no}, #{com_video_re_writer},
+		#{com_video_re_content},#{com_video_re_pos}+1,#{com_video_re_depth}+1,null);
+	</insert>
+
+	<select id="listReply" resultType="ComVideoReplyDTO">
+		select * from
+		com_video_reply where com_video_no=#{com_video_no}
+		order by
+		com_video_re_pos desc;
+	</select>
+
+	<select id="parentInfo" resultType="ComVideoReplyDTO">
+		select * from
+		com_video_reply where com_video_re_no=#{no};
+	</select>
+
+	<update id="updatePos">
+		update com_video_reply set
+		com_video_re_pos=com_video_re_pos+1;
+	</update>
+
+	<update id="replyUpdatePos">
+		update com_video_reply set
+		com_video_re_pos=com_video_re_pos+1
+		where com_video_re_pos
+		> #{com_video_re_pos}
+	</update>
+
+	<update id="deleteReply">
+		UPDATE com_video_reply SET
+		com_video_re_writer=#{com_video_re_writer},
+		com_video_re_content=#{com_video_re_content} WHERE
+		com_video_re_no=#{com_video_re_no};
+	</update>
 </mapper>

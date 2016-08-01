@@ -11,6 +11,8 @@ public interface MyclubNoticeDAO {
 	public void create(MyclubNoticeDTO dto) throws Exception;
 
 	public MyclubNoticeDTO read(Integer bno) throws Exception;
+	
+	public void updateCount(Integer myclub_notice_no) throws Exception;
 
 	public void update(MyclubNoticeDTO dto) throws Exception;
 
@@ -18,9 +20,9 @@ public interface MyclubNoticeDAO {
 
 	public List<MyclubNoticeDTO> listAll() throws Exception;
 
-	public List<MyclubNoticeDTO> listCriteria(Criteria cri) throws Exception; // ±ÔÃ¤
+	public List<MyclubNoticeDTO> listCriteria(Criteria cri) throws Exception; // ï¿½ï¿½Ã¤
 
-	public int countPaging(Criteria cri) throws Exception; // ±ÔÃ¤
+	public int countPaging(Criteria cri) throws Exception; // ï¿½ï¿½Ã¤
 
 	public List<MyclubNoticeDTO> listSearchCriteria(SearchCriteria cri) throws Exception;
 

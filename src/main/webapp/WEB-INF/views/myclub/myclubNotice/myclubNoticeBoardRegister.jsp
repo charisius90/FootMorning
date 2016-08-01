@@ -28,6 +28,7 @@
 			</div>
 			<form name="f1" method="post" action="/myclub/notice/register">
 		    <input type="hidden" name="mem_no" value="${USER_KEY.mem_no}"/>
+		    <input type="hidden" name="club_no" value="${CLUB_KEY.club_no}"/>
 			<div class="col-md-10">
 				<div id="page-content-wrapper">
 				<h1>클럽자랑-글쓰기</h1> 			

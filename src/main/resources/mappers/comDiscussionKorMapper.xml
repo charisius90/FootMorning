@@ -5,35 +5,160 @@
 
 <mapper namespace="com.footmorning.mappers.comDiscussionKorMapper">
 	
-	<insert id="register" parameterType="ComDiscussionKorDTO">
-		insert into com_discussion_kor(mem_no, com_discussion_kor_subject, 
-		com_discussion_kor_content, 
-		com_discussion_kor_count, 
-		com_discussion_kor_writer)
-		values(#{mem_no},#{com_discussion_kor_subject},#{com_discussion_kor_content},
-		#{com_discussion_kor_count}, #{com_discussion_kor_writer})
+	
+	<insert id="create">
+		INSERT INTO com_discussion_kor(mem_no, com_discussion_kor_writer,
+		com_discussion_kor_subject, com_discussion_kor_content)
+		VALUES (#{mem_no}, #{com_discussion_kor_writer},
+		#{com_discussion_kor_subject}, #{com_discussion_kor_content})
 	</insert>
-	
+
 	<select id="read" resultType="ComDiscussionKorDTO">
-		select * from com_discussion_kor where com_discussion_kor_no=#{com_discussion_kor_no}
+		select * from com_discussion_kor where
+		com_discussion_kor_no=#{bno}
 	</select>
 	
-	<update id="update" parameterType="ComDiscussionKorDTO">
-		update com_discussion_kor set mem_no=#{mem_no}, 
-		com_discussion_kor_subject=#{com_discussion_kor_subject},
-		com_discussion_kor_content=#{com_discussion_kor_content},
-		com_discussion_kor_writer=#{com_discussion_kor_writer},
-		com_discussion_kor_count=#{com_discussion_kor_count} 
-		where com_discussion_kor_no=#{com_discussion_kor_no}	
+	<update id="updateCount" parameterType="ComDiscussionKorDTO">
+		update com_discussion_kor set com_discussion_kor_count = com_discussion_kor_count + 1 where com_discussion_kor_no = #{no};
 	</update>
-	
+
+	<update id="update">
+		update com_discussion_kor set com_discussion_kor_subject
+		=#{com_discussion_kor_subject},
+		com_discussion_kor_content
+		=#{com_discussion_kor_content}
+		where com_discussion_kor_no = #{com_discussion_kor_no}
+	</update>
+
 	<delete id="delete">
-		delete from com_discussion_kor 
-		where com_discussion_kor_no=#{com_discussion_kor_no}
+		delete from com_discussion_kor where com_discussion_kor_no =
+		#{com_discussion_kor_no}
 	</delete>
-	
+
 	<select id="listAll" resultType="ComDiscussionKorDTO">
-		select * from com_discussion_kor where com_discussion_kor_no>0 order by com_discussion_kor_no desc, com_discussion_kor_regdate desc
+       <![CDATA[
+       select * from com_discussion_kor where com_discussion_kor_no > 0 order by com_discussion_kor_no desc, com_discussion_kor_regdate desc
+       ]]>
 	</select>
+
+	<select id="listPage" resultType="ComDiscussionKorDTO">
+		<![CDATA[
+			select * from com_discussion_kor where com_discussion_kor_no > 0 
+				order by com_discussion_kor_no desc, com_discussion_kor_regdate desc limit #{page}, 10
+		]]>
+	</select>
+
+	<select id="listCriteria" resultType="ComDiscussionKorDTO">
+ 		<![CDATA[
+ 			select * from com_discussion_kor where com_discussion_kor_no > 0 
+ 				order by com_discussion_kor_no desc, com_discussion_kor_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+
+	<select id="countPaging" resultType="int">
+		select count(com_discussion_kor_no) from com_discussion_kor
+	</select>
+
+
+	<!-- 반복되어 재사용되는 sql문은 이렇게 id를 부여하고 <sql></sql> 태그로 감싸면 include가 가능해진다. -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and com_discussion_kor_subject like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'c'.toString()">
+				and com_discussion_kor_content like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'w'.toString()">
+				and com_discussion_kor_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
+		keyword ) -->
+	<select id="listSearch"  resultType="ComDiscussionKorDTO">
+      <![CDATA[  
+        select 
+         A.*, 
+         (SELECT COUNT(*) FROM com_discussion_kor_reply B WHERE B.com_discussion_kor_no=A.com_discussion_kor_no) as replycount
+        from com_discussion_kor A
+        where com_discussion_kor_no > 0 
+      ]]>
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by com_discussion_kor_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<!-- 검색 결과 게시물 총 갯수 계산 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(com_discussion_kor_no) 
+		  from com_discussion_kor 
+		  where com_discussion_kor_no > 0
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<insert id="createReply" parameterType="ComDiscussionKorReplyDTO">
+		INSERT INTO
+		com_discussion_kor_reply(com_discussion_kor_no, mem_no, com_discussion_kor_re_writer,
+		com_discussion_kor_re_content, com_discussion_kor_re_pos,
+		com_discussion_kor_re_depth,com_discussion_kor_re_group)
+		VALUES
+		(#{com_discussion_kor_no}, #{mem_no}, #{com_discussion_kor_re_writer},
+		#{com_discussion_kor_re_content},0,0,null);
+	</insert>
+
+	<insert id="createReReply" parameterType="ComDiscussionKorReplyDTO">
+		INSERT INTO
+		com_discussion_kor_reply(com_discussion_kor_no, mem_no, com_discussion_kor_re_writer,
+		com_discussion_kor_re_content, com_discussion_kor_re_pos,
+		com_discussion_kor_re_depth,com_discussion_kor_re_group)
+		VALUES
+		(#{com_discussion_kor_no}, #{mem_no}, #{com_discussion_kor_re_writer},
+		#{com_discussion_kor_re_content},#{com_discussion_kor_re_pos}+1,#{com_discussion_kor_re_depth}+1,null);
+	</insert>
+
+	<select id="listReply" resultType="ComDiscussionKorReplyDTO">
+		select * from
+		com_discussion_kor_reply where com_discussion_kor_no=#{com_discussion_kor_no}
+		order by
+		com_discussion_kor_re_pos desc;
+	</select>
+
+	<select id="parentInfo" resultType="ComDiscussionKorReplyDTO">
+		select * from
+		com_discussion_kor_reply where com_discussion_kor_re_no=#{no};
+	</select>
+
+	<update id="updatePos">
+		update com_discussion_kor_reply set
+		com_discussion_kor_re_pos=com_discussion_kor_re_pos+1;
+	</update>
+
+	<update id="replyUpdatePos">
+		update com_discussion_kor_reply set
+		com_discussion_kor_re_pos=com_discussion_kor_re_pos+1
+		where com_discussion_kor_re_pos
+		> #{com_discussion_kor_re_pos}
+	</update>
+
+	<!-- <delete id="deleteReply"> -->
+	<!-- delete from com_discussion_kor_reply where com_discussion_kor_re_no=#{com_discussion_kor_re_no}; -->
+	<!-- </delete> -->
+
+	<update id="deleteReply">
+		UPDATE com_discussion_kor_reply SET
+		com_discussion_kor_re_writer=#{com_discussion_kor_re_writer},
+		com_discussion_kor_re_content=#{com_discussion_kor_re_content} WHERE
+		com_discussion_kor_re_no=#{com_discussion_kor_re_no};
+	</update>
 	
 </mapper>

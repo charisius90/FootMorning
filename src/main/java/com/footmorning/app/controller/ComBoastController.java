@@ -1,5 +1,11 @@
 package com.footmorning.app.controller;
 
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,78 +15,218 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.ComBoastDTO;
+import com.footmorning.app.domain.ComBoastReplyDTO;
 import com.footmorning.app.service.ComBoastService;
+import com.footmorning.app.util.PageMaker;
+import com.footmorning.app.util.SearchCriteria;
 
 /**
- * Ä¿¹Â´ÏÆ¼ ÀÚ¶û°Ô½ÃÆÇ ÄÁÆ®·Ñ·¯
- * @author ¹Ú¼öÇ×
+ * Ä¿ï¿½Â´ï¿½Æ¼ ï¿½Ú¶ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½
+ * @author ï¿½Ú¼ï¿½ï¿½ï¿½
  *
  */
 @Controller
-@RequestMapping("/com/boast/*")
 public class ComBoastController {
 	private static Logger logger = LoggerFactory.getLogger(ComBoastController.class);
 	
 	@Autowired
 	private ComBoastService service;
 	
-	/**
-	 * ±Û¾²±â
-	 */
-	@RequestMapping("comBoastRegister")
-	public void registerGET(){}
 	
-	@RequestMapping(value = "comBoastRegister", method = RequestMethod.POST)
-	public String registerPOST(ComBoastDTO dto, RedirectAttributes rttr) throws Exception {
-		dto.setCom_boast_count("0");
+	@RequestMapping("/com/boast/main")
+	public String notice(SearchCriteria cri, Model model, HttpServletRequest req) throws Exception {
+		HttpSession session = req.getSession();
+		
+//		ClubDTO dto = (ClubDTO)session.getAttribute("CLUB_KEY");
+//		cri.setClub_no(dto.getClub_no());
+		model.addAttribute("list", service.listSearchCriteria(cri));
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.listSearchCount(cri));
 
+		model.addAttribute("pageMaker", pageMaker);
+		// System.out.println(service.listAll().toString());
+		return "/com/boast/comBoastMain";
+		// ï¿½Ù¹ï¿½ï¿½ï¿½ myclubNoticeBoardMain2
+		// return "/myclub/myclubNotice/myclubNoticeBoardMain2";
+	}
+
+	@RequestMapping(value = "/com/boast/register", method = RequestMethod.GET)
+	public String register(Locale locale, Model model) {
+		// logger.info("ï¿½ï¿½ï¿½", locale);
+
+		return "/com/boast/comBoastRegister";
+	}
+
+	@RequestMapping(value = "/com/boast/register", method = RequestMethod.POST)
+	public String registerComplete(ComBoastDTO dto, RedirectAttributes rttr) throws Exception {
+		// logger.info("ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ : " + dto.toString());
 		service.register(dto);
 
 		rttr.addFlashAttribute("msg", "SUCCESS");
-		return "redirect:/com/boast/comBoastListAll";
+
+		return "redirect:/com/boast/main";
 	}
-	
+
 	/**
-	 * ÀüÃ¼¸ñ·Ï
+	 * ï¿½ï¿½ï¿½ï¿½ read get
+	 * 
+	 * @param bno
+	 * @param model
+	 * @return
+	 * @throws Exception
 	 */
-	@RequestMapping("comBoastListAll")
-	public void listAll(Model model) throws Exception{
-		model.addAttribute("list", service.listAll());
-	}
-	
-	/**
-	 * ±ÛÀĞ±â
-	 */
-	@RequestMapping("comBoastRead")
-	public void readGET(int no, Model model) throws Exception{
-		ComBoastDTO dto = service.read(no);
-		dto.setCom_boast_count(Integer.toString(Integer.valueOf(dto.getCom_boast_count()).intValue() + 1));
-		service.update(dto);
-		model.addAttribute(dto);
-	}
-	
-	/**
-	 * ¼öÁ¤ÇÏ±â
-	 */
-	@RequestMapping("comBoastUpdate")
-	public void updateGET(int no, Model model) throws Exception{
-		model.addAttribute(service.read(no));
-	}
-	@RequestMapping(value="comBoastUpdate", method=RequestMethod.POST)
-	public String updatePOST(ComBoastDTO dto, Model model) throws Exception{
-		service.update(dto);
+	@RequestMapping(value = "/com/boast/read", method = RequestMethod.GET)
+	public String read(Integer com_boast_no, Model model) throws Exception {
+		service.updateCount(com_boast_no);
 		
-		model.addAttribute(dto);
+		model.addAttribute("dto", service.read(com_boast_no));
+
+		model.addAttribute("replydto", service.listAllReply(com_boast_no));
+
 		return "/com/boast/comBoastRead";
 	}
-	
+
 	/**
-	 * »èÁ¦ÇÏ±â
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® get
+	 * 
+	 * @param bno
+	 * @param model
+	 * @return
+	 * @throws Exception
 	 */
-	@RequestMapping("comBoastDelete")
-	public String deleteGET(int no) throws Exception{
-		service.delete(no);
-		return "redirect:/com/boast/comBoastListAll";
+	@RequestMapping(value = "/com/boast/update", method = RequestMethod.GET)
+	public String update(Integer com_boast_no, Model model) throws Exception {
+		model.addAttribute("dto", service.read(com_boast_no));
+		System.out.println(service.read(com_boast_no).toString());
+		return "/com/boast/comBoastUpdate";
 	}
+
+	/**
+	 * 
+	 * ï¿½ï¿½ï¿½ï¿½ update post
+	 * 
+	 * @param dto
+	 * @param rttr
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/com/boast/update", method = RequestMethod.POST)
+	public String updateComplete(ComBoastDTO dto, RedirectAttributes rttr) throws Exception {
+		System.out.println("ï¿½ï¿½ï¿½ï¿½: " + dto.toString());
+		service.modify(dto);
+
+		rttr.addFlashAttribute("msg", "UPSUCCESS");
+
+		return "redirect:/com/boast/main";
+	}
+
+	/**
+	 * ï¿½ï¿½ï¿½ï¿½ delete get
+	 * 
+	 * @param bno
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/com/boast/delete")
+	public String delete(Integer com_boast_no, RedirectAttributes rttr) throws Exception {
+		service.remove(com_boast_no);
+		
+		rttr.addFlashAttribute("msg", "DELSUCCESS");
+
+		return "redirect:/com/boast/main";
+	}
+
+	/**
+	 * ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ reply add post
+	 * 
+	 * @param dto
+	 * @param rttr
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/com/boastReply/register", method = RequestMethod.POST)
+	public String registerReply(Model model, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+
+		System.out.println("controller called...");
+		String parent_no = req.getParameter("parent_no");
+		String content = req.getParameter("com_boast_re_content");
+		int com_boast_no = Integer.parseInt(req.getParameter("com_boast_no"));
+
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		int mem_no = Integer.parseInt(req.getParameter("mem_no"));
+		String Com_boast_reply_writer = req.getParameter("com_boast_reply_writer");
+
+		// DTOï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		ComBoastReplyDTO dto = new ComBoastReplyDTO();
+		dto.setCom_boast_no(com_boast_no);
+		dto.setCom_boast_re_content(content);
+
+		if (parent_no.equals("parent")) {
+			dto.setMem_no(mem_no);
+			dto.setCom_boast_reply_writer(Com_boast_reply_writer);
+			System.out.println(dto.toString());
+			service.createReply(dto);
+		} else {
+			dto.setMem_no(mem_no);
+			dto.setCom_boast_reply_writer(Com_boast_reply_writer);
+			System.out.println(dto.toString());
+			ComBoastReplyDTO dto2 = service.MyclubNoticeParentPos(Integer.parseInt(parent_no));
+			// System.out.println("parent data called.. : "+dto2.toString());
+			// service.updatePos(dto2.getCom_boast_re_pos());
+			service.updatePos(dto2);
+			dto.setCom_boast_re_pos(dto2.getCom_boast_re_pos());
+			dto.setCom_boast_re_depth(dto2.getCom_boast_re_depth());
+			service.createReReply(dto);
+		}
+
+		// ï¿½×½ï¿½Æ®
+		// System.out.println(service.listAllReply(Com_boast_no).toString());
+
+		// ï¿½ï¿½Û¸ï¿½ï¿½ï¿½Æ®
+		req.setAttribute("replydto", service.listAllReply(com_boast_no));
+
+		return "/com/boast/json/comboastReplyJson";
+	}
+
+	/**
+	 * ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
+	 * 
+	 * @param req
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/com/boastReply/delete", method = RequestMethod.POST)
+	public String deleteReply(HttpServletRequest req, Model model) throws Exception {
+
+		int re_no = Integer.parseInt(req.getParameter("re_no"));
+		// System.out.println(re_no);
+
+		// ï¿½Î¸ï¿½ info
+		ComBoastReplyDTO dto = service.MyclubNoticeParentPos(re_no);
+
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dto set
+		dto.setCom_boast_reply_writer("999");
+		dto.setCom_boast_re_no(re_no);
+		dto.setCom_boast_re_content("í•´ë‹¹ ëŒ“ê¸€ì€ ì´ë¯¸ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.");
+
+		// System.out.println(dto.toString());
+		// ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
+		service.deleteReply(dto);
+
+		req.setAttribute("result", true);
+		req.setAttribute("re_no", re_no);
+		req.setAttribute("depth", dto.getCom_boast_re_depth());
+		req.setAttribute("writer", dto.getCom_boast_reply_writer());
+
+		System.out.println("dto writer:" + dto.getCom_boast_reply_writer());
+		return "/com/boast/json/comboastReplyDeleteJson";
+
+	}
+
 }

@@ -5,34 +5,159 @@
 
 <mapper namespace="com.footmorning.mappers.comQnAMapper">
 	
-	<insert id="register" parameterType="ComQnADTO">
-		insert into com_qna(mem_no, com_qna_subject, 
-		com_qna_content,
-		com_qna_count, 
-		com_qna_writer)
-		values(#{mem_no}, #{com_qna_subject}, #{com_qna_content},
-		 #{com_qna_count}, #{com_qna_writer})
+	<insert id="create">
+		INSERT INTO com_qna(mem_no, com_qna_writer,
+		com_qna_subject, com_qna_content)
+		VALUES (#{mem_no}, #{com_qna_writer},
+		#{com_qna_subject}, #{com_qna_content})
 	</insert>
-	
+
 	<select id="read" resultType="ComQnADTO">
-		select * from com_qna where com_qna_no=#{com_qna_no}
+		select * from com_qna where
+		com_qna_no=#{bno}
 	</select>
 	
-	<update id="update" parameterType="ComQnADTO">
-		update com_qna set com_qna_subject=#{com_qna_subject},
-		com_qna_writer=#{com_qna_writer},
-		com_qna_content=#{com_qna_content}, 
-		com_qna_count=#{com_qna_count}
-		where com_qna_no=#{com_qna_no}
+	<update id="updateCount" parameterType="ComQnADTO">
+		update com_qna set com_qna_count = com_qna_count + 1 where com_qna_no = #{no};
 	</update>
-	
+
+	<update id="update">
+		update com_qna set com_qna_subject
+		=#{com_qna_subject},
+		com_qna_content
+		=#{com_qna_content}
+		where com_qna_no = #{com_qna_no}
+	</update>
+
 	<delete id="delete">
-		delete from com_qna 
-		where com_qna_no=#{com_qna_no}
+		delete from com_qna where com_qna_no =
+		#{com_qna_no}
 	</delete>
-	
+
 	<select id="listAll" resultType="ComQnADTO">
-		select * from com_qna where com_qna_no>0 order by com_qna_no desc, com_qna_regdate desc
+       <![CDATA[
+       select * from com_qna where com_qna_no > 0 order by com_qna_no desc, com_qna_regdate desc
+       ]]>
 	</select>
-	
+
+	<select id="listPage" resultType="ComQnADTO">
+		<![CDATA[
+			select * from com_qna where com_qna_no > 0 
+				order by com_qna_no desc, com_qna_regdate desc limit #{page}, 10
+		]]>
+	</select>
+
+	<select id="listCriteria" resultType="ComQnADTO">
+ 		<![CDATA[
+ 			select * from com_qna where com_qna_no > 0 
+ 				order by com_qna_no desc, com_qna_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+
+	<select id="countPaging" resultType="int">
+		select count(com_qna_no) from com_qna
+	</select>
+
+
+	<!-- 반복되어 재사용되는 sql문은 이렇게 id를 부여하고 <sql></sql> 태그로 감싸면 include가 가능해진다. -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and com_qna_subject like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'c'.toString()">
+				and com_qna_content like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'w'.toString()">
+				and com_qna_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
+		keyword ) -->
+	<select id="listSearch"  resultType="ComQnADTO">
+      <![CDATA[  
+        select 
+         A.*, 
+         (SELECT COUNT(*) FROM com_qna_reply B WHERE B.com_qna_no=A.com_qna_no) as replycount
+        from com_qna A
+        where com_qna_no > 0
+      ]]>
+
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by com_qna_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<!-- 검색 결과 게시물 총 갯수 계산 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(com_qna_no) 
+		  from com_qna 
+		  where com_qna_no > 0
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<insert id="createReply" parameterType="ComQnAReplyDTO">
+		INSERT INTO
+		com_qna_reply(com_qna_no, mem_no, com_qna_re_writer,
+		com_qna_re_content, com_qna_re_pos,
+		com_qna_re_depth,com_qna_re_group)
+		VALUES
+		(#{com_qna_no}, #{mem_no}, #{com_qna_re_writer},
+		#{com_qna_re_content},0,0,null);
+	</insert>
+
+	<insert id="createReReply" parameterType="ComQnAReplyDTO">
+		INSERT INTO
+		com_qna_reply(com_qna_no, mem_no, com_qna_re_writer,
+		com_qna_re_content, com_qna_re_pos,
+		com_qna_re_depth,com_qna_re_group)
+		VALUES
+		(#{com_qna_no}, #{mem_no}, #{com_qna_re_writer},
+		#{com_qna_re_content},#{com_qna_re_pos}+1,#{com_qna_re_depth}+1,null);
+	</insert>
+
+	<select id="listReply" resultType="ComQnAReplyDTO">
+		select * from
+		com_qna_reply where com_qna_no=#{com_qna_no}
+		order by
+		com_qna_re_pos desc;
+	</select>
+
+	<select id="parentInfo" resultType="ComQnAReplyDTO">
+		select * from
+		com_qna_reply where com_qna_re_no=#{no};
+	</select>
+
+	<update id="updatePos">
+		update com_qna_reply set
+		com_qna_re_pos=com_qna_re_pos+1;
+	</update>
+
+	<update id="replyUpdatePos">
+		update com_qna_reply set
+		com_qna_re_pos=com_qna_re_pos+1
+		where com_qna_re_pos
+		> #{com_qna_re_pos}
+	</update>
+
+	<!-- <delete id="deleteReply"> -->
+	<!-- delete from com_qna_reply where com_qna_re_no=#{com_qna_re_no}; -->
+	<!-- </delete> -->
+
+	<update id="deleteReply">
+		UPDATE com_qna_reply SET
+		com_qna_re_writer=#{com_qna_re_writer},
+		com_qna_re_content=#{com_qna_re_content} WHERE
+		com_qna_re_no=#{com_qna_re_no};
+	</update>
 </mapper>

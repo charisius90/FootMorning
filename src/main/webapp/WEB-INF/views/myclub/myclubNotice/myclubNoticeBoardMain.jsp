@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="now" class="java.util.Date" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,25 +31,37 @@
 				<h1>공지사항</h1>
 				<br/>
 				<table class="table table-boardead table-hover" style="text-align: center;">
-					<tr>
-						<td style="width: 26px;"></td>
-						<td style="width: 216px;">글번호</td>
-						<td style="width: 316px;">제목</td>
-						<td style="width: 216px;">작성자</td>
-						<td style="width: 216px;">작성일</td>
-						<td style="width: 116px;">조회수</td>
-					</tr>
+					<thead  style="background-color:#F7F7F7">
+						<tr>
+							<td style="width: 26px;"></td>
+							<td style="width: 216px;">글번호</td>
+							<td style="width: 316px;">제목</td>
+							<td style="width: 216px;">작성자</td>
+							<td style="width: 216px;">작성일</td>
+							<td style="width: 116px;">조회수</td>
+						</tr>
+					</thead>
 					<!-- 게시글 내용이 들어가는 부분 -->
-					<c:forEach items="${list}" var="myclubDTO">
-		               <tr align="center">
-		               	  <td></td>
-		               	  <td>${myclubDTO.myclub_notice_no}</td>
-		                  <td><a href="/myclub/notice/read?myclub_notice_no=${myclubDTO.myclub_notice_no}">${myclubDTO.myclub_notice_subject}</a></td>
-		                  <td>${myclubDTO.myclub_notice_writer}</td>
-		                  <td>${myclubDTO.myclub_notice_regdate}</td>
-		                  <td>${myclubDTO.myclub_notice_count}</td>
-		               </tr>
-              		</c:forEach>
+					<tbody>
+						<c:forEach items="${list}" var="myclubDTO">
+			               <tr align="center">
+			               	  <td></td>
+			               	  <td>${myclubDTO.myclub_notice_no}</td>
+			                  <td><a href="/myclub/notice/read?myclub_notice_no=${myclubDTO.myclub_notice_no}">
+			                  		${myclubDTO.myclub_notice_subject}</a>
+			                  		<c:if test="${myclubDTO.replycount > 0}"> [${myclubDTO.replycount}]</c:if>
+			                  		
+			                  		<fmt:parseNumber var="date" value="${(now.time - myclubDTO.myclub_notice_regdate.time)/(1000*60*60*24*60)}" integerOnly="true"/>
+			                  		<c:if test="${date > 0}">
+			                  			<img src="/resources/images/ico-new.gif"/>
+			                  		</c:if> 
+			                  </td>
+			                  <td>${myclubDTO.myclub_notice_writer}</td>
+			                  <td><fmt:formatDate value="${myclubDTO.myclub_notice_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+			                  <td>${myclubDTO.myclub_notice_count}</td>
+			               </tr>
+	              		</c:forEach>
+					</tbody>
 				</table>
 				<br/>
 					
@@ -94,6 +108,29 @@
 						</div>
 						
 						<script>
+						
+						   var msg = "${msg}";
+						   if(msg == "SUCCESS"){
+						      alert("등록 되었습니다");
+						   }
+						   else if(msg == "UPSUCCESS"){
+						      alert("수정 되었습니다");
+						   }
+						   else if(msg == "DELSUCCESS"){
+						      alert("삭제 되었습니다");
+						   }
+						   // 박수항
+						   // 로그인 확인 후 글쓰기로 이동 혹은 로그인필요를 알리는 함수
+						   function fnWrite(){
+						      var user_key = "${USER_KEY}";
+						      if(user_key!=null && user_key!=""){
+						         location.replace("/myclub/notice/register");
+						      }
+						      else{
+						         alert("로그인 하세요.");
+						      }
+						   }
+						
 							$('#searchBtn').on("click", function(event) {
 								
 								// 검색옵션 값 가져오기
@@ -108,7 +145,7 @@
 								
 						<!-- 글쓰기 -->
 						<div style="float: right;">
-							<a href="/myclub/notice/register" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-pencil"></span>글쓰기</a>
+							<a href="javascript:fnWrite()" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-pencil"></span>글쓰기</a>
 						</div>
 					</div>
 				</div> <!-- /container-fluid -->

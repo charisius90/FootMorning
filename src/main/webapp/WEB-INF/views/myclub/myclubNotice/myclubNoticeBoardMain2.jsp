@@ -26,7 +26,7 @@
 	<div class="row">
 		<div id="wrapper">
 			<div>
-				<%@ include file="../../include/communitysidebar.jsp" %>
+				<%@ include file="../../include/myclubSidebar.jsp" %>
 			</div>
 		<div id="page-content-wrapper">
 			<div class="col-md-10">
@@ -36,7 +36,7 @@
 					<c:forEach items="${list}" var="myclubDTO" varStatus="status">
 		                  <c:if test="${not empty myclubDTO.myclub_notice_main_thumnail}">
 			                  <div class="col-xs-6 col-md-3" >
-									<a href="MediaTest.jsp" class="thumbnail" style="height: 180px">${myclubDTO.myclub_notice_no}
+									<a href="/myclub/notice/read?myclub_notice_no=${myclubDTO.myclub_notice_no}" class="thumbnail" style="height: 180px">${myclubDTO.myclub_notice_no}
 								   	<img src="${myclubDTO.myclub_notice_main_thumnail}" style="max-width: 200px; max-height: 140px" /></a>
 							 	제목 : ${myclubDTO.myclub_notice_subject}<br/>
 		                		작성자 : ${myclubDTO.myclub_notice_writer}<br/>
@@ -50,29 +50,54 @@
 					<div class="row">
 						<form action="#">
 							<!-- 검색하는 부분 -->
-							<div class="col-md-5 form-inline" style="float: left;">
-								<select class="btn btn-default input-group-add">
-									<option>제목, 내용</option>
-									<option>제목</option>
-									<option>작성자</option>
-									</select>
-								<input class="form-control" type="text" value="" name="" />
-								<button class="btn btn-default input-group-add">검색</button>
+							<div class="col-md-5 form-search" style="float: left;">
+								<select style="width: 100px; height: 30px;" name="searchType" class="btn btn-default input-group-add" size="1">
+									<option value="n" <c:out value="${cri.searchType == null?'selected':''}"/>>---</option>
+									<option value="t" <c:out value="${cri.searchType eq 't'?'selected':''}"/>>제목</option>
+									<option value="c" <c:out value="${cri.searchType eq 'c'?'selected':''}"/>>내용</option>
+									<option value="w" <c:out value="${cri.searchType eq 'w'?'selected':''}"/>>작성자</option>
+								</select>
+								<input type="text" name="keyword" value='${pageMaker.cri.keyword}' style="height: 28px;">
+								<button id="searchBtn" class="btn btn-default input-group-add" type="submit" style="heigt: 25px;padding-top: 4px;padding-bottom: 4px;">검색</button>
 							</div>
 						</form>	
 								
 						<!-- 페이징-->
 						<div class="col-md-4">
 							<ul id="pagingul" class="pagination">
-							    <li><a href="#">&laquo;</a></li>
-							    <li><a href="#">1</a></li>
-							    <li><a href="#">2</a></li>
-							    <li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li><a href="#">&raquo;</a></li>
-							</ul>
+													
+									<c:if test="${pageMaker.prev}">
+										<li><a 
+											href="/myclub/notice/main${pageMaker.makeSearch(pageMaker.startPage - 1) }">&laquo;</a></li>
+									</c:if>
+									
+									<c:forEach begin="${pageMaker.startPage}" 
+												end="${pageMaker.endPage}" var="idx">
+										<li
+											<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
+											<a href="/myclub/notice/main${pageMaker.makeSearch(idx)}">${idx}</a>
+										</li>
+									</c:forEach>
+									
+									<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+										<li><a 
+											href="/myclub/notice/main${pageMaker.makeSearch(pageMaker.endPage + 1) }">&raquo;</a></li>
+									</c:if>
+								</ul>
 						</div>
+						
+						<script>
+							$('#searchBtn').on("click", function(event) {
+								
+								// 검색옵션 값 가져오기
+								var searchType = $("select[name=searchType]").val();
+								
+								// 키워드 값 가져오기
+								var keyword = $("input[name=keyword]").val();
+								
+								self.location = "/myclub/notice/main${pageMaker.makeQuery(1)}&searchType="+$("select option:selected").val() + "&keyword=" + $('#keywordInput').val();
+							});
+						</script>
 								
 						<!-- 글쓰기 -->
 						<div style="float: right;">

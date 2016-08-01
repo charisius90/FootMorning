@@ -24,16 +24,21 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 	}
 
 	/**
-	 * ½ÂÇÑ read
+	 * ï¿½ï¿½ï¿½ï¿½ read
 	 */
 	@Override
 	public MyclubNoticeDTO read(Integer bno) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.read(bno);
 	}
+	
+	@Override
+	public void updateCount(Integer myclub_notice_no) throws Exception {
+		dao.updateCount(myclub_notice_no);
+	}
 
 	/**
-	 * ½ÂÇÑ update
+	 * ï¿½ï¿½ï¿½ï¿½ update
 	 */
 	@Override
 	public void modify(MyclubNoticeDTO dto) throws Exception {
@@ -41,7 +46,7 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 	}
 
 	/**
-	 * ½ÂÇÑ delete
+	 * ï¿½ï¿½ï¿½ï¿½ delete
 	 */
 	@Override
 	public void remove(Integer bno) throws Exception {
@@ -53,7 +58,7 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 		return getMyClubNotices(dao.listAll());
 	}
 	
-	// ½æ³×ÀÏ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½
 	private List<MyclubNoticeDTO> getMyClubNotices(List<MyclubNoticeDTO> list) {
 		for (MyclubNoticeDTO dto : list) {
 			dto.setMyclub_notice_main_thumnail(getMainThumnail(dto.getMyclub_notice_content()));
@@ -61,7 +66,7 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 		return list;
 	}
 
-	// ½æ³×ÀÏ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½
 	private String getMainThumnail(String content) {
 		String mainThumnail = "";
 
@@ -78,7 +83,7 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 	}
 
 	/**
-	 * 	±ÔÃ¤ listCountCriteria
+	 * 	ï¿½ï¿½Ã¤ listCountCriteria
 	 */
 	@Override
 	public int listCountCriteria(Criteria cri) throws Exception {
@@ -86,7 +91,7 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 	}
 	
 	/**
-	 * 	±ÔÃ¤ listCriteria
+	 * 	ï¿½ï¿½Ã¤ listCriteria
 	 */
 	@Override
 	public List<MyclubNoticeDTO> listCriteria(Criteria cri) throws Exception {
@@ -94,15 +99,15 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 	}
 	
 	/**
-	 * 	±ÔÃ¤ listSearchCriteria
+	 * 	ï¿½ï¿½Ã¤ listSearchCriteria
 	 */
 	@Override
 	public List<MyclubNoticeDTO> listSearchCriteria(SearchCriteria cri) throws Exception {
-		return dao.listSearchCriteria(cri);
+		return getMyClubNotices(dao.listSearchCriteria(cri));
 	}
 	
 	/**
-	 *  ±ÔÃ¤ listSearchCount
+	 *  ï¿½ï¿½Ã¤ listSearchCount
 	 */
 	@Override
 	public int listSearchCount(SearchCriteria cri) throws Exception {
@@ -110,7 +115,7 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 	}
 	
 	/**
-	 * ½ÂÇÑ,º´Çö reply service dao¿Í µ¿ÀÏ
+	 * ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ reply service daoï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 */
 	@Override
 	public void createReply(MyclubNoticeReplyDTO dto) throws Exception {
