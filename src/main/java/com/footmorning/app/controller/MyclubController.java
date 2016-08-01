@@ -1,5 +1,7 @@
 package com.footmorning.app.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -7,13 +9,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.MemberDTO;
+import com.footmorning.app.domain.MyclubCashBookDTO;
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MemberService;
+import com.footmorning.app.service.MyclubCashBookService;
 
 /**
  * 
@@ -27,6 +34,8 @@ public class MyclubController {
 	private ClubService service;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private MyclubCashBookService myclubCashBookService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MyclubController.class);
 	
@@ -47,11 +56,29 @@ public class MyclubController {
 	}
 	
 	@RequestMapping("myclubCashBook")
-	public void myclubCashBook(){
+	public void myclubCashBook(Model model){
+		try {
+			List<MyclubCashBookDTO> list = myclubCashBookService.listAll();
+			model.addAttribute("BOOK", list);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping("myclubCashBookMgr")
-	public void myclubCashBookMgr(){
+	public void myclubCashBookMgr(Model model){
+		try {
+			List<MyclubCashBookDTO> list = myclubCashBookService.listAll();
+			model.addAttribute("BOOK", list);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping(value="myclubCashBookMgr", method=RequestMethod.POST)
+	public @ResponseBody List myclubCashBookMgrComplete(@RequestBody String param){
+		return null;
 	}
 	
 }

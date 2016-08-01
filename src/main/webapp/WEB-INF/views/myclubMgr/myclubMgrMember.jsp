@@ -163,16 +163,16 @@
 			// 1:마스터 / 2:매니저 / 3:스탭 / 4:일반
 			switch(grade){
 			case '1':
-				$target.eq(0).attr("selected", "selected");
+				$target.eq(0).prop("selected", "selected");
 				break;				
 			case '2':
-				$target.eq(1).attr("selected", "selected");
+				$target.eq(1).prop("selected", "selected");
 				break;
 			case '3':
-				$target.eq(2).attr("selected", "selected");
+				$target.eq(2).prop("selected", "selected");
 				break;
 			case '4':
-				$target.eq(3).attr("selected", "selected");
+				$target.eq(3).prop("selected", "selected");
 				break;
 			}
 		});

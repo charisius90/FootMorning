@@ -42,14 +42,16 @@
 								<td>내역</td>
 								<td>잔고</td>
 							</tr>
+							<c:forEach items="${BOOK}" var="row">
 							<tr style="text-algin:center">
-								<td>1</td>
-								<td>16.07.19</td>
-								<td>지출</td>
-								<td>200,000</td>
-								<td>7월회식</td>
-								<td>0</td>
+								<td>${row.cashbook_no}</td>
+								<td>${row.cashbook_date}</td>
+								<td><c:if test="${row.cashbook_type=='ADD'}">수입</c:if><c:if test="${row.cashbook_type=='SUB'}">지출</c:if></td>
+								<td>${row.cashbook_amount}</td>
+								<td>${row.cashbook_content}</td>
+								<td>${row.cashbook_balance}</td>
 							</tr>
+							</c:forEach>
 						</table>
 					<div align="right">
 						<a class="btn btn-default" role="button" href="/myclub/myclubCashBookMgr">수정</a>

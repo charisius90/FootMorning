@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.myclub.myclubCashBookMapper">
+	<insert id="insert" parameterType="com.footmorning.app.domain.MyclubCashBookDTO">
+		INSERT INTO
+		club_cashbook(cashbook_index, cashbook_date, cashbook_type, cashbook_content, cashbook_amount, cashbook_balance, club_no)
+		VALUES (#{cashbook_index}, #{cashbook_date}, #{cashbook_type}, #{cashbook_content}, #{cashbook_amount}, #{cashbook_balance}, #{club_no})
+	</insert>
+
+	<update id="update" parameterType="MyclubCashBookDTO">
+		update club_cashbook set
+		cashbook_index=#{cashbook_index},
+		cashbook_date=#{cashbook_date},
+		cashbook_type=#{cashbook_type},
+		cashbook_content=#{cashbook_content},
+		cashbook_amount=#{cashbook_amount},
+		cashbook_balance=#{cashbook_balance}
+		where cashbook_no=#{cashbook_no}
+	</update>
+
+	<delete id="delete">
+		delete from  club_cashbook where cashbook_no=#{no}
+	</delete>
+
+	<select id="getWithNo" resultType="MyclubCashBookDTO">
+		select * from club_cashbook where cashbook_no=#{no}
+	</select>
+
+	<select id="listAll" resultType="MyclubCashBookDTO">
+       select * from club_cashbook order by cashbook_date, cashbook_no
+	</select>
+</mapper>
