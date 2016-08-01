@@ -239,7 +239,7 @@ public class MyclubMgrController {
 		            MemberDTO member = memberService.getWithNo(Integer.parseInt(mem_no));
 		            member.setClub_no(clubMember.getClub_no());
 		            member.setMem_grade(GRADE_MEMBER);
-		            member.setMem_club_regdate(clubMember.getClub_mem_regdate());
+		            member.setMem_club_regdate(memberService.getTime());
 		            memberService.updateMember(member);
 		            
 		            // 클럽테이블에 클럽회원수+1
@@ -317,6 +317,7 @@ public class MyclubMgrController {
 				e.printStackTrace();
 			}
 		}
+		// 삭제된 인원수 반환
 		rttr.addFlashAttribute("data", memberList.size());
 
 		return "redirect:/myclubMgr/myclubMgrOutMember";
@@ -330,21 +331,41 @@ public class MyclubMgrController {
 	public void myclubMgrClosing(){}
 	
 	@RequestMapping(value="myclubMgrClosing", method=RequestMethod.POST)
-	public String myclubMgrClosingComplete(String club_name, String mem_email, String mem_pw, HttpServletRequest req, Model model){
+	public String myclubMgrClosingComplete(String club_name, String mem_email, String mem_pw, HttpServletRequest req, RedirectAttributes rttr){
 		try{
+			System.out.println("myclubMgrClosing : " + club_name + ", " + mem_email + ", " + mem_pw);
 			HttpSession session = req.getSession();
 			ClubDTO club = (ClubDTO)session.getAttribute("CLUB_KEY");
+			// 클럽명이 같고
 			if(club.getClub_name().equals(club_name)){
-				if(memberService.getWithPW(mem_email, mem_pw)!=null){
+				// 입력한 이메일과 비밀번호가 같은 회원의 정보를 가져와
+				MemberDTO member = memberService.getWithPW(mem_email, mem_pw);
+				// 클럽마스터의 회원번호와 위의 회원번호가 일치하면
+				if(member != null && club.getClub_master().equals(member.getMem_no())){
+					// 클럽테이블에서 삭제, 세션에 저장된 클럽키도 삭제
 					service.delete(Integer.parseInt((club.getClub_no())));
 					session.removeAttribute("CLUB_KEY");
+					
+					MemberDTO newMemInfo = memberService.getMemberInfo(mem_email);
+					
+					WebUtils.setSessionAttribute(req, "USER_KEY", newMemInfo);
+					
+					return "redirect:/";
 				}
+				else{
+					 rttr.addFlashAttribute("msg", "관리자 E-Mail 또는 비밀번호가 일치하지 않습니다.");
+					 return "redirect:/myclubMgr/myclubMgrClosing";
+				}
+			}
+			else{
+				rttr.addFlashAttribute("msg", "클럽명이 일치하지 않습니다.");
+				return "redirect:/myclubMgr/myclubMgrClosing";
 			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		return "redirect:/";
+		return "redirect:/myclubMgr/myclubMgrClosing";
 	}
 	
 	/**

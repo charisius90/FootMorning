@@ -34,7 +34,7 @@
 						<br/><br/>
 						<h3 align="center">클럽 폐쇄</h3>
 						<br/><br/>
-							<form action="/myclubMgr/myclubMgrClosing" method="post">
+							<form action="/myclubMgr/myclubMgrClosing" method="post" id="closing_form">
 								<table>
 									<tr>
 										<td>클럽명</td>
@@ -65,7 +65,7 @@
 	<!-- 클럽폐쇄 모달창-->
 	<div id="drop_club" class="modal fade" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
@@ -76,15 +76,24 @@
 					정말로 클럽을 폐쇄하시겠습니까?
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-primary" type="submit">확인</button>
+					<button class="btn btn-primary" onclick="fnSubmit()">확인</button>
 					<button class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script>
+		var msg = "${msg}";
+		if(msg!=""){
+			alert(msg);
+		}
+		
+		function fnSubmit(){
+			$("#closing_form").submit();
+		}
+	</script>
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 	<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
