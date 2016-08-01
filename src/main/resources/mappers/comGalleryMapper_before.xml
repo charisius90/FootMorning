@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.comGalleryMapper">
+	
+	<insert id="register" parameterType="ComGalleryDTO">
+		insert into com_gallery(mem_no, com_gallery_subject, com_gallery_content, com_gallery_count)
+		values(#{mem_no},#{com_gallery_subject},#{com_gallery_content},#{com_gallery_count})
+	</insert>
+	
+	<select id="read" resultType="ComGalleryDTO">
+		select * from com_gallery where com_gallery_no=#{com_gallery_no}
+	</select>
+	
+	<update id="update">
+		update com_gallery set mem_no=#{mem_no}, com_gallery_subject=#{com_gallery_subject},com_gallery_content=#{com_gallery_content},
+		com_gallery_writer=#{com_gallery_writer},
+		com_gallery_count=#{com_gallery_count} where com_gallery_no=#{com_gallery_no}	
+	</update>
+	
+	<delete id="delete">
+		delete from com_gallery 
+		where com_gallery_no=#{com_gallery_no}
+	</delete>
+	
+	<select id="listAll" resultType="ComGalleryDTO">
+		select * from com_gallery where com_gallery_no>0 order by com_gallery_no desc, com_gallery_regdate desc
+	</select>
+	
+</mapper>

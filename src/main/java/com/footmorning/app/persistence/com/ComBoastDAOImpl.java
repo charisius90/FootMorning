@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.footmorning.app.domain.ComBoastDTO;
+import com.footmorning.app.domain.ComBoastReplyDTO;
 import com.footmorning.app.persistence.ComBoastDAO;
+import com.footmorning.app.util.Criteria;
+import com.footmorning.app.util.SearchCriteria;
 
 /**
- * Ä¿¹Â´ÏÆ¼ ÀÚ¶û°Ô½ÃÆÇ DAO
- * @author ¹Ú¼öÇ×
+ * Ä¿ï¿½Â´ï¿½Æ¼ ï¿½Ú¶ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ DAO
+ * @author ï¿½Ú¼ï¿½ï¿½ï¿½
  */
 @Repository
 public class ComBoastDAOImpl implements ComBoastDAO {
@@ -21,28 +24,141 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	private static final String NAMESPACE = "com.footmorning.mappers.comBoastMapper";
 
 	@Override
-	public void register(ComBoastDTO dto) throws Exception {
-		sqlSession.insert(NAMESPACE + ".register", dto);
+	public void create(ComBoastDTO dto) throws Exception {
+		sqlSession.insert(NAMESPACE + ".create", dto);
 	}
 
+	/**
+	 * ï¿½ï¿½ï¿½ï¿½ read
+	 */
 	@Override
-	public ComBoastDTO read(Integer no) throws Exception {
-		return sqlSession.selectOne(NAMESPACE + ".read", no);
+	public ComBoastDTO read(Integer bno) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE + ".read", bno);
+	}
+	
+	@Override
+	public void updateCount(Integer no) throws Exception {
+		sqlSession.selectOne(NAMESPACE + ".updateCount", no);
 	}
 
+	/**
+	 * ï¿½ï¿½ï¿½ï¿½ update
+	 */
 	@Override
 	public void update(ComBoastDTO dto) throws Exception {
 		sqlSession.update(NAMESPACE + ".update", dto);
 	}
 
+	/**
+	 * ï¿½ï¿½ï¿½ï¿½ delete
+	 */
 	@Override
-	public void delete(Integer no) throws Exception {
-		sqlSession.delete(NAMESPACE + ".delete", no);
+	public void delete(Integer bno) throws Exception {
+		sqlSession.delete(NAMESPACE + ".delete", bno);
 	}
 
 	@Override
 	public List<ComBoastDTO> listAll() throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listAll");
+	}
+
+	/**
+	 * ï¿½ï¿½Ã¤ countPaging
+	 */
+	@Override
+	public int countPaging(Criteria cri) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".countPaging", cri);
+	}
+
+	/**
+	 * ï¿½ï¿½Ã¤ listCriteria
+	 */
+	@Override
+	public List<ComBoastDTO> listCriteria(Criteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listCriteria", cri);
+	}
+
+	/**
+	 * ï¿½ï¿½Ã¤ listSearchCriteria
+	 */
+	@Override
+	public List<ComBoastDTO> listSearchCriteria(SearchCriteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listSearch", cri);
+	}
+
+	/**
+	 * ï¿½ï¿½Ã¤ listSearchCount
+	 */
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".listSearchCount", cri);
+	}
+
+	/**
+	 * ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ reply start
+	 */
+	/**
+	 * pos +1 , parent_reply insert
+	 */
+	@Override
+	public void createReply(ComBoastReplyDTO dto) throws Exception {
+		sqlSession.update(NAMESPACE + ".updatePos");
+		sqlSession.insert(NAMESPACE + ".createReply", dto);
+
+	}
+
+	/**
+	 * ï¿½ï¿½ï¿½ï¿½ insert
+	 */
+	@Override
+	public void createReReply(ComBoastReplyDTO dto) {
+		sqlSession.insert(NAMESPACE + ".createReReply", dto);
+
+	}
+
+	// @Override
+	// public void updatePos(Integer pos) {
+	// sqlSession.update(NAMESPACE+".replyUpdatePos", pos);
+	// }
+	/**
+	 * rereply pos update
+	 */
+	@Override
+	public void updatePos(ComBoastReplyDTO dto) {
+		sqlSession.update(NAMESPACE + ".replyUpdatePos", dto);
+	}
+
+	/**
+	 * parentInfo
+	 */
+	@Override
+	public ComBoastReplyDTO MyclubNoticeParentPos(Integer no) {
+		return sqlSession.selectOne(NAMESPACE + ".parentInfo", no);
+	}
+
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½;
+	@Override
+	public void updateReply(ComBoastReplyDTO dto) throws Exception {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	 */
+	@Override
+	public void deleteReply(ComBoastReplyDTO dto) throws Exception {
+		sqlSession.update(NAMESPACE + ".deleteReply", dto);
+
+	}
+
+	/**
+	 * ï¿½Ô½Ã±Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+	 */
+	@Override
+	public List<ComBoastReplyDTO> listAllReply(Integer bno) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listReply", bno);
 	}
 
 }

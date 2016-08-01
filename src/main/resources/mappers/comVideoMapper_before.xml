@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.comVideoMapper">
+	
+	<insert id="register" parameterType="ComVideoDTO">
+		insert into com_video(mem_no, com_video_subject, com_video_content, com_video_count)
+		values(#{mem_no},#{com_video_subject},#{com_video_content},#{com_video_count})
+	</insert>
+	
+	<select id="read" resultType="ComVideoDTO">
+		select * from com_video where com_video_no=#{com_video_no}
+	</select>
+	
+	<update id="update" parameterType="ComVideoDTO">
+		update com_video set mem_no=#{mem_no}, com_video_subject=#{com_video_subject},com_video_content=#{com_video_content},
+		com_video_writer=#{com_video_writer},
+		com_video_count=#{com_video_count} where com_video_no=#{com_video_no}	
+	</update>
+	
+	<delete id="delete">
+		delete from com_video 
+		where com_video_no=#{com_video_no}
+	</delete>
+	
+	<select id="listAll" resultType="ComVideoDTO">
+		select * from com_video where com_video_no>0 order by com_video_no desc, com_video_regdate desc
+	</select>
+	
+</mapper>

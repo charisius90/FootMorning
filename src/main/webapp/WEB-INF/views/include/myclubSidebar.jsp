@@ -20,8 +20,9 @@
 					data-target="#comm">커뮤니티<i class="glyphicon glyphicon-triangle-bottom"></i></a>
 					<ul id="comm" class="collapse">
 						<li><a href="/myclub/free/main">자유게시판</a></li>
-						<li><a href="#">앨범</a></li>
-						<li><a href="#">동영상</a></li>
+						<li><a href="/myclub/team/main">팀게시판</a></li>
+						<li><a href="/myclub/album/main">앨범</a></li>
+						<li><a href="/myclub/video/main">동영상</a></li>
 						<li><a href="#">방명록</a></li>
 					</ul>
 				</li>

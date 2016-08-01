@@ -52,7 +52,7 @@ function displayReplyDiv(parent_no, rev_no) {
          </div>
          <div class="col-md-10">
             <div id="page-content-wrapper">
-            <h1>클럽자랑</h1>          
+            <h1>자유게시판</h1>          
             <br/><br/>
                
             <!-- 게시글 읽는 부분 -->

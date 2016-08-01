@@ -98,6 +98,30 @@
 						</div>
 						
 						<script>
+						   
+						var msg = "${msg}";
+						   if(msg == "SUCCESS"){
+						      alert("등록 되었습니다");
+						   }
+						   else if(msg == "UPSUCCESS"){
+							   alert("수정 되었습니다");
+					  	   }
+						   else if(msg == "DELSUCCESS"){
+							   alert("삭제 되었습니다");
+						   }
+						   
+						   // 박수항
+						   // 로그인 확인 후 글쓰기로 이동 혹은 로그인필요를 알리는 함수
+						   function fnWrite(){
+						      var user_key = "${USER_KEY}";
+						      if(user_key!=null && user_key!=""){
+						         location.replace("/myclub/free/register");
+						      }
+						      else{
+						         alert("로그인 하세요.");
+						      }
+						   }
+						   
 							$('#searchBtn').on("click", function(event) {
 								
 								// 검색옵션 값 가져오기
@@ -112,7 +136,7 @@
 								
 						<!-- 글쓰기 -->
 						<div style="float: right;">
-							<a href="/myclub/free/register" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-pencil"></span>글쓰기</a>
+							<a href="javascript:fnWrite()" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-pencil"></span>글쓰기</a>
 						</div>
 					</div>
 				</div> <!-- /container-fluid -->

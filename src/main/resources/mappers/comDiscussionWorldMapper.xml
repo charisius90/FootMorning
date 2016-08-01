@@ -5,37 +5,159 @@
 
 <mapper namespace="com.footmorning.mappers.comDiscussionWorldMapper">
 	
-	<insert id="register" parameterType="ComDiscussionWorldDTO">
-		insert into com_discussion_world(mem_no, com_discussion_world_subject, 
-		com_discussion_world_content, 
-		com_discussion_world_count, 
-		com_discussion_world_writer)
-		values(#{mem_no},#{com_discussion_world_subject},#{com_discussion_world_content},
-		#{com_discussion_world_count}, #{com_discussion_world_writer})
+	
+	<insert id="create">
+		INSERT INTO com_discussion_world(mem_no, com_discussion_world_writer,
+		com_discussion_world_subject, com_discussion_world_content)
+		VALUES (#{mem_no}, #{com_discussion_world_writer},
+		#{com_discussion_world_subject}, #{com_discussion_world_content})
 	</insert>
-	
+
 	<select id="read" resultType="ComDiscussionWorldDTO">
-		select * from com_discussion_world where com_discussion_world_no=#{com_discussion_world_no}
+		select * from com_discussion_world where
+		com_discussion_world_no=#{bno}
 	</select>
 	
-	<update id="update" parameterType="ComDiscussionWorldDTO">
-		update com_discussion_world set
-		com_discussion_world_subject=#{com_discussion_world_subject},
-		com_discussion_world_content=#{com_discussion_world_content},
-		com_discussion_world_writer=#{com_discussion_world_writer},
-		com_discussion_world_count=#{com_discussion_world_count} 
-		where com_discussion_world_no=#{com_discussion_world_no}	
+	<update id="updateCount" parameterType="ComDiscussionWorldDTO">
+		update com_discussion_world set com_discussion_world_count = com_discussion_world_count + 1 where com_discussion_world_no = #{no};
 	</update>
-	
-	
-	
+
+	<update id="update">
+		update com_discussion_world set com_discussion_world_subject
+		=#{com_discussion_world_subject},
+		com_discussion_world_content
+		=#{com_discussion_world_content}
+		where com_discussion_world_no = #{com_discussion_world_no}
+	</update>
+
 	<delete id="delete">
-		delete from com_discussion_world 
-		where com_discussion_world_no=#{com_discussion_world_no}
+		delete from com_discussion_world where com_discussion_world_no =
+		#{com_discussion_world_no}
 	</delete>
-	
+
 	<select id="listAll" resultType="ComDiscussionWorldDTO">
-		select * from com_discussion_world where com_discussion_world_no>0 order by com_discussion_world_no desc, com_discussion_world_regdate desc
+       <![CDATA[
+       select * from com_discussion_world where com_discussion_world_no > 0 order by com_discussion_world_no desc, com_discussion_world_regdate desc
+       ]]>
 	</select>
+
+	<select id="listPage" resultType="ComDiscussionWorldDTO">
+		<![CDATA[
+			select * from com_discussion_world where com_discussion_world_no > 0 
+				order by com_discussion_world_no desc, com_discussion_world_regdate desc limit #{page}, 10
+		]]>
+	</select>
+
+	<select id="listCriteria" resultType="ComDiscussionWorldDTO">
+ 		<![CDATA[
+ 			select * from com_discussion_world where com_discussion_world_no > 0 
+ 				order by com_discussion_world_no desc, com_discussion_world_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+
+	<select id="countPaging" resultType="int">
+		select count(com_discussion_world_no) from com_discussion_world
+	</select>
+
+
+	<!-- 반복되어 재사용되는 sql문은 이렇게 id를 부여하고 <sql></sql> 태그로 감싸면 include가 가능해진다. -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and com_discussion_world_subject like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'c'.toString()">
+				and com_discussion_world_content like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'w'.toString()">
+				and com_discussion_world_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
+		keyword ) -->
+	<select id="listSearch"  resultType="ComDiscussionWorldDTO">
+		<![CDATA[  
+		  select * 
+		  from com_discussion_world 
+		  where com_discussion_world_no > 0
+		]]>
+
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by com_discussion_world_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<!-- 검색 결과 게시물 총 갯수 계산 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(com_discussion_world_no) 
+		  from com_discussion_world 
+		  where com_discussion_world_no > 0
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<insert id="createReply" parameterType="ComDiscussionWorldReplyDTO">
+		INSERT INTO
+		com_discussion_world_reply(com_discussion_world_no, mem_no, com_discussion_world_re_writer,
+		com_discussion_world_re_content, com_discussion_world_re_pos,
+		com_discussion_world_re_depth,com_discussion_world_re_group)
+		VALUES
+		(#{com_discussion_world_no}, #{mem_no}, #{com_discussion_world_re_writer},
+		#{com_discussion_world_re_content},0,0,null);
+	</insert>
+
+	<insert id="createReReply" parameterType="ComDiscussionWorldReplyDTO">
+		INSERT INTO
+		com_discussion_world_reply(com_discussion_world_no, mem_no, com_discussion_world_re_writer,
+		com_discussion_world_re_content, com_discussion_world_re_pos,
+		com_discussion_world_re_depth,com_discussion_world_re_group)
+		VALUES
+		(#{com_discussion_world_no}, #{mem_no}, #{com_discussion_world_re_writer},
+		#{com_discussion_world_re_content},#{com_discussion_world_re_pos}+1,#{com_discussion_world_re_depth}+1,null);
+	</insert>
+
+	<select id="listReply" resultType="ComDiscussionWorldReplyDTO">
+		select * from
+		com_discussion_world_reply where com_discussion_world_no=#{com_discussion_world_no}
+		order by
+		com_discussion_world_re_pos desc;
+	</select>
+
+	<select id="parentInfo" resultType="ComDiscussionWorldReplyDTO">
+		select * from
+		com_discussion_world_reply where com_discussion_world_re_no=#{no};
+	</select>
+
+	<update id="updatePos">
+		update com_discussion_world_reply set
+		com_discussion_world_re_pos=com_discussion_world_re_pos+1;
+	</update>
+
+	<update id="replyUpdatePos">
+		update com_discussion_world_reply set
+		com_discussion_world_re_pos=com_discussion_world_re_pos+1
+		where com_discussion_world_re_pos
+		> #{com_discussion_world_re_pos}
+	</update>
+
+	<!-- <delete id="deleteReply"> -->
+	<!-- delete from com_discussion_world_reply where com_discussion_world_re_no=#{com_discussion_world_re_no}; -->
+	<!-- </delete> -->
+
+	<update id="deleteReply">
+		UPDATE com_discussion_world_reply SET
+		com_discussion_world_re_writer=#{com_discussion_world_re_writer},
+		com_discussion_world_re_content=#{com_discussion_world_re_content} WHERE
+		com_discussion_world_re_no=#{com_discussion_world_re_no};
+	</update>
 	
 </mapper>

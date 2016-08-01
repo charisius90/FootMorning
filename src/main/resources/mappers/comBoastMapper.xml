@@ -5,34 +5,158 @@
 
 <mapper namespace="com.footmorning.mappers.comBoastMapper">
 	
-	<insert id="register" parameterType="ComBoastDTO">
-		insert into com_boast(mem_no, com_boast_subject, 
-		com_boast_content,
-		com_boast_count, 
-		com_boast_writer)
-		values(#{mem_no}, #{com_boast_subject}, #{com_boast_content},
-		 #{com_boast_count}, #{com_boast_writer})
+	<insert id="create">
+		INSERT INTO com_boast(mem_no, com_boast_writer,
+		com_boast_subject, com_boast_content)
+		VALUES (#{mem_no}, #{com_boast_writer},
+		#{com_boast_subject}, #{com_boast_content})
 	</insert>
-	
+
 	<select id="read" resultType="ComBoastDTO">
-		select * from com_boast where com_boast_no=#{com_boast_no}
+		select * from com_boast where
+		com_boast_no=#{bno}
 	</select>
 	
-	<update id="update" parameterType="ComBoastDTO">
-		update com_boast set com_boast_subject=#{com_boast_subject},
-		com_boast_writer=#{com_boast_writer},
-		com_boast_content=#{com_boast_content}, 
-		com_boast_count=#{com_boast_count}
-		where com_boast_no=#{com_boast_no}
+	<update id="updateCount" parameterType="ComBoastDTO">
+		update com_boast set com_boast_count = com_boast_count + 1 where com_boast_no = #{no};
 	</update>
-	
+
+	<update id="update">
+		update com_boast set com_boast_subject
+		=#{com_boast_subject},
+		com_boast_content
+		=#{com_boast_content}
+		where com_boast_no = #{com_boast_no}
+	</update>
+
 	<delete id="delete">
-		delete from com_boast 
-		where com_boast_no=#{com_boast_no}
+		delete from com_boast where com_boast_no =
+		#{com_boast_no}
 	</delete>
-	
+
 	<select id="listAll" resultType="ComBoastDTO">
-		select * from com_boast where com_boast_no>0 order by com_boast_no desc, com_boast_regdate desc
+       <![CDATA[
+       select * from com_boast where com_boast_no > 0 order by com_boast_no desc, com_boast_regdate desc
+       ]]>
 	</select>
-	
+
+	<select id="listPage" resultType="ComBoastDTO">
+		<![CDATA[
+			select * from com_boast where com_boast_no > 0 
+				order by com_boast_no desc, com_boast_regdate desc limit #{page}, 10
+		]]>
+	</select>
+
+	<select id="listCriteria" resultType="ComBoastDTO">
+ 		<![CDATA[
+ 			select * from com_boast where com_boast_no > 0 
+ 				order by com_boast_no desc, com_boast_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+
+	<select id="countPaging" resultType="int">
+		select count(com_boast_no) from com_boast
+	</select>
+
+
+	<!-- 반복되어 재사용되는 sql문은 이렇게 id를 부여하고 <sql></sql> 태그로 감싸면 include가 가능해진다. -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and com_boast_subject like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'c'.toString()">
+				and com_boast_content like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'w'.toString()">
+				and com_boast_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
+		keyword ) -->
+	<select id="listSearch"  resultType="ComBoastDTO">
+		<![CDATA[  
+		  select * 
+		  from com_boast 
+		  where com_boast_no > 0
+		]]>
+
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by com_boast_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<!-- 검색 결과 게시물 총 갯수 계산 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(com_boast_no) 
+		  from com_boast 
+		  where com_boast_no > 0
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<insert id="createReply" parameterType="ComBoastReplyDTO">
+		INSERT INTO
+		com_boast_reply(com_boast_no, mem_no, com_boast_reply_writer,
+		com_boast_re_content, com_boast_re_pos,
+		com_boast_re_depth,com_boast_re_group)
+		VALUES
+		(#{com_boast_no}, #{mem_no}, #{com_boast_reply_writer},
+		#{com_boast_re_content},0,0,1);
+	</insert>
+
+	<insert id="createReReply" parameterType="ComBoastReplyDTO">
+		INSERT INTO
+		com_boast_reply(com_boast_no, mem_no, com_boast_reply_writer,
+		com_boast_re_content, com_boast_re_pos,
+		com_boast_re_depth,com_boast_re_group)
+		VALUES
+		(#{com_boast_no}, #{mem_no}, #{com_boast_reply_writer},
+		#{com_boast_re_content},#{com_boast_re_pos}+1,#{com_boast_re_depth}+1,1);
+	</insert>
+
+	<select id="listReply" resultType="ComBoastReplyDTO">
+		select * from
+		com_boast_reply where com_boast_no=#{com_boast_no}
+		order by
+		com_boast_re_pos desc;
+	</select>
+
+	<select id="parentInfo" resultType="ComBoastReplyDTO">
+		select * from
+		com_boast_reply where com_boast_re_no=#{no};
+	</select>
+
+	<update id="updatePos">
+		update com_boast_reply set
+		com_boast_re_pos=com_boast_re_pos+1;
+	</update>
+
+	<update id="replyUpdatePos">
+		update com_boast_reply set
+		com_boast_re_pos=com_boast_re_pos+1
+		where com_boast_re_pos
+		> #{com_boast_re_pos}
+	</update>
+
+	<!-- <delete id="deleteReply"> -->
+	<!-- delete from com_boast_reply where com_boast_re_no=#{com_boast_re_no}; -->
+	<!-- </delete> -->
+
+	<update id="deleteReply">
+		UPDATE com_boast_reply SET
+		com_boast_reply_writer=#{com_boast_reply_writer},
+		com_boast_re_content=#{com_boast_re_content} WHERE
+		com_boast_re_no=#{com_boast_re_no};
+	</update>
+
 </mapper>

@@ -88,15 +88,17 @@ public class MyclubFreeController {
 	public String updateComplete(MyclubFreeDTO dto, RedirectAttributes rttr) throws Exception {
 		service.modify(dto);
 
-		rttr.addFlashAttribute("msg", "SUCCESS");
+		rttr.addFlashAttribute("msg", "UPSUCCESS");
 
 		return "redirect:/myclub/free/main";
 	}
 	
 	// delete
 	@RequestMapping("/myclub/free/delete")
-	public String delete(Integer myclub_free_no, Model model) throws Exception {
+	public String delete(Integer myclub_free_no, Model model, RedirectAttributes rttr) throws Exception {
 		service.remove(myclub_free_no);
+
+		rttr.addFlashAttribute("msg", "DELSUCCESS");
 
 		return "redirect:/myclub/free/main";
 	}

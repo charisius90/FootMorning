@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.myclub.myclubAlbumMapper">
+	<insert id="create">
+		INSERT INTO myclub_album(mem_no, myclub_album_writer, club_no,
+		myclub_album_subject, myclub_album_content)
+		VALUES (#{mem_no}, #{myclub_album_writer}, #{club_no},
+		#{myclub_album_subject}, #{myclub_album_content})
+	</insert>
+	
+	<select id="read" resultType="MyclubAlbumDTO">
+		select * from myclub_album where
+		myclub_album_no=#{bno}
+	</select>
+
+	<update id="update">
+		update myclub_album set myclub_album_subject
+		=#{myclub_album_subject},
+		myclub_album_content
+		=#{myclub_album_content}
+		where myclub_album_no = #{myclub_album_no}
+	</update>
+	
+	<update id="updateCount" parameterType="MyclubAlbumDTO">
+		update myclub_album set myclub_album_count = myclub_album_count + 1 where myclub_album_no = #{myclub_album_no};
+	</update>
+
+	<delete id="delete">
+		delete from myclub_album where myclub_album_no =
+		#{myclub_album_no}
+	</delete>
+
+	<select id="listAll" resultType="MyclubAlbumDTO">
+       <![CDATA[
+       select * from myclub_album where myclub_album_no > 0 order by myclub_album_no desc, myclub_album_regdate desc
+       ]]>
+	</select>
+
+	<select id="listPage" resultType="MyclubAlbumDTO">
+		<![CDATA[
+			select * from myclub_album where myclub_album_no > 0 
+				order by myclub_album_no desc, myclub_album_regdate desc limit #{page}, 10
+		]]>
+	</select>
+
+	<select id="listCriteria" resultType="MyclubAlbumDTO">
+ 		<![CDATA[
+ 			select * from myclub_album where myclub_album_no > 0 
+ 				order by myclub_album_no desc, myclub_album_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+
+	<select id="countPaging" resultType="int">
+		select count(myclub_album_no) from myclub_album
+	</select>
+
+
+	<!-- 반복되어 재사용되는 sql문은 이렇게 id를 부여하고 <sql></sql> 태그로 감싸면 include가 가능해진다. -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and myclub_album_subject like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'c'.toString()">
+				and myclub_album_content like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'w'.toString()">
+				and myclub_album_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
+		keyword ) -->
+	<select id="listSearch"  resultType="MyclubAlbumDTO">
+		<![CDATA[  
+		  select * 
+		  from Myclub_album 
+		  where Myclub_album_no > 0 and club_no = #{club_no} 
+		]]>
+
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by Myclub_album_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<!-- 검색 결과 게시물 총 갯수 계산 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(Myclub_album_no) 
+		  from Myclub_album 
+		  where Myclub_album_no > 0 and club_no = #{club_no}
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<insert id="createReply" parameterType="MyclubAlbumReplyDTO">
+		INSERT INTO
+		myclub_album_reply(myclub_album_no, mem_no, myclub_album_re_writer,
+		myclub_album_re_content, myclub_album_re_pos,
+		myclub_album_re_depth,myclub_album_re_group)
+		VALUES
+		(#{myclub_album_no}, #{mem_no}, #{myclub_album_re_writer},
+		#{myclub_album_re_content},0,0,null);
+	</insert>
+
+	<insert id="createReReply" parameterType="MyclubAlbumReplyDTO">
+		INSERT INTO
+		myclub_album_reply(myclub_album_no, mem_no, myclub_album_re_writer,
+		myclub_album_re_content, myclub_album_re_pos,
+		myclub_album_re_depth,myclub_album_re_group)
+		VALUES
+		(#{myclub_album_no}, #{mem_no}, #{myclub_album_re_writer},
+		#{myclub_album_re_content},#{myclub_album_re_pos}+1,#{myclub_album_re_depth}+1,null);
+	</insert>
+
+	<select id="listReply" resultType="MyclubAlbumReplyDTO">
+		select * from
+		myclub_album_reply where myclub_album_no=#{myclub_album_no}
+		order by
+		myclub_album_re_pos desc;
+	</select>
+
+	<select id="parentInfo" resultType="MyclubAlbumReplyDTO">
+		select * from
+		myclub_album_reply where myclub_album_re_no=#{no};
+	</select>
+
+	<update id="updatePos">
+		update myclub_album_reply set
+		myclub_album_re_pos=myclub_album_re_pos+1;
+	</update>
+
+	<update id="replyUpdatePos">
+		update myclub_album_reply set
+		myclub_album_re_pos=myclub_album_re_pos+1
+		where myclub_album_re_pos
+		> #{myclub_album_re_pos}
+	</update>
+
+	<update id="deleteReply">
+		UPDATE myclub_album_reply SET
+		myclub_album_re_writer=#{myclub_album_re_writer},
+		myclub_album_re_content=#{myclub_album_re_content} WHERE
+		myclub_album_re_no=#{myclub_album_re_no};
+	</update>
+</mapper>

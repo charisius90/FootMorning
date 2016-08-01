@@ -42,7 +42,7 @@
 				<c:if test="${USER_KEY.club_no!=null}">
 					<li><a href="/myclub/myclubMain?no=${USER_KEY.club_no}">MYCLUB</a></li>
 				</c:if>
-				<li><a href="/com/boast/comBoastListAll">커뮤니티</a></li>
+				<li><a href="/com/boast/main">커뮤니티</a></li>
 			</ul>
 		</div>
 	</div>

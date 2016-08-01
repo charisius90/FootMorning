@@ -1,32 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.footmorning.mappers.comGalleryMapper">
-	
-	<insert id="register" parameterType="ComGalleryDTO">
-		insert into com_gallery(mem_no, com_gallery_subject, com_gallery_content, com_gallery_count)
-		values(#{mem_no},#{com_gallery_subject},#{com_gallery_content},#{com_gallery_count})
+	<insert id="create">
+		INSERT INTO com_gallery(mem_no, com_gallery_writer,
+		com_gallery_subject, com_gallery_content)
+		VALUES (#{mem_no}, #{com_gallery_writer},
+		#{com_gallery_subject}, #{com_gallery_content})
 	</insert>
 	
 	<select id="read" resultType="ComGalleryDTO">
-		select * from com_gallery where com_gallery_no=#{com_gallery_no}
+		select * from com_gallery where
+		com_gallery_no=#{bno}
 	</select>
-	
+
 	<update id="update">
-		update com_gallery set mem_no=#{mem_no}, com_gallery_subject=#{com_gallery_subject},com_gallery_content=#{com_gallery_content},
-		com_gallery_writer=#{com_gallery_writer},
-		com_gallery_count=#{com_gallery_count} where com_gallery_no=#{com_gallery_no}	
+		update com_gallery set com_gallery_subject
+		=#{com_gallery_subject},
+		com_gallery_content
+		=#{com_gallery_content}
+		where com_gallery_no = #{com_gallery_no}
 	</update>
 	
+	<update id="updateCount" parameterType="ComGalleryDTO">
+		update com_gallery set com_gallery_count = com_gallery_count + 1 where com_gallery_no = #{com_gallery_no};
+	</update>
+
 	<delete id="delete">
-		delete from com_gallery 
-		where com_gallery_no=#{com_gallery_no}
+		delete from com_gallery where com_gallery_no =
+		#{com_gallery_no}
 	</delete>
-	
+
 	<select id="listAll" resultType="ComGalleryDTO">
-		select * from com_gallery where com_gallery_no>0 order by com_gallery_no desc, com_gallery_regdate desc
+       <![CDATA[
+       select * from com_gallery where com_gallery_no > 0 order by com_gallery_no desc, com_gallery_regdate desc
+       ]]>
 	</select>
-	
+
+	<select id="listPage" resultType="ComGalleryDTO">
+		<![CDATA[
+			select * from com_gallery where com_gallery_no > 0 
+				order by com_gallery_no desc, com_gallery_regdate desc limit #{page}, 10
+		]]>
+	</select>
+
+	<select id="listCriteria" resultType="ComGalleryDTO">
+ 		<![CDATA[
+ 			select * from com_gallery where com_gallery_no > 0 
+ 				order by com_gallery_no desc, com_gallery_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+
+	<select id="countPaging" resultType="int">
+		select count(com_gallery_no) from com_gallery
+	</select>
+
+
+	<!-- 반복되어 재사용되는 sql문은 이렇게 id를 부여하고 <sql></sql> 태그로 감싸면 include가 가능해진다. -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and com_gallery_subject like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'c'.toString()">
+				and com_gallery_content like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'w'.toString()">
+				and com_gallery_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
+		keyword ) -->
+	<select id="listSearch"  resultType="ComGalleryDTO">
+		<![CDATA[  
+		  select * 
+		  from com_gallery 
+		  where com_gallery_no > 0
+		]]>
+
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by com_gallery_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<!-- 검색 결과 게시물 총 갯수 계산 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(com_gallery_no) 
+		  from com_gallery 
+		  where com_gallery_no > 0
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<insert id="createReply" parameterType="ComGalleryReplyDTO">
+		INSERT INTO
+		com_gallery_reply(com_gallery_no, mem_no, com_gallery_re_writer,
+		com_gallery_re_content, com_gallery_re_pos,
+		com_gallery_re_depth, com_gallery_re_group)
+		VALUES
+		(#{com_gallery_no}, #{mem_no}, #{com_gallery_re_writer},
+		#{com_gallery_re_content},0,0,null);
+	</insert>
+
+	<insert id="createReReply" parameterType="ComGalleryReplyDTO">
+		INSERT INTO
+		com_gallery_reply(com_gallery_no, mem_no, com_gallery_re_writer,
+		com_gallery_re_content, com_gallery_re_pos,
+		com_gallery_re_depth, com_gallery_re_group)
+		VALUES
+		(#{com_gallery_no}, #{mem_no}, #{com_gallery_re_writer},
+		#{com_gallery_re_content},#{com_gallery_re_pos}+1,#{com_gallery_re_depth}+1,null);
+	</insert>
+
+	<select id="listReply" resultType="ComGalleryReplyDTO">
+		select * from
+		com_gallery_reply where com_gallery_no=#{com_gallery_no}
+		order by
+		com_gallery_re_pos desc;
+	</select>
+
+	<select id="parentInfo" resultType="ComGalleryReplyDTO">
+		select * from
+		com_gallery_reply where com_gallery_re_no=#{no};
+	</select>
+
+	<update id="updatePos">
+		update com_gallery_reply set
+		com_gallery_re_pos=com_gallery_re_pos+1;
+	</update>
+
+	<update id="replyUpdatePos">
+		update com_gallery_reply set
+		com_gallery_re_pos=com_gallery_re_pos+1
+		where com_gallery_re_pos
+		> #{com_gallery_re_pos}
+	</update>
+
+	<update id="deleteReply">
+		UPDATE com_gallery_reply SET
+		com_gallery_re_writer=#{com_gallery_re_writer},
+		com_gallery_re_content=#{com_gallery_re_content} WHERE
+		com_gallery_re_no=#{com_gallery_re_no};
+	</update>
 </mapper>

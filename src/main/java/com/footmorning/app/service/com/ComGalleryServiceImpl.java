@@ -2,27 +2,36 @@ package com.footmorning.app.service.com;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 
 import com.footmorning.app.domain.ComGalleryDTO;
+import com.footmorning.app.domain.ComGalleryReplyDTO;
 import com.footmorning.app.persistence.ComGalleryDAO;
 import com.footmorning.app.service.ComGalleryService;
+import com.footmorning.app.util.AlbumCriteria;
+import com.footmorning.app.util.AlbumSearchCriteria;
 
 @Service
 public class ComGalleryServiceImpl implements ComGalleryService {
 	
-	@Autowired
+	@Inject
 	private ComGalleryDAO dao;
-
+	
 	@Override
-	public void register(ComGalleryDTO dto) throws Exception {
-		dao.register(dto);
+	public void create(ComGalleryDTO dto) throws Exception {
+		dao.create(dto);
 	}
 
 	@Override
-	public ComGalleryDTO read(Integer no) throws Exception {
-		return dao.read(no);
+	public ComGalleryDTO read(Integer bno) throws Exception {
+		return dao.read(bno);
+	}
+
+	@Override
+	public void updateCount(Integer com_gallery_no) throws Exception {
+		dao.updateCount(com_gallery_no);
 	}
 
 	@Override
@@ -31,13 +40,90 @@ public class ComGalleryServiceImpl implements ComGalleryService {
 	}
 
 	@Override
-	public void delete(Integer no) throws Exception {
-		dao.delete(no);
+	public void delete(Integer bno) throws Exception {
+		dao.delete(bno);
 	}
 
 	@Override
 	public List<ComGalleryDTO> listAll() throws Exception {
-		return dao.listAll();
+		return getComGallerys(dao.listAll());
+	}
+
+	private List<ComGalleryDTO> getComGallerys(List<ComGalleryDTO> list) {
+		for (ComGalleryDTO dto : list) {
+			dto.setCom_gallery_main_thumnail(getMainThumnail(dto.getCom_gallery_content()));
+		}
+		return list;
+	}
+
+	private String getMainThumnail(String content) {
+		String mainThumnail = "";
+
+		if (content.contains("img src=")) {
+			int startIndex = content.indexOf("img src=") + 9;
+			// System.out.println(content.charAt(startIndex));
+			int endIndex = content.indexOf("\"", startIndex) - 1;
+			if (startIndex < endIndex) {
+				mainThumnail = content.substring(startIndex, endIndex);
+			}
+			// System.out.println(mainThumnail);
+		}
+		return mainThumnail;
+	}	
+	
+	@Override
+	public List<ComGalleryDTO> listCriteria(AlbumCriteria cri) throws Exception {
+		return dao.listCriteria(cri);
+	}
+
+	@Override
+	public int countPaging(AlbumCriteria cri) throws Exception {
+		return dao.countPaging(cri);
+	}
+
+	@Override
+	public List<ComGalleryDTO> listSearchCriteria(AlbumSearchCriteria cri) throws Exception {
+		return getComGallerys(dao.listSearchCriteria(cri));
+	}
+
+	@Override
+	public int listSearchCount(AlbumSearchCriteria cri) throws Exception {
+		return dao.listSearchCount(cri);
+	}
+
+	@Override
+	public void createReply(ComGalleryReplyDTO dto) throws Exception {
+		dao.createReply(dto);
+	}
+
+	@Override
+	public void createReReply(ComGalleryReplyDTO dto) {
+		dao.createReReply(dto);
+	}
+
+	@Override
+	public void updatePos(ComGalleryReplyDTO dto) {
+		dao.updatePos(dto);
+	}
+
+	@Override
+	public ComGalleryReplyDTO ComGalleryParentPos(Integer no) {
+		return dao.ComGalleryParentPos(no);
+	}
+
+	@Override
+	public void updateReply(ComGalleryReplyDTO dto) throws Exception {
+		
+	}
+
+	@Override
+	public void deleteReply(ComGalleryReplyDTO dto) throws Exception {
+		dao.deleteReply(dto);
+	}
+
+	@Override
+	public List<ComGalleryReplyDTO> listAllReply(Integer bno) throws Exception {
+		return dao.listAllReply(bno);
 	}
 
 }

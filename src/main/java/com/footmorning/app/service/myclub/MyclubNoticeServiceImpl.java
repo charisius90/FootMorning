@@ -103,7 +103,7 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 	 */
 	@Override
 	public List<MyclubNoticeDTO> listSearchCriteria(SearchCriteria cri) throws Exception {
-		return dao.listSearchCriteria(cri);
+		return getMyClubNotices(dao.listSearchCriteria(cri));
 	}
 	
 	/**

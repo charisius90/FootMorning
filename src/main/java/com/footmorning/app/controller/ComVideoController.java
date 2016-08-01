@@ -1,78 +1,161 @@
 package com.footmorning.app.controller;
 
+import java.util.Locale;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.footmorning.app.domain.ComGalleryReplyDTO;
 import com.footmorning.app.domain.ComVideoDTO;
+import com.footmorning.app.domain.ComVideoReplyDTO;
 import com.footmorning.app.service.ComVideoService;
+import com.footmorning.app.util.AlbumPageMaker;
+import com.footmorning.app.util.AlbumSearchCriteria;
+
+
 
 @Controller
-@RequestMapping("/com/video/*")
 public class ComVideoController {
-	private static Logger Logger = LoggerFactory.getLogger(ComVideoController.class);
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);	
 	
-	@Autowired
+	@Inject
 	private ComVideoService service;
 	
-	/**
-	 * ±€æ≤±‚
-	 */
-	@RequestMapping("comVideoRegister")
-	public void registerGET(){}
-	@RequestMapping(value="comVideoRegister", method=RequestMethod.POST)
-	public String registerPOST(ComVideoDTO dto, RedirectAttributes rttr) throws Exception{
+	// Main
+	@RequestMapping("/com/video/main")
+	public String BoardMain(AlbumSearchCriteria cri, Model model) throws Exception {
 		
-		service.register(dto);
+		model.addAttribute("list", service.listSearchCriteria(cri));
+
+
+		AlbumPageMaker pageMaker = new AlbumPageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.listSearchCount(cri));
+
+		model.addAttribute("pageMaker", pageMaker);
+		
+		return "/com/video/VideoBoardMain2";
+	}
+	
+	// register (GET)
+	@RequestMapping(value = "/com/video/register", method = RequestMethod.GET)
+	public String register(Locale locale, Model model) {
+		return "/com/video/VideoBoardRegister";
+	}
+	
+	// register (POST)
+	@RequestMapping(value = "/com/video/register", method = RequestMethod.POST)
+	public String registerComplete(ComVideoDTO dto, RedirectAttributes rttr) throws Exception {
+		service.create(dto);
+
 		rttr.addFlashAttribute("msg", "SUCCESS");
-		return "redirect:/com/video/comVideoListAll";
+
+		return "redirect:/com/video/main";
 	}
 	
-	/**
-	 * ¿¸√º∏Ò∑œ
-	 */
-	@RequestMapping("comVideoListAll")
-	public void listAll(Model model) throws Exception{
-		model.addAttribute("list", service.listAll());
-	}
-	
-	/**
-	 * ±€¿–±‚
-	 */
-	@RequestMapping("comVideoRead")
-	public void readGET(int no, Model model) throws Exception{
-		ComVideoDTO dto = service.read(no);
-		dto.setCom_video_count(Integer.toString(Integer.valueOf(dto.getCom_video_count()).intValue() + 1));
-		service.update(dto);
-		model.addAttribute(dto);
-	}
-	
-	/**
-	 * ºˆ¡§«œ±‚
-	 */
-	@RequestMapping("comVideoUpdate")
-	public void updateGET(int no, Model model) throws Exception{
-		model.addAttribute(service.read(no));
-	}
-	@RequestMapping(value="comVideoUpdate", method=RequestMethod.POST)
-	public String updatePOST(ComVideoDTO dto, Model model) throws Exception{
-		service.update(dto);
+	// read
+	@RequestMapping(value = "/com/video/read", method = RequestMethod.GET)
+	public String read(Integer com_video_no, Model model) throws Exception {
+		service.updateCount(com_video_no);
+		model.addAttribute("dto", service.read(com_video_no));
 		
-		model.addAttribute(dto);
-		return "/com/video/comVideoRead";
+		model.addAttribute("replydto", service.listAllReply(com_video_no));
+
+		return "/com/video/VideoBoardRead";
 	}
 	
-	/**
-	 * ªË¡¶«œ±‚
-	 */
-	@RequestMapping("comVideoDelete")
-	public String deleteGET(int no) throws Exception{
-		service.delete(no);
-		return "redirect:/com/video/comVideoListAll";
+	// update
+	@RequestMapping(value = "/com/video/update", method = RequestMethod.GET)
+	public String update(Integer com_video_no, Model model) throws Exception {
+		model.addAttribute("dto", service.read(com_video_no));
+		
+		System.out.println(service.read(com_video_no));
+		
+		return "/com/video/VideoBoardUpdate";
 	}
+	
+	// updateComplete
+	@RequestMapping(value = "/com/video/update", method = RequestMethod.POST)
+	public String updateComplete(ComVideoDTO dto, RedirectAttributes rttr) throws Exception {
+		service.update(dto);
+
+		rttr.addFlashAttribute("msg", "UPSUCCESS");
+
+		return "redirect:/com/video/main";
+	}
+	
+	// delete
+	@RequestMapping("/com/video/delete")
+	public String delete(Integer com_video_no, Model model,  RedirectAttributes rttr) throws Exception {
+		service.delete(com_video_no);
+
+		rttr.addFlashAttribute("msg", "DELSUCCESS");
+
+		return "redirect:/com/video/main";
+	}
+	
+	@RequestMapping(value = "/com/videoReply/register", method = RequestMethod.POST)
+	public String registerReply(Model model, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+
+		String parent_no = req.getParameter("parent_no");
+		String content = req.getParameter("com_video_re_content");
+		int com_video_no = Integer.parseInt(req.getParameter("com_video_no"));
+
+		int mem_no = Integer.parseInt(req.getParameter("mem_no"));
+		String com_video_re_writer = req.getParameter("com_video_re_writer");
+
+		ComVideoReplyDTO dto = new ComVideoReplyDTO();
+		dto.setCom_video_no(com_video_no);
+		dto.setCom_video_re_content(content);
+
+		if (parent_no.equals("parent")) {
+			dto.setMem_no(mem_no);
+			dto.setCom_video_re_writer(com_video_re_writer);
+			service.createReply(dto);
+		} else {
+			dto.setMem_no(mem_no);
+			dto.setCom_video_re_writer(com_video_re_writer);
+			System.out.println(dto.toString());
+			ComVideoReplyDTO dto2 = service.ComVideoParentPos(Integer.parseInt(parent_no));
+			service.updatePos(dto2);
+			dto.setCom_video_re_pos(dto2.getCom_video_re_pos());
+			dto.setCom_video_re_depth(dto2.getCom_video_re_depth());
+			service.createReReply(dto);
+		}
+
+		req.setAttribute("replydto", service.listAllReply(com_video_no));
+		
+		return "/com/video/json/VideoReplyJson";
+	}
+
+	@RequestMapping(value = "/com/videoReply/delete", method = RequestMethod.POST)
+	public String deleteReply(HttpServletRequest req, Model model) throws Exception {
+
+		int re_no = Integer.parseInt(req.getParameter("re_no"));
+
+		ComVideoReplyDTO dto = service.ComVideoParentPos(re_no);
+		
+		dto.setCom_video_re_writer("999");
+		dto.setCom_video_re_no(re_no);
+		dto.setCom_video_re_content("Ìï¥Îãπ ÎåìÍ∏ÄÏùÄ Ïù¥ÎØ∏ ÏÇ≠Ï†úÎêòÏóàÏäµÎãàÎã§.");
+		
+		service.deleteReply(dto);
+
+		req.setAttribute("result", true);
+		req.setAttribute("re_no", re_no);
+		req.setAttribute("depth", dto.getCom_video_re_depth());
+		req.setAttribute("writer", dto.getCom_video_re_writer());
+		
+		return "/com/video/json/VideoReplyDeleteJson";
+
+	}
+	
 }

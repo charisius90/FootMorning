@@ -4,35 +4,158 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.footmorning.mappers.comFreeMapper">
-	
-	<insert id="register" parameterType="ComFreeDTO">
-		insert into com_free(mem_no, com_free_subject, 
-		com_free_content,
-		com_free_count, 
-		com_free_writer)
-		values(#{mem_no}, #{com_free_subject}, #{com_free_content},
-		 #{com_free_count}, #{com_free_writer})
+
+	<insert id="create">
+		INSERT INTO com_free(mem_no, com_free_writer,
+		com_free_subject, com_free_content)
+		VALUES (#{mem_no}, #{com_free_writer},
+		#{com_free_subject}, #{com_free_content})
 	</insert>
-	
+
 	<select id="read" resultType="ComFreeDTO">
-		select * from com_free where com_free_no=#{com_free_no}
+		select * from com_free where
+		com_free_no=#{bno}
 	</select>
 	
-	<update id="update" parameterType="ComFreeDTO">
-		update com_free set com_free_subject=#{com_free_subject},
-		com_free_writer=#{com_free_writer},
-		com_free_content=#{com_free_content}, 
-		com_free_count=#{com_free_count}
-		where com_free_no=#{com_free_no}
+	<update id="updateCount" parameterType="ComFreeDTO">
+		update com_free set com_free_count = com_free_count + 1 where com_free_no = #{no};
 	</update>
-	
+
+	<update id="update">
+		update com_free set com_free_subject
+		=#{com_free_subject},
+		com_free_content
+		=#{com_free_content}
+		where com_free_no = #{com_free_no}
+	</update>
+
 	<delete id="delete">
-		delete from com_free 
-		where com_free_no=#{com_free_no}
+		delete from com_free where com_free_no =
+		#{com_free_no}
 	</delete>
-	
+
 	<select id="listAll" resultType="ComFreeDTO">
-		select * from com_free where com_free_no>0 order by com_free_no desc, com_free_regdate desc
+       <![CDATA[
+       select * from com_free where com_free_no > 0 order by com_free_no desc, com_free_regdate desc
+       ]]>
 	</select>
-	
+
+	<select id="listPage" resultType="ComFreeDTO">
+		<![CDATA[
+			select * from com_free where com_free_no > 0 
+				order by com_free_no desc, com_free_regdate desc limit #{page}, 10
+		]]>
+	</select>
+
+	<select id="listCriteria" resultType="ComFreeDTO">
+ 		<![CDATA[
+ 			select * from com_free where com_free_no > 0 
+ 				order by com_free_no desc, com_free_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+
+	<select id="countPaging" resultType="int">
+		select count(com_free_no) from com_free
+	</select>
+
+
+	<!-- 반복되어 재사용되는 sql문은 이렇게 id를 부여하고 <sql></sql> 태그로 감싸면 include가 가능해진다. -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and com_free_subject like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'c'.toString()">
+				and com_free_content like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'w'.toString()">
+				and com_free_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
+		keyword ) -->
+	<select id="listSearch"  resultType="ComFreeDTO">
+		<![CDATA[  
+		  select * 
+		  from com_free 
+		  where com_free_no > 0
+		]]>
+
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by com_free_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<!-- 검색 결과 게시물 총 갯수 계산 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(com_free_no) 
+		  from com_free 
+		  where com_free_no > 0
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<insert id="createReply" parameterType="ComFreeReplyDTO">
+		INSERT INTO
+		com_free_reply(com_free_no, mem_no, com_free_re_writer,
+		com_free_re_content, com_free_re_pos,
+		com_free_re_depth,com_free_re_group)
+		VALUES
+		(#{com_free_no}, #{mem_no}, #{com_free_re_writer},
+		#{com_free_re_content},0,0,null);
+	</insert>
+
+	<insert id="createReReply" parameterType="ComFreeReplyDTO">
+		INSERT INTO
+		com_free_reply(com_free_no, mem_no, com_free_re_writer,
+		com_free_re_content, com_free_re_pos,
+		com_free_re_depth,com_free_re_group)
+		VALUES
+		(#{com_free_no}, #{mem_no}, #{com_free_re_writer},
+		#{com_free_re_content},#{com_free_re_pos}+1,#{com_free_re_depth}+1,null);
+	</insert>
+
+	<select id="listReply" resultType="ComFreeReplyDTO">
+		select * from
+		com_free_reply where com_free_no=#{com_free_no}
+		order by
+		com_free_re_pos desc;
+	</select>
+
+	<select id="parentInfo" resultType="ComFreeReplyDTO">
+		select * from
+		com_free_reply where com_free_re_no=#{no};
+	</select>
+
+	<update id="updatePos">
+		update com_free_reply set
+		com_free_re_pos=com_free_re_pos+1;
+	</update>
+
+	<update id="replyUpdatePos">
+		update com_free_reply set
+		com_free_re_pos=com_free_re_pos+1
+		where com_free_re_pos
+		> #{com_free_re_pos}
+	</update>
+
+	<!-- <delete id="deleteReply"> -->
+	<!-- delete from com_free_reply where com_free_re_no=#{com_free_re_no}; -->
+	<!-- </delete> -->
+
+	<update id="deleteReply">
+		UPDATE com_free_reply SET
+		com_free_re_writer=#{com_free_re_writer},
+		com_free_re_content=#{com_free_re_content} WHERE
+		com_free_re_no=#{com_free_re_no};
+	</update>
 </mapper>

@@ -21,7 +21,7 @@
    		 <input type='hidden' name='myclub_free_no' value="${dto.myclub_free_no}">
          <div class="col-md-10">
             <div id="page-content-wrapper">
-            <h1>클럽자랑-수정하기</h1>          
+            <h1>자유게시판-수정하기</h1>          
             <br/><br/>
             
             <!-- 글쓰는 부분 -->

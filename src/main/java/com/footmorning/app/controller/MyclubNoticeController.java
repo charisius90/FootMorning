@@ -116,7 +116,7 @@ public class MyclubNoticeController {
 		System.out.println("����: " + dto.toString());
 		service.modify(dto);
 
-		rttr.addFlashAttribute("msg", "SUCCESS");
+		rttr.addFlashAttribute("msg", "UPSUCCESS");
 
 		return "redirect:/myclub/notice/main";
 	}
@@ -130,9 +130,11 @@ public class MyclubNoticeController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/myclub/notice/delete")
-	public String delete(Integer myclub_notice_no, Model model) throws Exception {
+	public String delete(Integer myclub_notice_no, Model model, RedirectAttributes rttr) throws Exception {
 		service.remove(myclub_notice_no);
-
+		
+		rttr.addFlashAttribute("msg", "DELSUCCESS");
+		
 		return "redirect:/myclub/notice/main";
 	}
 
@@ -208,7 +210,7 @@ public class MyclubNoticeController {
 		// ������ dto set
 		dto.setMyclub_notice_re_writer("999");
 		dto.setMyclub_notice_re_no(re_no);
-		dto.setMyclub_notice_re_content("�ش� ����� �̹� �����Ǿ����ϴ�.");
+		dto.setMyclub_notice_re_content("해당 댓글은 이미 삭제되었습니다.");
 
 		// System.out.println(dto.toString());
 		// ���� ȣ��

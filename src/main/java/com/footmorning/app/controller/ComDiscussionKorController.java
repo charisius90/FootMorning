@@ -1,8 +1,13 @@
 package com.footmorning.app.controller;
 
+import java.util.Locale;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,77 +15,221 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.footmorning.app.domain.ComDiscussionKorDTO;
+import com.footmorning.app.domain.ComDiscussionKorReplyDTO;
 import com.footmorning.app.service.ComDiscussionKorService;
+import com.footmorning.app.util.PageMaker;
+import com.footmorning.app.util.SearchCriteria;
 
 /**
- * ƒøπ¬¥œ∆º ¿⁄∂˚∞‘Ω√∆« ƒ¡∆Æ∑—∑Ø
- * @author π⁄ºˆ«◊
+ * 
+ * @author ÏÜêÏäπÌïú
  *
  */
 @Controller
-@RequestMapping("/com/discussionkor/*")
 public class ComDiscussionKorController {
 	private static Logger logger = LoggerFactory.getLogger(ComDiscussionKorController.class);
 	
-	@Autowired
+	@Inject
 	private ComDiscussionKorService service;
 	
-	/**
-	 * ±€æ≤±‚
-	 */
-	@RequestMapping("comDiscussionKorRegister")
-	public void registerGET(){}
-	
-	@RequestMapping(value = "comDiscussionKorRegister", method = RequestMethod.POST)
-	public String registerPOST(ComDiscussionKorDTO dto, RedirectAttributes rttr) throws Exception {
-		dto.setCom_discussion_kor_count("0");
+	@RequestMapping("/com/kor/main")
+	public String notice(SearchCriteria cri, Model model, HttpServletRequest req) throws Exception {
+		HttpSession session = req.getSession();
+		
+//		ClubDTO dto = (ClubDTO)session.getAttribute("CLUB_KEY");
 
+		
+//		cri.setClub_no(dto.getClub_no());
+		model.addAttribute("list", service.listSearchCriteria(cri));
+
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.listSearchCount(cri));
+
+		model.addAttribute("pageMaker", pageMaker);
+		// System.out.println(service.listAll().toString());
+		return "/com/discussionkor/comDiscussionKorMain";
+		// ÔøΩŸπÔøΩÔøΩÔøΩ myclubNoticeBoardMain2
+		// return "/myclub/myclubNotice/myclubNoticeBoardMain2";
+	}
+
+	@RequestMapping(value = "/com/kor/register", method = RequestMethod.GET)
+	public String register(Locale locale, Model model) {
+		// logger.info("ÔøΩÔøΩÔøΩ", locale);
+
+		return "/com/discussionkor/comDiscussionKorRegister";
+	}
+
+	@RequestMapping(value = "/com/kor/register", method = RequestMethod.POST)
+	public String registerComplete(ComDiscussionKorDTO dto, RedirectAttributes rttr) throws Exception {
+		// logger.info("ÔøΩÔøΩÔøΩ ÔøΩœ∑ÔøΩ : " + dto.toString());
 		service.register(dto);
 
 		rttr.addFlashAttribute("msg", "SUCCESS");
-		return "redirect:/com/discussionkor/comDiscussionKorListAll";
+
+		return "redirect:/com/kor/main";
 	}
-	
+
 	/**
-	 * ¿¸√º∏Ò∑œ
+	 * ÔøΩÔøΩÔøΩÔøΩ read get
+	 * 
+	 * @param bno
+	 * @param model
+	 * @return
+	 * @throws Exception
 	 */
-	@RequestMapping("comDiscussionKorListAll")
-	public void listAll(Model model) throws Exception{
-		model.addAttribute("list", service.listAll());
-	}
-	
-	/**
-	 * ±€¿–±‚
-	 */
-	@RequestMapping("comDiscussionKorRead")
-	public void readGET(int no, Model model) throws Exception{
-		ComDiscussionKorDTO dto = service.read(no);
-		dto.setCom_discussion_kor_count(Integer.toString(Integer.valueOf(dto.getCom_discussion_kor_count()).intValue() + 1));
-		service.update(dto);
-		model.addAttribute(dto);
-	}
-	
-	/**
-	 * ºˆ¡§«œ±‚
-	 */
-	@RequestMapping("comDiscussionKorUpdate")
-	public void updateGET(int no, Model model) throws Exception{
-		model.addAttribute(service.read(no));
-	}
-	@RequestMapping(value="comDiscussionKorUpdate", method=RequestMethod.POST)
-	public String updatePOST(ComDiscussionKorDTO dto, Model model) throws Exception{
-		service.update(dto);
+	@RequestMapping(value = "/com/kor/read", method = RequestMethod.GET)
+	public String read(Integer com_discussion_kor_no, Model model) throws Exception {
+		service.updateCount(com_discussion_kor_no);
 		
-		model.addAttribute(dto);
+		model.addAttribute("dto", service.read(com_discussion_kor_no));
+
+		model.addAttribute("replydto", service.listAllReply(com_discussion_kor_no));
+
 		return "/com/discussionkor/comDiscussionKorRead";
 	}
-	
+
 	/**
-	 * ªË¡¶«œ±‚
+	 * ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ∆Æ get
+	 * 
+	 * @param bno
+	 * @param model
+	 * @return
+	 * @throws Exception
 	 */
-	@RequestMapping("comDiscussionKorDelete")
-	public String deleteGET(int no) throws Exception{
-		service.delete(no);
-		return "redirect:/com/discussionkor/comDiscussionKorListAll";
+	@RequestMapping(value = "/com/kor/update", method = RequestMethod.GET)
+	public String update(Integer com_discussion_kor_no, Model model) throws Exception {
+		model.addAttribute("dto", service.read(com_discussion_kor_no));
+		System.out.println(service.read(com_discussion_kor_no).toString());
+		return "/com/discussionkor/comDiscussionKorUpdate";
 	}
+
+	/**
+	 * 
+	 * ÔøΩÔøΩÔøΩÔøΩ update post
+	 * 
+	 * @param dto
+	 * @param rttr
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/com/kor/update", method = RequestMethod.POST)
+	public String updateComplete(ComDiscussionKorDTO dto, RedirectAttributes rttr) throws Exception {
+		System.out.println("ÔøΩÔøΩÔøΩÔøΩ: " + dto.toString());
+		service.modify(dto);
+
+		rttr.addFlashAttribute("msg", "UPSUCCESS");
+
+		return "redirect:/com/kor/main";
+	}
+
+	/**
+	 * ÔøΩÔøΩÔøΩÔøΩ delete get
+	 * 
+	 * @param bno
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/com/kor/delete")
+	public String delete(Integer com_discussion_kor_no, RedirectAttributes rttr) throws Exception {
+		service.remove(com_discussion_kor_no);
+		
+		rttr.addFlashAttribute("msg", "DELSUCCESS");
+
+		return "redirect:/com/kor/main";
+	}
+
+	/**
+	 * ÔøΩÔøΩÔøΩÔøΩ,ÔøΩÔøΩÔøΩÔøΩ reply add post
+	 * 
+	 * @param dto
+	 * @param rttr
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/com/korReply/register", method = RequestMethod.POST)
+	public String registerReply(Model model, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+
+		System.out.println("controller called...");
+		String parent_no = req.getParameter("parent_no");
+		String content = req.getParameter("com_discussion_kor_re_content");
+		int com_discussion_kor_no = Integer.parseInt(req.getParameter("com_discussion_kor_no"));
+
+		// ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ
+		int mem_no = Integer.parseInt(req.getParameter("mem_no"));
+		String com_discussion_kor_re_writer = req.getParameter("com_discussion_kor_re_writer");
+
+		// DTOÔøΩÔøΩ√ºÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ
+		ComDiscussionKorReplyDTO dto = new ComDiscussionKorReplyDTO();
+		dto.setCom_discussion_kor_no(com_discussion_kor_no);
+		dto.setCom_discussion_kor_re_content(content);
+
+		if (parent_no.equals("parent")) {
+			dto.setMem_no(mem_no);
+			dto.setCom_discussion_kor_re_writer(com_discussion_kor_re_writer);
+			System.out.println(dto.toString());
+			service.createReply(dto);
+		} else {
+			dto.setMem_no(mem_no);
+			dto.setCom_discussion_kor_re_writer(com_discussion_kor_re_writer);
+			System.out.println(dto.toString());
+			ComDiscussionKorReplyDTO dto2 = service.MyclubNoticeParentPos(Integer.parseInt(parent_no));
+			// System.out.println("parent data called.. : "+dto2.toString());
+			// service.updatePos(dto2.getCom_discussion_kor_re_pos());
+			service.updatePos(dto2);
+			dto.setCom_discussion_kor_re_pos(dto2.getCom_discussion_kor_re_pos());
+			dto.setCom_discussion_kor_re_depth(dto2.getCom_discussion_kor_re_depth());
+			service.createReReply(dto);
+		}
+
+		// ÔøΩ◊ΩÔøΩ∆Æ
+		// System.out.println(service.listAllReply(com_discussion_kor_no).toString());
+
+		// ÔøΩÔøΩ€∏ÔøΩÔøΩÔøΩ∆Æ
+		req.setAttribute("replydto", service.listAllReply(com_discussion_kor_no));
+
+		return "/com/discussionkor/json/comkorReplyJson";
+		
+	}
+
+	/**
+	 * ÔøΩÔøΩÔøΩÔøΩ,ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩ√ªÔøΩÔøΩÔøΩ
+	 * 
+	 * @param req
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/com/korReply/delete", method = RequestMethod.POST)
+	public String deleteReply(HttpServletRequest req, Model model) throws Exception {
+
+		int re_no = Integer.parseInt(req.getParameter("re_no"));
+		// System.out.println(re_no);
+
+		// ÔøΩŒ∏ÔøΩ info
+		ComDiscussionKorReplyDTO dto = service.MyclubNoticeParentPos(re_no);
+
+		// ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ dto set
+		dto.setCom_discussion_kor_re_writer("999");
+		dto.setCom_discussion_kor_re_no(re_no);
+		dto.setCom_discussion_kor_re_content("Ìï¥Îãπ ÎåìÍ∏ÄÏùÄ Ïù¥ÎØ∏ ÏÇ≠Ï†úÎêòÏóàÏäµÎãàÎã§.");
+
+		// System.out.println(dto.toString());
+		// ÔøΩÔøΩÔøΩÔøΩ »£ÔøΩÔøΩ
+		service.deleteReply(dto);
+
+		req.setAttribute("result", true);
+		req.setAttribute("re_no", re_no);
+		req.setAttribute("depth", dto.getCom_discussion_kor_re_depth());
+		req.setAttribute("writer", dto.getCom_discussion_kor_re_writer());
+
+		System.out.println("dto writer:" + dto.getCom_discussion_kor_re_writer());
+		return "/com/discussionkor/json/comkorReplyDeleteJson";
+
+	}
+	
+	
+	
 }
