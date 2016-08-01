@@ -296,12 +296,15 @@ public class MyclubMgrController {
 	public String myclubMgrOutMemberComplete(@RequestParam(value="mem_no") List<String> memberList, RedirectAttributes rttr, HttpServletRequest req){
 		for(String mem_no : memberList){
 			try{
+				// 클럽멤버테이블에서 삭제
 				ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt(mem_no));
 				clubMemberService.delete(clubMember);
 				
+				// 멤버테이블에서 클럽번호와 클럽가입일 삭제, 회원등급 수정
 				MemberDTO member = memberService.getWithNo(Integer.parseInt((mem_no)));
 				member.setClub_no(null);
 				member.setMem_grade(GRADE_NORMAL);
+				member.setMem_club_regdate(null);
 				memberService.updateMember(member);
 				
 				// 클럽테이블에 클럽회원수-1
@@ -366,32 +369,27 @@ public class MyclubMgrController {
 			ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt((mem_no)));
 			clubMember.setMem_grade(GRADE_MASTER);
 			clubMemberService.update(clubMember);
-			System.out.println(clubMember.toString());
 			
 			MemberDTO newMasterInfo = memberService.getWithNo(Integer.parseInt((clubMember.getMem_no())));
 			newMasterInfo.setMem_grade(GRADE_MASTER);
 			memberService.updateMember(newMasterInfo);
-			System.out.println(newMasterInfo.toString());
 			
 			// 클럽테이블의 마스터 정보에 선택된 회원의 회원번호와 이름으로 수정 
 			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
 			club.setClub_master(clubMember.getMem_no());
 			club.setClub_master_name(clubMember.getMem_name());
 			service.update(club);
-			System.out.println(club.toString());
 			WebUtils.setSessionAttribute(req, "CLUB_KEY", club);
 
 			// 기존 마스터의 회원등급을 클럽소속회원으로 수정
 			MemberDTO oldMasterInfo = (MemberDTO)WebUtils.getSessionAttribute(req, "USER_KEY");
 			oldMasterInfo.setMem_grade(GRADE_MEMBER);
 			memberService.updateMember(oldMasterInfo);
-			System.out.println(oldMasterInfo.toString());
 			WebUtils.setSessionAttribute(req, "USER_KEY", oldMasterInfo);
 			
 			ClubMemberDTO dto = clubMemberService.getWithMemno(Integer.parseInt((oldMasterInfo.getMem_no())));
 			dto.setMem_grade(GRADE_MEMBER);
 			clubMemberService.update(dto);
-			System.out.println(dto.toString());
 			
 			rttr.addFlashAttribute("msg", "클럽이 양도되었습니다.");
 		}
