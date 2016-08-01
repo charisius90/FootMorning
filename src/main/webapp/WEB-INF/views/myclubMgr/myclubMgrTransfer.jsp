@@ -27,92 +27,117 @@
 				<div id="page-content-wrapper">
 					<div class="col-md-9">
 						<h3>클럽양도</h3>
-						<div class="row">
-							<div class="col-lg-3">
-								<div class="input-group">
-									<input type="text" class="form-control" placeholder="Search" />
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button">검색</button>
-									</span>
-								</div>
-								<!-- /input-group -->
-							</div>
-							
-						</div>
-						<!-- /.row -->
-						<br/>
-						<div class="row">
-							<table class="table table-hover" text-align="center">
-								<tr>
-									<th>닉네임</th>
-									<th>등급</th>
-									<th>성별</th>
-									<th>전화번호</th>
-									<th>주소</th>
-									<th>가입일</th>
-								</tr>
-								<tr>
-									<td>woovcheko</td>
-									<td>클럽장</td>
-									<td>남자</td>
-									<td>010-7564-xxxx</td>
-									<td>경기도 광명시</td>
-									<td>2016-07-18</td>
-								</tr>
-								<tr>
-									<td>netsong7</td>
-									<td>회원</td>
-									<td>남자</td>
-									<td>010-xxxx-xxxx</td>
-									<td>의정부</td>
-									<td>2016-07-18</td>
-								</tr>
-								<tr>
-									<td>맨유</td>
-									<td>클럽장</td>
-									<td>남자</td>
-									<td>010-1234-xxxx</td>
-									<td>영국 맨체스터</td>
-									<td>2013-2-12</td>
-								</tr>
-								<tr>
-									<td>첼시</td>
-									<td>클럽장</td>
-									<td>남자</td>
-									<td>010-4321-0000</td>
-									<td>영국 런던</td>
-									<td>2015-03-12</td>
-								</tr>
-
-							</table>
-							<nav align="center">
-								<ul class="pagination">
-									<li><a href="#" aria-label="Previous"> <span
-											aria-hidden="true">&laquo;</span>
-									</a></li>
-									<li><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><a href="#" aria-label="Next"> <span
-											aria-hidden="true">&raquo;</span>
-									</a></li>
-								</ul>
-							</nav>
-						</div>
-						<!-- /.row -->
-					</div>
-					<!-- /.col-md-9 -->
+			<div class="row">
+				<div style="float:left">
+					<select name="searchSelectBox" style="height:30px">
+						<option value='mem_name' selected>이름</option>
+						<option value='mem_id'>아이디</option>
+					</select>
 				</div>
-				<!-- page-content-wrapper -->
-			</div>
+				<div class="col-lg-3">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search"/>
+						<span class="input-group-btn">
+	        				<button class="btn btn-default" type="button">검색</button>
+	     				</span>
+					</div><!-- /input-group -->
+				</div><!-- /.col-lg-4 -->
+			</div><!-- /.row -->
+			<br/><br/>
+			<div class="row">
+				<form action="/myclubMgr/myclubMgrTransfer" method="post">
+					<table class="table table-hover" text-align="center">
+						<thead>
+						<tr>
+							<th><input id="checkAll" type="checkbox"/></th>
+							<th>E-Mail</th>
+							<th>회원등급</th>
+							<th>이름</th>
+							<th>생년월일</th>
+							<th>성별</th>
+							<th>클럽가입일</th>
+						</tr>
+						</thead>
+						<c:forEach items="${list}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="mem_no" id="checked_member_${dto.mem_no}" value="${dto.mem_no}"/></td>
+								<td>${dto.mem_email}</td>
+								<td>
+									<!-- 1:마스터 / 2:매니저 / 3:스탭 / 4:일반 -->
+									<c:if test="${dto.mem_grade==1}">마스터</c:if>
+									<c:if test="${dto.mem_grade==2}">매니저</c:if>
+									<c:if test="${dto.mem_grade==3}">스탭</c:if>
+									<c:if test="${dto.mem_grade==4}">일반</c:if>
+								</td>
+								<td>${dto.mem_name}</td>
+								<td>${dto.mem_birth}</td>
+								<td>${dto.mem_gender}</td>
+								<td>${dto.club_mem_regdate}</td>
+							</tr>
+						</c:forEach>
+					</table>
+					
+					<div style="float:right">
+						<button class="btn btn-primary" type="submit">클럽양도</button>
+					</div>
+				</form>
+				</div><!-- /.row -->	
+				<div class="row">
+					<nav align="center">
+						<ul class="pagination">
+							<li><a href="#" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a></li>
+							<li><a href="#">1</a></li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><a href="#">5</a></li>
+							<li><a href="#" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div><!-- /.col-md-9 -->
+		</div><!-- page-content-wrapper -->
 		</div>
-		<!-- /.row -->
-	</div>
-	<!-- /.container -->
+	</div><!-- /.row -->
+</div><!-- /.container -->
 
+<script>
+	$(function(){
+		// 전체선택에 체크한 경우 변환
+		$("#checkAll").click(function(){
+			var check = $(this).prop("checked");
+			if(check){
+				$("input:checkbox").each(function(i, e){
+					$(e).prop("checked", true);
+				})
+			}
+			else{
+				$("input:checkbox").each(function(i, e){
+					$(e).prop("checked", false);
+				})
+			}
+		});
+	});
 
-	<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
+	$(function(){
+		$("#datepicker").datepicker(
+			{
+				dateFormat: "yymmdd",
+				changeMonth: true,
+				changeYear: true,
+				minDate: "0",
+				maxDate: "+1y",
+			}		
+		);
+	});
+
+</script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

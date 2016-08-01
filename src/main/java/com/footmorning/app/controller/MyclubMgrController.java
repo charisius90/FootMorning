@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.ClubConfigDTO;
@@ -71,6 +73,7 @@ public class MyclubMgrController {
 	
 	/**
 	 * 기본정보 변경 페이지
+	 * @Author 박수항
 	 */
 	@RequestMapping("myclubMgrInfo")
 	public String myclubInfoMgr(HttpServletRequest req){
@@ -159,6 +162,7 @@ public class MyclubMgrController {
 	
 	/**
 	 * 클럽멤버관리
+	 * @Author 김소영, 박수항
 	 */
 	@RequestMapping("myclubMgrMember")
 	public void myclubMgrMember(HttpServletRequest req, Model model){
@@ -199,6 +203,7 @@ public class MyclubMgrController {
 	
 	/**
 	 * 가입신청관리
+	 * @Author 김소영
 	 */
 	@RequestMapping("myclubMgrRegister")
 	public void myclubMgrRegister(HttpServletRequest req, Model model){
@@ -261,6 +266,7 @@ public class MyclubMgrController {
 	
 	/**
 	 * 탈퇴관리
+	 * @Author 김소영
 	 */
 	@RequestMapping("myclubMgrOutMember")
 	public void myclubMgrOutMember(HttpServletRequest req, Model model){
@@ -273,19 +279,59 @@ public class MyclubMgrController {
 		}
 	}
 	
+	@RequestMapping(value="myclubMgrOutMember", method=RequestMethod.POST)
+	public String myclubMgrOutMemberComplete(@RequestParam(value="mem_no") List<String> memberList, RedirectAttributes rttr){
+		for(String mem_no : memberList){
+			try{
+				ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt(mem_no));
+				clubMemberService.delete(clubMember);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		rttr.addFlashAttribute("data", memberList.size());
+
+		return "redirect:/myclubMgr/myclubMgrOutMember";
+	}
+	
 	/**
 	 * 클럽폐쇄
+	 * @Author 김소영
 	 */
 	@RequestMapping("myclubMgrClosing")
-	public void myclubMgrClosing(){
-		
+	public void myclubMgrClosing(){}
+	
+	@RequestMapping(value="myclubMgrClosing", method=RequestMethod.POST)
+	public String myclubMgrClosingComplete(HttpServletRequest req, Model model){
+		try{
+			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+			service.delete(Integer.parseInt((club.getClub_no())));
+			HttpSession session = req.getSession();
+			session.removeAttribute("CLUB_KEY");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return "redirect:/";
 	}
 	
 	/**
 	 * 클럽양도
 	 */
 	@RequestMapping("myclubMgrTransfer")
-	public void myclubMgrTransfer(){
-		
+	public void myclubMgrTransfer(HttpServletRequest req, Model model){
+		try {
+			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+			model.addAttribute("list", clubMemberService.listMember(Integer.parseInt(club.getClub_no())));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="myclubMgrTransfer", method=RequestMethod.POST)
+	public String myclubMgrTransferComplete(){
+		return "redirect:/myclubMgr/myclubMgrTransfer";
 	}
 }

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +21,7 @@
 			</div>
 		<div id="page-content-wrapper">
 			<div class="col-md-9">
-			<h3>탈퇴멤버관리</h3>
+			<h3>멤버탈퇴관리</h3>
 			<div class="myteamheader" align="right">
 					<!-- 버튼두개짜리 헤더  -->
 					<%@include file="../include/myclubHeader.jsp" %>
@@ -45,30 +45,42 @@
 			</div><!-- /.row -->
 			<br/><br/>
 			<div class="row">
-				<table class="table table-hover" text-align="center">
-					<thead>
-					<tr>
-						<th><input type="checkbox"/></th>
-						<th>E-Mail</th>
-						<th>이름</th>
-						<th>성별</th>
-						<th>가입일</th>
-					</tr>
-					</thead>
-					<c:forEach items="${list}" var="dto">
+				<form action="/myclubMgr/myclubMgrOutMember" method="post">
+					<table class="table table-hover" text-align="center">
+						<thead>
 						<tr>
-							<td><input type="checkbox" name="mem_no" id="checked_member_${dto.mem_no}" value="${dto.mem_no}"/></td>
-							<td>${dto.mem_email}</td>
-							<td>${dto.mem_name}</td>
-							<td>${dto.mem_gender}</td>
-							<td>${dto.club_mem_regdate}</td>
+							<th><input id="checkAll" type="checkbox"/></th>
+							<th>E-Mail</th>
+							<th>회원등급</th>
+							<th>이름</th>
+							<th>생년월일</th>
+							<th>성별</th>
+							<th>클럽가입일</th>
 						</tr>
-					</c:forEach>
-				</table>
-				
-				<div style="float:right">
-					<button class="btn btn-primary">선택회원방출</button>
-				</div>
+						</thead>
+						<c:forEach items="${list}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="mem_no" id="checked_member_${dto.mem_no}" value="${dto.mem_no}"/></td>
+								<td>${dto.mem_email}</td>
+								<td>
+									<!-- 1:마스터 / 2:매니저 / 3:스탭 / 4:일반 -->
+									<c:if test="${dto.mem_grade==1}">마스터</c:if>
+									<c:if test="${dto.mem_grade==2}">매니저</c:if>
+									<c:if test="${dto.mem_grade==3}">스탭</c:if>
+									<c:if test="${dto.mem_grade==4}">일반</c:if>
+								</td>
+								<td>${dto.mem_name}</td>
+								<td>${dto.mem_birth}</td>
+								<td>${dto.mem_gender}</td>
+								<td>${dto.club_mem_regdate}</td>
+							</tr>
+						</c:forEach>
+					</table>
+					
+					<div style="float:right">
+						<button class="btn btn-primary" type="submit">선택회원방출</button>
+					</div>
+				</form>
 				</div><!-- /.row -->	
 				<div class="row">
 					<nav align="center">
@@ -94,6 +106,26 @@
 </div><!-- /.container -->
 
 <script>
+	var data = ${data};
+	alert(data + "명이 방출되었습니다.");
+	
+	$(function(){
+		// 전체선택에 체크한 경우 변환
+		$("#checkAll").click(function(){
+			var check = $(this).prop("checked");
+			if(check){
+				$("input:checkbox").each(function(i, e){
+					$(e).prop("checked", true);
+				})
+			}
+			else{
+				$("input:checkbox").each(function(i, e){
+					$(e).prop("checked", false);
+				})
+			}
+		});
+	});
+
 	$(function(){
 		$("#datepicker").datepicker(
 			{
