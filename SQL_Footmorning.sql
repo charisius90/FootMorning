@@ -1,3 +1,12 @@
+drop database finaltest;
+
+create database finaltest;
+use finaltest;
+
+
+
+
+
 CREATE TABLE MEMBER
 (
    mem_no                INTEGER NOT NULL auto_increment PRIMARY KEY,
@@ -26,13 +35,24 @@ CREATE TABLE CHALLENGE
    receiver_club_no      INTEGER NULL,
    challenge_content     VARCHAR(500) NULL,
    game_no               INTEGER NULL,
-   game_flag             VARCHAR(10) NULL
+   game_flag             VARCHAR(10) NULL,
+    club_ability        INTEGER NULL
 )
 ;
 
-
-
-
+CREATE TABLE GAME
+(
+   game_no               INTEGER NOT NULL auto_increment,
+    game_flag             VARCHAR(10) NOT NULL,
+   game_date             TIMESTAMP NULL,
+   game_time             VARCHAR(30) NULL,
+   game_addr             VARCHAR(50) NULL,
+   club_no               INTEGER NOT NULL,
+   game_score            INTEGER NULL,
+    club_ability        INTEGER NULL,
+    primary key(game_no, game_flag)
+)
+;
 
 CREATE TABLE CLUB
 (
@@ -48,10 +68,6 @@ CREATE TABLE CLUB
     club_mem_count        INTEGER NULL
 )
 ;
-
-
-
-
 
 CREATE TABLE FORMATION
 (
@@ -70,23 +86,6 @@ CREATE TABLE FORMATION
    lineup_no             INTEGER NOT NULL
 )
 ;
-
-
-
-
-CREATE TABLE GAME
-(
-   game_no               INTEGER NOT NULL auto_increment,
-   game_date             TIMESTAMP NULL,
-   game_time             VARCHAR(30) NULL,
-   game_addr             VARCHAR(50) NULL,
-   game_flag             VARCHAR(10) NOT NULL,
-   club_no               INTEGER NOT NULL,
-   game_score            INTEGER NULL,
-    primary key(game_no, game_flag)
-)
-;
-
 
 CREATE TABLE LINEUP
 (
@@ -152,7 +151,7 @@ ALTER TABLE FORMATION
 
 
 ALTER TABLE GAME
-   ADD FOREIGN KEY R_3 (club_no) REFERENCES CLUB(club_no)
+   ADD FOREIGN KEY R_3 (club_no) REFERENCES CLUB(club_no) on delete cascade
 ;
 
 
@@ -170,7 +169,7 @@ ALTER TABLE LINEUP_SUB
 
 
 ALTER TABLE MEMBER
-   ADD FOREIGN KEY R_6 (club_no) REFERENCES CLUB(club_no)
+   ADD FOREIGN KEY R_6 (club_no) REFERENCES CLUB(club_no) on delete cascade
 ;
 
 
@@ -178,10 +177,6 @@ ALTER TABLE MEMBER
 ALTER TABLE RECORD
    ADD FOREIGN KEY R_7 (game_no,game_flag) REFERENCES GAME(game_no,game_flag)
 ;
-
-
-
-
 
 
 
@@ -542,11 +537,6 @@ ALTER TABLE com_video_reply
 
 
 
-
-
-
-
-
 CREATE TABLE main_notice
 (
    main_notice_no        INTEGER NOT NULL auto_increment PRIMARY KEY,
@@ -782,6 +772,7 @@ CREATE TABLE myclub_visitor_reply
 
 
 
+
 ALTER TABLE main_notice
    ADD FOREIGN KEY R_29 (mem_no) REFERENCES member(mem_no)
 ;
@@ -905,17 +896,6 @@ ALTER TABLE challenge
 ;
 
 
-DELIMITER $$
-
-DROP TRIGGER IF EXISTS finaltest.club_AFTER_INSERT$$
-USE `finaltest`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `finaltest`.`club_AFTER_INSERT` AFTER INSERT ON `club` FOR EACH ROW
-BEGIN
-   update member set club_no=new.club_no where mem_no=new.club_master;
-END$$
-DELIMITER ;
-
-
 
 CREATE TABLE CLUB_MEMBER
 (
@@ -932,6 +912,7 @@ CREATE TABLE CLUB_MEMBER
     club_mem_flag			 varchar(10) default 'FALSE',
     constraint foreign key (mem_no) references member(mem_no),
     constraint foreign key (club_no) references club(club_no)
+    on delete cascade
 );
 
 CREATE TABLE CLUB_CONFIG
@@ -944,6 +925,7 @@ CREATE TABLE CLUB_CONFIG
     config_birth_to		 date default '9999-12-31',
    	club_no				 int,
     constraint foreign key (club_no) references club(club_no)
+    on delete cascade
 )
 ;
 
@@ -958,3 +940,18 @@ BEGIN
     insert into club_config(club_no) values(new.club_no);
 END$$
 DELIMITER ;
+
+CREATE TABLE CLUB_CASHBOOK
+(
+   cashbook_no          int auto_increment primary key,
+    cashbook_index       int,
+    cashbook_date       date,
+    cashbook_type       varchar(10),
+    cashbook_content   varchar(100),
+    cashbook_amount       int,
+    cashbook_balance    int,
+    club_no             int,
+    constraint foreign key(club_no) references club(club_no)
+    on delete cascade
+)
+;
