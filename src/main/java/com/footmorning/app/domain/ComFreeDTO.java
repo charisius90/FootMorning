@@ -11,6 +11,7 @@ public class ComFreeDTO {
 	private Date com_free_regdate;
 	private String com_free_main_thumnail;
 	private int com_free_count;
+	private int replycount;
 	public int getCom_free_no() {
 		return com_free_no;
 	}
@@ -59,13 +60,18 @@ public class ComFreeDTO {
 	public void setCom_free_count(int com_free_count) {
 		this.com_free_count = com_free_count;
 	}
+	public int getReplycount() {
+		return replycount;
+	}
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
 	@Override
 	public String toString() {
 		return "ComFreeDTO [com_free_no=" + com_free_no + ", mem_no=" + mem_no + ", com_free_writer=" + com_free_writer
 				+ ", com_free_subject=" + com_free_subject + ", com_free_content=" + com_free_content
 				+ ", com_free_regdate=" + com_free_regdate + ", com_free_main_thumnail=" + com_free_main_thumnail
-				+ ", com_free_count=" + com_free_count + "]";
+				+ ", com_free_count=" + com_free_count + ", replycount=" + replycount + "]";
 	}
-
 	
 }

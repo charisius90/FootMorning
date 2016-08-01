@@ -81,12 +81,13 @@
 	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
 		keyword ) -->
 	<select id="listSearch"  resultType="ComDiscussionKorDTO">
-		<![CDATA[  
-		  select * 
-		  from com_discussion_kor 
-		  where com_discussion_kor_no > 0
-		]]>
-
+      <![CDATA[  
+        select 
+         A.*, 
+         (SELECT COUNT(*) FROM com_discussion_kor_reply B WHERE B.com_discussion_kor_no=A.com_discussion_kor_no) as replycount
+        from com_discussion_kor A
+        where com_discussion_kor_no > 0 
+      ]]>
 		<include refid="search"></include>
 		  
 		<![CDATA[    

@@ -1,20 +1,19 @@
 package com.footmorning.app.domain;
 
-/**
- * @author Gyuchae
- *
- */
+import java.util.Date;
+
 public class MyclubTeamDTO {
 
 	private int myclub_team_no;
 	private int mem_no;
 	private String myclub_team_subject;
 	private String myclub_team_content;
-	private String myclub_team_regdate;
+	private Date myclub_team_regdate;
 	private int myclub_team_count;
 	private String myclub_team_main_thumnail;
 	private String myclub_team_writer;
 	private int club_no;
+	private int replycount;
 
 	public int getMyclub_team_no() {
 		return myclub_team_no;
@@ -32,7 +31,7 @@ public class MyclubTeamDTO {
 		return myclub_team_content;
 	}
 
-	public String getMyclub_team_regdate() {
+	public Date getMyclub_team_regdate() {
 		return myclub_team_regdate;
 	}
 
@@ -52,6 +51,10 @@ public class MyclubTeamDTO {
 		return club_no;
 	}
 
+	public int getReplycount() {
+		return replycount;
+	}
+
 	public void setMyclub_team_no(int myclub_team_no) {
 		this.myclub_team_no = myclub_team_no;
 	}
@@ -68,7 +71,7 @@ public class MyclubTeamDTO {
 		this.myclub_team_content = myclub_team_content;
 	}
 
-	public void setMyclub_team_regdate(String myclub_team_regdate) {
+	public void setMyclub_team_regdate(Date myclub_team_regdate) {
 		this.myclub_team_regdate = myclub_team_regdate;
 	}
 
@@ -88,13 +91,17 @@ public class MyclubTeamDTO {
 		this.club_no = club_no;
 	}
 
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
+
 	@Override
 	public String toString() {
 		return "MyclubTeamDTO [myclub_team_no=" + myclub_team_no + ", mem_no=" + mem_no + ", myclub_team_subject="
 				+ myclub_team_subject + ", myclub_team_content=" + myclub_team_content + ", myclub_team_regdate="
 				+ myclub_team_regdate + ", myclub_team_count=" + myclub_team_count + ", myclub_team_main_thumnail="
 				+ myclub_team_main_thumnail + ", myclub_team_writer=" + myclub_team_writer + ", club_no=" + club_no
-				+ "]";
+				+ ", replycount=" + replycount + "]";
 	}
 
 }

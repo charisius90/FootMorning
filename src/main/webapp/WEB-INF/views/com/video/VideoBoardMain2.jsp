@@ -1,5 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="now" class="java.util.Date" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,9 +41,16 @@
 			                  <div class="col-xs-6 col-md-3" >
 									<a href="/com/video/read?com_video_no=${comDTO.com_video_no}" class="thumbnail" style="height: 180px">${comDTO.com_video_no}
 								   	<img src="${comDTO.com_video_main_thumnail}" style="max-width: 200px; max-height: 140px" /></a>
-							 	제목 : ${comDTO.com_video_subject}<br/>
+							 	제목 : ${comDTO.com_video_subject}
+							 		<c:if test="${comDTO.replycount > 0}"> [${comDTO.replycount}]</c:if> 
+							 		
+							 		<fmt:parseNumber var="date" value="${(now.time - comDTO.com_video_regdate.time)/(1000*60*60*24*60)}" integerOnly="true"/>
+			                  		<c:if test="${date > 0}">
+			                  			<img src="/resources/images/ico-new.gif"/>
+			                  		</c:if> 
+							 	<br/>
 		                		작성자 : ${comDTO.com_video_writer}<br/>
-		                		날짜 : ${comDTO.com_video_regdate}<br/><br/>
+		                		날짜 : <fmt:formatDate value="${comDTO.com_video_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/><br/><br/>
 							  </div></c:if>
               		</c:forEach>
               	</div>

@@ -80,11 +80,13 @@
 	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
 		keyword ) -->
 	<select id="listSearch"  resultType="ComQnADTO">
-		<![CDATA[  
-		  select * 
-		  from com_qna 
-		  where com_qna_no > 0
-		]]>
+      <![CDATA[  
+        select 
+         A.*, 
+         (SELECT COUNT(*) FROM com_qna_reply B WHERE B.com_qna_no=A.com_qna_no) as replycount
+        from com_qna A
+        where com_qna_no > 0
+      ]]>
 
 		<include refid="search"></include>
 		  

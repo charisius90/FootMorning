@@ -78,8 +78,10 @@
 		keyword ) -->
 	<select id="listSearch"  resultType="MyclubNoticeDTO">
 		<![CDATA[  
-		  select * 
-		  from Myclub_Notice 
+		  select 
+			A.*, 
+			(SELECT COUNT(*) FROM myclub_notice_reply B WHERE B.myclub_notice_no=A.myclub_notice_no) as replycount
+		  from Myclub_Notice A
 		  where Myclub_Notice_no > 0 and club_no = #{club_no} 
 		]]>
 
@@ -155,4 +157,5 @@
 		myclub_notice_re_content=#{myclub_notice_re_content} WHERE
 		myclub_notice_re_no=#{myclub_notice_re_no};
 	</update>
+		
 </mapper>

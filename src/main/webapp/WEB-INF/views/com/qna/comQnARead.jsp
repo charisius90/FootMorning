@@ -75,7 +75,7 @@ function displayReplyDiv(parent_no, rev_no) {
                         <td colspan="1">${dto.com_qna_writer}</td>
                         <td bgcolor="F7F7F7">등록일</td>
                         <td>
-   							${dto.com_qna_regdate}
+   							<fmt:formatDate value="${dto.com_qna_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/>
                         </td>
                      </tr>
                      <tr style="border-left: none; border-right: none;">

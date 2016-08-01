@@ -80,11 +80,13 @@
 	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
 		keyword ) -->
 	<select id="listSearch"  resultType="ComFreeDTO">
-		<![CDATA[  
-		  select * 
-		  from com_free 
-		  where com_free_no > 0
-		]]>
+	   <![CDATA[  
+        select 
+         A.*, 
+         (SELECT COUNT(*) FROM com_free_reply B WHERE B.com_free_no=A.com_free_no) as replycount
+        from com_free A
+        where com_free_no > 0 
+      ]]>
 
 		<include refid="search"></include>
 		  

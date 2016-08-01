@@ -15,7 +15,7 @@
    <div class="row">
       <div id="wrapper">
          <div>
-            <%@ include file="../../include/communitysidebar.jsp" %>
+            <%@ include file="../../include/myclubSidebar.jsp" %>
          </div>
          <form name="f1" method="post" action="/myclub/team/update">
    		 <input type='hidden' name='myclub_team_no' value="${dto.myclub_team_no}">

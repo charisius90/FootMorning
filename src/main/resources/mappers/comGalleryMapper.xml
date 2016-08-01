@@ -78,8 +78,10 @@
 		keyword ) -->
 	<select id="listSearch"  resultType="ComGalleryDTO">
 		<![CDATA[  
-		  select * 
-		  from com_gallery 
+		  select 
+		  	A.*,
+		    (SELECT COUNT(*) FROM com_gallery_reply B WHERE B.com_gallery_no=A.com_gallery_no) as replycount
+		  from com_gallery A
 		  where com_gallery_no > 0
 		]]>
 

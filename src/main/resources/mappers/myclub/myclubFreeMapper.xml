@@ -78,8 +78,9 @@
 		keyword ) -->
 	<select id="listSearch"  resultType="MyclubFreeDTO">
 		<![CDATA[  
-		  select * 
-		  from Myclub_Free 
+		  select A.*,
+		  (SELECT COUNT(*) FROM myclub_free_reply B WHERE B.myclub_free_no=A.myclub_free_no) as replycount 
+		  from Myclub_Free A
 		  where Myclub_Free_no > 0 and club_no = #{club_no} 
 		]]>
 

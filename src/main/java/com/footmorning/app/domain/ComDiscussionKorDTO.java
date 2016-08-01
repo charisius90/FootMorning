@@ -12,8 +12,7 @@ public class ComDiscussionKorDTO {
 	private Date com_discussion_kor_regdate;
 	private String com_discussion_kor_main_thumnail;
 	private int com_discussion_kor_count;
-	
-	
+	private int replycount;
 	
 	public int getCom_discussion_kor_no() {
 		return com_discussion_kor_no;
@@ -63,14 +62,20 @@ public class ComDiscussionKorDTO {
 	public void setCom_discussion_kor_count(int com_discussion_kor_count) {
 		this.com_discussion_kor_count = com_discussion_kor_count;
 	}
+	public int getReplycount() {
+		return replycount;
+	}
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
 	@Override
 	public String toString() {
 		return "ComDiscussionKorDTO [com_discussion_kor_no=" + com_discussion_kor_no + ", mem_no=" + mem_no
 				+ ", com_discussion_kor_writer=" + com_discussion_kor_writer + ", com_discussion_kor_subject="
 				+ com_discussion_kor_subject + ", com_discussion_kor_content=" + com_discussion_kor_content
 				+ ", com_discussion_kor_regdate=" + com_discussion_kor_regdate + ", com_discussion_kor_main_thumnail="
-				+ com_discussion_kor_main_thumnail + ", com_discussion_kor_count=" + com_discussion_kor_count + "]";
+				+ com_discussion_kor_main_thumnail + ", com_discussion_kor_count=" + com_discussion_kor_count
+				+ ", replycount=" + replycount + "]";
 	}
-	
 	
 }

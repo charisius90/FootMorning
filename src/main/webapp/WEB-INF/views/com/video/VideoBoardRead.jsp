@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,7 +75,7 @@ function displayReplyDiv(parent_no, rev_no) {
                         <td bgcolor="F7F7F7">작성자</td>
                         <td colspan="1">${dto.com_video_writer}</td>
                         <td bgcolor="F7F7F7">등록일</td>
-                        <td>${dto.com_video_regdate}</td>
+                        <td><fmt:formatDate value="${dto.com_video_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
                      </tr>
                      <tr style="border-left: none; border-right: none;">
                          <td colspan="10" class="col-sm-5" style="text-align: left;">${dto.com_video_content}</td>

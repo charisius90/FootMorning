@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="now" class="java.util.Date" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +35,7 @@
 						<tr>
 							<td style="width: 26px;"></td>
 							<td style="width: 216px;">글번호</td>
+							<td style="width: 216px;">클럽명</td>
 							<td style="width: 316px;">제목</td>
 							<td style="width: 216px;">작성자</td>
 							<td style="width: 216px;">작성일</td>
@@ -45,9 +48,20 @@
 			               <tr align="center">
 			               	  <td></td>
 			               	  <td>${ComBoastDTO.com_boast_no}</td>
-			                  <td><a href="/com/boast/read?com_boast_no=${ComBoastDTO.com_boast_no}">${ComBoastDTO.com_boast_subject}</a></td>
+			               	  <td>${ComBoastDTO.club_name}</td>
+			                  <td>
+			                  	<a href="/com/boast/read?com_boast_no=${ComBoastDTO.com_boast_no}">${ComBoastDTO.com_boast_subject}</a>
+			                  	<c:if test="${ComBoastDTO.replycount > 0}">[${ComBoastDTO.replycount}]</c:if>
+				                <fmt:parseNumber var="date" value="${(now.time - ComBoastDTO.com_boast_regdate.time)/(1000*60*60*24*60)}" integerOnly="true"/>
+				                <c:if test="${date > 0 }">
+				                
+										<img src="/resources/images/ico-new.gif"/>	
+				                </c:if>
+			                  </td>
 			                  <td>${ComBoastDTO.com_boast_writer}</td>
-			                  <td>${ComBoastDTO.com_boast_regdate}</td>
+			                  <td>
+			                 	 <fmt:formatDate value="${ComBoastDTO.com_boast_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/>
+			                  </td>
 			                  <td>${ComBoastDTO.com_boast_count}</td>
 			               </tr>
 	              		</c:forEach>

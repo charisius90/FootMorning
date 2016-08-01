@@ -82,10 +82,13 @@
 		keyword ) -->
 	<select id="listSearch"  resultType="ComDiscussionWorldDTO">
 		<![CDATA[  
-		  select * 
-		  from com_discussion_world 
-		  where com_discussion_world_no > 0
-		]]>
+        select 
+         A.*, 
+         (SELECT COUNT(*) FROM com_discussion_world_reply B WHERE B.com_discussion_world_no=A.com_discussion_world_no) as replycount
+        from com_discussion_world A
+        where com_discussion_world_no > 0 
+      ]]>
+		
 
 		<include refid="search"></include>
 		  

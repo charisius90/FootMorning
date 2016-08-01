@@ -11,6 +11,7 @@ public class ComDiscussionWorldDTO {
 	private Date com_discussion_world_regdate;
 	private String com_discussion_world_main_thumnail;
 	private int com_discussion_world_count;
+	private int replycount;
 	public int getCom_discussion_world_no() {
 		return com_discussion_world_no;
 	}
@@ -59,6 +60,12 @@ public class ComDiscussionWorldDTO {
 	public void setCom_discussion_world_count(int com_discussion_world_count) {
 		this.com_discussion_world_count = com_discussion_world_count;
 	}
+	public int getReplycount() {
+		return replycount;
+	}
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
 	@Override
 	public String toString() {
 		return "ComDiscussionWorldDTO [com_discussion_world_no=" + com_discussion_world_no + ", mem_no=" + mem_no
@@ -66,9 +73,6 @@ public class ComDiscussionWorldDTO {
 				+ com_discussion_world_subject + ", com_discussion_world_content=" + com_discussion_world_content
 				+ ", com_discussion_world_regdate=" + com_discussion_world_regdate
 				+ ", com_discussion_world_main_thumnail=" + com_discussion_world_main_thumnail
-				+ ", com_discussion_world_count=" + com_discussion_world_count + "]";
+				+ ", com_discussion_world_count=" + com_discussion_world_count + ", replycount=" + replycount + "]";
 	}
-	
-	
-
 }

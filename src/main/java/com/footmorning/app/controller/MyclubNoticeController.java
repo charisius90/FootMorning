@@ -20,6 +20,7 @@ import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.domain.MyclubNoticeDTO;
 import com.footmorning.app.domain.MyclubNoticeReplyDTO;
 import com.footmorning.app.service.MyclubNoticeService;
+import com.footmorning.app.util.DateCal;
 import com.footmorning.app.util.PageMaker;
 import com.footmorning.app.util.SearchCriteria;
 
@@ -34,17 +35,18 @@ public class MyclubNoticeController {
 		HttpSession session = req.getSession();
 		
 		ClubDTO dto = (ClubDTO)session.getAttribute("CLUB_KEY");
-
+		
 		
 		cri.setClub_no(dto.getClub_no());
 		model.addAttribute("list", service.listSearchCriteria(cri));
-
-
+		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listSearchCount(cri));
 
 		model.addAttribute("pageMaker", pageMaker);
+		
+		
 		// System.out.println(service.listAll().toString());
 		return "/myclub/myclubNotice/myclubNoticeBoardMain";
 		// �ٹ��� myclubNoticeBoardMain2

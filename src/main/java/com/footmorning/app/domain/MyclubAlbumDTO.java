@@ -1,16 +1,19 @@
 package com.footmorning.app.domain;
 
+import java.util.Date;
+
 public class MyclubAlbumDTO {
 
 	private int myclub_album_no;
 	private int mem_no;
 	private String myclub_album_subject;
 	private String myclub_album_content;
-	private String myclub_album_regdate;
+	private Date myclub_album_regdate;
 	private int myclub_album_count;
 	private String myclub_album_main_thumnail;
 	private String myclub_album_writer;
 	private int club_no;
+	private int replycount;
 
 	public int getMyclub_album_no() {
 		return myclub_album_no;
@@ -28,7 +31,7 @@ public class MyclubAlbumDTO {
 		return myclub_album_content;
 	}
 
-	public String getMyclub_album_regdate() {
+	public Date getMyclub_album_regdate() {
 		return myclub_album_regdate;
 	}
 
@@ -48,6 +51,10 @@ public class MyclubAlbumDTO {
 		return club_no;
 	}
 
+	public int getReplycount() {
+		return replycount;
+	}
+
 	public void setMyclub_album_no(int myclub_album_no) {
 		this.myclub_album_no = myclub_album_no;
 	}
@@ -64,7 +71,7 @@ public class MyclubAlbumDTO {
 		this.myclub_album_content = myclub_album_content;
 	}
 
-	public void setMyclub_album_regdate(String myclub_album_regdate) {
+	public void setMyclub_album_regdate(Date myclub_album_regdate) {
 		this.myclub_album_regdate = myclub_album_regdate;
 	}
 
@@ -84,12 +91,17 @@ public class MyclubAlbumDTO {
 		this.club_no = club_no;
 	}
 
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
+
 	@Override
 	public String toString() {
 		return "MyclubAlbumDTO [myclub_album_no=" + myclub_album_no + ", mem_no=" + mem_no + ", myclub_album_subject="
 				+ myclub_album_subject + ", myclub_album_content=" + myclub_album_content + ", myclub_album_regdate="
 				+ myclub_album_regdate + ", myclub_album_count=" + myclub_album_count + ", myclub_album_main_thumnail="
 				+ myclub_album_main_thumnail + ", myclub_album_writer=" + myclub_album_writer + ", club_no=" + club_no
-				+ "]";
+				+ ", replycount=" + replycount + "]";
 	}
+
 }

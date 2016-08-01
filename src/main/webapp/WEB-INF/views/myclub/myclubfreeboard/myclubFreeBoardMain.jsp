@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="now" class="java.util.Date" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,9 +47,17 @@
 			               <tr align="center">
 			               	  <td></td>
 			               	  <td>${myclubDTO.myclub_free_no}</td>
-			                  <td><a href="/myclub/free/read?myclub_free_no=${myclubDTO.myclub_free_no}">${myclubDTO.myclub_free_subject}</a></td>
+			                  <td><a href="/myclub/free/read?myclub_free_no=${myclubDTO.myclub_free_no}">
+			                  		${myclubDTO.myclub_free_subject}</a>
+			                  		<c:if test="${myclubDTO.replycount > 0}"> [${myclubDTO.replycount}]</c:if>
+			                  		
+			                  		<fmt:parseNumber var="date" value="${(now.time - myclubDTO.myclub_free_regdate.time)/(1000*60*60*24*60)}" integerOnly="true"/>
+			                  		<c:if test="${date > 0}">
+			                  			<img src="/resources/images/ico-new.gif"/> 
+			                  		</c:if> 
+			                  </td>
 			                  <td>${myclubDTO.myclub_free_writer}</td>
-			                  <td>${myclubDTO.myclub_free_regdate}</td>
+			                   <td><fmt:formatDate value="${myclubDTO.myclub_free_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
 			                  <td>${myclubDTO.myclub_free_count}</td>
 			               </tr>
 	              		</c:forEach>

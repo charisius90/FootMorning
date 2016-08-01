@@ -16,6 +16,10 @@ public class ComBoastDTO {
 	private Date com_boast_regdate;
 	private String com_boast_main_thumnail;
 	private int com_boast_count;
+	private String club_name;
+	private int club_no;
+	private int replycount;
+	
 	public int getCom_boast_no() {
 		return com_boast_no;
 	}
@@ -52,7 +56,6 @@ public class ComBoastDTO {
 	public void setCom_boast_regdate(Date com_boast_regdate) {
 		this.com_boast_regdate = com_boast_regdate;
 	}
-
 	public String getCom_boast_main_thumnail() {
 		return com_boast_main_thumnail;
 	}
@@ -65,12 +68,32 @@ public class ComBoastDTO {
 	public void setCom_boast_count(int com_boast_count) {
 		this.com_boast_count = com_boast_count;
 	}
+	public String getClub_name() {
+		return club_name;
+	}
+	public void setClub_name(String club_name) {
+		this.club_name = club_name;
+	}
+	public int getClub_no() {
+		return club_no;
+	}
+	public void setClub_no(int club_no) {
+		this.club_no = club_no;
+	}
+	public int getReplycount() {
+		return replycount;
+	}
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
 	@Override
 	public String toString() {
 		return "ComBoastDTO [com_boast_no=" + com_boast_no + ", mem_no=" + mem_no + ", com_boast_writer="
 				+ com_boast_writer + ", com_boast_subject=" + com_boast_subject + ", com_boast_content="
 				+ com_boast_content + ", com_boast_regdate=" + com_boast_regdate + ", com_boast_main_thumnail="
-				+ com_boast_main_thumnail + ", com_boast_count=" + com_boast_count + "]";
+				+ com_boast_main_thumnail + ", com_boast_count=" + com_boast_count + ", club_name=" + club_name
+				+ ", club_no=" + club_no + ", replycount=" + replycount + "]";
 	}
-
+	
+	
 }

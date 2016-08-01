@@ -1,15 +1,18 @@
 package com.footmorning.app.domain;
 
+import java.util.Date;
+
 public class ComGalleryDTO {
 
 	private int com_gallery_no;
 	private String com_gallery_subject;
 	private String com_gallery_content;
-	private String com_gallery_regdate;
+	private Date com_gallery_regdate;
 	private int com_gallery_count;
 	private int mem_no;
 	private String com_gallery_writer;
 	private String com_gallery_main_thumnail;
+	private int replycount;
 
 	public int getCom_gallery_no() {
 		return com_gallery_no;
@@ -23,7 +26,7 @@ public class ComGalleryDTO {
 		return com_gallery_content;
 	}
 
-	public String getCom_gallery_regdate() {
+	public Date getCom_gallery_regdate() {
 		return com_gallery_regdate;
 	}
 
@@ -43,6 +46,10 @@ public class ComGalleryDTO {
 		return com_gallery_main_thumnail;
 	}
 
+	public int getReplycount() {
+		return replycount;
+	}
+
 	public void setCom_gallery_no(int com_gallery_no) {
 		this.com_gallery_no = com_gallery_no;
 	}
@@ -55,7 +62,7 @@ public class ComGalleryDTO {
 		this.com_gallery_content = com_gallery_content;
 	}
 
-	public void setCom_gallery_regdate(String com_gallery_regdate) {
+	public void setCom_gallery_regdate(Date com_gallery_regdate) {
 		this.com_gallery_regdate = com_gallery_regdate;
 	}
 
@@ -75,12 +82,17 @@ public class ComGalleryDTO {
 		this.com_gallery_main_thumnail = com_gallery_main_thumnail;
 	}
 
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
+
 	@Override
 	public String toString() {
 		return "ComGalleryDTO [com_gallery_no=" + com_gallery_no + ", com_gallery_subject=" + com_gallery_subject
 				+ ", com_gallery_content=" + com_gallery_content + ", com_gallery_regdate=" + com_gallery_regdate
 				+ ", com_gallery_count=" + com_gallery_count + ", mem_no=" + mem_no + ", com_gallery_writer="
-				+ com_gallery_writer + ", com_gallery_main_thumnail=" + com_gallery_main_thumnail + "]";
+				+ com_gallery_writer + ", com_gallery_main_thumnail=" + com_gallery_main_thumnail + ", replycount="
+				+ replycount + "]";
 	}
 
 }

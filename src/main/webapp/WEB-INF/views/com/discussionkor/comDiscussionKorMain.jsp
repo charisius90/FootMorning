@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="now" class="java.util.Date" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,14 +43,23 @@
 					</thead>
 					<!-- 게시글 내용이 들어가는 부분 -->
 					<tbody>
-						<c:forEach items="${list}" var="ComDiscussionKorDTO">
+						<c:forEach items="${list}" var="dto">
 			               <tr align="center">
 			               	  <td></td>
-			               	  <td>${ComDiscussionKorDTO.com_discussion_kor_no}</td>
-			                  <td><a href="/com/kor/read?com_discussion_kor_no=${ComDiscussionKorDTO.com_discussion_kor_no}">${ComDiscussionKorDTO.com_discussion_kor_subject}</a></td>
-			                  <td>${ComDiscussionKorDTO.com_discussion_kor_writer}</td>
-			                  <td>${ComDiscussionKorDTO.com_discussion_kor_regdate}</td>
-			                  <td>${ComDiscussionKorDTO.com_discussion_kor_count}</td>
+			               	  <td>${dto.com_discussion_kor_no}</td>
+			                  <td>
+			                  	<a href="/com/kor/read?com_discussion_kor_no=${dto.com_discussion_kor_no}">${dto.com_discussion_kor_subject}</a>
+			                  	<c:if test="${dto.replycount > 0}">[${dto.replycount}]</c:if>
+				                <fmt:parseNumber var="date" value="${(now.time - dto.com_discussion_kor_regdate.time)/(1000*60*60*24*60)}" integerOnly="true"/>
+				                <c:if test="${date > 0 }">
+										<img src="/resources/images/ico-new.gif"/>	
+				                </c:if>
+			                  </td>
+			                  <td>${dto.com_discussion_kor_writer}</td>
+			                  <td>
+			                 	 <fmt:formatDate value="${dto.com_discussion_kor_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/>
+			                  </td>
+			                  <td>${dto.com_discussion_kor_count}</td>
 			               </tr>
 	              		</c:forEach>
 					</tbody>

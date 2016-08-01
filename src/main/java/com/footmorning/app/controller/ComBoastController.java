@@ -1,8 +1,10 @@
 package com.footmorning.app.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.ComBoastDTO;
 import com.footmorning.app.domain.ComBoastReplyDTO;
 import com.footmorning.app.service.ComBoastService;
@@ -34,12 +37,12 @@ public class ComBoastController {
 	
 	@RequestMapping("/com/boast/main")
 	public String notice(SearchCriteria cri, Model model, HttpServletRequest req) throws Exception {
-//		HttpSession session = req.getSession();
+		HttpSession session = req.getSession();
 		
 //		ClubDTO dto = (ClubDTO)session.getAttribute("CLUB_KEY");
 //		cri.setClub_no(dto.getClub_no());
 		model.addAttribute("list", service.listSearchCriteria(cri));
-
+		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listSearchCount(cri));

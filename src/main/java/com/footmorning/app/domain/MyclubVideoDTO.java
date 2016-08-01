@@ -1,16 +1,19 @@
 package com.footmorning.app.domain;
 
+import java.util.Date;
+
 public class MyclubVideoDTO {
 
 	private int myclub_video_no;
 	private int mem_no;
 	private String myclub_video_subject;
 	private String myclub_video_content;
-	private String myclub_video_regdate;
+	private Date myclub_video_regdate;
 	private int myclub_video_count;
 	private String myclub_video_main_thumnail;
 	private String myclub_video_writer;
 	private int club_no;
+	private int replycount;
 
 	public int getMyclub_video_no() {
 		return myclub_video_no;
@@ -28,7 +31,7 @@ public class MyclubVideoDTO {
 		return myclub_video_content;
 	}
 
-	public String getMyclub_video_regdate() {
+	public Date getMyclub_video_regdate() {
 		return myclub_video_regdate;
 	}
 
@@ -48,6 +51,10 @@ public class MyclubVideoDTO {
 		return club_no;
 	}
 
+	public int getReplycount() {
+		return replycount;
+	}
+
 	public void setMyclub_video_no(int myclub_video_no) {
 		this.myclub_video_no = myclub_video_no;
 	}
@@ -64,7 +71,7 @@ public class MyclubVideoDTO {
 		this.myclub_video_content = myclub_video_content;
 	}
 
-	public void setMyclub_video_regdate(String myclub_video_regdate) {
+	public void setMyclub_video_regdate(Date myclub_video_regdate) {
 		this.myclub_video_regdate = myclub_video_regdate;
 	}
 
@@ -84,13 +91,17 @@ public class MyclubVideoDTO {
 		this.club_no = club_no;
 	}
 
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
+
 	@Override
 	public String toString() {
 		return "MyclubVideoDTO [myclub_video_no=" + myclub_video_no + ", mem_no=" + mem_no + ", myclub_video_subject="
 				+ myclub_video_subject + ", myclub_video_content=" + myclub_video_content + ", myclub_video_regdate="
 				+ myclub_video_regdate + ", myclub_video_count=" + myclub_video_count + ", myclub_video_main_thumnail="
 				+ myclub_video_main_thumnail + ", myclub_video_writer=" + myclub_video_writer + ", club_no=" + club_no
-				+ "]";
+				+ ", replycount=" + replycount + "]";
 	}
 
 }

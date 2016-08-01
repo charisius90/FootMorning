@@ -12,8 +12,7 @@ public class ComQnADTO {
 	private Date com_qna_regdate;
 	private String com_qna_main_thumnail;
 	private int com_qna_count;
-	
-	
+	private int replycount;
 	public int getCom_qna_no() {
 		return com_qna_no;
 	}
@@ -62,14 +61,18 @@ public class ComQnADTO {
 	public void setCom_qna_count(int com_qna_count) {
 		this.com_qna_count = com_qna_count;
 	}
+	public int getReplycount() {
+		return replycount;
+	}
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
 	@Override
 	public String toString() {
 		return "ComQnADTO [com_qna_no=" + com_qna_no + ", mem_no=" + mem_no + ", com_qna_writer=" + com_qna_writer
 				+ ", com_qna_subject=" + com_qna_subject + ", com_qna_content=" + com_qna_content + ", com_qna_regdate="
 				+ com_qna_regdate + ", com_qna_main_thumnail=" + com_qna_main_thumnail + ", com_qna_count="
-				+ com_qna_count + "]";
+				+ com_qna_count + ", replycount=" + replycount + "]";
 	}
-	
 
-	
 }

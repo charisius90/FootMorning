@@ -1,15 +1,18 @@
 package com.footmorning.app.domain;
 
+import java.util.Date;
+
 public class ComVideoDTO {
 
 	private int com_video_no;
 	private String com_video_subject;
 	private String com_video_content;
-	private String com_video_regdate;
+	private Date com_video_regdate;
 	private int com_video_count;
 	private int mem_no;
 	private String com_video_writer;
 	private String com_video_main_thumnail;
+	private int replycount;
 
 	public int getCom_video_no() {
 		return com_video_no;
@@ -23,7 +26,7 @@ public class ComVideoDTO {
 		return com_video_content;
 	}
 
-	public String getCom_video_regdate() {
+	public Date getCom_video_regdate() {
 		return com_video_regdate;
 	}
 
@@ -43,6 +46,10 @@ public class ComVideoDTO {
 		return com_video_main_thumnail;
 	}
 
+	public int getReplycount() {
+		return replycount;
+	}
+
 	public void setCom_video_no(int com_video_no) {
 		this.com_video_no = com_video_no;
 	}
@@ -55,7 +62,7 @@ public class ComVideoDTO {
 		this.com_video_content = com_video_content;
 	}
 
-	public void setCom_video_regdate(String com_video_regdate) {
+	public void setCom_video_regdate(Date com_video_regdate) {
 		this.com_video_regdate = com_video_regdate;
 	}
 
@@ -75,12 +82,17 @@ public class ComVideoDTO {
 		this.com_video_main_thumnail = com_video_main_thumnail;
 	}
 
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
+
 	@Override
 	public String toString() {
-		return "ComvideoDTO [com_video_no=" + com_video_no + ", com_video_subject=" + com_video_subject
+		return "ComVideoDTO [com_video_no=" + com_video_no + ", com_video_subject=" + com_video_subject
 				+ ", com_video_content=" + com_video_content + ", com_video_regdate=" + com_video_regdate
 				+ ", com_video_count=" + com_video_count + ", mem_no=" + mem_no + ", com_video_writer="
-				+ com_video_writer + ", com_video_main_thumnail=" + com_video_main_thumnail + "]";
+				+ com_video_writer + ", com_video_main_thumnail=" + com_video_main_thumnail + ", replycount="
+				+ replycount + "]";
 	}
 
 }

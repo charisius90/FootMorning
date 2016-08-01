@@ -1,5 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="now" class="java.util.Date" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,9 +41,16 @@
 			                  <div class="col-xs-6 col-md-3" >
 									<a href="/myclub/video/read?myclub_video_no=${myclubDTO.myclub_video_no}" class="thumbnail" style="height: 180px">${myclubDTO.myclub_video_no}
 								   	<img src="${myclubDTO.myclub_video_main_thumnail}" style="max-width: 200px; max-height: 140px" /></a>
-							 	제목 : ${myclubDTO.myclub_video_subject}<br/>
+							 	제목 : ${myclubDTO.myclub_video_subject}
+							 		<c:if test="${myclubDTO.replycount > 0}"> [${myclubDTO.replycount}]</c:if> 
+							 		
+							 		<fmt:parseNumber var="date" value="${(now.time - myclubDTO.myclub_video_regdate.time)/(1000*60*60*24*60)}" integerOnly="true"/>
+			                  		<c:if test="${date > 0}">
+			                  			<img src="/resources/images/ico-new.gif"/>
+			                  		</c:if> 
+							 	<br/>
 		                		작성자 : ${myclubDTO.myclub_video_writer}<br/>
-		                		날짜 : ${myclubDTO.myclub_video_regdate}<br/><br/>
+		                		날짜 : <fmt:formatDate value="${myclubDTO.myclub_video_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/><br/><br/>
 							  </div></c:if>
               		</c:forEach>
               	</div>
