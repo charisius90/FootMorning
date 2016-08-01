@@ -85,7 +85,7 @@
 	// 5. 년도별, 월별 페이징을 지원하자(일단 select-option 태그로 지원하자)
 	function fnCalcBalance(e){
 		var $row = $(e).parent().parent();
-		
+// 		var $beforeRow;
 		var type = $row.contents().find("select").val();
 	}
 	
@@ -103,10 +103,10 @@
 			"<tr>" +
 				"<td><div align='center' style='padding-top: 6px;'><span class='badge'>" + nextNo + "</span></div></td>" +
 				"<td><input type='text' class='form-control' size='2' name='cashbook_date' placeholder='날짜선택'></td>" +
-				"<td><select class='form-control' name='cashbook_type' size='1'><option value='SUB'>지출</option><option value='ADD'>수입</option></select></td>" +
-				"<td><input type='text' class='form-control' size='2' name='cashbook_amount' value='150000'></td>" +
+				"<td><select class='form-control' name='cashbook_type' size='1' onchange='fnCalcBalance(this)'><option value='SUB'>지출</option><option value='ADD'>수입</option></select></td>" +
+				"<td><input type='text' class='form-control' size='2' name='cashbook_amount' value='150000' onchange='fnCalcBalance(this)'></td>" +
 				"<td><input type='text' class='form-control' size='10' name='cashbook_content' value='회식비'></td>" +
-				"<td><input type='text' class='form-control' size='2' name='cashbook_balance' onchange='fnCalcBalance(this)' disabled></td>" +
+				"<td><input type='text' class='form-control' size='2' name='cashbook_balance' onload='fnCalcBalance(this)' disabled></td>" +
 				"<td><div align='center' style='padding-top: 8px;'><span class='glyphicon glyphicon-remove' aria-hidden='true' style='cursor: pointer;' onclick='fnDelRow(this)'></span></div></td>" +
 			"</tr>"
 		);

@@ -7,8 +7,8 @@
 	
 	<insert id="insert" parameterType="com.footmorning.app.domain.ClubMemberDTO">
 		insert into
-		club_member(club_no, mem_no, mem_gender, mem_email, mem_phone, mem_name, mem_birth, mem_grade)
-		values(#{club_no}, #{mem_no}, #{mem_gender}, #{mem_email}, #{mem_phone}, #{mem_name}, #{mem_birth}, #{mem_grade})
+		club_member(club_no, mem_no, mem_gender, mem_email, mem_phone, mem_name, mem_birth, mem_grade, club_mem_flag)
+		values(#{club_no}, #{mem_no}, #{mem_gender}, #{mem_email}, #{mem_phone}, #{mem_name}, #{mem_birth}, #{mem_grade}, #{club_mem_flag})
 	</insert>
 	
 	<update id="update" parameterType="ClubMemberDTO">
