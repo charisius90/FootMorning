@@ -179,7 +179,7 @@
 			url:"/myclub/myclubCashBookMgr?cmd=update",
 			type:"POST",
 			contentType : "application/json; charset=utf-8",
-			data:paramJSON,
+			data:dataJSON,
 			success:function(data){
 				alert(data.length + "명 수정 완료");
 			}
@@ -240,16 +240,7 @@
 			}
 		});
 		
-// 		// 지울때마다 DB수정
-// 		$.ajax({
-// 			url:"/myclub/myclubCashBookMgr?cmd=del",
-// 			type:"POST",
-// 			contentType : "application/json; charset=utf-8",
-// 			data:paramJSON,
-// 			success:function(data){
-// 				alert(data.length + "명 수정 완료");
-// 			}
-// 		});
+		fnCalcBalance();
 	}
 	
 	$(function(){

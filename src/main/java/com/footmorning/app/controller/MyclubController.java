@@ -1,6 +1,7 @@
 package com.footmorning.app.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.ClubDTO;
+import com.footmorning.app.domain.ClubMemberDTO;
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.domain.MyclubCashBookDTO;
 import com.footmorning.app.service.ClubService;
@@ -77,8 +79,50 @@ public class MyclubController {
 		}
 	}
 	@RequestMapping(value="myclubCashBookMgr", method=RequestMethod.POST)
-	public @ResponseBody List myclubCashBookMgrComplete(@RequestBody String param){
+	public @ResponseBody List myclubCashBookMgrComplete(@RequestBody List<Map<String, Object>> list, String cmd){
+		if(cmd.equals("update")){
+			System.out.println("myclubController cashbook POST TEST : " + list);
+			MyclubCashBookDTO dto = null;
+			for(Map map : list){
+				try {
+					dto = myclubCashBookService.getWithNo(Integer.parseInt((String)map.get("cashbook_no")));
+					// map에서 값을 꺼내 세터로 저장 후 업데이트
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		else if(cmd.equals("add")){
+			
+		}
+		
 		return null;
 	}
-	
+//	
+//	@RequestMapping(value="myclubMgrMember", method=RequestMethod.POST)
+//	public @ResponseBody List myclubMgrMemberComplete(@RequestBody List<Map<String, Object>> list){
+//        
+//		ClubMemberDTO dto = null;
+//		MemberDTO member = null;
+//		for(Map map : list){
+//			try {
+//				// club_member 테이블 grade 수정
+//				dto = clubMemberService.getWithMemno(Integer.parseInt((String)map.get("mem_no")));
+//				dto.setMem_grade((String)map.get("mem_grade"));
+//				clubMemberService.update(dto);
+//				
+//				// member 테이블 grade 수정
+//				member = memberService.getWithNo(Integer.parseInt((String)map.get("mem_no")));
+//				member.setMem_grade((String)map.get("mem_grade"));
+//				memberService.updateMember(member);
+//			}
+//			catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//        return list;
+////		return "redirect:/myclubMgr/myclubMgrMember";
+//	}
+//	
 }
