@@ -34,20 +34,22 @@
 						<br/><br/>
 						<h3 align="center">클럽 폐쇄</h3>
 						<br/><br/>
-							<table>
-								<tr>
-									<td>클럽명</td>
-									<td><input type="text" name="club_name" placeholder="클럽명 입력" required></td>
-								</tr>
-								<tr>
-									<td>관리자 E-Mail</td>
-									<td><input type="text" name="mem_email" placeholder="E-Mail 입력" required></td>
-								</tr>
-								<tr>
-									<td>관리자 비밀번호</td>
-									<td><input type="password" name="mem_pw" placeholder="비밀번호 입력" required></td>
-								</tr>
-							</table>
+							<form action="/myclubMgr/myclubMgrClosing" method="post">
+								<table>
+									<tr>
+										<td>클럽명</td>
+										<td><input type="text" name="club_name" placeholder="클럽명 입력" required></td>
+									</tr>
+									<tr>
+										<td>관리자 E-Mail</td>
+										<td><input type="text" name="mem_email" placeholder="E-Mail 입력" required></td>
+									</tr>
+									<tr>
+										<td>관리자 비밀번호</td>
+										<td><input type="password" name="mem_pw" placeholder="비밀번호 입력" required></td>
+									</tr>
+								</table>
+							</form>
 						<br />
 						<br />
 						<div align="center">
@@ -74,7 +76,7 @@
 					정말로 클럽을 폐쇄하시겠습니까?
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-primary">확인</button>
+					<button class="btn btn-primary" type="submit">확인</button>
 					<button class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
 				</div>
 			</div>
