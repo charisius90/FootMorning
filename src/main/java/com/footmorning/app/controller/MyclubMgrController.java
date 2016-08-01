@@ -224,7 +224,7 @@ public class MyclubMgrController {
 	}
 	
 	@RequestMapping(value="myclubMgrRegister", method=RequestMethod.POST)
-	public String myclubMgrRegisterComplete(@RequestParam(value="mem_no") List<String> memberList, String type, Model model){
+	public String myclubMgrRegisterComplete(@RequestParam(value="mem_no") List<String> memberList, String type, Model model, HttpServletRequest req){
 		// 가입신청승인
 		if(type.equals("approval")){
 			for(String mem_no : memberList){
@@ -241,6 +241,12 @@ public class MyclubMgrController {
 		            member.setMem_grade(GRADE_MEMBER);
 		            member.setMem_club_regdate(clubMember.getClub_mem_regdate());
 		            memberService.updateMember(member);
+		            
+		            // 클럽테이블에 클럽회원수+1
+		            ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+		            club.setClub_mem_count(Integer.toString((Integer.parseInt((club.getClub_mem_count()))+1)));
+		            service.update(club);
+		            WebUtils.setSessionAttribute(req, "CLUB_KEY", club);
 				}
 				catch(Exception e){
 					 e.printStackTrace();
@@ -287,11 +293,22 @@ public class MyclubMgrController {
 	}
 	
 	@RequestMapping(value="myclubMgrOutMember", method=RequestMethod.POST)
-	public String myclubMgrOutMemberComplete(@RequestParam(value="mem_no") List<String> memberList, RedirectAttributes rttr){
+	public String myclubMgrOutMemberComplete(@RequestParam(value="mem_no") List<String> memberList, RedirectAttributes rttr, HttpServletRequest req){
 		for(String mem_no : memberList){
 			try{
 				ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt(mem_no));
 				clubMemberService.delete(clubMember);
+				
+				MemberDTO member = memberService.getWithNo(Integer.parseInt((mem_no)));
+				member.setClub_no(null);
+				member.setMem_grade(GRADE_NORMAL);
+				memberService.updateMember(member);
+				
+				// 클럽테이블에 클럽회원수-1
+				ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+	            club.setClub_mem_count(Integer.toString((Integer.parseInt((club.getClub_mem_count()))-1)));
+	            service.update(club);
+	            WebUtils.setSessionAttribute(req, "CLUB_KEY", club);
 			}
 			catch(Exception e){
 				e.printStackTrace();
@@ -310,12 +327,16 @@ public class MyclubMgrController {
 	public void myclubMgrClosing(){}
 	
 	@RequestMapping(value="myclubMgrClosing", method=RequestMethod.POST)
-	public String myclubMgrClosingComplete(HttpServletRequest req, Model model){
+	public String myclubMgrClosingComplete(String club_name, String mem_email, String mem_pw, HttpServletRequest req, Model model){
 		try{
-			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
-			service.delete(Integer.parseInt((club.getClub_no())));
 			HttpSession session = req.getSession();
-			session.removeAttribute("CLUB_KEY");
+			ClubDTO club = (ClubDTO)session.getAttribute("CLUB_KEY");
+			if(club.getClub_name().equals(club_name)){
+				if(memberService.getWithPW(mem_email, mem_pw)!=null){
+					service.delete(Integer.parseInt((club.getClub_no())));
+					session.removeAttribute("CLUB_KEY");
+				}
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -325,6 +346,7 @@ public class MyclubMgrController {
 	
 	/**
 	 * 클럽양도
+	 * @Author 김소영
 	 */
 	@RequestMapping("myclubMgrTransfer")
 	public void myclubMgrTransfer(HttpServletRequest req, Model model){
@@ -338,7 +360,44 @@ public class MyclubMgrController {
 	}
 	
 	@RequestMapping(value="myclubMgrTransfer", method=RequestMethod.POST)
-	public String myclubMgrTransferComplete(){
+	public String myclubMgrTransferComplete(String mem_no , RedirectAttributes rttr, HttpServletRequest req){
+		try{
+			// 선택된 회원에게 마스터 등급 부여
+			ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt((mem_no)));
+			clubMember.setMem_grade(GRADE_MASTER);
+			clubMemberService.update(clubMember);
+			System.out.println(clubMember.toString());
+			
+			MemberDTO newMasterInfo = memberService.getWithNo(Integer.parseInt((clubMember.getMem_no())));
+			newMasterInfo.setMem_grade(GRADE_MASTER);
+			memberService.updateMember(newMasterInfo);
+			System.out.println(newMasterInfo.toString());
+			
+			// 클럽테이블의 마스터 정보에 선택된 회원의 회원번호와 이름으로 수정 
+			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+			club.setClub_master(clubMember.getMem_no());
+			club.setClub_master_name(clubMember.getMem_name());
+			service.update(club);
+			System.out.println(club.toString());
+			WebUtils.setSessionAttribute(req, "CLUB_KEY", club);
+
+			// 기존 마스터의 회원등급을 클럽소속회원으로 수정
+			MemberDTO oldMasterInfo = (MemberDTO)WebUtils.getSessionAttribute(req, "USER_KEY");
+			oldMasterInfo.setMem_grade(GRADE_MEMBER);
+			memberService.updateMember(oldMasterInfo);
+			System.out.println(oldMasterInfo.toString());
+			WebUtils.setSessionAttribute(req, "USER_KEY", oldMasterInfo);
+			
+			ClubMemberDTO dto = clubMemberService.getWithMemno(Integer.parseInt((oldMasterInfo.getMem_no())));
+			dto.setMem_grade(GRADE_MEMBER);
+			clubMemberService.update(dto);
+			System.out.println(dto.toString());
+			
+			rttr.addFlashAttribute("msg", "클럽이 양도되었습니다.");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		return "redirect:/myclubMgr/myclubMgrTransfer";
 	}
 }

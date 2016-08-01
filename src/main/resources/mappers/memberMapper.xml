@@ -30,7 +30,7 @@
 	
 	<insert id="insertMember" parameterType="MemberDTO">
 		insert into member(mem_email, mem_pw, mem_name, mem_gender, mem_phone, mem_addr, mem_grade, mem_birth)
-		 values(#{mem_email}, #{mem_pw}, #{mem_name}, #{mem_gender}, #{mem_phone}, #{mem_addr}, '4', #{mem_birth})
+		 values(#{mem_email}, #{mem_pw}, #{mem_name}, #{mem_gender}, #{mem_phone}, #{mem_addr}, '5', #{mem_birth})
 	</insert>
 	
 	<update id="updateMember" parameterType="MemberDTO">

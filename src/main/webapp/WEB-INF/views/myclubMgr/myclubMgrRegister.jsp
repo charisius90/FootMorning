@@ -40,7 +40,7 @@
 					<table class="table table-hover" text-align="center">
 						<thead>
 						<tr>
-							<th><input type="checkbox"/></th>
+							<th><input type="checkbox" id="checkAll"/></th>
 							<th>E-Mail</th>
 							<th>이름</th>
 							<th>생년월일</th>
@@ -99,16 +99,20 @@
 	 }
 	
 	$(function(){
-		
-		$("#datepicker").datepicker(
-			{
-				dateFormat: "yymmdd",
-				changeMonth: true,
-				changeYear: true,
-				minDate: "0",
-				maxDate: "+1y",
-			}		
-		);
+		// 전체선택에 체크한 경우 변환
+		$("#checkAll").click(function(){
+			var check = $(this).prop("checked");
+			if(check){
+				$("input:checkbox").each(function(i, e){
+					$(e).prop("checked", true);
+				})
+			}
+			else{
+				$("input:checkbox").each(function(i, e){
+					$(e).prop("checked", false);
+				})
+			}
+		});		
 	});
 
 </script>

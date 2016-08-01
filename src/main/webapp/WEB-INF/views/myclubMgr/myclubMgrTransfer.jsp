@@ -49,7 +49,7 @@
 					<table class="table table-hover" text-align="center">
 						<thead>
 						<tr>
-							<th><input id="checkAll" type="checkbox"/></th>
+							<th></th>
 							<th>E-Mail</th>
 							<th>회원등급</th>
 							<th>이름</th>
@@ -60,7 +60,7 @@
 						</thead>
 						<c:forEach items="${list}" var="dto">
 							<tr>
-								<td><input type="checkbox" name="mem_no" id="checked_member_${dto.mem_no}" value="${dto.mem_no}"/></td>
+								<td><input class="checkbox" type="checkbox" name="mem_no" id="checked_member_${dto.mem_no}" value="${dto.mem_no}"/></td>
 								<td>${dto.mem_email}</td>
 								<td>
 									<!-- 1:마스터 / 2:매니저 / 3:스탭 / 4:일반 -->
@@ -106,35 +106,17 @@
 </div><!-- /.container -->
 
 <script>
-	$(function(){
-		// 전체선택에 체크한 경우 변환
-		$("#checkAll").click(function(){
-			var check = $(this).prop("checked");
-			if(check){
-				$("input:checkbox").each(function(i, e){
-					$(e).prop("checked", true);
-				})
-			}
-			else{
-				$("input:checkbox").each(function(i, e){
-					$(e).prop("checked", false);
-				})
-			}
+	var msg = "${msg}";
+	if(msg!=""){
+		alert(msg);
+	}
+
+	// 체크박스 하나만 선택가능
+	$(function() {
+		$('input[type="checkbox"]').bind('click', function() {
+			$('input[type="checkbox"]').not(this).prop("checked", false);
 		});
 	});
-
-	$(function(){
-		$("#datepicker").datepicker(
-			{
-				dateFormat: "yymmdd",
-				changeMonth: true,
-				changeYear: true,
-				minDate: "0",
-				maxDate: "+1y",
-			}		
-		);
-	});
-
 </script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
