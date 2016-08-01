@@ -52,7 +52,7 @@
 							</tr>
 						</table>
 					<div align="right">
-						<a class="btn btn-default" role="button" href="myteamcashbookMgr.jsp">수정</a>
+						<a class="btn btn-default" role="button" href="/myclub/myclubCashBookMgr">수정</a>
 					</div>
 				</div>
 			</div>	

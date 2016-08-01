@@ -11,9 +11,10 @@
 <link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
 <link href="../resources/bootstrap/css/custom.css" rel="stylesheet">
 <!-- JQUERY -->
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!-- <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
 </head>
 <body>
 <%@ include file="../include/header.jsp" %>

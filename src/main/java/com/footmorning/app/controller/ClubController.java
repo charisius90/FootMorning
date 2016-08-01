@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.ClubDTO;
+import com.footmorning.app.domain.ClubMemberDTO;
 import com.footmorning.app.domain.MemberDTO;
+import com.footmorning.app.service.ClubMemberService;
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MemberService;
 import com.footmorning.app.util.ClubPageMaker;
@@ -26,6 +28,8 @@ public class ClubController {
 	private ClubService service;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private ClubMemberService clubMemberService;
 	
 	// 회원 등급 파이널 변수 모음
 	public static final String GRADE_ADMIN = "0"; // 서비스 운영진
@@ -68,7 +72,21 @@ public class ClubController {
 			member = memberService.getMemberInfo(mem_email);
 			member.setMem_grade(GRADE_MASTER);
 			memberService.updateMember(member);
+			
 			WebUtils.setSessionAttribute(req, "USER_KEY", member);
+			
+			// 클럽멤버 테이블에 마스터 추가
+			ClubMemberDTO clubMember = new ClubMemberDTO();
+			clubMember.setClub_no(member.getClub_no());
+			clubMember.setMem_no(member.getMem_no());
+			clubMember.setMem_gender(member.getMem_gender());
+			clubMember.setMem_email(member.getMem_email());
+			clubMember.setMem_phone(member.getMem_phone());
+			clubMember.setMem_grade(member.getMem_grade());
+			clubMember.setMem_name(member.getMem_name());
+			clubMember.setMem_birth(member.getMem_birth());
+			clubMember.setClub_mem_flag("TRUE");
+			clubMemberService.insert(clubMember);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
