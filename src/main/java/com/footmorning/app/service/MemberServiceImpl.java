@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.persistence.MemberDAO;
+import com.footmorning.app.util.SearchCriteria;
 
 /**
  * 
@@ -68,6 +69,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<MemberDTO> listAll() throws Exception {
 		return memberDAO.listAll();
+	}
+
+	@Override
+	public List<MemberDTO> listSearchCriteria(SearchCriteria cri) throws Exception {
+		return memberDAO.listSearchCriteria(cri);
+	}
+
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		return memberDAO.listSearchCount(cri);
 	}
 
 }

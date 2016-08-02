@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.footmorning.app.domain.MemberDTO;
+import com.footmorning.app.util.SearchCriteria;
 
 /**
  * 
@@ -88,6 +89,16 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public List<MemberDTO> listAll() throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listAll");
+	}
+
+	@Override
+	public List<MemberDTO> listSearchCriteria(SearchCriteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listSearchCriteria", cri);
+	}
+
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".listSearchCount", cri);
 	}
 
 }
