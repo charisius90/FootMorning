@@ -94,23 +94,23 @@ public class MyclubController {
 				logger.info("UPDATE - CASHBOOK LIST : " + list);
 				MyclubCashBookDTO dto = null;
 				for(Map map : list){
-						int cashbook_no = Integer.parseInt((String)map.get("cashbook_no"));
-						// map에서 값을 꺼내 세터로 저장 후 업데이트
-//						String cashbook_index = (String)map.get("cashbook_index");
-						String cashbook_amount = (String)map.get("cashbook_amount");
-						String cashbook_balance = (String)map.get("cashbook_balance");
-						String cashbook_content = (String)map.get("cashbook_content");
-						String cashbook_date = (String)map.get("cashbook_date");
-						String cashbook_type = (String)map.get("cashbook_type");
-						dto = myclubCashBookService.getWithNo(cashbook_no);
-//						dto.setCashbook_index(cashbook_index);
-						dto.setCashbook_amount(cashbook_amount.isEmpty() ? null : cashbook_amount);
-						dto.setCashbook_balance(cashbook_balance.isEmpty() ? null : cashbook_balance);
-						dto.setCashbook_content(cashbook_content.isEmpty() ? null : cashbook_content);
-						dto.setCashbook_date(cashbook_date.isEmpty() ? null : cashbook_date);
-						dto.setCashbook_type(cashbook_type.isEmpty() ? null : cashbook_type);
+					int cashbook_no = Integer.parseInt((String)map.get("cashbook_no"));
+					// map에서 값을 꺼내 세터로 저장 후 업데이트
+//					String cashbook_index = (String)map.get("cashbook_index");
+					String cashbook_amount = (String)map.get("cashbook_amount");
+					String cashbook_balance = (String)map.get("cashbook_balance");
+					String cashbook_content = (String)map.get("cashbook_content");
+					String cashbook_date = (String)map.get("cashbook_date");
+					String cashbook_type = (String)map.get("cashbook_type");
+					dto = myclubCashBookService.getWithNo(cashbook_no);
+//					dto.setCashbook_index(cashbook_index);
+					dto.setCashbook_amount(cashbook_amount.isEmpty() ? null : cashbook_amount);
+					dto.setCashbook_balance(cashbook_balance.isEmpty() ? null : cashbook_balance);
+					dto.setCashbook_content(cashbook_content.isEmpty() ? null : cashbook_content);
+					dto.setCashbook_date(cashbook_date.isEmpty() ? null : cashbook_date);
+					dto.setCashbook_type(cashbook_type.isEmpty() ? null : cashbook_type);
 						
-						myclubCashBookService.update(dto);
+					myclubCashBookService.update(dto);
 				}
 			}
 			else if(cmd.equals("add")){
@@ -129,6 +129,7 @@ public class MyclubController {
 			}
 			
 			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+			System.out.println(club);
 			listAll = myclubCashBookService.listAllWithClubNo(Integer.parseInt(club.getClub_no()));
 		}
 		catch (Exception e) {

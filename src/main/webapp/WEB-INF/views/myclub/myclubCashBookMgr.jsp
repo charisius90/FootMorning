@@ -135,10 +135,15 @@
 			data = new Object();
 		
 		// 필요한 모든 tr을 찾아 반복
-		var $row;
 		$("tr").not("#sort, #rhead, #balance, #addRow").each(function(i, e){
-			$row = $(e);					// 현재 row
+			var $row = $(e);				// 현재 row
 			var $prevRow = $row.prev();		// 이전 row
+			var cashbook_no = $row.contents().find(".badge").text();
+			
+			// 반복문을 잘못 도는 경우 cashbook_no가 없는 것을 종료시킴
+			if(cashbook_no==null || cashbook_no==""){
+				return;
+			}
 			
 			// 테이블의 첫 행은 prev()가 작용하지 않다 처리하는 구문 
 			if($prevRow.html() == null){
@@ -167,8 +172,9 @@
 				$row.contents().find("[name=cashbook_balance]").val(result);
 			}
 			
+			alert("cashbook no : " + $row.contents().find(".badge").text());
 			// json용 객체에 데이터 담기
-			data.cashbook_no = $row.contents().find(".badge").text();
+			data.cashbook_no = cashbook_no;
 			data.cashbook_date = $row.contents().find("[name=cashbook_date]").val();
 			data.cashbook_type = $row.contents().find("[name=cashbook_type]").val();
 			data.cashbook_content = $row.contents().find("[name=cashbook_content]").val();
@@ -195,10 +201,7 @@
 	function fnAddRow(){
 		var $prevBadge = $("#addRow").prev().contents().find(".badge");
 		var nextNo;
-		if($prevBadge.html() == null){
-			nextNo = "new";
-		}
-		else if($prevBadge.text() == "new"){
+		if($prevBadge.html()==null || $prevBadge.text()=="new"){
 			nextNo = "new";
 		}
 		else{
@@ -236,6 +239,10 @@
 			contentType : "application/json; charset=utf-8",
 			data:dataJSON,
 			success:function(data){
+				console.log("data - " + data);
+				for(var i=0; i<data.length; i++){
+					console.log("data[i] - " + data[i].get);
+				}
 				console.log(data.length + "줄 추가");
 			}
 		});
