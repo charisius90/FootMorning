@@ -25,6 +25,11 @@ import com.footmorning.app.service.ClubConfigService;
 import com.footmorning.app.service.ClubMemberService;
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MemberService;
+import com.footmorning.app.util.ClubCriteria;
+import com.footmorning.app.util.ClubPageMaker;
+import com.footmorning.app.util.PageMaker;
+import com.footmorning.app.util.SearchClubCriteria;
+import com.footmorning.app.util.SearchCriteria;
 
 @Controller
 @RequestMapping("/myclubMgr/*")
@@ -155,10 +160,19 @@ public class MyclubMgrController {
 	 * @Author 김소영, 박수항
 	 */
 	@RequestMapping("myclubMgrMember")
-	public void myclubMgrMember(HttpServletRequest req, Model model){
+	public void myclubMgrMember(SearchClubCriteria clubcri, HttpServletRequest req, Model model){
 		try {
 			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
-			model.addAttribute("list", clubMemberService.listMember(Integer.parseInt(club.getClub_no())));
+			
+			clubcri.setClub_no(club.getClub_no());
+			model.addAttribute("list", clubMemberService.listSearchClubMemberCriteria(clubcri));
+			
+			ClubPageMaker cpageMaker = new ClubPageMaker();
+			cpageMaker.setClubcri(clubcri);
+			cpageMaker.setTotalCount(clubMemberService.listSearchClubMemberCount(clubcri));
+			
+			model.addAttribute("pageMaker", cpageMaker);
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -196,10 +210,16 @@ public class MyclubMgrController {
 	 * @Author 김소영
 	 */
 	@RequestMapping("myclubMgrRegister")
-	public void myclubMgrRegister(HttpServletRequest req, Model model){
+	public void myclubMgrRegister(SearchClubCriteria clubcri, HttpServletRequest req, Model model){
 		try {
 			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
 			model.addAttribute("req", clubMemberService.listRequest(Integer.parseInt(club.getClub_no())));
+			
+			ClubPageMaker cpageMaker = new ClubPageMaker();
+			cpageMaker.setClubcri(clubcri);
+			cpageMaker.setTotalCount(clubMemberService.listRequestCount(clubcri));
+			
+			model.addAttribute("pageMaker", cpageMaker);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -265,10 +285,20 @@ public class MyclubMgrController {
 	 * @Author 김소영
 	 */
 	@RequestMapping("myclubMgrOutMember")
-	public void myclubMgrOutMember(HttpServletRequest req, Model model){
+	public void myclubMgrOutMember(SearchClubCriteria clubcri, HttpServletRequest req, Model model){
 		try {
 			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
-			model.addAttribute("list", clubMemberService.listMember(Integer.parseInt(club.getClub_no())));
+//			model.addAttribute("list", clubMemberService.listMember(Integer.parseInt(club.getClub_no())));
+			
+			clubcri.setClub_no(club.getClub_no());
+			model.addAttribute("list", clubMemberService.listSearchClubMemberCriteria(clubcri));
+			
+			ClubPageMaker cpageMaker = new ClubPageMaker();
+			cpageMaker.setClubcri(clubcri);
+			cpageMaker.setTotalCount(clubMemberService.listSearchClubMemberCount(clubcri));
+			
+			model.addAttribute("pageMaker", cpageMaker);
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();

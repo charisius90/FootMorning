@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,27 +57,31 @@
 					<div id="gallery">
 					<h4>갤러리</h4>
 						<div class="row">
+						<c:forEach items="${gallery}" var="GallDTO" begin="0" end="3" step="1">
+						  <c:if test="${not empty GallDTO.com_gallery_main_thumnail}">
 						  <div class="col-xs-6 col-md-3">
-						    <a href="#" class="thumbnail">
-						      <img src="/resources/images/vincent.jpg">
+						    <a href="/com/gallery/read?com_gallery_no=${GallDTO.com_gallery_no}" class="thumbnail">
+						      <img src="${GallDTO.com_gallery_main_thumnail}">
 	<!-- 					      <img src="resources/images/vincent.jsp" alt="..."> -->
 						    </a>
 						  </div>
-						  <div class="col-xs-6 col-md-3">
-						    <a href="#" class="thumbnail">
-						      <img src="/resources/images/vincent.jpg">
-						    </a>
-						  </div>
-						  <div class="col-xs-6 col-md-3">
-						    <a href="#" class="thumbnail">
-						      <img src="/resources/images/vincent.jpg">
-						    </a>
-						  </div>
-						  <div class="col-xs-6 col-md-3">
-						    <a href="#" class="thumbnail">
-						      <img src="/resources/images/vincent.jpg">
-						    </a>
-						  </div>
+						  </c:if>
+						  </c:forEach>
+<!-- 						  <div class="col-xs-6 col-md-3"> -->
+<!-- 						    <a href="#" class="thumbnail"> -->
+<!-- 						      <img src="/resources/images/vincent.jpg"> -->
+<!-- 						    </a> -->
+<!-- 						  </div> -->
+<!-- 						  <div class="col-xs-6 col-md-3"> -->
+<!-- 						    <a href="#" class="thumbnail"> -->
+<!-- 						      <img src="/resources/images/vincent.jpg"> -->
+<!-- 						    </a> -->
+<!-- 						  </div> -->
+<!-- 						  <div class="col-xs-6 col-md-3"> -->
+<!-- 						    <a href="#" class="thumbnail"> -->
+<!-- 						      <img src="/resources/images/vincent.jpg"> -->
+<!-- 						    </a> -->
+<!-- 						  </div> -->
 						</div>
 					</div>
 					<div id="clubswag">
@@ -87,31 +93,23 @@
 								<td>작성일</td>
 								<td>조회수</td>
 							</tr>
+							
+							
+							
+							
 							<!-- 게시글 내용이 들어가는 부분 -->
+							<c:forEach items="${boast}" var="dto" begin="0" end="3" step="1">
 							<tr>
-								<td>kh5조</td>
-								<td><a href="#">이번에 갔던 MT 사진입니다!</a></td>
-								<td>2016-7-17</td>
-								<td>99</td>
+								<td>${dto.club_name}</td>
+								<td><a href="com/boast/read?com_boast_no=${dto.com_boast_no}">${dto.com_boast_subject}</a></td>
+								<td><fmt:formatDate value="${dto.com_boast_regdate}" pattern="yy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.replycount}</td>
 							</tr>
-							<tr>
-								<td>kh4조</td>
-								<td><a href="#">이번에 갔던 MT 사진입니다!</a></td>
-								<td>2016-7-17</td>
-								<td>99</td>
-							</tr>
-							<tr>
-								<td>kh3조</td>
-								<td><a href="#">이번에 갔던 MT 사진입니다!</a></td>
-								<td>2016-7-17</td>
-								<td>99</td>
-							</tr>
-							<tr>
-								<td>kh2조</td>
-								<td><a href="#">이번에 갔던 MT 사진입니다!</a></td>
-								<td>2016-7-17</td>
-								<td>99</td>
-							</tr>
+							</c:forEach>
+							
+							
+							
+							
 						</table>
 					</div>				
 				</div>

@@ -1,15 +1,13 @@
-package com.footmorning.app.persistence.com;
+package com.footmorning.app.persistence;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.footmorning.app.domain.ComBoastDTO;
-import com.footmorning.app.domain.ComBoastReplyDTO;
-import com.footmorning.app.persistence.ComBoastDAO;
+import com.footmorning.app.domain.MainNoticeDTO;
+import com.footmorning.app.domain.MainNoticeReplyDTO;
 import com.footmorning.app.util.Criteria;
 import com.footmorning.app.util.SearchCriteria;
 
@@ -18,14 +16,16 @@ import com.footmorning.app.util.SearchCriteria;
  * @author �ڼ���
  */
 @Repository
-public class ComBoastDAOImpl implements ComBoastDAO {
+public class MainNoticeDAOImpl implements MainNoticeDAO {
 	
-	@Inject
+	@Autowired
 	private SqlSession sqlSession;
-	private static final String NAMESPACE = "com.footmorning.mappers.comBoastMapper";
+	
+	
+	private static final String NAMESPACE = "com.footmorning.mappers.mainNoticeMapper";
 
 	@Override
-	public void create(ComBoastDTO dto) throws Exception {
+	public void create(MainNoticeDTO dto) throws Exception {
 		sqlSession.insert(NAMESPACE + ".create", dto);
 	}
 
@@ -33,7 +33,7 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	 * ���� read
 	 */
 	@Override
-	public ComBoastDTO read(Integer bno) throws Exception {
+	public MainNoticeDTO read(Integer bno) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NAMESPACE + ".read", bno);
 	}
@@ -47,7 +47,7 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	 * ���� update
 	 */
 	@Override
-	public void update(ComBoastDTO dto) throws Exception {
+	public void update(MainNoticeDTO dto) throws Exception {
 		sqlSession.update(NAMESPACE + ".update", dto);
 	}
 
@@ -60,7 +60,7 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	}
 
 	@Override
-	public List<ComBoastDTO> listAll() throws Exception {
+	public List<MainNoticeDTO> listAll() throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listAll");
 	}
 
@@ -76,7 +76,7 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	 * ��ä listCriteria
 	 */
 	@Override
-	public List<ComBoastDTO> listCriteria(Criteria cri) throws Exception {
+	public List<MainNoticeDTO> listCriteria(Criteria cri) throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listCriteria", cri);
 	}
 
@@ -84,7 +84,7 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	 * ��ä listSearchCriteria
 	 */
 	@Override
-	public List<ComBoastDTO> listSearchCriteria(SearchCriteria cri) throws Exception {
+	public List<MainNoticeDTO> listSearchCriteria(SearchCriteria cri) throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listSearch", cri);
 	}
 
@@ -103,7 +103,7 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	 * pos +1 , parent_reply insert
 	 */
 	@Override
-	public void createReply(ComBoastReplyDTO dto) throws Exception {
+	public void createReply(MainNoticeReplyDTO dto) throws Exception {
 		sqlSession.update(NAMESPACE + ".updatePos");
 		sqlSession.insert(NAMESPACE + ".createReply", dto);
 
@@ -113,7 +113,7 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	 * ���� insert
 	 */
 	@Override
-	public void createReReply(ComBoastReplyDTO dto) {
+	public void createReReply(MainNoticeReplyDTO dto) {
 		sqlSession.insert(NAMESPACE + ".createReReply", dto);
 
 	}
@@ -126,7 +126,7 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	 * rereply pos update
 	 */
 	@Override
-	public void updatePos(ComBoastReplyDTO dto) {
+	public void updatePos(MainNoticeReplyDTO dto) {
 		sqlSession.update(NAMESPACE + ".replyUpdatePos", dto);
 	}
 
@@ -134,13 +134,13 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	 * parentInfo
 	 */
 	@Override
-	public ComBoastReplyDTO MyclubNoticeParentPos(Integer no) {
+	public MainNoticeReplyDTO MyclubNoticeParentPos(Integer no) {
 		return sqlSession.selectOne(NAMESPACE + ".parentInfo", no);
 	}
 
 	// ������;
 	@Override
-	public void updateReply(ComBoastReplyDTO dto) throws Exception {
+	public void updateReply(MainNoticeReplyDTO dto) throws Exception {
 		// TODO Auto-generated method stub
 
 	}
@@ -149,7 +149,7 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	 * ���� ����
 	 */
 	@Override
-	public void deleteReply(ComBoastReplyDTO dto) throws Exception {
+	public void deleteReply(MainNoticeReplyDTO dto) throws Exception {
 		sqlSession.update(NAMESPACE + ".deleteReply", dto);
 
 	}
@@ -158,7 +158,7 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	 * �Խñۿ� ���� ��ü ���� ����Ʈ
 	 */
 	@Override
-	public List<ComBoastReplyDTO> listAllReply(Integer bno) throws Exception {
+	public List<MainNoticeReplyDTO> listAllReply(Integer bno) throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listReply", bno);
 	}
 

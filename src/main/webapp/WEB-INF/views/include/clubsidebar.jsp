@@ -57,31 +57,32 @@
 					<li data-order="1"><a href="#tab2" data-toggle="tab">추천클럽</a></li>
 				</ul>
 				<div class="tab-content">
+						<!-- 신상클럽 -->
 						<div class="tab-pane active" id="tab1">
 							<ul id="new_club_list">
-								<li><a href="#">오조아</a></li>
-								<li><a href="#">KH팀</a></li>
-								<li><a href="#">맨유</a></li>
-								<li><a href="#">비전FC</a></li>
+								<c:forEach items="${club}" var="sidebar" begin="0" end="3" step="1">
+									<li><a href="/myclub/myclubMain?no=${sidebar.club_no}">${sidebar.club_name}</a></li>
+								</c:forEach>
 							</ul>
 						</div>
+						<!-- 인기클럽 -->
 						<div class="tab-pane" id="tab2">
 							<ul id="rec_club_list">
-								<li><a href="#">오시죠</a></li>
-								<li><a href="#">첼시</a></li>
-								<li><a href="#">바운스</a></li>
-								<li><a href="#">한가람FC</a></li>
+							<c:forEach items="${popular}" var="pop" begin="0" end="3" step="1">
+								<li><a href="/myclub/myclubMain?no=${pop.club_no}">${pop.club_name}</a></li>
+							</c:forEach>
 							</ul>
 						</div>
 				</div>
 			</div>
 			<div>
-				<p style="text-align:center; height:30px; border-radius:5px; background:#ffcccc; padding-top:5px">공지사항</p>
+				<p style="text-align:center; height:30px; border-radius:5px; background:#ffcccc; padding-top:5px">
+					<a href="/club/notice/main">공지사항</a>
+				</p>
 				<ul>
-					<li><a href="#">[공지]현금출납장 오류안내</a></li>
-					<li><a href="#">[긴급]서버교체작업 긴급공지</a></li>
-					<li><a href="#">[수정]닉네임변경</a></li>
-					<li><a href="#">[수정]클럽이름 변경</a></li>
+					<c:forEach items="${notice}" var="clubNotice" begin="0" end="3" step="1">
+						<li><a href="/club/notice/read?main_notice_no=${clubNotice.main_notice_no}">${clubNotice.main_notice_content}</a></li>
+					</c:forEach>
 				</ul>
 			</div>
 		</div>
