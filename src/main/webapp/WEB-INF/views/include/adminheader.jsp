@@ -14,8 +14,8 @@
 <nav class="navbar navbar-default navbar-static-top">
 		<div style="background-image: url('../resources/images/banner.jpg'); background-size: cover; height: 200px;">
 		<div class="banner" align="right" style="height: 24px; padding-top: 10px">
-			<a href="#"><i class="glyphicon glyphicon-home"></i> 서비스홈</a>&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="#"><i class="glyphicon glyphicon-log-out"></i> 로그아웃</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="/"><i class="glyphicon glyphicon-home"></i> 서비스홈</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="member/memberLogout"><i class="glyphicon glyphicon-log-out"></i> 로그아웃</a>&nbsp;&nbsp;&nbsp;&nbsp;
 		</div>
 	</div>
 	<div class="container">

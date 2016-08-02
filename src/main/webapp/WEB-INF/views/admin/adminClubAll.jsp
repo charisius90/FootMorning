@@ -38,7 +38,7 @@
 			클럽수 <span style="color:red">${fn:length(list)}</span>개
 			<table class="table table-bordered">
 				<tr style="background-color:#dddddd;">
-					<td><input type="checkbox" name="" value="" />&nbsp;&nbsp;클럽명</td>
+					<td><input id="checkAll" type="checkbox"/>&nbsp;&nbsp;클럽명</td>
 					<td>클럽장</td>
 					<td>연고지</td>
 					<td>개설일</td>
@@ -50,11 +50,11 @@
 				<tr>
 					<td><input type="checkbox" name="" value="" />&nbsp;&nbsp;${dto.club_name}</td>
 					<td>${dto.club_master_name}</td>
-					<td>2016.07.18</td>
-					<td>서울</td>
-					<td>10</td>
-					<td>10</td>
-					<td>일반클럽</td>
+					<td>${dto.club_loc}</td>
+					<td>${dto.club_regdate}</td>
+					<td>${dto.club_mem_count}</td>
+					<td></td>
+					<td>${dto.club_type}</td>
 				</tr>
 			</c:forEach>
 			</table>
@@ -74,9 +74,26 @@
 						
 	</div><!-- /.row -->
 </div><!-- /.container -->
-
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	$(function(){
+		// 전체선택에 체크한 경우 변환
+		$("#checkAll").click(function(){
+			var check = $(this).prop("checked");
+			if(check){
+				$("input:checkbox").each(function(i, e){
+					$(e).prop("checked", true);
+				})
+			}
+			else{
+				$("input:checkbox").each(function(i, e){
+					$(e).prop("checked", false);
+				})
+			}
+		});
+	});
+</script>
 </body>
 </html>
