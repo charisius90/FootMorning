@@ -39,6 +39,10 @@
 	<select id="listAll" resultType="ClubDTO">
 		select * from club order by club_no desc, club_regdate desc
 	</select>
+	
+	<select id="popularityListAll" resultType="ClubDTO">
+		select * from club order by club_mem_count desc;
+	</select>
 
 	<sql id="search">
 		<if test="searchType != null">

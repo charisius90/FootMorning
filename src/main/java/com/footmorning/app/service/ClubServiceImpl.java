@@ -46,6 +46,12 @@ public class ClubServiceImpl implements ClubService {
 		System.out.println("clubserviceimpl dao : " + dao);
 		return dao.listAll();
 	}
+	
+	@Override
+	public List<ClubDTO> popularityListAll() throws Exception {
+		// TODO Auto-generated method stub
+		return dao.popularityListAll();
+	}
 
 	@Override
 	public ClubDTO getWithNo(Integer no) throws Exception {

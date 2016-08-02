@@ -11,7 +11,7 @@ import com.footmorning.app.util.SearchClubCriteria;
 
 /**
  * 
- * @author ¹Ú¼öÇ×
+ * @author ï¿½Ú¼ï¿½ï¿½ï¿½
  *
  */
 @Repository
@@ -50,6 +50,12 @@ public class ClubDAOImpl implements ClubDAO {
 	public List<ClubDTO> listAll() throws Exception {
 		System.out.println("clubdaoimpl called");
 		return sqlSession.selectList(NAMESPACE + ".listAll");
+	}
+
+	@Override
+	public List<ClubDTO> popularityListAll() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE + ".popularityListAll");
 	}
 
 	@Override
