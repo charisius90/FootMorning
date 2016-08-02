@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.ClubDTO;
@@ -158,10 +159,28 @@ public class MyclubController {
 	 * 가입신청 테스트용(컨트롤러 위치 변경해야함)
 	 */
 	@RequestMapping(value="clubRequest", method=RequestMethod.POST)
-	public String requestPOST(ClubMemberDTO dto){
+	public String requestPOST(ClubMemberDTO dto, RedirectAttributes rttr){
 		System.out.println(dto);
-		dto.setClub_mem_flag(CLUB_MEM_FLAG_DEFAULT);
-		clubMemberService.insert(dto);
+		try{
+			ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt((dto.getMem_no())));
+			if(clubMember!=null){
+				if(clubMember.getClub_mem_flag().equals("TRUE")){
+					rttr.addFlashAttribute("msg", "이미 가입된 회원입니다.");
+				}
+				else{
+					rttr.addFlashAttribute("msg", "이미 가입신청 중인 회원입니다.");
+				}
+			}
+			else{
+				dto.setClub_mem_flag(CLUB_MEM_FLAG_DEFAULT);
+				clubMemberService.insert(dto);
+				rttr.addFlashAttribute("msg", "가입신청이 완료되었습니다.");
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		return "redirect:/myclub/myclubMain?no=" + dto.getClub_no();
+		
 	}
 }

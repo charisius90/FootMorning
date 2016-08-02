@@ -73,7 +73,7 @@
 							  			<input type="hidden" name="mem_name" value="${USER_KEY.mem_name}"/>
 							  			<input type="hidden" name="mem_birth" value="${USER_KEY.mem_birth}"/>
 							  			<input type="hidden" name="mem_grade" value="${USER_KEY.mem_grade}"/>
-							  			<button type="submit">가입신청</button>
+							  			<button class="btn btn-primary" type="submit">가입신청</button>
 							  		</form>
 							  	</td>
 							  </tr>
@@ -126,6 +126,12 @@
 		</div>
 	</div>
 </div>
+<script>
+	var msg = "${msg}";
+	if(msg!=""){
+		alert(msg);
+	}
+</script>
 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
