@@ -87,7 +87,7 @@
 								</tr>
 							</thead>
 							<c:forEach items="${BOOK}" var="row">
-								<tr>
+								<tr name="data">
 									<td><span class="badge" style="margin-top: 7px;">${row.cashbook_no}</span></td>
 									<td><input type="text" class="form-control" size="2" name="cashbook_date" value="${row.cashbook_date}" placeholder="날짜선택" onchange="fnCalcBalance()"></td>
 									<td>
@@ -172,7 +172,6 @@
 				$row.contents().find("[name=cashbook_balance]").val(result);
 			}
 			
-			alert("cashbook no : " + $row.contents().find(".badge").text());
 			// json용 객체에 데이터 담기
 			data.cashbook_no = cashbook_no;
 			data.cashbook_date = $row.contents().find("[name=cashbook_date]").val();
@@ -192,8 +191,10 @@
 			contentType : "application/json; charset=utf-8",
 			data:dataJSON,
 			success:function(data){
-				console.log(data.length + "줄 갱신");
-				// 돌아온 데이터로 각 row 모든 col 업데이트 하는 기능 추가하면 좋을 것 같다.
+				var noArr = data.split(" ");
+				$("tr[name=data]").each(function(i, e){
+					$(this).contents().find(".badge").text(noArr[i+1]);
+				})
 			}
 		});
 	}
@@ -209,7 +210,7 @@
 		}
 		
 		$("#addRow").before(
-			"<tr>" +
+			"<tr name='data'>" +
 				"<td><div align='center' style='padding-top: 6px;'><span class='badge'>" + nextNo + "</span></div></td>" +
 				"<td><input type='text' class='form-control' size='2' name='cashbook_date' placeholder='날짜선택' onchange='fnCalcBalance()'></td>" +
 				"<td><select class='form-control' name='cashbook_type' size='1' onchange='fnCalcBalance()'><option value='SUB'>지출</option><option value='ADD'>수입</option></select></td>" +
@@ -239,11 +240,14 @@
 			contentType : "application/json; charset=utf-8",
 			data:dataJSON,
 			success:function(data){
-				var arr_cashbook_no = data.split(" ");
+				var noArr = data.split(" ");
+				$("tr[name=data]").each(function(i, e){
+					$(this).contents().find(".badge").text(noArr[i+1]);
+				})
 			}
 		});
 	}
-	
+
 	function fnDelRow(e){
 		var $row = $(e).parent().parent();
 		var targetNo = $row.contents().find(".badge").text();
@@ -274,7 +278,10 @@
 			contentType : "application/json; charset=utf-8",
 			data:dataJSON,
 			success:function(data){
-				console.log(data.length + "줄 제거");
+				var noArr = data.split(" ");
+				$("tr[name=data]").each(function(i, e){
+					$(this).contents().find(".badge").text(noArr[i+1]);
+				})
 			}
 		});
 	}
