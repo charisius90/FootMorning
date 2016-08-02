@@ -1,5 +1,4 @@
 drop database finaltest;
-
 create database finaltest;
 use finaltest;
 
@@ -169,7 +168,7 @@ ALTER TABLE LINEUP_SUB
 
 
 ALTER TABLE MEMBER
-   ADD FOREIGN KEY R_6 (club_no) REFERENCES CLUB(club_no) on delete cascade
+   ADD FOREIGN KEY R_6 (club_no) REFERENCES CLUB(club_no) on update cascade
 ;
 
 
@@ -955,3 +954,21 @@ CREATE TABLE CLUB_CASHBOOK
     on delete cascade
 )
 ;
+
+
+DELIMITER $$
+
+USE `finaltest`$$
+DROP TRIGGER IF EXISTS `finaltest`.`club_AFTER_DELETE` $$
+DELIMITER ;
+USE `finaltest`;
+
+DELIMITER $$
+
+DROP TRIGGER IF EXISTS finaltest.club_BEFORE_DELETE$$
+USE `finaltest`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `finaltest`.`club_BEFORE_DELETE` BEFORE DELETE ON `club` FOR EACH ROW
+BEGIN
+   update member set club_no=null, mem_club_regdate=null, mem_grade=5 where club_no=OLD.club_no;
+END$$
+DELIMITER ;

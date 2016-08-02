@@ -239,7 +239,7 @@ public class MyclubMgrController {
 		            MemberDTO member = memberService.getWithNo(Integer.parseInt(mem_no));
 		            member.setClub_no(clubMember.getClub_no());
 		            member.setMem_grade(GRADE_MEMBER);
-		            member.setMem_club_regdate(clubMember.getClub_mem_regdate());
+		            member.setMem_club_regdate(memberService.getTime());
 		            memberService.updateMember(member);
 		            
 		            // 클럽테이블에 클럽회원수+1
@@ -296,12 +296,15 @@ public class MyclubMgrController {
 	public String myclubMgrOutMemberComplete(@RequestParam(value="mem_no") List<String> memberList, RedirectAttributes rttr, HttpServletRequest req){
 		for(String mem_no : memberList){
 			try{
+				// 클럽멤버테이블에서 삭제
 				ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt(mem_no));
 				clubMemberService.delete(clubMember);
 				
+				// 멤버테이블에서 클럽번호와 클럽가입일 삭제, 회원등급 수정
 				MemberDTO member = memberService.getWithNo(Integer.parseInt((mem_no)));
 				member.setClub_no(null);
 				member.setMem_grade(GRADE_NORMAL);
+				member.setMem_club_regdate(null);
 				memberService.updateMember(member);
 				
 				// 클럽테이블에 클럽회원수-1
@@ -314,6 +317,7 @@ public class MyclubMgrController {
 				e.printStackTrace();
 			}
 		}
+		// 삭제된 인원수 반환
 		rttr.addFlashAttribute("data", memberList.size());
 
 		return "redirect:/myclubMgr/myclubMgrOutMember";
@@ -327,21 +331,41 @@ public class MyclubMgrController {
 	public void myclubMgrClosing(){}
 	
 	@RequestMapping(value="myclubMgrClosing", method=RequestMethod.POST)
-	public String myclubMgrClosingComplete(String club_name, String mem_email, String mem_pw, HttpServletRequest req, Model model){
+	public String myclubMgrClosingComplete(String club_name, String mem_email, String mem_pw, HttpServletRequest req, RedirectAttributes rttr){
 		try{
+			System.out.println("myclubMgrClosing : " + club_name + ", " + mem_email + ", " + mem_pw);
 			HttpSession session = req.getSession();
 			ClubDTO club = (ClubDTO)session.getAttribute("CLUB_KEY");
+			// 클럽명이 같고
 			if(club.getClub_name().equals(club_name)){
-				if(memberService.getWithPW(mem_email, mem_pw)!=null){
+				// 입력한 이메일과 비밀번호가 같은 회원의 정보를 가져와
+				MemberDTO member = memberService.getWithPW(mem_email, mem_pw);
+				// 클럽마스터의 회원번호와 위의 회원번호가 일치하면
+				if(member != null && club.getClub_master().equals(member.getMem_no())){
+					// 클럽테이블에서 삭제, 세션에 저장된 클럽키도 삭제
 					service.delete(Integer.parseInt((club.getClub_no())));
 					session.removeAttribute("CLUB_KEY");
+					
+					MemberDTO newMemInfo = memberService.getMemberInfo(mem_email);
+					
+					WebUtils.setSessionAttribute(req, "USER_KEY", newMemInfo);
+					
+					return "redirect:/";
 				}
+				else{
+					 rttr.addFlashAttribute("msg", "관리자 E-Mail 또는 비밀번호가 일치하지 않습니다.");
+					 return "redirect:/myclubMgr/myclubMgrClosing";
+				}
+			}
+			else{
+				rttr.addFlashAttribute("msg", "클럽명이 일치하지 않습니다.");
+				return "redirect:/myclubMgr/myclubMgrClosing";
 			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		return "redirect:/";
+		return "redirect:/myclubMgr/myclubMgrClosing";
 	}
 	
 	/**
@@ -366,32 +390,27 @@ public class MyclubMgrController {
 			ClubMemberDTO clubMember = clubMemberService.getWithMemno(Integer.parseInt((mem_no)));
 			clubMember.setMem_grade(GRADE_MASTER);
 			clubMemberService.update(clubMember);
-			System.out.println(clubMember.toString());
 			
 			MemberDTO newMasterInfo = memberService.getWithNo(Integer.parseInt((clubMember.getMem_no())));
 			newMasterInfo.setMem_grade(GRADE_MASTER);
 			memberService.updateMember(newMasterInfo);
-			System.out.println(newMasterInfo.toString());
 			
 			// 클럽테이블의 마스터 정보에 선택된 회원의 회원번호와 이름으로 수정 
 			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
 			club.setClub_master(clubMember.getMem_no());
 			club.setClub_master_name(clubMember.getMem_name());
 			service.update(club);
-			System.out.println(club.toString());
 			WebUtils.setSessionAttribute(req, "CLUB_KEY", club);
 
 			// 기존 마스터의 회원등급을 클럽소속회원으로 수정
 			MemberDTO oldMasterInfo = (MemberDTO)WebUtils.getSessionAttribute(req, "USER_KEY");
 			oldMasterInfo.setMem_grade(GRADE_MEMBER);
 			memberService.updateMember(oldMasterInfo);
-			System.out.println(oldMasterInfo.toString());
 			WebUtils.setSessionAttribute(req, "USER_KEY", oldMasterInfo);
 			
 			ClubMemberDTO dto = clubMemberService.getWithMemno(Integer.parseInt((oldMasterInfo.getMem_no())));
 			dto.setMem_grade(GRADE_MEMBER);
 			clubMemberService.update(dto);
-			System.out.println(dto.toString());
 			
 			rttr.addFlashAttribute("msg", "클럽이 양도되었습니다.");
 		}
