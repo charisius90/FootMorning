@@ -40,8 +40,8 @@ public class MyclubCashBookServiceImpl implements MyclubCashBookService {
 	}
 
 	@Override
-	public List<MyclubCashBookDTO> listAll() throws Exception {
-		return dao.listAll();
+	public List<MyclubCashBookDTO> listAllWithClubNo(Integer no) throws Exception {
+		return dao.listAllWithClubNo(no);
 	}
 
 }

@@ -27,7 +27,7 @@
 		select * from club_cashbook where cashbook_no=#{no}
 	</select>
 
-	<select id="listAll" resultType="MyclubCashBookDTO">
-       select * from club_cashbook order by cashbook_date, cashbook_no
+	<select id="listAllWithClubNo" resultType="MyclubCashBookDTO">
+       select * from club_cashbook where club_no=#{no} order by cashbook_date, cashbook_no
 	</select>
 </mapper>

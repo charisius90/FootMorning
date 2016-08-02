@@ -89,7 +89,7 @@
 							<c:forEach items="${BOOK}" var="row">
 								<tr>
 									<td><span class="badge" style="margin-top: 7px;">${row.cashbook_no}</span></td>
-									<td><input type="text" class="form-control" size="2" name="cashbook_date" value="${row.cashbook_date}" placeholder="날짜선택"></td>
+									<td><input type="text" class="form-control" size="2" name="cashbook_date" value="${row.cashbook_date}" placeholder="날짜선택" onchange="fnCalcBalance()"></td>
 									<td>
 										<input type="hidden" name="type" value="${row.cashbook_type}"/>
 										<select class="form-control" size="1" name="cashbook_type" onchange="fnCalcBalance()">
@@ -97,8 +97,8 @@
 											<option value="ADD">수입</option>
 										</select>
 									</td>
-									<td><input type="text" class="form-control" size="2" name="cashbook_amount" value="${row.cashbook_amount}" onchange="fnCalcBalance()"></td>
-									<td><input type="text" class="form-control" size="10" name="cashbook_content" value="${row.cashbook_content}"></td>
+									<td><input type="text" class="form-control" size="2" name="cashbook_amount" value="${row.cashbook_amount}" placeholder="금액을 입력하세요" onchange="fnCalcBalance()"></td>
+									<td><input type="text" class="form-control" size="10" name="cashbook_content" value="${row.cashbook_content}" placeholder="내용을 입력하세요" onchange="fnCalcBalance()"></td>
 									<td><input type="text" class="form-control" size="2" name="cashbook_balance" value="${row.cashbook_balance}" disabled></td>
 									<td><span class="glyphicon glyphicon-remove" aria-hidden="true" style="cursor: pointer; margin-top: 8px;" onclick="fnDelRow(this)"></span></td>
 								</tr>
@@ -129,13 +129,16 @@
 	
 	// 모든 row 계산
 	function fnCalcBalance(){
+		// JSON생성용 변수 
 		var dataJSON,
 			dataArr = new Array(),
 			data = new Object();
 		
-		$("tr").not("#sort, #rhead, #balance, #addRow").each(function(){
-			var $row = $(this);					// 현재 row
-			var $prevRow = $row.prev();			// 이전 row
+		// 필요한 모든 tr을 찾아 반복
+		var $row;
+		$("tr").not("#sort, #rhead, #balance, #addRow").each(function(i, e){
+			$row = $(e);					// 현재 row
+			var $prevRow = $row.prev();		// 이전 row
 			
 			// 테이블의 첫 행은 prev()가 작용하지 않다 처리하는 구문 
 			if($prevRow.html() == null){
@@ -147,10 +150,12 @@
 			// 현재 처리할 금액
 			var amount = $row.contents().find("[name=cashbook_amount]").val();
 			
-			if(amount=="" || amount==null){
+			// 
+			if(amount=="" || amount==null || isNaN(amount)){
 				amount = 0;
 			}
 			
+			// 현재 balance 계산
 			var type = $row.contents().find("select[name=cashbook_type]").val();
 			var result = 0;
 			if(type=="ADD"){
@@ -174,14 +179,15 @@
 		});
 		
 		dataJSON = JSON.stringify(dataArr);
-		// 컨트롤러 작업이 필요함
+		
 		$.ajax({
 			url:"/myclub/myclubCashBookMgr?cmd=update",
 			type:"POST",
 			contentType : "application/json; charset=utf-8",
 			data:dataJSON,
 			success:function(data){
-				alert(data.length + "명 수정 완료");
+				console.log(data.length + "줄 갱신");
+				// 돌아온 데이터로 각 row 모든 col 업데이트 하는 기능 추가하면 좋을 것 같다.
 			}
 		});
 	}
@@ -190,7 +196,10 @@
 		var $prevBadge = $("#addRow").prev().contents().find(".badge");
 		var nextNo;
 		if($prevBadge.html() == null){
-			nextNo = 1;
+			nextNo = "new";
+		}
+		else if($prevBadge.text() == "new"){
+			nextNo = "new";
 		}
 		else{
 			nextNo = parseInt($prevBadge.text()) + 1;
@@ -199,10 +208,10 @@
 		$("#addRow").before(
 			"<tr>" +
 				"<td><div align='center' style='padding-top: 6px;'><span class='badge'>" + nextNo + "</span></div></td>" +
-				"<td><input type='text' class='form-control' size='2' name='cashbook_date' placeholder='날짜선택'></td>" +
+				"<td><input type='text' class='form-control' size='2' name='cashbook_date' placeholder='날짜선택' onchange='fnCalcBalance()'></td>" +
 				"<td><select class='form-control' name='cashbook_type' size='1' onchange='fnCalcBalance()'><option value='SUB'>지출</option><option value='ADD'>수입</option></select></td>" +
 				"<td><input type='text' class='form-control' size='2' name='cashbook_amount' placeholder='금액을 입력하세요' onchange='fnCalcBalance()'></td>" +
-				"<td><input type='text' class='form-control' size='10' name='cashbook_content' placeholder='내용을 입력하세요'></td>" +
+				"<td><input type='text' class='form-control' size='10' name='cashbook_content' placeholder='내용을 입력하세요' onchange='fnCalcBalance()'></td>" +
 				"<td><input type='text' class='form-control' size='2' name='cashbook_balance' value='-' disabled></td>" +
 				"<td><span class='glyphicon glyphicon-remove' aria-hidden='true' style='cursor: pointer; margin-top: 8px;' onclick='fnDelRow(this)'></span></td>" +
 			"</tr>"
@@ -214,22 +223,27 @@
 			yearRange: "2016:2017"
 		});
 		
-// 		// 추가할 때 마다 DB수정
-// 		$.ajax({
-// 			url:"/myclub/myclubCashBookMgr?cmd=add",
-// 			type:"POST",
-// 			contentType : "application/json; charset=utf-8",
-// 			data:paramJSON,
-// 			success:function(data){
-// 				alert(data.length + "명 수정 완료");
-// 			}
-// 		});
+		var dataJSON,
+			dataArr = new Array(),
+			data = new Object();
+			data.club_no = "${CLUB_KEY.club_no}";
+			dataArr.push(data);
+			dataJSON = JSON.stringify(dataArr);
+		// 추가할 때 마다 DB수정
+		$.ajax({
+			url:"/myclub/myclubCashBookMgr?cmd=add",
+			type:"POST",
+			contentType : "application/json; charset=utf-8",
+			data:dataJSON,
+			success:function(data){
+				console.log(data.length + "줄 추가");
+			}
+		});
 	}
 	
 	function fnDelRow(e){
 		var $row = $(e).parent().parent();
 		var targetNo = $row.contents().find(".badge").text();
-		
 		$row.remove();
 		
 		$(".badge").each(function(){
@@ -240,7 +254,26 @@
 			}
 		});
 		
+		// 제거 된 후 계산
 		fnCalcBalance();
+		
+		// DB에서 해당 줄 삭제
+		var dataJSON,
+			dataArr = new Array(),
+			data = new Object();
+		data.cashbook_no = targetNo;
+		dataArr.push(data);
+		dataJSON = JSON.stringify(dataArr);
+		
+		$.ajax({
+			url:"/myclub/myclubCashBookMgr?cmd=del",
+			type:"POST",
+			contentType : "application/json; charset=utf-8",
+			data:dataJSON,
+			success:function(data){
+				console.log(data.length + "줄 제거");
+			}
+		});
 	}
 	
 	$(function(){
@@ -258,7 +291,7 @@
 		$("[name=cashbook_date]").datepicker({
 			dateFormat:"yy-mm-dd",
 			changeMonth:true,
-			yearRange: "2016:2016"
+			yearRange: "2016:2017"
 		});
 	})
 </script>

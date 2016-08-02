@@ -43,8 +43,8 @@ public class MyclubCashBookDAOImpl implements MyclubCashBookDAO {
 	}
 
 	@Override
-	public List<MyclubCashBookDTO> listAll() throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".listAll");
+	public List<MyclubCashBookDTO> listAllWithClubNo(Integer no) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listAllWithClubNo", no);
 	}
 
 }

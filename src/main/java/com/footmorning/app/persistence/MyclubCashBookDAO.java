@@ -10,7 +10,7 @@ public interface MyclubCashBookDAO {
 	public void update(MyclubCashBookDTO dto);
 	public void delete(Integer no);
 	public MyclubCashBookDTO getWithNo(Integer no) throws Exception;
-	public List<MyclubCashBookDTO> listAll() throws Exception;
+	public List<MyclubCashBookDTO> listAllWithClubNo(Integer no) throws Exception;
 //	public List<MyclubCashBookDTO>listSearchClubCriteria(SearchClubCriteria clubcri);
 //	public int listSearchClubCount(SearchClubCriteria clubcri);
 }
