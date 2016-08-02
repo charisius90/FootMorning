@@ -1,107 +1,106 @@
 drop database finaltest;
+
 create database finaltest;
+
 use finaltest;
-
-
-
-
 
 CREATE TABLE MEMBER
 (
-   mem_no                INTEGER NOT NULL auto_increment PRIMARY KEY,
-   mem_email             VARCHAR(50) NULL,
-   mem_pw                VARCHAR(300) NULL,
-   mem_name              VARCHAR(20) NULL,
-   mem_gender            VARCHAR(10) NULL,
-    mem_birth            VARCHAR(20) NULL,
-   mem_phone             VARCHAR(20) NULL,
-   mem_addr              VARCHAR(50) NULL,
-   mem_grade             INTEGER NULL,
-   mem_image             VARCHAR(50) NULL,
-   mem_regdate           TIMESTAMP NULL default now(),
-   mem_logdate           TIMESTAMP NULL,
-   mem_backno            INTEGER NULL,
-   club_no               INTEGER NULL,
-   mem_club_regdate			 timestamp null
+	mem_no                INTEGER NOT NULL auto_increment PRIMARY KEY,
+	mem_email             VARCHAR(50) NULL,
+	mem_pw                VARCHAR(300) NULL,
+	mem_name              VARCHAR(20) NULL,
+	mem_gender            VARCHAR(10) NULL,
+    mem_birth 			  VARCHAR(20) NULL,
+	mem_phone             VARCHAR(20) NULL,
+	mem_addr              VARCHAR(50) NULL,
+	mem_grade             INTEGER NULL,
+	mem_image             VARCHAR(50) NULL,
+	mem_regdate           TIMESTAMP NULL default now(),
+	mem_logdate           TIMESTAMP NULL,
+	mem_backno            INTEGER NULL,
+	club_no               INTEGER NULL,
+    mem_club_regdate	  timestamp null
 )
 ;
 
 
 CREATE TABLE CHALLENGE
 (
-   challenge_no          INTEGER NOT NULL auto_increment PRIMARY KEY,
-   sender_club_no        INTEGER NULL,
-   receiver_club_no      INTEGER NULL,
-   challenge_content     VARCHAR(500) NULL,
-   game_no               INTEGER NULL,
-   game_flag             VARCHAR(10) NULL,
-    club_ability        INTEGER NULL
+	challenge_no          INTEGER NOT NULL auto_increment PRIMARY KEY,
+	sender_club_no        INTEGER NULL,
+	receiver_club_no      INTEGER NULL,
+	challenge_content     VARCHAR(500) NULL,
+	game_no               INTEGER NULL,
+	game_flag             VARCHAR(10) NULL,
+    club_ability		  INTEGER NULL,
+    challenge_flag		  varchar(10) NULL
 )
 ;
 
 CREATE TABLE GAME
 (
-   game_no               INTEGER NOT NULL auto_increment,
+	game_no               INTEGER NOT NULL,
     game_flag             VARCHAR(10) NOT NULL,
-   game_date             TIMESTAMP NULL,
-   game_time             VARCHAR(30) NULL,
-   game_addr             VARCHAR(50) NULL,
-   club_no               INTEGER NOT NULL,
-   game_score            INTEGER NULL,
-    club_ability        INTEGER NULL,
+	game_date             TIMESTAMP NULL,
+	game_time             VARCHAR(30) NULL,
+	game_addr             VARCHAR(50) NULL,
+	club_no               INTEGER NOT NULL,
+	game_score            INTEGER NULL,
+    club_ability		  INTEGER NULL,
     primary key(game_no, game_flag)
 )
 ;
 
 CREATE TABLE CLUB
 (
-   club_no               INTEGER NOT NULL auto_increment PRIMARY KEY,
-   club_name             VARCHAR(50) NULL,
-    club_master         INTEGER NOT NULL,
-    club_master_name     VARCHAR(50) NULL,           
-   club_image            VARCHAR(100) NULL,
-   club_content          VARCHAR(500) NULL,
-   club_loc              VARCHAR(50) NULL,
-   club_type             INTEGER NULL,
-   club_regdate          TIMESTAMP NULL default now(),
-    club_mem_count        INTEGER NULL
+	club_no               INTEGER NOT NULL auto_increment PRIMARY KEY,
+	club_name             VARCHAR(50) NULL,
+    club_master 		  INTEGER NOT NULL,
+    club_master_name	  VARCHAR(50) NULL,			  
+	club_image            VARCHAR(100) NULL,
+	club_content          VARCHAR(500) NULL,
+	club_loc              VARCHAR(50) NULL,
+	club_type             INTEGER NULL,
+	club_regdate          TIMESTAMP NULL default now(),
+    club_mem_count		  INTEGER NULL
 )
 ;
 
 CREATE TABLE FORMATION
 (
-   fomation_no           INTEGER NOT NULL auto_increment PRIMARY KEY,
-   loc0                  VARCHAR(20) NULL,
-   loc1                  VARCHAR(20) NULL,
-   loc2                  VARCHAR(20) NULL,
-   loc3                  VARCHAR(20) NULL,
-   loc4                  VARCHAR(20) NULL,
-   loc5                  VARCHAR(20) NULL,
-   loc6                  VARCHAR(20) NULL,
-   loc7                  VARCHAR(20) NULL,
-   loc8                  VARCHAR(20) NULL,
-   loc9                  VARCHAR(20) NULL,
-   loc10                 VARCHAR(20) NULL,
-   lineup_no             INTEGER NOT NULL
+	fomation_no           INTEGER NOT NULL auto_increment PRIMARY KEY,
+	loc0                  VARCHAR(20) NULL,
+	loc1                  VARCHAR(20) NULL,
+	loc2                  VARCHAR(20) NULL,
+	loc3                  VARCHAR(20) NULL,
+	loc4                  VARCHAR(20) NULL,
+	loc5                  VARCHAR(20) NULL,
+	loc6                  VARCHAR(20) NULL,
+	loc7                  VARCHAR(20) NULL,
+	loc8                  VARCHAR(20) NULL,
+	loc9                  VARCHAR(20) NULL,
+	loc10                 VARCHAR(20) NULL,
+	lineup_no             INTEGER NOT NULL
 )
 ;
 
 CREATE TABLE LINEUP
 (
-   lineup_no             INTEGER NOT NULL auto_increment PRIMARY KEY,
-   player0               INTEGER NULL,
-   player1               INTEGER NULL,
-   player2               INTEGER NULL,
-   player3               INTEGER NULL,
-   player4               INTEGER NULL,
-   player5               INTEGER NULL,
-   player6               INTEGER NULL,
-   player7               INTEGER NULL,
-   player8               INTEGER NULL,
-   player9               INTEGER NULL,
-   player10              INTEGER NULL,
-   game_no               INTEGER NOT NULL,
-   game_flag             VARCHAR(10) NOT NULL
+	lineup_no             INTEGER NOT NULL auto_increment PRIMARY KEY,
+	player0               INTEGER NULL,
+	player1               INTEGER NULL,
+	player2               INTEGER NULL,
+	player3               INTEGER NULL,
+	player4               INTEGER NULL,
+	player5               INTEGER NULL,
+	player6               INTEGER NULL,
+	player7               INTEGER NULL,
+	player8               INTEGER NULL,
+	player9               INTEGER NULL,
+	player10              INTEGER NULL,
+	game_no               INTEGER NOT NULL,
+	game_flag             VARCHAR(10) NOT NULL
 )
 ;
 
@@ -110,13 +109,13 @@ CREATE TABLE LINEUP
 
 CREATE TABLE LINEUP_SUB
 (
-   lineup_no             INTEGER NOT NULL PRIMARY KEY,
-   player11              INTEGER NULL,
-   player12              INTEGER NULL,
-   player13              INTEGER NULL,
-   player14              INTEGER NULL,
-   player15              INTEGER NULL,
-   player16              INTEGER NULL
+	lineup_no             INTEGER NOT NULL PRIMARY KEY,
+	player11              INTEGER NULL,
+	player12              INTEGER NULL,
+	player13              INTEGER NULL,
+	player14              INTEGER NULL,
+	player15              INTEGER NULL,
+	player16              INTEGER NULL
 )
 ;
 
@@ -124,12 +123,12 @@ CREATE TABLE LINEUP_SUB
 
 CREATE TABLE RECORD
 (
-   record_no             INTEGER NOT NULL auto_increment PRIMARY KEY,
-   record_time           VARCHAR(10) NULL,
-   record_goal_mem       INTEGER NULL,
-   record_assist_mem     INTEGER NULL,
-   game_no               INTEGER NOT NULL,
-   game_flag             VARCHAR(10) NOT NULL
+	record_no             INTEGER NOT NULL auto_increment PRIMARY KEY,
+	record_time           VARCHAR(10) NULL,
+	record_goal_mem       INTEGER NULL,
+	record_assist_mem     INTEGER NULL,
+	game_no               INTEGER NOT NULL,
+	game_flag             VARCHAR(10) NOT NULL
 )
 ;
 
@@ -138,44 +137,48 @@ CREATE TABLE RECORD
 
 
 ALTER TABLE CHALLENGE
-   ADD FOREIGN KEY R_1 (game_no,game_flag) REFERENCES GAME(game_no,game_flag)
+	ADD FOREIGN KEY R_1 (game_no) REFERENCES GAME(game_no)
 ;
 
 
 
 ALTER TABLE FORMATION
-   ADD FOREIGN KEY R_2 (lineup_no) REFERENCES LINEUP(lineup_no)
+	ADD FOREIGN KEY R_2 (lineup_no) REFERENCES LINEUP(lineup_no) 
 ;
 
 
 
 ALTER TABLE GAME
-   ADD FOREIGN KEY R_3 (club_no) REFERENCES CLUB(club_no) on delete cascade
+	ADD FOREIGN KEY R_3 (club_no) REFERENCES CLUB(club_no) on delete cascade
 ;
 
 
 
 ALTER TABLE LINEUP
-   ADD FOREIGN KEY R_4 (game_no,game_flag) REFERENCES GAME(game_no,game_flag)
+	ADD FOREIGN KEY R_4 (game_no,game_flag) REFERENCES GAME(game_no,game_flag)
 ;
 
 
 
 ALTER TABLE LINEUP_SUB
-   ADD FOREIGN KEY R_5 (lineup_no) REFERENCES LINEUP(lineup_no)
+	ADD FOREIGN KEY R_5 (lineup_no) REFERENCES LINEUP(lineup_no)
 ;
 
 
 
 ALTER TABLE MEMBER
-   ADD FOREIGN KEY R_6 (club_no) REFERENCES CLUB(club_no) on update cascade
+	ADD FOREIGN KEY R_6 (club_no) REFERENCES CLUB(club_no)
 ;
 
 
 
 ALTER TABLE RECORD
-   ADD FOREIGN KEY R_7 (game_no,game_flag) REFERENCES GAME(game_no,game_flag)
+	ADD FOREIGN KEY R_7 (game_no,game_flag) REFERENCES GAME(game_no,game_flag)
 ;
+
+
+
+
 
 
 
@@ -185,7 +188,7 @@ CREATE TABLE com_boast
 (
    com_boast_no          INTEGER NOT NULL auto_increment PRIMARY KEY,
    mem_no                INTEGER NOT NULL,
-   com_boast_writer     VARCHAR(20) NULL,
+   com_boast_writer 	 VARCHAR(20) NULL,
    com_boast_subject     VARCHAR(500) NULL,
    com_boast_content     VARCHAR(3000) NULL,
    com_boast_regdate     TIMESTAMP NULL default now(),
@@ -200,7 +203,7 @@ CREATE TABLE com_boast_reply
 (
    com_boast_re_no       INTEGER NOT NULL auto_increment PRIMARY KEY,
    mem_no                INTEGER NOT NULL,
-   com_boast_reply_writer   VARCHAR(20) NULL,
+   com_boast_reply_writer	VARCHAR(20) NULL,
    com_boast_re_content  VARCHAR(200) NULL,
    com_boast_re_regdate  TIMESTAMP NULL default now(),
    com_boast_re_pos      INTEGER NULL,
@@ -220,7 +223,7 @@ CREATE TABLE com_discussion_kor
    com_discussion_kor_regdate  TIMESTAMP NULL default now(),
    com_discussion_kor_count  INTEGER NULL default 0,
    mem_no                INTEGER NOT NULL,
-   com_discussion_kor_writer   VARCHAR(20) NULL
+   com_discussion_kor_writer	VARCHAR(20) NULL
 )
 ;
 
@@ -238,7 +241,7 @@ CREATE TABLE com_discussion_kor_reply
    com_discussion_kor_no  INTEGER NOT NULL,
    com_discussion_kor_re_group  INTEGER NULL,
    mem_no                INTEGER NOT NULL,
-   com_discussion_kor_re_writer   VARCHAR(20) NULL
+   com_discussion_kor_re_writer	VARCHAR(20) NULL
 )
 ;
 
@@ -254,7 +257,7 @@ CREATE TABLE com_discussion_world
    com_discussion_world_regdate  TIMESTAMP NULL default now(),
    com_discussion_world_count  INTEGER NULL default 0,
    mem_no                INTEGER NOT NULL,
-   com_discussion_world_writer   VARCHAR(20) NULL
+   com_discussion_world_writer	VARCHAR(20) NULL
 )
 ;
 
@@ -273,7 +276,7 @@ CREATE TABLE com_discussion_world_reply
    com_discussion_world_no  INTEGER NOT NULL,
    com_discussion_world_re_group  INTEGER NULL,
    mem_no                INTEGER NOT NULL,
-   com_discussion_world_re_writer   VARCHAR(20) NULL
+   com_discussion_world_re_writer	VARCHAR(20) NULL
 )
 ;
 
@@ -289,7 +292,7 @@ CREATE TABLE com_free
    com_free_regdate      TIMESTAMP NULL default now(),
    com_free_count        INTEGER NULL default 0,
    mem_no                INTEGER NOT NULL,
-   com_free_writer       VARCHAR(20) NULL
+   com_free_writer		 VARCHAR(20) NULL
 )
 ;
 
@@ -307,7 +310,7 @@ CREATE TABLE com_free_reply
    com_free_no           INTEGER NOT NULL,
    com_free_re_group     INTEGER NULL,
    mem_no                INTEGER NOT NULL,
-   com_free_re_writer    VARCHAR(20) NULL
+   com_free_re_writer	 VARCHAR(20) NULL
 )
 ;
 
@@ -323,7 +326,7 @@ CREATE TABLE com_gallery
    com_gallery_regdate   TIMESTAMP NULL default now(),
    com_gallery_count     INTEGER NULL default 0,
    mem_no                INTEGER NOT NULL,
-   com_gallery_writer    VARCHAR(20) NULL
+   com_gallery_writer	 VARCHAR(20) NULL
 )
 ;
 
@@ -340,7 +343,7 @@ CREATE TABLE com_gallery_reply
    com_gallery_no        INTEGER NOT NULL,
    com_gallery_re_group  INTEGER NULL,
    mem_no                INTEGER NOT NULL,
-   com_gallery_re_writer    VARCHAR(20) NULL
+   com_gallery_re_writer	 VARCHAR(20) NULL
 )
 ;
 
@@ -356,7 +359,7 @@ CREATE TABLE com_qna
    com_qna_content       VARCHAR(3000) NULL,
    com_qna_regdate       TIMESTAMP NULL default now(),
    com_qna_count         INTEGER NULL default 0,
-   com_qna_writer       VARCHAR(20) NULL
+   com_qna_writer	 	VARCHAR(20) NULL
 )
 ;
 
@@ -375,7 +378,7 @@ CREATE TABLE com_qna_reply
    com_qna_re_depth      INTEGER NULL,
    com_qna_no            INTEGER NOT NULL,
    com_qna_re_group      INTEGER NULL,
-   com_qna_re_writer    VARCHAR(20) NULL
+   com_qna_re_writer	 VARCHAR(20) NULL
 )
 ;
 
@@ -390,7 +393,7 @@ CREATE TABLE com_video
    com_video_regdate     TIMESTAMP NULL default now(),
    com_video_count       CHAR(18) NULL default 0,
    mem_no                INTEGER NOT NULL,
-   com_video_writer    VARCHAR(20) NULL
+   com_video_writer	 VARCHAR(20) NULL
 )
 ;
 
@@ -407,7 +410,7 @@ CREATE TABLE com_video_reply
    com_video_no          INTEGER NOT NULL,
    com_video_re_group    INTEGER NULL,
    mem_no                INTEGER NOT NULL,
-   com_video_re_writer    VARCHAR(20) NULL
+   com_video_re_writer	 VARCHAR(20) NULL
 )
 ;
 
@@ -536,6 +539,11 @@ ALTER TABLE com_video_reply
 
 
 
+
+
+
+
+
 CREATE TABLE main_notice
 (
    main_notice_no        INTEGER NOT NULL auto_increment PRIMARY KEY,
@@ -544,7 +552,7 @@ CREATE TABLE main_notice
    main_notice_content   VARCHAR(3000) NULL,
    main_notice_regdate   TIMESTAMP NULL default now(),
    main_notice_count     INTEGER NULL default 0,
-   main_notice_writer    VARCHAR(20) NULL
+   main_notice_writer	 VARCHAR(20) NULL
 )
 ;
 
@@ -561,7 +569,7 @@ CREATE TABLE main_notice_reply
    main_notice_re_pos    INTEGER NULL,
    main_notice_re_depth  INTEGER NULL,
    main_notice_re_group  INTEGER NULL,
-   main_norice_re_no     INTEGER NOT NULL auto_increment PRIMARY KEY,
+   main_notice_re_no     INTEGER NOT NULL auto_increment PRIMARY KEY,
    main_notice_re_writer VARCHAR(20) NULL
 )
 ;
@@ -573,7 +581,7 @@ CREATE TABLE main_notice_reply
 CREATE TABLE myclub_album
 (
    myclub_album_no       INTEGER NOT NULL auto_increment PRIMARY KEY,
-   club_no             INTEGER NULL,
+   club_no				 INTEGER NULL,
    mem_no                INTEGER NOT NULL,
    myclub_album_subject  VARCHAR(500) NULL,
    myclub_album_content  VARCHAR(3000) NULL,
@@ -605,7 +613,7 @@ CREATE TABLE myclub_album_reply
 CREATE TABLE myclub_free
 (
    myclub_free_no        INTEGER NOT NULL auto_increment PRIMARY KEY,
-   club_no             INTEGER NULL,
+   club_no				 INTEGER NULL,
    mem_no                INTEGER NOT NULL,
    myclub_free_subject   VARCHAR(500) NULL,
    myclub_free_content   VARCHAR(3000) NULL,
@@ -639,7 +647,7 @@ CREATE TABLE myclub_free_reply
 CREATE TABLE myclub_notice
 (
    myclub_notice_no      INTEGER NOT NULL auto_increment PRIMARY KEY,
-   club_no             INTEGER NULL,
+   club_no				 INTEGER NULL,
    mem_no                INTEGER NOT NULL,
    myclub_notice_subject  VARCHAR(500) NULL,
    myclub_notice_content  VARCHAR(3000) NULL,
@@ -673,7 +681,7 @@ CREATE TABLE myclub_notice_reply
 CREATE TABLE myclub_team
 (
    myclub_team_no        INTEGER NOT NULL auto_increment PRIMARY KEY,
-   club_no             INTEGER NULL,
+   club_no				 INTEGER NULL,
    mem_no                INTEGER NOT NULL,
    myclub_team_subject   VARCHAR(500) NULL,
    myclub_team_content   VARCHAR(3000) NULL,
@@ -706,7 +714,7 @@ CREATE TABLE myclub_team_reply
 CREATE TABLE myclub_video
 (
    myclub_video_no       INTEGER NOT NULL auto_increment PRIMARY KEY,
-   club_no             INTEGER NULL,
+   club_no				 INTEGER NULL,
    mem_no                INTEGER NOT NULL,
    myclub_video_subject  VARCHAR(500) NULL,
    myclub_video_content  VARCHAR(3000) NULL,
@@ -742,7 +750,7 @@ CREATE TABLE myclub_video_reply
 CREATE TABLE myclub_visitor
 (
    myclub_visitor_no     INTEGER NOT NULL auto_increment PRIMARY KEY,
-   club_no             INTEGER NULL,
+   club_no				 INTEGER NULL,
    mem_no                INTEGER NOT NULL,
    myclub_visitor_subject  VARCHAR(500) NULL,
    myclub_visitor_content  VARCHAR(3000) NULL,
@@ -767,7 +775,6 @@ CREATE TABLE myclub_visitor_reply
    myclub_visitor_writer   VARCHAR(20) NULL
 )
 ;
-
 
 
 
@@ -888,12 +895,6 @@ ALTER TABLE myclub_visitor_reply
 ALTER TABLE myclub_visitor_reply
    ADD FOREIGN KEY R_49 (myclub_visitor_no) REFERENCES myclub_visitor(myclub_visitor_no)
 ;
-
-
-ALTER TABLE challenge
-   ADD challenge_flag varchar(10) default "FALSE"
-;
-
 
 
 CREATE TABLE CLUB_MEMBER

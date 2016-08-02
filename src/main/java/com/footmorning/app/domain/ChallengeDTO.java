@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ChallengeDTO {
 
-	private int challeng_no;
+	private int challenge_no;
 	private int sender_club_no;
 	private int receiver_club_no;
 	private String challenge_content;
@@ -14,13 +14,13 @@ public class ChallengeDTO {
 	private String game_time;
 	private String game_addr;
 	private int club_ability;
+	private String challenge_flag;
 	
-	
-	public int getChalleng_no() {
-		return challeng_no;
+	public int getChallenge_no() {
+		return challenge_no;
 	}
-	public void setChalleng_no(int challeng_no) {
-		this.challeng_no = challeng_no;
+	public void setChallenge_no(int challenge_no) {
+		this.challenge_no = challenge_no;
 	}
 	public int getSender_club_no() {
 		return sender_club_no;
@@ -76,13 +76,28 @@ public class ChallengeDTO {
 	public void setClub_ability(int club_ability) {
 		this.club_ability = club_ability;
 	}
+	public String getChallenge_flag() {
+		return challenge_flag;
+	}
+	public void setChallenge_flag(String challenge_flag) {
+		this.challenge_flag = challenge_flag;
+	}
+//	@Override
+//	public String toString() {
+//		return "ChallengeDTO [challenge_no=" + challenge_no + ", sender_club_no=" + sender_club_no
+//				+ ", receiver_club_no=" + receiver_club_no + ", challenge_content=" + challenge_content + ", game_no="
+//				+ game_no + ", game_flag=" + game_flag + ", game_date=" + game_date + ", game_time=" + game_time
+//				+ ", game_addr=" + game_addr + ", club_ability=" + club_ability + ", challenge_flag=" + challenge_flag
+//				+ "]";
+//	}
 	@Override
 	public String toString() {
-		return "ChallengeDTO [challeng_no=" + challeng_no + ", sender_club_no=" + sender_club_no + ", receiver_club_no="
-				+ receiver_club_no + ", challenge_content=" + challenge_content + ", game_no=" + game_no
-				+ ", game_flag=" + game_flag + ", game_date=" + game_date + ", game_time=" + game_time + ", game_addr="
-				+ game_addr + ", club_ability=" + club_ability + "]";
+		return "{\"challenge_no\":" + challenge_no + ", \"sender_club_no\":" + sender_club_no
+				+ ", \"receiver_club_no\":" + receiver_club_no + ", \"challenge_content\":" + "\"" + challenge_content + "\""
+				+ ", \"game_no\":" + game_no + ", \"game_flag\":" + "\"" + game_flag + "\"" + ", \"game_date\":" + "\"" + game_date + "\""
+				+ ", \"game_time\":" + "\"" + game_time + "\""
+				+ ", \"game_addr\":" + "\"" + game_addr + "\"" + ", \"club_ability\":" + club_ability 
+				+ ", \"challenge_flag\":" + "\"" + challenge_flag +"\""
+				+ "}";
 	}
-	
-	
 }

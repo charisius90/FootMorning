@@ -43,7 +43,7 @@
 				<li><a href="javascript:;" data-toggle="collapse"
 					data-target="#operationmgr"> 운영관리 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
 					<ul id="operationmgr" class="collapse">
-						<li><a href="#">도전장관리</a></li>
+						<li><a href="/myclubMgr/myclubChallengeMgr?no=${USER_KEY.club_no}">도전장관리</a></li>
 					</ul>
 				</li>				
 				<li><a href="javascript:;" data-toggle="collapse"

@@ -6,8 +6,21 @@
 <mapper namespace="com.footmorning.mappers.MatchMapper">
 	
 	<insert id="register" parameterType="MatchDTO">
-		INSERT INTO game(game_date,game_time,game_addr, game_flag, club_no, club_ability) 
+		INSERT INTO game(game_no, game_date,game_time,game_addr, game_flag, club_no, club_ability) 
 		VALUES (
+		#{game_no},
+		#{game_date},
+		#{game_time},
+		#{game_addr},
+		#{game_flag},
+		#{club_no},
+		#{club_ability});
+	</insert>
+	
+	<insert id="registerRevice" parameterType="MatchDTO">
+		INSERT INTO game(game_no, game_date,game_time,game_addr, game_flag, club_no, club_ability) 
+		VALUES (
+		#{game_no},
 		#{game_date},
 		#{game_time},
 		#{game_addr},
@@ -17,11 +30,32 @@
 	</insert>
 	
 	<select id="listAll" resultType="MatchDTO">
-	
-	
 		select * from game inner join club on game.club_no=club.club_no
-		where game_no > 0 order by game_no desc;	
-		
+		where game_no not in (select game_no from game where game_flag='AWAY') order by game_no desc;	
 	</select>
+	
+	<select id="myListWithClubNo" resultType="MatchDTO">
+		select distinct g.* from game g, challenge c 
+		where g.club_no=#{club_no} and (c.sender_club_no=#{club_no} or c.receiver_club_no=#{club_no}) and c.challenge_flag='YES' order by game_no desc;
+	</select>
+	
+	<select id="yourListWithClubNo" resultType="MatchDTO">
+		select distinct g.* from game g, challenge c 
+		where g.club_no=#{club_no} and (c.sender_club_no=#{club_no} or c.receiver_club_no=#{club_no}) and c.challenge_flag='YES' order by game_no desc;
+	</select>
+	
+	<select id="listWithClubNo" resultType="MatchDTO">
+		select distinct g.* from game g, challenge c where g.game_no in 
+		(select g.game_no from game g, challenge c where g.club_no=#{club_no} and (c.sender_club_no=#{club_no} or c.receiver_club_no=#{club_no}) 
+		and c.challenge_flag in ('YES', 'CANCLE')) order by game_date desc, game_time desc, game_flag desc;
+	</select>
+	
+	<select id="checkGameNo" resultType="String">
+		select case when max(game_no) is null then 0 else max(game_no) end from game;
+	</select>
+	
+	<update id="updateCancle">
+		UPDATE GAME SET `club_ability`=0 WHERE `game_no`=#{game_no};
+	</update>
 	
 </mapper>

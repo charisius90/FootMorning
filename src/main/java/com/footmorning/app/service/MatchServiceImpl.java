@@ -22,7 +22,32 @@ public class MatchServiceImpl implements MatchService {
 	}
 
 	@Override
+	public void matchReciveRegister(MatchDTO dto) throws Exception {
+		dao.matchReciveRegister(dto);
+	}
+
+	@Override
 	public List<MatchDTO> matchListAll() throws Exception {
 		return dao.matchListAll();
+	}
+
+	@Override
+	public List<MatchDTO> myMatchListWithClubNo(int club_no) throws Exception {
+		return dao.myMatchListWithClubNo(club_no);
+	}
+	
+	@Override
+	public List<MatchDTO> yourMatchListWithClubNo(int club_no) throws Exception {
+		return dao.yourMatchListWithClubNo(club_no);
+	}
+	
+	@Override
+	public List<MatchDTO> matchListWithClubNo(int club_no) throws Exception {
+		return dao.matchListWithClubNo(club_no);
+	}
+
+	@Override
+	public void matchDelete(int game_no) throws Exception {
+		dao.matchDelete(game_no);
 	}
 }

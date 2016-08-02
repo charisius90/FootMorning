@@ -32,13 +32,9 @@ public class MatchingController {
 	}
 	
 	@RequestMapping(value="/matching/register",method=RequestMethod.POST)
-	public String matchingRegister(MatchDTO dto, HttpServletRequest req,Model model){
-//		System.out.println(dto.toString());
-		try {
-			service.matchRegister(dto);
-		} catch (Exception e) {
-			System.out.println("matchingfailed...");
-		}
+	public String matchingRegister(MatchDTO dto, HttpServletRequest req,Model model)  throws Exception{
+		System.out.println("등록시도");
+		service.matchRegister(dto);
 		
 		return"redirect:/matching/main";
 	}
