@@ -1,5 +1,7 @@
 package com.footmorning.app.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,8 +89,7 @@ public class MyclubController {
 		}
 	}
 	@RequestMapping(value="myclubCashBookMgr", method=RequestMethod.POST)
-	public @ResponseBody List myclubCashBookMgrComplete(@RequestBody List<Map<String, Object>> list, String cmd, HttpServletRequest req){
-		List<MyclubCashBookDTO> listAll = null;
+	public String myclubCashBookMgrComplete(@RequestBody List<Map<String, Object>> list, String cmd, HttpServletRequest req){
 		try {
 			if(cmd.equals("update")){
 				logger.info("UPDATE - CASHBOOK LIST : " + list);
@@ -120,6 +121,15 @@ public class MyclubController {
 				dto.setClub_no(club_no);
 				
 				myclubCashBookService.insert(dto);
+				
+				ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+				System.out.println(club);
+				List<MyclubCashBookDTO> listAll = myclubCashBookService.listAllWithClubNo(Integer.parseInt(club.getClub_no()));
+				StringBuilder result = new StringBuilder("0");
+				for(MyclubCashBookDTO book : listAll){
+					result.append(" " + book.getCashbook_no());
+				}
+				return result.toString();
 			}
 			else if(cmd.equals("del")){
 				logger.info("DEL - CASHBOOK LIST : " + list);
@@ -128,14 +138,11 @@ public class MyclubController {
 				myclubCashBookService.delete(cashbook_no);
 			}
 			
-			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
-			System.out.println(club);
-			listAll = myclubCashBookService.listAllWithClubNo(Integer.parseInt(club.getClub_no()));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		return listAll;
+		return null;
 	}
 
 	
