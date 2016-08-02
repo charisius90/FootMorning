@@ -43,6 +43,9 @@
 					<li><a href="/myclub/myclubMain?no=${USER_KEY.club_no}">MYCLUB</a></li>
 				</c:if>
 				<li><a href="/com/boast/main">커뮤니티</a></li>
+				<%-- <c:if test="${ADMIN!=null}"> --%>
+					<li><a href="/admin/adminMain">관리</a></li>
+				<%-- </c:if> --%>
 			</ul>
 		</div>
 	</div>

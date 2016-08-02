@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,15 +21,15 @@
 		<div class="navbar-header"><a class="navbar-brand" href="#">로고들어갈위치</a></div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav nav-justified" style="margin-top:10px" id="main-navbar">
-				<li><a href="../admin/adminhome.jsp">관리 홈</a></li>
+				<li><a href="/admin/adminMain">관리 홈</a></li>
 				
 				<!-- 직원 메뉴 -->
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">직원</a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="../admin/adminInquriyMgr.jsp">전체 직원 관리</a></li>
+						<li><a href="/admin/adminEmpAll">전체 직원 관리</a></li>
 			            <li class="divider"></li>
-						<li><a href="../admin/adminInquriyAdd.jsp">직원 등록</a></li>
+						<li><a href="/admin/adminEmpAdd">직원 등록</a></li>
 					</ul>
 				</li>
 				
@@ -36,9 +37,9 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">회원</a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="../admin/adminMemberAll.jsp">전체 회원 관리</a></li>
+						<li><a href="/admin/adminMemberAll">전체 회원 관리</a></li>
 			            <li class="divider"></li>
-						<li><a href="../admin/adminMemberDeclaration.jsp">신고 접수 관리</a></li>
+						<li><a href="/admin/adminMemberDeclaration">신고 접수 관리</a></li>
 					</ul>
 				</li>
 				
@@ -46,9 +47,9 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">클럽</a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="../admin/adminClubAll.jsp">전체 클럽 관리</a></li>
+						<li><a href="/admin/adminClubAll">전체 클럽 관리</a></li>
 			            <li class="divider"></li>
-						<li><a href="../admin/adminClubDeclaration.jsp">신고 접수 관리</a></li>
+						<li><a href="/admin/adminClubDeclaration">신고 접수 관리</a></li>
 					</ul>
 				</li>
 				
@@ -56,11 +57,11 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">커뮤니티</a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="../admin/adminCommunityAll.jsp">전체 게시판 관리</a></li>
+						<li><a href="/admin/adminCommunityAll">전체 게시판 관리</a></li>
 			            <li class="divider"></li>
-						<li><a href="../admin/adminCommunityDeclaration.jsp">신고 접수 관리</a></li>
+						<li><a href="/admin/adminCommunityDeclaration">신고 접수 관리</a></li>
 			            <li class="divider"></li>
-						<li><a href="../admin/adminCommunityQ&A.jsp">Q&A 관리</a></li>
+						<li><a href="/admin/adminCommunityQnA">Q&A 관리</a></li>
 					</ul>
 				</li>
 				
@@ -68,9 +69,9 @@
 				<li class="dropdown">
 				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">꾸미기</a>
 		          <ul class="dropdown-menu" role="menu">
-		            <li><a href="../admin/adminadmgr.jsp">광고 관리</a></li>
+		            <li><a href="/admin/adminAd">광고 관리</a></li>
 		            <li class="divider"></li>
-		            <li><a href="../admin/admindesignmgr.jsp">디자인 관리</a></li>
+		            <li><a href="/admin/adminDesign">디자인 관리</a></li>
 		          </ul>
         		</li>
       		</ul>

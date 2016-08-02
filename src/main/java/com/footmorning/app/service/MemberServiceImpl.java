@@ -1,5 +1,7 @@
 package com.footmorning.app.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -9,7 +11,7 @@ import com.footmorning.app.persistence.MemberDAO;
 
 /**
  * 
- * @author ±è¼Ò¿µ
+ * @author ï¿½ï¿½Ò¿ï¿½
  *
  */
 
@@ -61,6 +63,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDTO getWithNo(Integer mem_no) throws Exception {
 		return memberDAO.getWithNo(mem_no);
+	}
+
+	@Override
+	public List<MemberDTO> listAll() throws Exception {
+		return memberDAO.listAll();
 	}
 
 }

@@ -1,15 +1,18 @@
 package com.footmorning.app.persistence;
 
+import java.util.List;
+
 import com.footmorning.app.domain.MemberDTO;
 
 /**
  * 
- * @author ±è¼Ò¿µ
+ * @author ï¿½ï¿½Ò¿ï¿½
  *
  */
 
 public interface MemberDAO {
 	public String getTime();
+	public List<MemberDTO> listAll() throws Exception;
 	public void insertMember(MemberDTO dto);
 	public void updateMember(MemberDTO dto);
 	public void deleteMember(Integer mem_no);

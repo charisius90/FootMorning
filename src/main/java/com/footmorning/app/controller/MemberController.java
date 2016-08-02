@@ -129,6 +129,7 @@ public class MemberController {
 	
 	/**
 	 * 비밀번호 찾기 페이지(임시비밀번호 생성 후 이메일 전송)
+	 * @author 김소영
 	 */
 	@Autowired
 	private EmailSender emailSender;

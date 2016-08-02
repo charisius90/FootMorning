@@ -1,9 +1,12 @@
 package com.footmorning.app.service;
 
+import java.util.List;
+
 import com.footmorning.app.domain.MemberDTO;
 
 public interface MemberService {
 	public String getTime();
+	public List<MemberDTO> listAll() throws Exception;
 	public void insertMember(MemberDTO dto);
 	public void updateMember(MemberDTO dto);
 	public void deleteMember(Integer mem_no);

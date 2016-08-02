@@ -8,6 +8,10 @@
 		select now()
 	</select>
 	
+	<select id="listAll" resultType="MemberDTO">
+		select * from member
+	</select>
+	
 	<select id="getMemberInfo" resultType="com.footmorning.app.domain.MemberDTO">
 		select * from member where mem_email=#{mem_email}
 	</select>

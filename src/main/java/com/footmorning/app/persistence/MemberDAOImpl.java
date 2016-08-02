@@ -1,6 +1,7 @@
 package com.footmorning.app.persistence;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -11,7 +12,7 @@ import com.footmorning.app.domain.MemberDTO;
 
 /**
  * 
- * @author ±è¼Ò¿µ
+ * @author ï¿½ï¿½Ò¿ï¿½
  *
  */
 @Repository
@@ -82,6 +83,11 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public MemberDTO getWithNo(Integer mem_no) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + ".getWithNo", mem_no);
+	}
+
+	@Override
+	public List<MemberDTO> listAll() throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listAll");
 	}
 
 }

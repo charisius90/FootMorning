@@ -22,12 +22,12 @@
 						<td>회원검색</td>
 						<td>
 						<select class="form-control">
-							<option>아이디</option>
+							<option>E-Mail</option>
 							<option>이름</option>
 							<option>차단여부</option>
 						</select>
 						<td>
-						<td><input type="text" class="form-control" size="40" placeholder="아이디/이름/직무로 검색가능" id=""></td>
+						<td><input type="text" class="form-control" size="40" placeholder="E-Mail/이름으로 검색가능" id=""></td>
 						<td><button class="btn btn-default">검색</button></td>
 						<td><button class="btn btn-default">상세검색<span class="caret"></span></button>
 					</tr>
@@ -39,7 +39,7 @@
 		<form method="post" action="">
 			<table class="table table-bordered">
 				<tr style="background-color:#dddddd;">
-					<td><input type="checkbox" name="" value="" /> 이름 (아이디)</td>
+					<td><input type="checkbox" name="" value="" /> E-Mail</td>
 					<td>소속 클럽</td>
 					<td>가입일</td>
 					<td>최종방문일</td>
@@ -48,66 +48,18 @@
 					<td>성별</td>
 					<td>차단여부</td>
 				</tr>
+			<c:forEach items="${list}" var="dto">
 				<tr>
-					<td><input type="checkbox" name="" value="" /> 박수항(soo1)</td>
-					<td>맨유</td>
-					<td>2016.07.18</td>
-					<td>2016.07.18</td>
-					<td>1</td>
-					<td>1</td>
-					<td>남</td>
-					<td>차단</td>
+					<td><input type="checkbox" name="" value="" />${dto.mem_email}</td>
+					<td>${dto.mem_club_no}</td>
+					<td>${dto.mem_regdate}</td>
+					<td>${dto.mem_logdate}</td>
+					<td>${}</td>
+					<td>${}</td>
+					<td>${dto.mem_gender}</td>
+					<td>${}</td>
 				</tr>
-				<tr>
-					<td><input type="checkbox" name="" value="" /> 박수항(soo2)</td>
-					<td>첼시</td>
-					<td>2016.07.18</td>
-					<td>2016.07.18</td>
-					<td>1</td>
-					<td>1</td>
-					<td>남</td>
-					<td>정상</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" name="" value="" /> 박수항(soo3)</td>
-					<td>아스날</td>
-					<td>2016.07.18</td>
-					<td>2016.07.18</td>
-					<td>1</td>
-					<td>1</td>
-					<td>남</td>
-					<td>정상</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" name="" value="" /> 박수항(soo4)</td>
-					<td>토트넘</td>
-					<td>2016.07.18</td>
-					<td>2016.07.18</td>
-					<td>1</td>
-					<td>1</td>
-					<td>남</td>
-					<td>정상</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" name="" value="" /> 박수항(soo5)</td>
-					<td>맨시티</td>
-					<td>2016.07.18</td>
-					<td>2016.07.18</td>
-					<td>1</td>
-					<td>1</td>
-					<td>남</td>
-					<td>정상</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" name="" value="" /> 박수항(soo6)</td>
-					<td>QPR</td>
-					<td>2016.07.18</td>
-					<td>2016.07.18</td>
-					<td>1</td>
-					<td>1</td>
-					<td>남</td>
-					<td>정상</td>
-				</tr>
+			</c:forEach>
 			</table>
 			<hr/>
 			<table>
