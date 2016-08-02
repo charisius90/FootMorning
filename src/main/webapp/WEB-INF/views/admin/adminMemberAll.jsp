@@ -54,10 +54,10 @@
 					<td>${dto.mem_club_no}</td>
 					<td>${dto.mem_regdate}</td>
 					<td>${dto.mem_logdate}</td>
-					<td>${}</td>
-					<td>${}</td>
-					<td>${dto.mem_gender}</td>
-					<td>${}</td>
+<%-- 					<td>${}</td> --%>
+<%-- 					<td>${}</td> --%>
+<%-- 					<td>${dto.mem_gender}</td> --%>
+<%-- 					<td>${}</td> --%>
 				</tr>
 			</c:forEach>
 			</table>
