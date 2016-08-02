@@ -239,11 +239,7 @@
 			contentType : "application/json; charset=utf-8",
 			data:dataJSON,
 			success:function(data){
-				console.log("data - " + data);
-				for(var i=0; i<data.length; i++){
-					console.log("data[i] - " + data[i].get);
-				}
-				console.log(data.length + "줄 추가");
+				var arr_cashbook_no = data.split(" ");
 			}
 		});
 	}
