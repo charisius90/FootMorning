@@ -20,12 +20,11 @@ public class ChallengeController {
 
 	@RequestMapping(value="/challenge/register",method=RequestMethod.POST)
 	public String ChallengeRegister(ChallengeDTO dto,RedirectAttributes rttr) throws Exception{
-		
+
 		System.out.println(dto.toString());
-		service.ChallengRegister(dto);
+		service.ChallengeRegister(dto);
 		
 		rttr.addFlashAttribute("msg", "SUCCESS");
-		
 		
 		return "redirect:/matching/main";
 	}

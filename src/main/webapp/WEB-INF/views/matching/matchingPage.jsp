@@ -13,38 +13,42 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="../resources/reply_js/date.js"></script>
 <script>
-// 	$(function(){
-// 		$("#datepicker, #datepicker2").datepicker(
-// 			{
-// 				dateFormat: "yyyy/mm/dd",
-// 				changeMonth: true,
-// 				changeYear: true,
-// 				minDate: "0",
-// 				maxDate: "+1y",
-// 			}		
-// 		);
-// 	});
-	function fnModal(game_no ,game_date , game_time , game_addr , club_name, club_no){
-		
-// 		alert("date?"+game_date);
-// 		alert("time?"+game_time);
-// 		alert("addr?"+game_addr);
-// 		alert("gameNo?"+club_name+","+game_no);
-		
-		//open modal
-		$('#send_chellenge_modal').modal('show');
-		
-		$("#game_no").val(game_no);
-		$("#challengeDate").text(game_date);
-		$("#challengeTime").text(game_time);
-		$("#challengeAddr").text(game_addr);
-		//추후에 
-		$("#receiver_club_name").val(club_name);
-		$("#receiver_club_no").val(club_no);
-		
-		
-	}
+//    $(function(){
+//       $("#datepicker, #datepicker2").datepicker(
+//          {
+//             dateFormat: "yyyy/mm/dd",
+//             changeMonth: true,
+//             changeYear: true,
+//             minDate: "0",
+//             maxDate: "+1y",
+//          }      
+//       );
+//    });
+   function fnModal(game_no ,game_date , game_time , game_addr , club_name, club_no){
+      
+//       alert("date?"+game_date);
+//       alert("time?"+game_time);
+//       alert("addr?"+game_addr);
+//       alert("gameNo?"+club_name+","+game_no);
+	  var game_date = game_date;
+	  game_date = new Date().toString('yyyy-MM-dd') ;
+
+      //open modal
+      $('#send_chellenge_modal').modal('show');
+      
+      $("#game_no").val(game_no);
+      
+      $("#challengeDate").val(game_date);
+      $("#challengeTime").val(game_time);
+      $("#challengeAddr").val(game_addr);
+      //추후에 
+      $("#receiver_club_name").val(club_name);
+      $("#receiver_club_no").val(club_no);
+      
+      
+   }
 </script>
 </head>
 <body>
@@ -172,37 +176,41 @@
 						aria-hidden="true">×</button>
 					<h3 id="myModalLabel">도전장 보내기</h3>
 				</div>
-				<form method="post" action="/challenge/register">
-				
-				
-					<input type="hidden" name="game_no" id="game_no"/>
-					<input type="hidden" name="receiver_club_no" id="receiver_club_no"/>
-					<input type="hidden" name="sender_club_no" id="sender_club_no" value="${USER_KEY.club_no}"/>
-					<input type="hidden" name="game_flag" id="game_flag" value="AWAY"/>
-					
-					
-					<div class="modal-body" align="center">
-						<div>
-							날짜&nbsp;<div id="challengeDate"></div><br/><br/>
-							시간&nbsp;<div id="challengeTime"></div><br/><br/>
-							지역&nbsp;<div id="challengeAddr"></div><br/><br/>
-							HOME팀&nbsp;<input type="text" id="receiver_club_name"/><br/><br/>
-							AWAY팀&nbsp;<input type="text" id="sender_club_name" value="${USER_KEY.club_no}"/><br/><br/>
-							실력&nbsp;<select name="club_ability" style="width:170px">
-										<option value="1">★</option>
-										<option value="2">★★</option>
-										<option value="3">★★★</option>
-										<option value="4">★★★★</option>
-										<option value="5">★★★★★</option>
-							</select><br/><br/>
-							<textarea name="challenge_content" rows="10" cols="20" style="width: 170px" placeholder="한마디"></textarea>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-primary" type="submit">보내기</button>
-						<button class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
-					</div>
-				</form>
+				            <form method="post" action="/challenge/register">
+            
+            
+               <input type="hidden" name="game_no" id="game_no"/>
+               <input type="hidden" name="receiver_club_no" id="receiver_club_no"/>
+               <input type="hidden" name="sender_club_no" id="sender_club_no" value="${USER_KEY.club_no}"/>
+               <input type="hidden" name="game_flag" id="game_flag" value="AWAY"/>
+               
+               
+               <div class="modal-body">
+                  <div class="container-fluid">
+                     <div class="row">
+                        <div class="col-md-10">
+			                        날짜&nbsp;<input class="form-control" type="text" id="challengeDate" readonly="readonly" value=""/><br/>
+			                        시간&nbsp;<input class="form-control" type="text" id="challengeTime" readonly="readonly"><br/>
+			                        지역&nbsp;<input class="form-control" type="text" id="challengeAddr" readonly="readonly"><br/>
+                        HOME팀&nbsp;<input class="form-control" type="text" id="receiver_club_name" readonly="readonly"/><br/>
+                        AWAY팀&nbsp;<input class="form-control" type="text" id="sender_club_name" value="${USER_KEY.club_no}"readonly="readonly"/><br/>
+                 	       실력&nbsp;<select class="form-control" name="club_ability" style="width:170px">
+                                 <option value="1">★</option>
+                                 <option value="2">★★</option>
+                                 <option value="3">★★★</option>
+                                 <option value="4">★★★★</option>
+                                 <option value="5">★★★★★</option>
+                        </select><br/>
+                        <textarea class="form-control" name="challenge_content" rows="5" cols="50" style="width: 100%" placeholder="한마디"></textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button class="btn btn-primary" type="submit">보내기</button>
+                  <button class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
+               </div>
+            </form>
 			</div>
 		</div>
 	</div>

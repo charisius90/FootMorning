@@ -1,5 +1,7 @@
 package com.footmorning.app.persistence;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -16,10 +18,27 @@ public class ChallengeDAOImpl implements ChallengeDAO {
 	private SqlSession SqlSession;
 	
 	@Override
-	public void ChallengRegister(ChallengeDTO dto) throws Exception {
-		
+	public void ChallengeRegister(ChallengeDTO dto) throws Exception {
 		SqlSession.insert(NAMESPASE+".register", dto);
-		
+	}
+	
+	@Override
+	public List<ChallengeDTO> SendChallengeListAll(int no) throws Exception {
+		return SqlSession.selectList(NAMESPASE+".sendListAll", no);
+	}
+	
+	@Override
+	public List<ChallengeDTO> ReciveChallengeListAll(int no) throws Exception {
+		return SqlSession.selectList(NAMESPASE+".reciveListAll", no);
 	}
 
+	@Override
+	public boolean yesChallenge(int challenge_no) throws Exception {
+		return SqlSession.update(NAMESPASE + ".updateYes", challenge_no) > 0;
+	}
+
+	@Override
+	public boolean noChallenge(int challenge_no) throws Exception {
+		return SqlSession.update(NAMESPASE + ".updateNo", challenge_no) > 0;
+	}
 }

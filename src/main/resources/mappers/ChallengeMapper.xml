@@ -17,4 +17,31 @@
 	#{club_ability});
 	</insert>
 	
+	<select id="listAll" resultType="ChallengeDTO">
+		select ch.*, ga.game_date, ga.game_time, ga.game_addr from challenge ch inner join game ga on ch.game_no = ga.game_no
+		where ch.receiver_club_no=#{no} order by ch.game_no desc;
+	</select>
+	
+	<select id="sendListAll" resultType="ChallengeDTO">
+		select distinct ch.*, ga.game_date, ga.game_time, ga.game_addr from challenge ch inner join game ga on ch.game_no = ga.game_no
+		where ch.sender_club_no=#{no} order by ch.game_no desc;
+	</select>
+	
+	<select id="reciveListAll" resultType="ChallengeDTO">
+		select distinct ch.*, ga.game_date, ga.game_time, ga.game_addr from challenge ch inner join game ga on ch.game_no = ga.game_no
+		where ch.receiver_club_no=#{no} order by ch.game_no desc;
+	</select>
+	
+	<update id="updateYes">
+		UPDATE CHALLENGE SET `challenge_flag`='YES' WHERE `challenge_no`=#{challenge_no};
+	</update>
+	
+	<update id="updateNo">
+		UPDATE CHALLENGE SET `challenge_flag`='NO' WHERE `challenge_no`=#{challenge_no};
+	</update>
+	
+	<update id="updateCancle">
+		UPDATE CHALLENGE SET `challenge_flag`='CANCLE' WHERE `game_no`=#{game_no};
+	</update>
+	
 </mapper>
