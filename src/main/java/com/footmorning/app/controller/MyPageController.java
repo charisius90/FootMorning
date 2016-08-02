@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.MemberDTO;
@@ -17,7 +19,7 @@ import com.footmorning.app.service.MemberService;
 
 /**
  * 
- * @author ±è¼Ò¿µ
+ * @author ï¿½ï¿½Ò¿ï¿½
  *
  */
 @Controller
@@ -46,6 +48,8 @@ public class MyPageController {
 		service.updateMember(dto);
 		logger.info("mypageProfileUpdate : " + dto.toString());
 		
+		WebUtils.setSessionAttribute(req, "USER_KEY", dto);
+		
 		return "redirect:/mypage/myPageProfile";
 	}
 	
@@ -58,7 +62,7 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value="myPagePW", method=RequestMethod.POST)
-	public String myPagePwUpdate(String mem_oldPw, String mem_newPw, String mem_newPw_check, HttpServletRequest req){
+	public String myPagePwUpdate(String mem_oldPw, String mem_newPw, String mem_newPw_check, HttpServletRequest req, RedirectAttributes rttr){
 		HttpSession session = req.getSession();
 		
 		MemberDTO dto = (MemberDTO)session.getAttribute("USER_KEY");
@@ -71,12 +75,12 @@ public class MyPageController {
 				return "redirect:/member/memberLogin";
 			}
 			else{
-				System.out.println("»õ ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇÏ¼¼¿ä.");
-				return "/mypage/myPagePW";
+				rttr.addFlashAttribute("msg", "ìƒˆ ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•˜ì„¸ìš”.");
+				return "redirect:/mypage/myPagePW";
 			}
 		}
-		System.out.println("ÇöÀç ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù.");
-		return "/mypage/myPagePW";
+		rttr.addFlashAttribute("msg", "í˜„ì¬ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
+		return "redirect:/mypage/myPagePW";
 	}
 	
 }

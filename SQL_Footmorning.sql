@@ -918,8 +918,8 @@ CREATE TABLE CLUB_MEMBER
 CREATE TABLE CLUB_CONFIG
 (
 	config_no			 int auto_increment primary key,
-    config_reject_from	 date default '2000-01-01',
-	config_reject_to	 date default '2000-01-01',
+    config_reject_from	 date default '1000-01-01',
+	config_reject_to	 date default '1000-01-01',
     config_gender		 varchar(10) default 'BOTH',
     config_birth_from	 date default '1000-01-01',
     config_birth_to		 date default '9999-12-31',

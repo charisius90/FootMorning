@@ -1,6 +1,8 @@
 package com.footmorning.app.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
+import com.footmorning.app.domain.ClubConfigDTO;
 import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.ClubMemberDTO;
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.domain.MyclubCashBookDTO;
+import com.footmorning.app.service.ClubConfigService;
 import com.footmorning.app.service.ClubMemberService;
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MemberService;
@@ -44,6 +48,8 @@ public class MyclubController {
 	private MyclubCashBookService myclubCashBookService;
 	@Autowired
 	private ClubMemberService clubMemberService;
+	@Autowired
+	private ClubConfigService clubConfigService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MyclubController.class);
 	
@@ -155,7 +161,7 @@ public class MyclubController {
 	 */
 	public static final String CLUB_MEM_FLAG_DEFAULT = "FALSE"; // 이게 가입 신청서라는 표시를 하는 플래그
 	/**
-	 * @Author 박수항
+	 * @Author 박수항, 김소영
 	 * 가입신청 테스트용(컨트롤러 위치 변경해야함)
 	 */
 	@RequestMapping(value="clubRequest", method=RequestMethod.POST)
@@ -172,9 +178,34 @@ public class MyclubController {
 				}
 			}
 			else{
-				dto.setClub_mem_flag(CLUB_MEM_FLAG_DEFAULT);
-				clubMemberService.insert(dto);
-				rttr.addFlashAttribute("msg", "가입신청이 완료되었습니다.");
+				SimpleDateFormat fm = new SimpleDateFormat("yy-mm-dd");
+
+				String mem_birth = dto.getMem_birth();
+				Date birthDate = fm.parse(mem_birth);
+				
+				ClubConfigDTO clubConfig = clubConfigService.getWithClubNo(Integer.parseInt((dto.getClub_no())));
+				System.out.println("clubRequest : " + clubConfig.toString());
+				Date birthFrom = fm.parse(clubConfig.getConfig_birth_from());
+				Date birthTo = fm.parse(clubConfig.getConfig_birth_to());
+				
+				Date today = new Date();
+				Date rejectFrom = fm.parse(clubConfig.getConfig_reject_from());
+				Date rejectTo = fm.parse(clubConfig.getConfig_reject_to());
+
+				if(today.getTime() > rejectFrom.getTime() && today.getTime() < rejectTo.getTime()){
+					rttr.addFlashAttribute("msg", "현재는 가입신청을 받지 않는 기간입니다.");
+				}
+				else if(birthDate.getTime() < birthFrom.getTime() && birthDate.getTime() > birthTo.getTime()){
+					rttr.addFlashAttribute("msg", "가입조건에 맞지 않는 연령입니다.");
+				}
+				else if(!clubConfig.getConfig_gender().equals("BOTH") && !dto.getMem_gender().toUpperCase().equals(clubConfig.getConfig_gender())){
+					rttr.addFlashAttribute("msg", "가입조건에 맞지 않는 성별입니다.");
+				}
+				else{
+					dto.setClub_mem_flag(CLUB_MEM_FLAG_DEFAULT);
+					clubMemberService.insert(dto);
+					rttr.addFlashAttribute("msg", "가입신청이 완료되었습니다.");
+				}
 			}
 		}
 		catch(Exception e){

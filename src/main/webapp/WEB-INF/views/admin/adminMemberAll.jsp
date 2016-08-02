@@ -44,7 +44,7 @@
 		<form method="post" action="">
 			<table class="table table-bordered">
 				<tr style="background-color:#dddddd;">
-					<td><input type="checkbox" name="" value="" />&nbsp;&nbsp;E-Mail</td>
+					<td><input id="checkAll" type="checkbox"/>&nbsp;&nbsp;E-Mail</td>
 					<td>이름</td>
 					<td>소속 클럽</td>
 					<td>가입일</td>
@@ -56,7 +56,7 @@
 				</tr>
 			<c:forEach items="${list}" var="dto">
 				<tr>
-					<td><input type="checkbox" name="" value="" />&nbsp;&nbsp;${dto.mem_email}</td>
+					<td><input type="checkbox" name="mem_no" value="${dto.mem_no}" />&nbsp;&nbsp;${dto.mem_email}</td>
 					<td>${dto.mem_name}</td>
 					<td>${dto.club_no}</td>
 					<td>${dto.mem_regdate}</td>
@@ -107,8 +107,27 @@
 		
 	</div><!-- /.row -->
 </div><!-- /.container -->
-
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 <script>
+	$(function(){
+		// 전체선택에 체크한 경우 변환
+		$("#checkAll").click(function(){
+			var check = $(this).prop("checked");
+			if(check){
+				$("input:checkbox").each(function(i, e){
+					$(e).prop("checked", true);
+				})
+			}
+			else{
+				$("input:checkbox").each(function(i, e){
+					$(e).prop("checked", false);
+				})
+			}
+		});
+	});
+
 	$('#searchBtn').on("click", function(event) {
 	
 		// 검색옵션 값 가져오기
@@ -121,8 +140,5 @@
 	});
 
 </script>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

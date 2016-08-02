@@ -8,8 +8,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원정보</title>
 <link href="../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css"
-	rel="stylesheet">
+<link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <style>
 	tr,td {padding:15px;}
 	table{border-spacing:10px;}
@@ -92,13 +93,19 @@
 			</div>
 		</div>
 	</div>
-	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script>
-/* 현재 접속중인 회원의 등록되있는 성별값을 가져와서 라디오 버튼에 체크  */
-$(document).ready(
+	//데이트피커 연결
+	var birth = $("[name=mem_birth]").datepicker({
+		dateFormat:"yy-mm-dd",
+		changeMonth:true,
+		changeYear:true,
+		yearRange: "1930:2016"
+	});
+
+	// 현재 접속중인 회원의 등록되있는 성별값을 가져와서 라디오 버튼에 체크
+	$(document).ready(
 		function(){
 			var gender = "${USER_KEY.mem_gender}"
 			
