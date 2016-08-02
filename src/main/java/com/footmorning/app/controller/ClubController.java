@@ -1,5 +1,6 @@
 package com.footmorning.app.controller;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.footmorning.app.domain.ClubMemberDTO;
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.service.ClubMemberService;
 import com.footmorning.app.service.ClubService;
+import com.footmorning.app.service.MainNoticeService;
 import com.footmorning.app.service.MemberService;
 import com.footmorning.app.util.ClubPageMaker;
 import com.footmorning.app.util.SearchClubCriteria;
@@ -30,7 +32,8 @@ public class ClubController {
 	private MemberService memberService;
 	@Autowired
 	private ClubMemberService clubMemberService;
-	
+	@Inject
+	private MainNoticeService MainNoticeService;
 	// 회원 등급 파이널 변수 모음
 	public static final String GRADE_ADMIN = "0"; // 서비스 운영진
 	public static final String GRADE_MASTER = "1"; // 클럽마스터
@@ -40,7 +43,7 @@ public class ClubController {
 	public static final String GRADE_NORMAL = "5"; // 일반회원
 	
 	@RequestMapping("clubList")
-	public void listGET(SearchClubCriteria clubcri, Model model){
+	public void listGET(SearchClubCriteria clubcri, Model model) throws Exception{
 		try {
 			model.addAttribute("list", service.listSearchClubCriteria(clubcri));
 			
@@ -56,11 +59,25 @@ public class ClubController {
 		catch (Exception err) {
 			System.out.println("clubListAll : " + err);
 		}
+		//클럽목록
+		model.addAttribute("club", service.listAll());
+		//추천클럽 : 클럽인원수 리스트.
+		model.addAttribute("popular", service.popularityListAll());
+		//클럽공지사항 : 
+		model.addAttribute("notice", MainNoticeService.listAll());
 		
 	}
 	
 	@RequestMapping("clubRegister")
-	public void registerGET(){}
+	public void registerGET(Model model) throws Exception{
+		
+		model.addAttribute("club", service.listAll());
+		//추천클럽 : 클럽인원수 리스트.
+		model.addAttribute("popular", service.popularityListAll());
+		//클럽공지사항 : 
+		model.addAttribute("notice", MainNoticeService.listAll());
+		
+	}
 	
 	@RequestMapping(value="clubRegister", method=RequestMethod.POST)
 	public String registerPOST(ClubDTO dto, String mem_email, Model model, HttpServletRequest req){

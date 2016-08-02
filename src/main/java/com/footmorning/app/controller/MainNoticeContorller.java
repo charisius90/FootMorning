@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.footmorning.app.domain.MainNoticeDTO;
 import com.footmorning.app.domain.MainNoticeReplyDTO;
+import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MainNoticeService;
 import com.footmorning.app.util.PageMaker;
 import com.footmorning.app.util.SearchCriteria;
@@ -34,6 +35,12 @@ public class MainNoticeContorller {
 	@Inject
 	private MainNoticeService service;
 	
+	@Inject
+	private ClubService ClubService;
+	
+	@Inject
+	private MainNoticeService MainNoticeService;
+	
 	
 	@RequestMapping("/club/notice/main")
 	public String notice(SearchCriteria cri, Model model, HttpServletRequest req) throws Exception {
@@ -49,14 +56,29 @@ public class MainNoticeContorller {
 
 		model.addAttribute("pageMaker", pageMaker);
 		// System.out.println(service.listAll().toString());
+		
+		//클럽목록
+		model.addAttribute("club", ClubService.listAll());
+		//추천클럽 : 클럽인원수 리스트.
+		model.addAttribute("popular", ClubService.popularityListAll());
+		//클럽공지사항 : 
+		model.addAttribute("notice", MainNoticeService.listAll());
+		
 		return "/club/notice/NoticeMain";
 		// �ٹ��� myclubNoticeBoardMain2
 		// return "/myclub/myclubNotice/myclubNoticeBoardMain2";
 	}
 
 	@RequestMapping(value = "/club/notice/register", method = RequestMethod.GET)
-	public String register(Locale locale, Model model) {
+	public String register(Locale locale, Model model) throws Exception {
 		// logger.info("���", locale);
+		
+		//클럽목록
+		model.addAttribute("club", ClubService.listAll());
+		//추천클럽 : 클럽인원수 리스트.
+		model.addAttribute("popular", ClubService.popularityListAll());
+		//클럽공지사항 : 
+		model.addAttribute("notice", MainNoticeService.listAll());
 
 		return "/club/notice/NoticeRegister";
 	}
@@ -86,6 +108,13 @@ public class MainNoticeContorller {
 		model.addAttribute("dto", service.read(main_notice_no));
 
 		model.addAttribute("replydto", service.listAllReply(main_notice_no));
+		
+		//클럽목록
+		model.addAttribute("club", ClubService.listAll());
+		//추천클럽 : 클럽인원수 리스트.
+		model.addAttribute("popular", ClubService.popularityListAll());
+		//클럽공지사항 : 
+		model.addAttribute("notice", MainNoticeService.listAll());
 
 		return "/club/notice/NoticeRead";
 	}
@@ -102,6 +131,15 @@ public class MainNoticeContorller {
 	public String update(Integer main_notice_no, Model model) throws Exception {
 		model.addAttribute("dto", service.read(main_notice_no));
 		System.out.println(service.read(main_notice_no).toString());
+		
+		//클럽목록
+		model.addAttribute("club", ClubService.listAll());
+		//추천클럽 : 클럽인원수 리스트.
+		model.addAttribute("popular", ClubService.popularityListAll());
+		//클럽공지사항 : 
+		model.addAttribute("notice", MainNoticeService.listAll());
+		
+		
 		return "/club/notice/NoticeUpdate";
 	}
 

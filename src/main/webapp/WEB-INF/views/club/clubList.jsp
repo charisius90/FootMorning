@@ -61,7 +61,7 @@
 					<c:forEach items="${list}" var="clubDTO">
 						<tr>
 							<td>${clubDTO.club_no}</td>
-							<td><a href="/myclub/myclubMain?no=${clubDTO.club_no}"><img class="logo" src="${club.club_image}" alt="LOGO 위치"/></a></td>
+							<td><a href="/myclub/myclubMain?no=${clubDTO.club_no}"><img class="logo" src="${clubDTO.club_image}" alt="LOGO 위치"/></a></td>
 							<td><a href="/myclub/myclubMain?no=${clubDTO.club_no}">${clubDTO.club_name}</a></td>
 							<td><a href="#${clubDTO.club_master}">${clubDTO.club_master_name}</a></td>
 							<td>${clubDTO.club_mem_count}</td>
