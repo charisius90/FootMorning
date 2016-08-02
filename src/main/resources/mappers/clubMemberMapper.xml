@@ -87,8 +87,8 @@
 	</select>
 	
 		
-	<select id="listRequest" resultType="ClubMemberDTO">
-		select * from club_member where club_no=#{club_no} and club_mem_flag='FALSE' order by club_mem_regdate desc
-	</select>
+<!-- 	<select id="listRequest" resultType="ClubMemberDTO"> -->
+<!-- 		select * from club_member where club_no=#{club_no} and club_mem_flag='FALSE' order by club_mem_regdate desc -->
+<!-- 	</select> -->
 
 </mapper>
