@@ -8,15 +8,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MemberService;
 
 @Controller
 @RequestMapping("/admin/*")
 public class AdminController {
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private ClubService clubService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
 	/**
 	 * 관리 홈
@@ -66,7 +70,14 @@ public class AdminController {
 	 * 전체 클럽 관리
 	 */
 	@RequestMapping("adminClubAll")
-	public void adminClubAll(){}
+	public void adminClubAll(Model model){
+		try {
+			model.addAttribute("list", clubService.listAll());
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * 클럽 신고 접수 관리
