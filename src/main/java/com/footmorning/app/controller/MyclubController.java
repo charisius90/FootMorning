@@ -137,4 +137,23 @@ public class MyclubController {
 		return listAll;
 	}
 
+	
+	
+	
+	/**
+	 * 클럽 가입신청 파이널 변수
+	 * @Author 박수항
+	 */
+	public static final String CLUB_MEM_FLAG_DEFAULT = "FALSE"; // 이게 가입 신청서라는 표시를 하는 플래그
+	/**
+	 * @Author 박수항
+	 * 가입신청 테스트용(컨트롤러 위치 변경해야함)
+	 */
+	@RequestMapping(value="clubRequest", method=RequestMethod.POST)
+	public String requestPOST(ClubMemberDTO dto){
+		System.out.println(dto);
+		dto.setClub_mem_flag(CLUB_MEM_FLAG_DEFAULT);
+		clubMemberService.insert(dto);
+		return "redirect:/myclub/myclubMain?no=" + dto.getClub_no();
+	}
 }

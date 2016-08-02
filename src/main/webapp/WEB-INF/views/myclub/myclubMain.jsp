@@ -64,7 +64,7 @@
 							  </tr>
 							  <tr>
 							  	<td align="center">
-							  		<form id="registerForm" method="post" action="/myclubMgr/clubRequest">
+							  		<form id="registerForm" method="post" action="/myclub/clubRequest">
 							  			<input type="hidden" name="club_no" value="${CLUB_KEY.club_no}"/>
 							  			<input type="hidden" name="mem_no" value="${USER_KEY.mem_no}"/>
 							  			<input type="hidden" name="mem_gender" value="${USER_KEY.mem_gender}"/>
