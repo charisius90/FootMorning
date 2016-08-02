@@ -35,11 +35,11 @@
 			</div>
 		</div>
 			
-		회원수 6명
+		회원수 <span style="color:red">${fn:length(list)}</span>명
 		<form method="post" action="">
 			<table class="table table-bordered">
 				<tr style="background-color:#dddddd;">
-					<td><input type="checkbox" name="" value="" /> E-Mail</td>
+					<td><input type="checkbox" name="" value="" />&nbsp;&nbsp;E-Mail</td>
 					<td>소속 클럽</td>
 					<td>가입일</td>
 					<td>최종방문일</td>
@@ -50,14 +50,14 @@
 				</tr>
 			<c:forEach items="${list}" var="dto">
 				<tr>
-					<td><input type="checkbox" name="" value="" />${dto.mem_email}</td>
-					<td>${dto.mem_club_no}</td>
+					<td><input type="checkbox" name="" value="" />&nbsp;&nbsp;${dto.mem_email}</td>
+					<td>${dto.club_no}</td>
 					<td>${dto.mem_regdate}</td>
 					<td>${dto.mem_logdate}</td>
-<%-- 					<td>${}</td> --%>
-<%-- 					<td>${}</td> --%>
-<%-- 					<td>${dto.mem_gender}</td> --%>
-<%-- 					<td>${}</td> --%>
+ 					<td></td>
+ 					<td></td>
+ 					<td>${dto.mem_gender}</td>
+ 					<td></td>
 				</tr>
 			</c:forEach>
 			</table>

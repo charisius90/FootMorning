@@ -35,26 +35,28 @@
 			</div>
 		</div>
 			
-			클럽수 1명
+			클럽수 <span style="color:red">${fn:length(list)}</span>개
 			<table class="table table-bordered">
 				<tr style="background-color:#dddddd;">
-					<td><input type="checkbox" name="" value="" /> 클럽 이름 (아이디)</td>
-					<td>클럽장(아이디)</td>
+					<td><input type="checkbox" name="" value="" />&nbsp;&nbsp;클럽명</td>
+					<td>클럽장</td>
 					<td>연고지</td>
 					<td>개설일</td>
 					<td>회원수</td>
 					<td>총경기 수</td>
 					<td>속성</td>
 				</tr>
+			<c:forEach items="${list}" var="dto">
 				<tr>
-					<td><input type="checkbox" name="" value="" /> 맨유</td>
-					<td>박수항(soo1)</td>
+					<td><input type="checkbox" name="" value="" />&nbsp;&nbsp;${dto.club_name}</td>
+					<td>${dto.club_master_name}</td>
 					<td>2016.07.18</td>
 					<td>서울</td>
 					<td>10</td>
 					<td>10</td>
 					<td>일반클럽</td>
 				</tr>
+			</c:forEach>
 			</table>
 			
 			<table>
