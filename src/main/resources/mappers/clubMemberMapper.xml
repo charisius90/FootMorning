@@ -45,7 +45,7 @@
 				and mem_name like CONCAT('%', #{keyword}, '%')
 			</if>
 
-			<if test="searchType == 'i'.toString()">
+			<if test="searchType == 'e'.toString()">
 				and mem_email like CONCAT('%', #{keyword}, '%')
 			</if>
 		</if>
@@ -73,9 +73,14 @@
 	</select>
 	
 	<select id="listRequest" resultType="ClubMemberDTO">
+		<![CDATA[
 		select *
-		  from club_member 
-		  where club_no=#{club_no} and club_mem_flag='FALSE' order by club_mem_regdate desc
+		  from club_member where club_no=#{club_no} and club_mem_flag='FALSE'
+		]]>
+<!-- 			<include refid="search"></include> -->
+		<![CDATA[
+		  order by club_mem_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
 	</select>
 	
 	<select id="listRequestCount" resultType="int">
@@ -85,10 +90,5 @@
 		  where club_no=#{club_no} and club_mem_flag='FALSE' order by club_mem_regdate desc
 		]]>
 	</select>
-	
-		
-<!-- 	<select id="listRequest" resultType="ClubMemberDTO"> -->
-<!-- 		select * from club_member where club_no=#{club_no} and club_mem_flag='FALSE' order by club_mem_regdate desc -->
-<!-- 	</select> -->
 
 </mapper>

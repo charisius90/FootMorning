@@ -3,6 +3,7 @@ package com.footmorning.app.service;
 import java.util.List;
 
 import com.footmorning.app.domain.ClubMemberDTO;
+import com.footmorning.app.util.ClubCriteria;
 import com.footmorning.app.util.SearchClubCriteria;
 
 /**
@@ -19,6 +20,6 @@ public interface ClubMemberService {
 	public ClubMemberDTO getWithMemno(Integer mem_no) throws Exception;
 	public List<ClubMemberDTO> listSearchClubMemberCriteria(SearchClubCriteria clubcri) throws Exception;
 	public int listSearchClubMemberCount(SearchClubCriteria clubcri) throws Exception;
-	public List<ClubMemberDTO> listRequest(SearchClubCriteria clubcri) throws Exception;
-	public int listRequestCount(SearchClubCriteria clubcri) throws Exception;
+	public List<ClubMemberDTO> listClubRequest(SearchClubCriteria clubcri) throws Exception;
+	public int listClubRequestCount(SearchClubCriteria clubcri) throws Exception;
 }

@@ -213,11 +213,17 @@ public class MyclubMgrController {
 	public void myclubMgrRegister(SearchClubCriteria clubcri, HttpServletRequest req, Model model){
 		try {
 			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
-			model.addAttribute("req", clubMemberService.listRequest(Integer.parseInt(club.getClub_no())));
+			
+			System.out.println(clubcri.toString());
+			
+			clubcri.setClub_no(club.getClub_no());
+			model.addAttribute("req", clubMemberService.listClubRequest(clubcri));
+			
+			System.out.println("가입신청자 : "+clubMemberService.listClubRequest(clubcri));
 			
 			ClubPageMaker cpageMaker = new ClubPageMaker();
 			cpageMaker.setClubcri(clubcri);
-			cpageMaker.setTotalCount(clubMemberService.listRequestCount(clubcri));
+			cpageMaker.setTotalCount(clubMemberService.listClubRequestCount(clubcri));
 			
 			model.addAttribute("pageMaker", cpageMaker);
 		}
@@ -288,7 +294,6 @@ public class MyclubMgrController {
 	public void myclubMgrOutMember(SearchClubCriteria clubcri, HttpServletRequest req, Model model){
 		try {
 			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
-//			model.addAttribute("list", clubMemberService.listMember(Integer.parseInt(club.getClub_no())));
 			
 			clubcri.setClub_no(club.getClub_no());
 			model.addAttribute("list", clubMemberService.listSearchClubMemberCriteria(clubcri));
@@ -386,10 +391,18 @@ public class MyclubMgrController {
 	 * @Author 김소영
 	 */
 	@RequestMapping("myclubMgrTransfer")
-	public void myclubMgrTransfer(HttpServletRequest req, Model model){
+	public void myclubMgrTransfer(SearchClubCriteria clubcri,HttpServletRequest req, Model model){
 		try {
 			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
-			model.addAttribute("list", clubMemberService.listMember(Integer.parseInt(club.getClub_no())));
+			
+			clubcri.setClub_no(club.getClub_no());
+			model.addAttribute("list", clubMemberService.listSearchClubMemberCriteria(clubcri));
+			
+			ClubPageMaker cpageMaker = new ClubPageMaker();
+			cpageMaker.setClubcri(clubcri);
+			cpageMaker.setTotalCount(clubMemberService.listSearchClubMemberCount(clubcri));
+			
+			model.addAttribute("pageMaker", cpageMaker);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

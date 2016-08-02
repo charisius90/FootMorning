@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.footmorning.app.domain.ClubMemberDTO;
 import com.footmorning.app.persistence.ClubMemberDAO;
+import com.footmorning.app.util.ClubCriteria;
 import com.footmorning.app.util.SearchClubCriteria;
 
 @Service
@@ -65,14 +66,12 @@ public class ClubMemberServiceImpl implements ClubMemberService {
 	}
 
 	@Override
-	public int listRequestCount(SearchClubCriteria clubcri) throws Exception {
-		return dao.listRequestcount(clubcri);
+	public List<ClubMemberDTO> listClubRequest(SearchClubCriteria clubcri) throws Exception {
+		return dao.listClubRequest(clubcri);
 	}
 
 	@Override
-	public List<ClubMemberDTO> listRequest(SearchClubCriteria clubcri) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public int listClubRequestCount(SearchClubCriteria clubcri) throws Exception {
+		return dao.listClubRequestcount(clubcri);
 	}
-
 }

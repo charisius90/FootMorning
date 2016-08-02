@@ -37,7 +37,7 @@
 							<select style="width: 100px; height: 30px;" name="searchType" class="btn btn-default input-group-add" size="1">
 								<option value="n" <c:out value="${clubcri.searchType == null?'selected':''}"/>>---</option>
 								<option value="m" <c:out value="${clubcri.searchType eq 'm'?'selected':''}"/>>이름</option>
-								<option value="i" <c:out value="${clubcri.searchType eq 'i'?'selected':''}"/>>아이디</option>
+								<option value="e" <c:out value="${clubcri.searchType eq 'e'?'selected':''}"/>>Email</option>
 							</select>
 							<input type="text" name="keyword" value='${pageMaker.clubcri.keyword}' style="height: 28px;">
 							<button id="searchBtn" class="btn btn-default input-group-add" type="submit" style="heigt: 25px;padding-top: 4px;padding-bottom: 4px;">검색</button>

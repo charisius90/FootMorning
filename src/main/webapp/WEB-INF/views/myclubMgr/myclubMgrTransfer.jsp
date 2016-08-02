@@ -1,4 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,19 +31,17 @@
 						<h3>클럽양도</h3>
 			<div class="row">
 				<div style="float:left">
-					<select name="searchSelectBox" style="height:30px">
-						<option value='mem_name' selected>이름</option>
-						<option value='mem_id'>아이디</option>
-					</select>
-				</div>
-				<div class="col-lg-3">
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Search"/>
-						<span class="input-group-btn">
-	        				<button class="btn btn-default" type="button">검색</button>
-	     				</span>
-					</div><!-- /input-group -->
-				</div><!-- /.col-lg-4 -->
+					<form action="#">
+						<div class="form-search" style="float: left;">
+							<select style="width: 100px; height: 30px;" name="searchType" class="btn btn-default input-group-add" size="1">
+								<option value="n" <c:out value="${clubcri.searchType == null?'selected':''}"/>>---</option>
+								<option value="m" <c:out value="${clubcri.searchType eq 'm'?'selected':''}"/>>이름</option>
+								<option value="e" <c:out value="${clubcri.searchType eq 'e'?'selected':''}"/>>Email</option>
+							</select>
+							<input type="text" name="keyword" value='${pageMaker.clubcri.keyword}' style="height: 28px;">
+							<button id="searchBtn" class="btn btn-default input-group-add" type="submit" style="heigt: 25px;padding-top: 4px;padding-bottom: 4px;">검색</button>
+						</div>
+					</form>
 			</div><!-- /.row -->
 			<br/><br/>
 			<div class="row">
@@ -84,18 +84,25 @@
 				</div><!-- /.row -->	
 				<div class="row">
 					<nav align="center">
-						<ul class="pagination">
-							<li><a href="#" aria-label="Previous">
-								<span aria-hidden="true">&laquo;</span>
-							</a></li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-							</a></li>
+						<ul id="pagingul" class="pagination">
+													
+							<c:if test="${pageMaker.prev}">
+								<li><a 
+									href="/myclubMgr/myclubMgrTransfer${pageMaker.makeSearch(pageMaker.startPage - 1) }">&laquo;</a></li>
+							</c:if>
+									
+							<c:forEach begin="${pageMaker.startPage}" 
+										end="${pageMaker.endPage}" var="idx">
+								<li
+									<c:out value="${pageMaker.clubcri.page == idx?'class =active':''}"/>>
+									<a href="/myclubMgr/myclubMgrTransfer${pageMaker.makeSearch(idx)}">${idx}</a>
+								</li>
+							</c:forEach>
+									
+							<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+								<li><a 
+									href="/myclubMgr/myclubMgrTransfer${pageMaker.makeSearch(pageMaker.endPage + 1) }">&raquo;</a></li>
+							</c:if>
 						</ul>
 					</nav>
 				</div>
@@ -116,6 +123,18 @@
 		$('input[type="checkbox"]').bind('click', function() {
 			$('input[type="checkbox"]').not(this).prop("checked", false);
 		});
+	});
+	
+	$('#searchBtn').on("click", function(event) {
+		
+		// 검색옵션 값 가져오기
+		var searchType = $("select[name=searchType]").val();
+		
+		// 키워드 값 가져오기
+		var keyword = $("input[name=keyword]").val();
+		
+		
+		self.location = "/myclubMgr/myclubMgrTransfer${pageMaker.makeQuery(1)}&searchType="+$("select option:selected").val() + "&keyword=" + $('#keywordInput').val();
 	});
 </script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

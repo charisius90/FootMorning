@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.ClubMemberDTO;
+import com.footmorning.app.util.ClubCriteria;
 import com.footmorning.app.util.SearchClubCriteria;
 
 /**
@@ -20,6 +21,6 @@ public interface ClubMemberDAO {
 	public ClubMemberDTO getWithMemno(Integer mem_no) throws Exception;
 	public List<ClubMemberDTO> listSearchClubMemberCriteria(SearchClubCriteria clubcri) throws Exception;
 	public int listSearchClubMemberCount(SearchClubCriteria clubcri) throws Exception;
-	public List<ClubMemberDTO> listRequest(SearchClubCriteria clubcri) throws Exception;
-	public int listRequestcount(SearchClubCriteria clubcri) throws Exception;
+	public List<ClubMemberDTO> listClubRequest(SearchClubCriteria clubcri) throws Exception;
+	public int listClubRequestcount(SearchClubCriteria clubcri) throws Exception;
 }
