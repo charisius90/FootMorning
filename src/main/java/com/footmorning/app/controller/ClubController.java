@@ -48,7 +48,7 @@ public class ClubController {
 			
 			ClubPageMaker cpageMaker = new ClubPageMaker();
 			
-			cpageMaker.setClubCri(clubcri);
+			cpageMaker.setClubcri(clubcri);
 			cpageMaker.setTotalCount(service.listSearchClubCount(clubcri));
 			
 			model.addAttribute("cpageMaker", cpageMaker);

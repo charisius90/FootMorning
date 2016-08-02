@@ -11,7 +11,7 @@ import com.footmorning.app.util.SearchClubCriteria;
 
 /**
  * 
- * @author ¹Ú¼öÇ×
+ * @author ï¿½Ú¼ï¿½ï¿½ï¿½
  *
  */
 @Repository
@@ -56,15 +56,10 @@ public class ClubDAOImpl implements ClubDAO {
 	public ClubDTO getWithNo(Integer no) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + ".getWithNo", no);
 	}
-	
-	@Override
-	public List<ClubDTO> listSearchClubCriteria(SearchClubCriteria clubcri) {
-		return sqlSession.selectList(NAMESPACE + ".listSearchClub", clubcri);
-	}
 
 	@Override
-	public int listSearchClubCount(SearchClubCriteria clubcri) {
-		return sqlSession.selectOne(NAMESPACE + ".listSearchClubCount", clubcri);
+	public List<ClubDTO> listSearchClubCriteria(SearchClubCriteria clubcri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".getClubInfo", clubcri);
 	}
 
 }

@@ -13,10 +13,10 @@ public class ClubPageMaker {
 
 	private int displayPageNum = 5;
 
-	private ClubCriteria cri;
+	private ClubCriteria clubcri;
 
-	public void setClubCri(ClubCriteria clubcri) {
-		this.cri = clubcri;
+	public void setClubcri(ClubCriteria clubcri) {
+		this.clubcri = clubcri;
 	}
 
 	public void setTotalCount(int totalCount) {
@@ -27,11 +27,11 @@ public class ClubPageMaker {
 
 	private void calcData() {
 
-		endPage = (int) (Math.ceil(cri.getPage() / (double) displayPageNum) * displayPageNum);
+		endPage = (int) (Math.ceil(clubcri.getPage() / (double) displayPageNum) * displayPageNum);
 
 		startPage = (endPage - displayPageNum) + 1;
 
-		int tempEndPage = (int) (Math.ceil(totalCount / (double) cri.getPerPageNum()));
+		int tempEndPage = (int) (Math.ceil(totalCount / (double) clubcri.getPerPageNum()));
 
 		if (endPage > tempEndPage) {
 			endPage = tempEndPage;
@@ -39,7 +39,7 @@ public class ClubPageMaker {
 
 		prev = startPage == 1 ? false : true;
 
-		next = endPage * cri.getPerPageNum() >= totalCount ? false : true;
+		next = endPage * clubcri.getPerPageNum() >= totalCount ? false : true;
 	}
 
 	public int getTotalCount() {
@@ -66,24 +66,27 @@ public class ClubPageMaker {
 		return displayPageNum;
 	}
 
-	public ClubCriteria getClubCri() {
-		return cri;
+	public ClubCriteria getClubcri() {
+		return clubcri;
 	}
 
 	public String makeQuery(int page) {
 
 		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page)
-				.queryParam("perPageNum", cri.getPerPageNum()).build();
+				.queryParam("perPageNum", clubcri.getPerPageNum()).build();
 
 		return uriComponents.toUriString();
 	}
 
 	public String makeSearch(int page) {
 
-		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page)
-				.queryParam("perPageNum", cri.getPerPageNum())
-				.queryParam("searchType", ((SearchClubCriteria) cri).getSearchType())
-				.queryParam("keyword", ((SearchClubCriteria) cri).getKeyword()).build();
+		UriComponents uriComponents = 
+				UriComponentsBuilder.newInstance()
+				.queryParam("page", page)
+				.queryParam("perPageNum", clubcri.getPerPageNum())
+				.queryParam("searchType", ((SearchClubCriteria) clubcri).getSearchType())
+				.queryParam("keyword", ((SearchClubCriteria) clubcri).getKeyword())
+				.build();
 
 		return uriComponents.toUriString();
 	}

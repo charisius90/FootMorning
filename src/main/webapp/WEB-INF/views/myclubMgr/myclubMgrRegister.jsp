@@ -61,18 +61,25 @@
 					</table>
 				</form>
 					<nav align="center">
-						<ul class="pagination">
-							<li><a href="#" aria-label="Previous">
-								<span aria-hidden="true">&laquo;</span>
-							</a></li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-							</a></li>
+						<ul id="pagingul" class="pagination">
+													
+							<c:if test="${pageMaker.prev}">
+								<li><a 
+									href="/myclubMgr/myclubMgrMember${pageMaker.makeSearch(pageMaker.startPage - 1) }">&laquo;</a></li>
+							</c:if>
+									
+							<c:forEach begin="${pageMaker.startPage}" 
+										end="${pageMaker.endPage}" var="idx">
+								<li
+									<c:out value="${pageMaker.clubcri.page == idx?'class =active':''}"/>>
+									<a href="/myclubMgr/myclubMgrMember${pageMaker.makeSearch(idx)}">${idx}</a>
+								</li>
+							</c:forEach>
+									
+							<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+								<li><a 
+									href="/myclubMgr/myclubMgrMember${pageMaker.makeSearch(pageMaker.endPage + 1) }">&raquo;</a></li>
+							</c:if>
 						</ul>
 					</nav>
 				</div><!-- /.row -->	
