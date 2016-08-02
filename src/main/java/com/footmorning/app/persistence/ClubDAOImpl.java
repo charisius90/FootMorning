@@ -65,7 +65,7 @@ public class ClubDAOImpl implements ClubDAO {
 
 	@Override
 	public List<ClubDTO> listSearchClubCriteria(SearchClubCriteria clubcri) throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".getClubInfo", clubcri);
+		return sqlSession.selectList(NAMESPACE + ".listSearchClub", clubcri);
 	}
 
 	@Override

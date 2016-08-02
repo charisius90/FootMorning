@@ -61,13 +61,13 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public List<ClubDTO> listSearchClubCriteria(SearchClubCriteria clubcri) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.listSearchClubCriteria(clubcri);
 	}
 
 	@Override
 	public int listSearchClubCount(SearchClubCriteria clubcri) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.listSearchClubCount(clubcri);
 	}
 
 }

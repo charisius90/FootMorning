@@ -51,7 +51,7 @@
 			</if>
 			
 			<if test="searchType == 'c'.toString()">
-				and club_master like CONCAT('%', #{keyword}, '%')
+				and club_master_name like CONCAT('%', #{keyword}, '%')
 			</if>
 			
 			<if test="searchType == 'l'.toString()">
