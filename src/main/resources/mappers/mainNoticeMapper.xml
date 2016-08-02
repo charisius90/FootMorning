@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.mainNoticeMapper">
+	
+	<insert id="create">
+		INSERT INTO main_notice(mem_no, main_notice_writer,
+		main_notice_subject, main_notice_content)
+		VALUES (#{mem_no}, #{main_notice_writer},
+		#{main_notice_subject}, #{main_notice_content})
+	</insert>
+
+	<select id="read" resultType="MainNoticeDTO">
+		select * from main_notice where
+		main_notice_no=#{bno}
+	</select>
+	
+	<update id="updateCount" parameterType="MainNoticeDTO">
+		update main_notice set main_notice_count = main_notice_count + 1 where main_notice_no = #{no};
+	</update>
+
+	<update id="update">
+		update main_notice set main_notice_subject
+		=#{main_notice_subject},
+		main_notice_content
+		=#{main_notice_content}
+		where main_notice_no = #{main_notice_no}
+	</update>
+
+	<delete id="delete">
+		delete from main_notice where main_notice_no =
+		#{main_notice_no}
+	</delete>
+	
+	<select id="listAll" resultType="MainNoticeDTO">
+       <![CDATA[
+			select * from main_notice
+			where main_notice_no > 0 order by main_notice_no desc;	
+	   ]]>
+	   
+
+	</select>	
+
+	<select id="listPage" resultType="MainNoticeDTO">
+		<![CDATA[
+			select * from main_notice where main_notice_no > 0 
+				order by main_notice_no desc, main_notice_regdate desc limit #{page}, 10
+		]]>
+	</select>
+
+	<select id="listCriteria" resultType="MainNoticeDTO">
+ 		<![CDATA[
+ 			select * from main_notice where main_notice_no > 0 
+ 				order by main_notice_no desc, main_notice_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+
+	<select id="countPaging" resultType="int">
+		select count(main_notice_no) from main_notice
+	</select>
+
+
+	<!-- 반복되어 재사용되는 sql문은 이렇게 id를 부여하고 <sql></sql> 태그로 감싸면 include가 가능해진다. -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and main_notice_subject like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'c'.toString()">
+				and main_notice_content like CONCAT('%', #{keyword}, '%')
+			</if>
+
+			<if test="searchType == 'w'.toString()">
+				and main_notice_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<!-- 페이징 + 검색처리된 게시물 조회 ( SearchCriteria ( page, perPageNum, searchType, 
+		keyword ) -->
+	<select id="listSearch"  resultType="MainNoticeDTO">
+		<![CDATA[  
+			select
+			main_notice_no, a.mem_no, main_notice_writer, main_notice_subject,
+			main_notice_content,main_notice_regdate, main_notice_count,c.club_no,c.club_name,
+			(SELECT COUNT(*) FROM main_notice_reply B WHERE B.main_notice_no=A.main_notice_no) as replycount
+			from main_notice a
+			inner join member b
+			on a.mem_no=b.mem_no
+			inner join club c
+			on b.club_no=c.club_no 
+			where main_notice_no > 0
+		]]>
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by main_notice_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<!-- 검색 결과 게시물 총 갯수 계산 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(main_notice_no) 
+		  from main_notice 
+		  where main_notice_no > 0
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<insert id="createReply" parameterType="MainNoticeReplyDTO">
+		INSERT INTO
+		main_notice_reply(main_notice_no, mem_no, main_notice_re_writer,
+		main_notice_re_content, main_notice_re_pos,
+		main_notice_re_depth,main_notice_re_group)
+		VALUES
+		(#{main_notice_no}, #{mem_no}, #{main_notice_re_writer},
+		#{main_notice_re_content},0,0,null);
+	</insert>
+
+	<insert id="createReReply" parameterType="MainNoticeReplyDTO">
+		INSERT INTO
+		main_notice_reply(main_notice_no, mem_no, main_notice_re_writer,
+		main_notice_re_content, main_notice_re_pos,
+		main_notice_re_depth,main_notice_re_group)
+		VALUES
+		(#{main_notice_no}, #{mem_no}, #{main_notice_re_writer},
+		#{main_notice_re_content},#{main_notice_re_pos}+1,#{main_notice_re_depth}+1,null);
+	</insert>
+
+	<select id="listReply" resultType="MainNoticeReplyDTO">
+		select * from
+		main_notice_reply where main_notice_no=#{main_notice_no}
+		order by
+		main_notice_re_pos desc;
+	</select>
+
+	<select id="parentInfo" resultType="MainNoticeReplyDTO">
+		select * from
+		main_notice_reply where main_notice_re_no=#{no};
+	</select>
+
+	<update id="updatePos">
+		update main_notice_reply set
+		main_notice_re_pos=main_notice_re_pos+1;
+	</update>
+
+	<update id="replyUpdatePos">
+		update main_notice_reply set
+		main_notice_re_pos=main_notice_re_pos+1
+		where main_notice_re_pos
+		> #{main_notice_re_pos}
+	</update>
+
+	<!-- <delete id="deleteReply"> -->
+	<!-- delete from main_notice_reply where main_notice_re_no=#{main_notice_re_no}; -->
+	<!-- </delete> -->
+
+	<update id="deleteReply">
+		UPDATE main_notice_reply SET
+		main_notice_re_writer=#{main_notice_re_writer},
+		main_notice_re_content=#{main_notice_re_content} WHERE
+		main_notice_re_no=#{main_notice_re_no};
+	</update>
+
+</mapper>

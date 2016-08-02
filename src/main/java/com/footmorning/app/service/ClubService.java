@@ -19,6 +19,7 @@ public interface ClubService {
 	public ClubDTO getClubInfo(String name) throws Exception;
 	public ClubDTO getWithNo(Integer no) throws Exception;
 	public List<ClubDTO> listAll() throws Exception;
+	public List<ClubDTO> popularityListAll() throws Exception;
 	public List<ClubDTO> listSearchClubCriteria(SearchClubCriteria clubcri) throws Exception;
 	public int listSearchClubCount(SearchClubCriteria clubcri) throws Exception;
 }

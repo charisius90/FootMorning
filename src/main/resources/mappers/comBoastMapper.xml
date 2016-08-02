@@ -36,15 +36,16 @@
 	
 	<select id="listAll" resultType="ComBoastDTO">
        <![CDATA[
-		select
-		com_boast_no, a.mem_no, com_boast_writer, com_boast_subject,
-		com_boast_content,com_boast_regdate, com_boast_count,c.club_no,c.club_name
-		from com_boast a
-		inner join member b
-		on a.mem_no=b.mem_no
-		inner join club c
-		on b.club_no=c.club_no 
-		where com_boast_no > 0 order by com_boast_no desc;	
+			select
+			com_boast_no, a.mem_no, com_boast_writer, com_boast_subject,
+			com_boast_content,com_boast_regdate, com_boast_count,c.club_no,c.club_name,
+			(SELECT COUNT(*) FROM com_boast_reply B WHERE B.com_boast_no=A.com_boast_no) as replycount
+			from com_boast a
+			inner join member b
+			on a.mem_no=b.mem_no
+			inner join club c
+			on b.club_no=c.club_no 
+			where com_boast_no > 0 order by com_boast_no desc;	
 	   ]]>
 	   
 

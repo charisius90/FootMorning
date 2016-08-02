@@ -53,6 +53,12 @@ public class ClubDAOImpl implements ClubDAO {
 	}
 
 	@Override
+	public List<ClubDTO> popularityListAll() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE + ".popularityListAll");
+	}
+
+	@Override
 	public ClubDTO getWithNo(Integer no) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + ".getWithNo", no);
 	}
@@ -60,6 +66,11 @@ public class ClubDAOImpl implements ClubDAO {
 	@Override
 	public List<ClubDTO> listSearchClubCriteria(SearchClubCriteria clubcri) throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".getClubInfo", clubcri);
+	}
+
+	@Override
+	public int listSearchClubCount(SearchClubCriteria clubcri) {
+		return sqlSession.selectOne(NAMESPACE + ".listSearchClubCount", clubcri);
 	}
 
 }

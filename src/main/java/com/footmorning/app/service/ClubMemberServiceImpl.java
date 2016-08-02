@@ -70,9 +70,9 @@ public class ClubMemberServiceImpl implements ClubMemberService {
 	}
 
 	@Override
-	public int listRequest(SearchClubCriteria clubcri) throws Exception {
+	public List<ClubMemberDTO> listRequest(SearchClubCriteria clubcri) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
-	
+
 }
