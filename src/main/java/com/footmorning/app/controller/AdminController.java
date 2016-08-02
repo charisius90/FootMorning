@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MemberService;
+import com.footmorning.app.util.PageMaker;
+import com.footmorning.app.util.SearchCriteria;
 
 @Controller
 @RequestMapping("/admin/*")
@@ -44,9 +46,19 @@ public class AdminController {
 	 * 전체 회원 관리
 	 */
 	@RequestMapping("adminMemberAll")
-	public void adminMemberAll(Model model){
+	public void adminMemberAll(SearchCriteria cri, Model model){
 		try{
-			model.addAttribute("list", memberService.listAll());
+			model.addAttribute("list", memberService.listSearchCriteria(cri));
+			
+			int total = memberService.listSearchCount(cri);
+			
+			model.addAttribute("total", total);
+			
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(total);
+			
+			model.addAttribute("pageMaker", pageMaker);
 			
 		}
 		catch(Exception e){
