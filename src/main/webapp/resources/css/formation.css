@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+
+.formation_container {
+	padding-left: 15%;
+	width: 80%;
+}
+
+.ground_wrapper {
+	float: left;
+	width: 1000px;
+}
+
+.ground {
+	float: left;
+	background-image: url("../images/ground.jpg");
+	background-size: cover;
+	height: 600px;
+	width: 1000px;
+}
+
+.uniform {
+	position:absolute;
+	cursor: pointer;
+	width: 80px;
+	height: 80px;
+	background-image: url("../images/uniform.png");
+	background-size: 80px 80px;
+}
+
+.uniform span {
+	color: white;
+	font-size: 20pt;
+	position: absolute;
+	top: 20px;
+	left: 25px;
+}
+
+.uniform_popover {
+	position: absolute;
+}
+
+.uniform_menu {
+	cursor: pointer;
+}
+
+.buttons {
+	float: left;
+	width: 400px;
+}
+
+.buttons div {
+	float: left;
+}
+
+.select {
+	background-color: darkgray;
+}
+
+.select span {
+}
+
+.select select {
+}

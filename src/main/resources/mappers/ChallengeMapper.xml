@@ -7,14 +7,15 @@
 
 	<insert id="register" parameterType="ChallengeDTO">
 	
-	INSERT INTO challenge (sender_club_no, receiver_club_no, challenge_content, game_no, game_flag, club_ability)
+	INSERT INTO challenge (sender_club_no, receiver_club_no, challenge_content, game_no, game_flag, club_ability, challenge_flag)
 	VALUES(
 	#{sender_club_no},
 	#{receiver_club_no},
 	#{challenge_content},
 	#{game_no},
 	#{game_flag},
-	#{club_ability});
+	#{club_ability},
+	#{challenge_flag});
 	</insert>
 	
 	<select id="listAll" resultType="ChallengeDTO">
@@ -44,4 +45,10 @@
 		UPDATE CHALLENGE SET `challenge_flag`='CANCLE' WHERE `game_no`=#{game_no};
 	</update>
 	
+	<select id="checkChallenge" resultType="ChallengeDTO">
+      select * from challenge 
+      where sender_club_no =#{sender_club_no} 
+      and receiver_club_no =#{receiver_club_no}
+      and game_no=#{game_no};
+   </select>
 </mapper>

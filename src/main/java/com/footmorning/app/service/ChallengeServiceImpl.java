@@ -16,6 +16,12 @@ public class ChallengeServiceImpl implements ChallengeService{
 	private ChallengeDAO dao;
 	
 	@Override
+   public List<ChallengeDTO> validateUserClubNo(ChallengeDTO dto) throws Exception {
+      // TODO Auto-generated method stub
+      return dao.validateUserClubNo(dto);
+   }
+	
+	@Override
 	public void ChallengeRegister(ChallengeDTO dto) throws Exception {
 		dao.ChallengeRegister(dto);
 	}

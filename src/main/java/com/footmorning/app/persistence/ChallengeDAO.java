@@ -6,6 +6,8 @@ import com.footmorning.app.domain.ChallengeDTO;
 
 public interface ChallengeDAO {
 
+	public List<ChallengeDTO> validateUserClubNo(ChallengeDTO dto) throws Exception;
+	
 	public void ChallengeRegister(ChallengeDTO dto)throws Exception;
 	
 	public List<ChallengeDTO> SendChallengeListAll(int no)throws Exception;

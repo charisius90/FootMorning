@@ -45,9 +45,24 @@ public class MatchServiceImpl implements MatchService {
 	public List<MatchDTO> matchListWithClubNo(int club_no) throws Exception {
 		return dao.matchListWithClubNo(club_no);
 	}
+	
+	@Override
+	public List<MatchDTO> matchListWithClubNoUnconnect(int club_no) throws Exception {
+		return dao.matchListWithClubNoUnconnect(club_no);
+	}
+
+	@Override
+	public MatchDTO matchWithGameNo(int game_no) throws Exception {
+		return dao.matchWithGameNo(game_no);
+	}
 
 	@Override
 	public void matchDelete(int game_no) throws Exception {
 		dao.matchDelete(game_no);
 	}
+	
+	@Override
+   public String myClubName(int club_no) throws Exception {
+      return dao.myClubName(club_no);
+   }
 }
