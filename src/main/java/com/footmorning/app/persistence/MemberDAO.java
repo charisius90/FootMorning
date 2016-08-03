@@ -16,6 +16,8 @@ public interface MemberDAO {
 	public String getTime();
 	public List<MemberDTO> listAll() throws Exception;
 	public void insertAuth(Map map);
+	public void updateAuth(Map map);
+	public void deleteAuth(String mem_email);
 	public void insertMember(MemberDTO dto);
 	public void updateMember(MemberDTO dto);
 	public void deleteMember(Integer mem_no);

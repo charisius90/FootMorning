@@ -7,12 +7,12 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.persistence.MemberDAO;
+import com.footmorning.app.util.RoleFeeder;
 import com.footmorning.app.util.SearchCriteria;
 
 /**
@@ -29,6 +29,14 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private BCryptPasswordEncoder bCrypt;
 	
+	@Autowired
+	private RoleFeeder roles;
+
+	@Override
+	public void updateAuth(Map map) {
+		memberDAO.updateAuth(map);
+	}
+
 	@Override
 	public void insertMember(MemberDTO dto) {
 		// bCrypt로 비밀번호 암호화
@@ -36,13 +44,9 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.insertMember(dto);
 		
 		// 새 회원의 이메일과 권한 DB에 추가
-		Object[] objs = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray();
-		for(int i=0; i<objs.length; i++){
-			System.out.println("MemberServiceImpl insertMem : " + objs[i].toString());
-		}
 		Map map = new HashMap();
 		map.put("mem_email", dto.getMem_email());
-		map.put("role", objs[0].toString());
+		map.put("role", roles.getRole(roles.ROLE_USER));
 		memberDAO.insertAuth(map);
 	}
 
@@ -54,7 +58,15 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void deleteMember(Integer mem_no) {
-		memberDAO.deleteMember(mem_no);
+		try {
+			memberDAO.deleteMember(mem_no);
+			
+			String mem_email = memberDAO.getWithNo(mem_no).getMem_email();
+			memberDAO.deleteAuth(mem_email);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

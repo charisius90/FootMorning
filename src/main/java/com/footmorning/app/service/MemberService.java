@@ -1,6 +1,7 @@
 package com.footmorning.app.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.util.SearchCriteria;
@@ -8,6 +9,7 @@ import com.footmorning.app.util.SearchCriteria;
 public interface MemberService {
 	public String getTime();
 	public List<MemberDTO> listAll() throws Exception;
+	public void updateAuth(Map map);
 	public void insertMember(MemberDTO dto);
 	public void updateMember(MemberDTO dto);
 	public void deleteMember(Integer mem_no);

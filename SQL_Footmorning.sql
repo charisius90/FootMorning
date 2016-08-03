@@ -957,6 +957,12 @@ CREATE TABLE CLUB_CASHBOOK
 ;
 
 
+create table authority(
+	mem_email	varchar(50) not null,
+	authority   varchar(50) not null
+);
+
+
 DELIMITER $$
 
 USE `finaltest`$$

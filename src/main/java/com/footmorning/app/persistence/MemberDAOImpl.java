@@ -13,7 +13,7 @@ import com.footmorning.app.util.SearchCriteria;
 
 /**
  * 
- * @author ��ҿ�
+ * @author 박수항
  *
  */
 @Repository
@@ -26,6 +26,17 @@ public class MemberDAOImpl implements MemberDAO {
 	public void insertAuth(Map map) {
 		sqlSession.insert(NAMESPACE + ".insertAuth", map);
 	}
+	
+	@Override
+	public void updateAuth(Map map) {
+		sqlSession.update(NAMESPACE + ".updateAuth", map);
+		
+	}
+	@Override
+	public void deleteAuth(String mem_email) {
+		sqlSession.delete(NAMESPACE + ".deleteAuth", mem_email);
+	}
+	
 	@Override
 	public void insertMember(MemberDTO dto) {
 		sqlSession.insert(NAMESPACE + ".insertMember", dto);

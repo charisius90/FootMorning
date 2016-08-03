@@ -8,11 +8,17 @@
 	<insert id="insertAuth">
 		insert into authority values(#{mem_email}, #{role})
 	</insert>
-	<!-- security 추가 부분 -->
 	<select id="login">
 		select * from member
 		where mem_email=#{mem_email} and mem_pw=#{mem_pw}
 	</select>
+	<update id="updateAuth">
+		update authority set authority=#{role} where mem_email=#{mem_email}
+	</update>	
+	<update id="deleteAuth">
+		delete from authority where mem_email=#{mem_email}
+	</update>	
+	<!-- security 추가 부분 -->
 
 	<select id="getTime" resultType="String">
 		select now()

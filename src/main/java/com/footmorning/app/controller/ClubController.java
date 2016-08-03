@@ -1,5 +1,8 @@
 package com.footmorning.app.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +21,7 @@ import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MainNoticeService;
 import com.footmorning.app.service.MemberService;
 import com.footmorning.app.util.ClubPageMaker;
+import com.footmorning.app.util.RoleFeeder;
 import com.footmorning.app.util.SearchClubCriteria;
 
 /**
@@ -34,6 +38,7 @@ public class ClubController {
 	private ClubMemberService clubMemberService;
 	@Inject
 	private MainNoticeService MainNoticeService;
+	@Autowired RoleFeeder roles;
 	// 회원 등급 파이널 변수 모음
 	public static final String GRADE_ADMIN = "0"; // 서비스 운영진
 	public static final String GRADE_MASTER = "1"; // 클럽마스터
@@ -89,6 +94,11 @@ public class ClubController {
 			member = memberService.getMemberInfo(mem_email);
 			member.setMem_grade(GRADE_MASTER);
 			memberService.updateMember(member);
+			
+			Map map = new HashMap();
+			map.put("mem_email", member.getMem_email());
+			map.put("role", roles.getRole(roles.ROLE_CLUB));
+			memberService.updateAuth(map);
 			
 			WebUtils.setSessionAttribute(req, "USER_KEY", member);
 			
