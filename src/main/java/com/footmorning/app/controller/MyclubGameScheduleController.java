@@ -31,11 +31,11 @@ public class MyclubGameScheduleController {
 		
 		model.addAttribute("list", service.matchListWithClubNo(club_no));
 		
-//		List<MatchDTO> list = service.matchListWithClubNo(club_no);
-//		System.out.println("리스트 받아옴");
-//		for(int i=0; i<list.size(); i++){
-//			System.out.println(i+"번쨰 : " +list.get(i).toString());
-//		}
+		List<MatchDTO> list = service.matchListWithClubNo(club_no);
+		System.out.println("리스트 받아옴");
+		for(int i=0; i<list.size(); i++){
+			System.out.println(i+"번쨰 : " +list.get(i).toString());
+		}
 		return "/myclub/myclubGameSchedule";
 	}
 	

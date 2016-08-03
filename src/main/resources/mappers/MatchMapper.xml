@@ -34,20 +34,12 @@
 		where game_no not in (select game_no from game where game_flag ='AWAY' or game_flag ='INVITE') order by game_no desc;
 	</select>
 	
-	<select id="myListWithClubNo" resultType="MatchDTO">
-		select distinct g.* from game g, challenge c 
-		where g.club_no=#{club_no} and (c.sender_club_no=#{club_no} or c.receiver_club_no=#{club_no}) and c.challenge_flag='YES' order by game_no desc;
-	</select>
-	
-	<select id="yourListWithClubNo" resultType="MatchDTO">
-		select distinct g.* from game g, challenge c 
-		where g.club_no=#{club_no} and (c.sender_club_no=#{club_no} or c.receiver_club_no=#{club_no}) and c.challenge_flag='YES' order by game_no desc;
-	</select>
-	
 	<select id="listWithClubNo" resultType="MatchDTO">
-		select distinct g.* from game g, challenge c where g.game_no in 
-		(select g.game_no from game g, challenge c where g.club_no=#{club_no} and (c.sender_club_no=#{club_no} or c.receiver_club_no=#{club_no}) 
-		and c.challenge_flag in ('YES', 'CANCLE')) order by game_date desc, game_time desc, game_flag desc;
+<!-- 		select distinct g.* from game g, challenge c where g.game_no in  -->
+<!-- 		(select g.game_no from game g, challenge c where g.club_no=#{club_no} and (c.sender_club_no=#{club_no} or c.receiver_club_no=#{club_no})  -->
+<!-- 		and c.challenge_flag in ('YES', 'CANCLE')) order by game_date desc, game_time desc, game_flag desc; -->
+		select distinct * from game	where game_no in 
+		(select game_no from challenge where (sender_club_no=#{club_no} or receiver_club_no=#{club_no}) and challenge_flag='YES') order by game_date desc, game_time desc, game_flag desc;
 	</select>
 	
 	<select id="listWithClubNoUnconnect" resultType="MatchDTO">

@@ -69,7 +69,7 @@ public class MyclubGameMgrController {
 		matchDto.setGame_date(sdf.parse(req.getParameter("game_date")));
 		matchDto.setGame_time(req.getParameter("game_time"));
 		matchDto.setGame_addr(req.getParameter("game_addr"));
-		matchDto.setGame_flag("INVITE");
+		matchDto.setGame_flag("AWAY");
 		matchDto.setClub_no(Integer.parseInt(req.getParameter("club_no")));
 		matchDto.setClub_ability(Integer.parseInt(req.getParameter("club_ability")));
 		
