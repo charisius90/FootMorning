@@ -4,6 +4,16 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.footmorning.mappers.memberMapper">
+	<!-- security 추가 부분 -->
+	<insert id="insertAuth">
+		insert into authority values(#{mem_email}, #{role})
+	</insert>
+	<!-- security 추가 부분 -->
+	<select id="login">
+		select * from member
+		where mem_email=#{mem_email} and mem_pw=#{mem_pw}
+	</select>
+
 	<select id="getTime" resultType="String">
 		select now()
 	</select>

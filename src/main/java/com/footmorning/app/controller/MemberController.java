@@ -13,6 +13,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -52,22 +53,15 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@RequestMapping("memberLogin")
-	public void login(HttpServletRequest req){
-//		WebUtils.setSessionAttribute(req, "LAST_PAGE", LAST_PAGE);
-	}
+	public void login(HttpServletRequest req){}
 
-	@RequestMapping(value="memberLogin", method=RequestMethod.POST)
-	public String loginComplete(@Valid MemberDTO member, BindingResult result, HttpServletRequest req) {
-//		String LAST_PAGE = (String)WebUtils.getSessionAttribute(req, "LAST_PAGE");
-		if(result.hasErrors()){
-			return "/member/memberLogin";
-		}
-		
+	@RequestMapping("memberLoginSuccess")
+	public String loginSuccess(@Valid MemberDTO member, BindingResult result, HttpServletRequest req) {
 		try {
-			MemberDTO dto = service.getWithPW(member.getMem_email(), member.getMem_pw());
-			if(dto == null){
-				return "/member/memberLogin";
-			}
+			String email = SecurityContextHolder.getContext().getAuthentication().getName();
+			
+			MemberDTO dto = service.getMemberInfo(email);
+			
 			WebUtils.setSessionAttribute(req, "USER_KEY", dto);
 			
 			if(dto.getClub_no() != null){
@@ -75,28 +69,35 @@ public class MemberController {
 				WebUtils.setSessionAttribute(req, "CLUB_KEY", clubService.getWithNo(club_no));
 				WebUtils.setSessionAttribute(req, "MATCH_KEY", matchService.matchListWithClubNoUnconnect(club_no));
 			}
+			
+			// 최종 접속 시간 업데이트
+			dto.setMem_logdate(service.getTime());
+			service.updateMember(dto);
 		}
-		catch (Exception err) {
-			result.reject("login");
-			return "/member/memberLogin";
+		catch (Exception e) {
+			e.printStackTrace();
 		}
-		return "index";
-	}
-	
-	@RequestMapping("memberLogout")
-	public String logout(HttpServletRequest req){
-		HttpSession session = req.getSession();
-		
-		// ���� ���� �ð� ����
-		MemberDTO dto = (MemberDTO)session.getAttribute("USER_KEY");
-		dto.setMem_logdate(service.getTime());
-		service.updateMember(dto);
-		
-		// �α׾ƿ�
-		session.invalidate();
-		
 		return "redirect:/";
 	}
+	
+	@RequestMapping("memberLoginFailure")
+	public String loginFailure(@Valid MemberDTO member, BindingResult result, HttpServletRequest req) {
+		if(result.hasErrors()){
+			return "/member/memberLogin";
+		}
+
+		result.reject("login");
+		return "/member/memberLogin";
+	}
+	
+//	@RequestMapping("memberLogout")
+//	public String logout(HttpServletRequest req){
+//		// 세션 닫기
+//		HttpSession session = req.getSession();
+//		session.invalidate();
+//		
+//		return "redirect:/";
+//	}
 	
 	@RequestMapping("memberSignUp")
 	public void signup(){}

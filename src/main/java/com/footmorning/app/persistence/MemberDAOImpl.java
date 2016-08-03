@@ -21,7 +21,11 @@ public class MemberDAOImpl implements MemberDAO {
 	@Autowired
 	private SqlSession sqlSession;	
 	private static final String NAMESPACE = "com.footmorning.mappers.memberMapper";
-	
+
+	@Override
+	public void insertAuth(Map map) {
+		sqlSession.insert(NAMESPACE + ".insertAuth", map);
+	}
 	@Override
 	public void insertMember(MemberDTO dto) {
 		sqlSession.insert(NAMESPACE + ".insertMember", dto);

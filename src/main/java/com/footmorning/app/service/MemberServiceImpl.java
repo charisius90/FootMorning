@@ -1,9 +1,14 @@
 package com.footmorning.app.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.footmorning.app.domain.MemberDTO;
@@ -12,22 +17,38 @@ import com.footmorning.app.util.SearchCriteria;
 
 /**
  * 
- * @author ��ҿ�
+ * @author박수항
  *
  */
 
 @Service
 public class MemberServiceImpl implements MemberService {
 	@Inject
-	private MemberDAO memberDAO; 
+	private MemberDAO memberDAO;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCrypt;
 	
 	@Override
 	public void insertMember(MemberDTO dto) {
+		// bCrypt로 비밀번호 암호화
+		dto.setMem_pw(this.bCrypt.encode(dto.getMem_pw()));
 		memberDAO.insertMember(dto);
+		
+		// 새 회원의 이메일과 권한 DB에 추가
+		Object[] objs = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray();
+		for(int i=0; i<objs.length; i++){
+			System.out.println("MemberServiceImpl insertMem : " + objs[i].toString());
+		}
+		Map map = new HashMap();
+		map.put("mem_email", dto.getMem_email());
+		map.put("role", objs[0].toString());
+		memberDAO.insertAuth(map);
 	}
 
 	@Override
 	public void updateMember(MemberDTO dto) {
+		dto.setMem_pw(this.bCrypt.encode(dto.getMem_pw()));
 		memberDAO.updateMember(dto);
 	}
 
