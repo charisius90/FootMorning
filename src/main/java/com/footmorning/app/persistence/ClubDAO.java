@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.util.SearchClubCriteria;
+import com.footmorning.app.util.SearchCriteria;
 
 /**
  * 
@@ -21,4 +22,6 @@ public interface ClubDAO {
 	public List<ClubDTO> popularityListAll() throws Exception;
 	public List<ClubDTO> listSearchClubCriteria(SearchClubCriteria clubcri) throws Exception;
 	public int listSearchClubCount(SearchClubCriteria clubcri);
+	public List<ClubDTO> listSearchCriteria(SearchCriteria cri) throws Exception;
+	public int listSearchCount(SearchCriteria cri) throws Exception;
 }

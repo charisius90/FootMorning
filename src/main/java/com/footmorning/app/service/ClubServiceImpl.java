@@ -9,6 +9,7 @@ import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.persistence.ClubDAO;
 import com.footmorning.app.persistence.MemberDAO;
 import com.footmorning.app.util.SearchClubCriteria;
+import com.footmorning.app.util.SearchCriteria;
 
 @Service
 public class ClubServiceImpl implements ClubService {
@@ -68,6 +69,16 @@ public class ClubServiceImpl implements ClubService {
 	public int listSearchClubCount(SearchClubCriteria clubcri) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.listSearchClubCount(clubcri);
+	}
+
+	@Override
+	public List<ClubDTO> listSearchCriteria(SearchCriteria cri) throws Exception {
+		return dao.listSearchCriteria(cri);
+	}
+
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		return dao.listSearchCount(cri);
 	}
 
 }

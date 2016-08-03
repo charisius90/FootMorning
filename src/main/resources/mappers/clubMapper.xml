@@ -79,4 +79,25 @@
 		<include refid="search"></include>
 	</select>
 	
+	<select id="listSearchCriteria" resultType="ClubDTO">
+		<![CDATA[
+			select * from club where club_no > 0
+		]]>
+		
+		<include refid="search"></include>
+		
+		<![CDATA[
+			order by club_regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[
+		  select count(club_no) 
+		  from club where club_no > 0
+		]]>
+		
+		<include refid="search"></include>
+	</select>
+	
 </mapper>

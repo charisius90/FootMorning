@@ -20,7 +20,7 @@
 		
 		<div class="admin">
 			<div>
-				<form action="#">
+				<form id="form" action="#">
 					<table style="width: 100%">
 						<tr>
 							<td>회원검색</td>
@@ -32,7 +32,7 @@
 									<option value="s" <c:out value="${cri.searchType eq 's'?'selected':''}"/>>차단여부</option>
 								</select>
 							<td>
-							<td><input type="text"  name="keyword" value='${pageMaker.cri.keyword}' class="form-control" size="40" placeholder="E-Mail/이름으로 검색가능" id=""></td>
+							<td><input type="text"  name="keyword" value='${pageMaker.cri.keyword}' class="form-control" size="40" placeholder="E-Mail/이름으로 검색가능"></td>
 							<td><button id="searchBtn" class="btn btn-default  input-group-add" type="submit">검색</button></td>
 						</tr>
 					</table>
@@ -97,12 +97,12 @@
 							</li>
 						</c:forEach>
 									
-					<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-						<li><a 
-							href="/admin/adminMemberAll${pageMaker.makeSearch(pageMaker.endPage + 1) }">&raquo;</a></li>
-					</c:if>
-				</ul>
-			</div>
+						<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+							<li><a 
+								href="/admin/adminMemberAll${pageMaker.makeSearch(pageMaker.endPage + 1) }">&raquo;</a></li>
+						</c:if>
+					</ul>
+				</div>
 			</div>
 		
 	</div><!-- /.row -->
@@ -137,6 +137,7 @@
 		var keyword = $("input[name=keyword]").val();
 		
 		self.location = "/admin/adminMemberAll${pageMaker.makeQuery(1)}&searchType="+$("select option:selected").val() + "&keyword=" + $('#keywordInput').val();
+		
 	});
 
 </script>
