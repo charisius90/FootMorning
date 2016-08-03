@@ -3,16 +3,70 @@
 <html>
 <head>
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
 <script type="text/javascript" src="/resources/SmartEditor2.8.2/js/HuskyEZCreator.js" charset="utf-8"></script>
-<script>
+<script type="text/javascript" >
 	function resize_Image(event) {
 		resize_X=event.x;
 		resize_Y=event.y;
 		event.srcElement.width=resize_X;
 		event.srcElement.height=resize_Y;
 	}
+	
+	 function fnUploadFile () {
+		 //var $fileForm = $("#fileForm");
+		 	
+		 var formData = new FormData();
+       	 formData.append("uploadfile", $("input[name=uploadfile]")[0].files[0]);
+       	 
+       	 $.ajax({
+       	    url: '/video/fileUpload',
+       	    data: formData,
+       	    processData: false,
+       	    contentType: false,
+       	    type: 'POST',
+       	    success: function(data){
+        	       data = $.parseJSON(data);
+        	       console.dir(data);
+        	       if(data.result) {
+        	    	   alert('성공');
+        	    	   var $content = $(".se2_inputarea");
+        	    	   $content.append("teststetes");
+        	    	   var video = '<embed src="'+data.fileName+'" width="500" height="200" />';
+  	    	      	$content.innerHTML=$content.innerHTML + "sdfsdfdsf<br/>" + video + "testsjlfjdsalkfjdsalkfjslakfjsldkjfklsd";
+        	       } else {
+        	    	   alsert("동영상 추가가 제대로 이루어지지 않았습니다.");
+        	       }
+        	    }
+       	  });
+
+		 	
+	      //  var filename = $("#uploadfile");
+		//	var $form = $(document.createElement('form'));
+		//	$form.attr("enctype", "multipart/form-data");
+			//$form.append(filename);$form.append(filename);
+		//	console.dir($form.text());
+		//	$formData = $form.serialize();
+			//$formData.append("uploadfile", filename);
+		//	console.dir($form);
+		//	alert("test");
+	      //  $.ajax({
+	      //      type: "POST",
+	       //     url: "/video/fileUpload",
+	       //     data: $formData,
+	      //      success: function (data) {
+	      //      	$.parseJSON(data);
+	       //     	console.dir(data);
+	       //         alert("Data Uploaded: ");
+	       //     },
+	       //     fail : function (xhr) {
+	       //     	alert(xhr);
+	       //     }
+	       // });
+	    }
+
 </script>
 
 </head>
@@ -46,6 +100,7 @@
 		                        <td>작성자</td>
 		                        <td><input type="text" name="myclub_video_writer" value="${USER_KEY.mem_name}"/></td>
 		                     </tr>
+		             
 		                     <tr>
 		                        <td>내용</td>
 								<td><textarea name="myclub_video_content" id="ir1" rows="10" cols="100"
@@ -61,7 +116,7 @@
 											.createInIFrame({
 												oAppRef : oEditors,
 												elPlaceHolder : "ir1",
-												sSkinURI : "/resources/SmartEditor2.8.2/SmartEditor2Skin.html",
+												sSkinURI : "../../resources/SmartEditor2.8.2/SmartEditor2Skin.html",
 												htParams : {
 													bUseToolbar : true, // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
 													bUseVerticalResizer : true, // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
@@ -125,7 +180,9 @@
 										var nFontSize = 24;
 										oEditors.getById["ir1"].setDefaultFont(sDefaultFont, nFontSize);
 									}
-								</script></td>
+								</script>
+									<input type="file" id="uploadfile" name="uploadfile" required="required"> <input id="uploadbutton" type="button" onclick="fnUploadFile()" value="게시글에 추가"/>	
+								</td>
 		                     </tr>
                  	 	</table>
 					</div>
