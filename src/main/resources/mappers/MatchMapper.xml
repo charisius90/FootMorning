@@ -17,7 +17,7 @@
 		#{club_ability});
 	</insert>
 	
-	<insert id="registerRevice" parameterType="MatchDTO">
+	<insert id="registerRecive" parameterType="MatchDTO">
 		INSERT INTO game(game_no, game_date,game_time,game_addr, game_flag, club_no, club_ability) 
 		VALUES (
 		#{game_no},
@@ -31,7 +31,7 @@
 	
 	<select id="listAll" resultType="MatchDTO">
 		select * from game inner join club on game.club_no=club.club_no
-		where game_no not in (select game_no from game where game_flag='AWAY') order by game_no desc;	
+		where game_no not in (select game_no from game where game_flag ='AWAY' or game_flag ='INVITE') order by game_no desc;
 	</select>
 	
 	<select id="myListWithClubNo" resultType="MatchDTO">
@@ -50,6 +50,14 @@
 		and c.challenge_flag in ('YES', 'CANCLE')) order by game_date desc, game_time desc, game_flag desc;
 	</select>
 	
+	<select id="listWithClubNoUnconnect" resultType="MatchDTO">
+		select * from game where game_no not in (select game_no from game where game_flag='AWAY' or game_flag='INVITE') and club_no=#{club_no};
+	</select>
+	
+	<select id="matchWithGameNo" resultType="MatchDTO">
+		select * from game where game_no=#{game_no} and game_flag='HOME';
+	</select>
+	
 	<select id="checkGameNo" resultType="String">
 		select case when max(game_no) is null then 0 else max(game_no) end from game;
 	</select>
@@ -58,4 +66,7 @@
 		UPDATE GAME SET `club_ability`=0 WHERE `game_no`=#{game_no};
 	</update>
 	
+	<select id="myclubName" resultType="String">
+      select club_name from club where club_no=#{club_no};
+   </select>
 </mapper>

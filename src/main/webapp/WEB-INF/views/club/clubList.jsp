@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -9,12 +10,25 @@
 <title>Insert title here</title>
 <link href="../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" /> 
 <style>
 	.logo{
 		width: 50px;
 		height: 50px;
 	}
 </style>
+<script type="text/javascript">
+	function fnModal(myclubNo, yourclubNo){
+		var yourclubNo = yourclubNo;
+		alert(yourclubNo);
+		
+		$("#yourclubNo").val(yourclubNo);
+		$('#send_invite_modal').modal('show');
+	}
+</script>
 </head>
 <body>
 <%@ include file="../include/header.jsp" %>
@@ -42,6 +56,7 @@
 							</select>
 							<input type="text" class="form-control" name="keyword" value="" placeholder="Search"/>
 		        			<button id="searchBtn" class="btn btn-default" type="submit">검색</button>
+							<br/><br/><br/><br/>
 						</div><!-- /input-group -->
 				</form>
 					</div><!-- /.col-lg-4 -->
@@ -49,9 +64,10 @@
 			
 			<!-- 클럽 정보가 들어가는 부분 -->
 			<div class="row">
+			<c:out value="today : ${today}"/>
 				<table class="table table-hover" text-align="center">
 					<!-- 상당 메뉴 부분 -->
-					<thead>
+					<thead style="background-color: #e6e6e6">
 					<tr>
 						<th>NO</th><th>로고</th><th>클럽명</th><th>마스터</th><th>클럽인원</th><th>지역</th><th>클럽소개</th>
 					</tr>
@@ -62,7 +78,8 @@
 						<tr>
 							<td>${clubDTO.club_no}</td>
 							<td><a href="/myclub/myclubMain?no=${clubDTO.club_no}"><img class="logo" src="${clubDTO.club_image}" alt="LOGO 위치"/></a></td>
-							<td><a href="/myclub/myclubMain?no=${clubDTO.club_no}">${clubDTO.club_name}</a></td>
+<%-- 							<td><a href="/myclub/myclubMain?no=${clubDTO.club_no}">${clubDTO.club_name}</a></td> --%>
+							<td><a href="javascript:fnModal(${USER_KEY.club_no},${clubDTO.club_no})">${clubDTO.club_name}</a></td>
 							<td><a href="#${clubDTO.club_master}">${clubDTO.club_master_name}</a></td>
 							<td>${clubDTO.club_mem_count}</td>
 							<td>${clubDTO.club_loc}</td>
@@ -102,9 +119,55 @@
 	</div><!-- /.row -->
 </div><!-- /.container -->
 
+	<div id="send_invite_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3>매치 초대하기</h3>
+				</div>
+				<form id="modalForm" method="post" action="/challenge/invite">
+					<input type="hidden" name="yourclubNo" id="yourclubNo"/>
+					<table class="table table-hover" text-align="center">
+						<thead style="background-color: #e6e6e6">
+							<tr>
+								<th>NO</th><th>날짜</th><th>시간</th><th>지역</th>
+								<th>클럽명</th><th>클럽장</th><th>실력</th><th>선택</th>
+								
+							</tr>
+						</thead>
+						<c:forEach items="${MATCH_KEY}" var="dto">
+							<tr>
+								<td>${dto.game_no}</td>
+								<td><fmt:formatDate value="${dto.game_date}" pattern="yyyy-MM-dd"/></td>
+								<td>${dto.game_time}</td>
+								<td>${dto.game_addr}</td>
+								<td>${dto.club_no}</td>
+								<td>${dto.club_master_name}</td>
+								<td><c:forEach begin="1" end="${dto.club_ability}"><i class="glyphicon glyphicon-star"></i></c:forEach></td>
+								<td><input name="checkbox" id="checkbox_${dto.game_no}" type="checkbox" value="${dto.game_no}"/></td>
+							</tr>
+						</c:forEach>
+					</table>
+					<textarea class="form-control" name="challenge_content" rows="5" cols="50" style="width: 100%" placeholder="한마디"></textarea>
+					<div class="modal-footer">
+	                	<button class="btn btn-primary" type="submit">보내기</button>
+	                	<button class="btn" data-dismiss="modal" aria-hidden="true">취소</button>
+	               	</div>
+               	</form>
+			</div>
+		</div>
+	</div>
+
 <!-- jQuery 플러그인을 가져옵니다. -->
 <script src="../../resources/bootstrap/js/jQuery-2.1.4.min.js"></script>
 <script>
+	var result = '${msg}';
+	
+	if(result == 'SUCCESS'){
+		alert("처리가 완료되었습니다.");
+	}
+	
 	$(function(){
 		$('#searchBtn').on("click", function(event) {
 			// 검색옵션 값 가져오기

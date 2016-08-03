@@ -14,40 +14,57 @@
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" src="../resources/reply_js/date.js"></script>
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" /> 
 <script>
-//    $(function(){
-//       $("#datepicker, #datepicker2").datepicker(
-//          {
-//             dateFormat: "yyyy/mm/dd",
-//             changeMonth: true,
-//             changeYear: true,
-//             minDate: "0",
-//             maxDate: "+1y",
-//          }      
-//       );
-//    });
-   function fnModal(game_no ,game_date , game_time , game_addr , club_name, club_no){
-      
-//       alert("date?"+game_date);
-//       alert("time?"+game_time);
-//       alert("addr?"+game_addr);
-//       alert("gameNo?"+club_name+","+game_no);
-	  var game_date = game_date;
-	  game_date = new Date().toString('yyyy-MM-dd') ;
 
-      //open modal
-      $('#send_chellenge_modal').modal('show');
+   function fnModal(game_no ,game_date , game_time , game_addr , club_name, club_no , user_club_no){
       
-      $("#game_no").val(game_no);
+      var param={};
+      param.sander_club_no=user_club_no;
+      param.receiver_club_no=club_no;
+      param.game_no=game_no;
+//       param.game_no=game_no;
+//       param.game_date=game_date;
+//       param.game_time=game_time;
+//       param.game_addr=game_addr;
+//       param.challenge_content=$("#challenge_content").val();
       
-      $("#challengeDate").val(game_date);
-      $("#challengeTime").val(game_time);
-      $("#challengeAddr").val(game_addr);
-      //추후에 
-      $("#receiver_club_name").val(club_name);
-      $("#receiver_club_no").val(club_no);
-      
-      
+       $.ajax({
+           type: "POST",
+           url: "/challenge/register",
+           data: param,
+//              여기서 서블릿으로 감
+           success: function(result) {
+              alert("success");
+            alert(result);
+              data = $.parseJSON(result);
+//               alert(data);
+              alert(data.result);
+              
+              if(data.result=="SAMENAME"){
+                 alert("다른회원이 이미 도전장을 보냈습니다.");
+              }else if(data.result=="SAMECLUB"){
+                 alert("본인클럽에 도전장을 보내실 수 없습니다.");
+              }else{
+                 var game_date = game_date;
+                 game_date = new Date().toString('yyyy-MM-dd') ;
+
+                  //open modal
+                  $('#send_chellenge_modal').modal('show');
+                   $("#game_no").val(game_no);
+                  $("#challengeDate").val(game_date);
+                  $("#challengeTime").val(game_time);
+                  $("#challengeAddr").val(game_addr);
+                  //추후에 
+                  $("#receiver_club_name").val(club_name);
+                  $("#receiver_club_no").val(club_no);
+              }
+            },
+            fail: function(result) {
+               alert('대댓글 등록 실패:'+result);
+            }
+        });   
    }
 </script>
 </head>
@@ -79,8 +96,9 @@
 			</div><!-- /.row -->
 			<div class="row">
 				<div align="right"><a class="btn btn-default" href="/matching/register" type="button">매칭등록</a></div>
+				<c:out value="today : ${today}"/>
 				<table class="table table-hover" text-align="center">
-					<thead>
+					<thead style="background-color: #e6e6e6">
 						<tr>
 							<th>NO</th><th>날짜</th><th>시간</th><th>지역</th>
 							<th>클럽명</th><th>클럽장</th><th>실력</th><th>도전장</th>
@@ -99,12 +117,9 @@
 							<td>${dto.club_name}</td>
 							<td>${dto.club_master_name}</td>
 							<td><c:forEach begin="1" end="${dto.club_ability}"><i class="glyphicon glyphicon-star"></i></c:forEach></td>
-							<td><input type="button" value="보내기" onclick="fnModal(${dto.game_no},'${dto.game_date}','${dto.game_time}','${dto.game_addr}','${dto.club_name}',${dto.club_no})"/></td>
+							<td><input type="button" value="보내기" onclick="fnModal(${dto.game_no},'${dto.game_date}','${dto.game_time}','${dto.game_addr}','${dto.club_name}',${dto.club_no},${USER_KEY.club_no})"/>
 						</tr>
 					</c:forEach>
-					
-					
-					
 				</table>
 					<nav align="center">
 						<ul class="pagination">
@@ -176,32 +191,28 @@
 						aria-hidden="true">×</button>
 					<h3 id="myModalLabel">도전장 보내기</h3>
 				</div>
-				            <form method="post" action="/challenge/register">
-            
-            
-               <input type="hidden" name="game_no" id="game_no"/>
-               <input type="hidden" name="receiver_club_no" id="receiver_club_no"/>
-               <input type="hidden" name="sender_club_no" id="sender_club_no" value="${USER_KEY.club_no}"/>
-               <input type="hidden" name="game_flag" id="game_flag" value="AWAY"/>
-               
-               
-               <div class="modal-body">
-                  <div class="container-fluid">
-                     <div class="row">
-                        <div class="col-md-10">
-			                        날짜&nbsp;<input class="form-control" type="text" id="challengeDate" readonly="readonly" value=""/><br/>
-			                        시간&nbsp;<input class="form-control" type="text" id="challengeTime" readonly="readonly"><br/>
-			                        지역&nbsp;<input class="form-control" type="text" id="challengeAddr" readonly="readonly"><br/>
-                        HOME팀&nbsp;<input class="form-control" type="text" id="receiver_club_name" readonly="readonly"/><br/>
-                        AWAY팀&nbsp;<input class="form-control" type="text" id="sender_club_name" value="${USER_KEY.club_no}"readonly="readonly"/><br/>
-                 	       실력&nbsp;<select class="form-control" name="club_ability" style="width:170px">
-                                 <option value="1">★</option>
-                                 <option value="2">★★</option>
-                                 <option value="3">★★★</option>
-                                 <option value="4">★★★★</option>
-                                 <option value="5">★★★★★</option>
-                        </select><br/>
-                        <textarea class="form-control" name="challenge_content" rows="5" cols="50" style="width: 100%" placeholder="한마디"></textarea>
+				<form method="post" action="/challenge/registercomp">
+	               <input type="hidden" name="game_no" id="game_no"/>
+	               <input type="hidden" name="receiver_club_no" id="receiver_club_no"/>
+	               <input type="hidden" name="sender_club_no" id="sender_club_no" value="${USER_KEY.club_no}"/>
+	               <input type="hidden" name="game_flag" id="game_flag" value="AWAY"/>
+                   <div class="modal-body">
+                  	<div class="container-fluid">
+                     	<div class="row">
+                        	<div class="col-md-10">
+		                               	  날짜&nbsp;<input class="form-control" type="text" id="challengeDate" readonly="readonly" value=""/><br/>
+						                                시간&nbsp;<input class="form-control" type="text" id="challengeTime" readonly="readonly"><br/>
+						                                 지역&nbsp;<input class="form-control" type="text" id="challengeAddr" readonly="readonly"><br/>
+				                        	HOME팀&nbsp;<input class="form-control" type="text" id="receiver_club_name" readonly="readonly"/><br/>
+				                       	 	AWAY팀&nbsp;<input class="form-control" type="text" id="sender_club_name" value="${CLUB_NAME}"readonly="readonly"/><br/>
+				                           	실력&nbsp;<select class="form-control" name="club_ability" style="width:170px">
+				                                 <option value="1">★</option>
+				                                 <option value="2">★★</option>
+				                                 <option value="3">★★★</option>
+				                                 <option value="4">★★★★</option>
+				                                 <option value="5">★★★★★</option>
+                        					</select><br/>
+                        				<textarea class="form-control" id="challenge_content" name="challenge_content" rows="5" cols="50" style="width: 100%" placeholder="한마디"></textarea>
                         </div>
                      </div>
                   </div>
