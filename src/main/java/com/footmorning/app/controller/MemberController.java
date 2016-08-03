@@ -101,13 +101,12 @@ public class MemberController {
 	public String signupComplete(MemberDTO member, String mem_pw_check, HttpServletRequest req){
 //	public String signupComplete(@Valid MemberDTO member, BindingResult result, String mem_pw_check, HttpServletRequest req){
 		logger.info("signupComplete : " + member.toString() + ", " + mem_pw_check);
-		System.out.println("signUP!!!");
 		if(member.getMem_pw().equals(mem_pw_check)){
 			try{
 				service.insertMember(member);
 			}
 			catch(Exception err){
-				System.out.println("existing member");
+				System.out.println("MemberController signupComplete : " + err);
 				return "/member/memberSignUp";
 			}
 			

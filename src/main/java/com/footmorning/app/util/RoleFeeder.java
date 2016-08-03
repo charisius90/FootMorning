@@ -25,11 +25,11 @@ public class RoleFeeder {
 		roles.add(new SimpleGrantedAuthority(ROLE_CLUB));
 	}
 	
-	public GrantedAuthority getRole(String role_name){
-		GrantedAuthority result = null;
+	public String getRole(String role_name){
+		String result = null;
 		for(GrantedAuthority auth : roles){
 			if(auth.getAuthority().equals(role_name)){
-				result = auth;
+				result = auth.getAuthority();
 			}
 		}
 		return result;
