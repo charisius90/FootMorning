@@ -96,7 +96,7 @@ public class MyclubController {
 		}
 	}
 	@RequestMapping(value="myclubCashBookMgr", method=RequestMethod.POST)
-	public String myclubCashBookMgrComplete(@RequestBody List<Map<String, Object>> list, String cmd, HttpServletRequest req){
+	public @ResponseBody String myclubCashBookMgrComplete(@RequestBody List<Map<String, Object>> list, String cmd, HttpServletRequest req){
 		try {
 			if(cmd.equals("update")){
 				logger.info("UPDATE - CASHBOOK LIST : " + list);
@@ -129,14 +129,6 @@ public class MyclubController {
 				
 				myclubCashBookService.insert(dto);
 				
-				ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
-				System.out.println(club);
-				List<MyclubCashBookDTO> listAll = myclubCashBookService.listAllWithClubNo(Integer.parseInt(club.getClub_no()));
-				StringBuilder result = new StringBuilder("0");
-				for(MyclubCashBookDTO book : listAll){
-					result.append(" " + book.getCashbook_no());
-				}
-				return result.toString();
 			}
 			else if(cmd.equals("del")){
 				logger.info("DEL - CASHBOOK LIST : " + list);
@@ -145,6 +137,13 @@ public class MyclubController {
 				myclubCashBookService.delete(cashbook_no);
 			}
 			
+			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
+			List<MyclubCashBookDTO> listAll = myclubCashBookService.listAllWithClubNo(Integer.parseInt(club.getClub_no()));
+			StringBuilder result = new StringBuilder("0");
+			for(MyclubCashBookDTO book : listAll){
+				result.append(" " + book.getCashbook_no());
+			}
+			return result.toString();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
