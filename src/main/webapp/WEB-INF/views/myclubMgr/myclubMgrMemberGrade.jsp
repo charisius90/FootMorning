@@ -36,19 +36,47 @@
 				<div class="row">
 					<table class="table table-hover">
 						<tr>
-							<th>방문자권한</th>
+							<th>방문자 권한</th>
 							<td>
 								등업되지 않은 임시회원이며, 다음 권한을 부여할 수가 있습니다.<br/>
-								<input type="checkbox"/>&nbsp;글쓰기 권한 사용
+								<input type="checkbox"/>&nbsp;글쓰기 권한
 							</td>
 						</tr>
 						<tr>
-							<th>등급별권한</th>
+							<th>등급별 권한</th>
 							<td>
-								<div>1.일반회원</div><input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
-								<div>2.스태프</div><input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
-								<div>3.매니저</div><input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
-								<div>4.마스터</div><input type="checkbox"/>&nbsp;글쓰기 권한 사용<br/>
+								<div>1.일반회원</div><input type="checkbox"/>&nbsp;게시글 수정/삭제&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;현금출납부 관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;관리페이지 접근&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;기본정보관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;멤버관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;운영관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;클럽관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<br/>
+								<div>2.스태프</div><input type="checkbox"/>&nbsp;게시글 수정/삭제&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;현금출납부 관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;관리페이지 접근&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;기본정보관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;멤버관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;운영관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;클럽관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<br/>
+								<div>3.매니저</div><input type="checkbox"/>&nbsp;게시글 수정/삭제&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;현금출납부 관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;관리페이지 접근&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;기본정보관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;멤버관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;운영관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;클럽관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<br/>
+								<div>4.마스터</div><input type="checkbox"/>&nbsp;게시글 수정/삭제&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;현금출납부 관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;관리페이지 접근&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;기본정보관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;멤버관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;운영관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox"/>&nbsp;클럽관리&nbsp;&nbsp;&nbsp;&nbsp;
+								<br/>
 							</td>
 							
 						</tr>

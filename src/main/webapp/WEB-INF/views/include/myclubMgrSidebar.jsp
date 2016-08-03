@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,14 +46,16 @@
 					<ul id="operationmgr" class="collapse">
 						<li><a href="/myclubMgr/myclubChallengeMgr?no=${USER_KEY.club_no}">도전장관리</a></li>
 					</ul>
-				</li>				
+				</li>
+				<c:if test="${USER_KEY.mem_grade<2}">				
 				<li><a href="javascript:;" data-toggle="collapse"
 					data-target="#operationclub"> 클럽운영 <i class="glyphicon glyphicon-triangle-bottom"></i></a>
 					<ul id="operationclub" class="collapse">
 						<li><a href="/myclubMgr/myclubMgrClosing">클럽폐쇄</a></li>
 						<li><a href="/myclubMgr/myclubMgrTransfer">클럽양도</a></li>
 					</ul>
-				</li>				
+				</li>			
+				</c:if>	
 			</ul>
 	</div>
 	<!-- /#sidebar-wrapper -->
