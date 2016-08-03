@@ -29,6 +29,10 @@
 		<div id="page-content-wrapper">
 			<div class="col-md-10">
 				<h1>자유게시판</h1>
+					<div class="myteamheader" align="right">
+						<!-- 버튼두개짜리 헤더  -->
+						<%@include file="../../include/myclubHeader.jsp" %>
+					</div>
 				<br/>
 				<table class="table table-boardead table-hover" style="text-align: center;">
 					<thead  style="background-color:#F7F7F7">
