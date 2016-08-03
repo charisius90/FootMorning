@@ -60,7 +60,7 @@
 			<div class="row">
 				<c:out value="today : ${today}"/>
 				<table class="table table-hover" text-align="center">
-					<thead>
+					<thead style="background-color: #e6e6e6">
 					<tr>
 						<th>경기 번호</th><th>날짜</th><th>시간</th><th>장소</th>
 						<th>HOME실력</th><th>HOME</th><th>vs</th><th>AWAY</th><th>AWAY실력</th>

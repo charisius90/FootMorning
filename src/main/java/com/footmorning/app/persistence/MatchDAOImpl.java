@@ -41,7 +41,7 @@ public class MatchDAOImpl implements MatchDAO {
 
 	@Override
 	public void matchReciveRegister(MatchDTO dto) throws Exception {
-		SqlSession.insert(NAMESPASE+".registerRevice", dto);
+		SqlSession.insert(NAMESPASE+".registerRecive", dto);
 	}
 
 
@@ -66,11 +66,25 @@ public class MatchDAOImpl implements MatchDAO {
 		return SqlSession.selectList(NAMESPASE+".listWithClubNo", club_no);
 	}
 
+	@Override
+	public List<MatchDTO> matchListWithClubNoUnconnect(int club_no) throws Exception {
+		return SqlSession.selectList(NAMESPASE+".listWithClubNoUnconnect", club_no);
+	}
+
+	@Override
+	public MatchDTO matchWithGameNo(int game_no) throws Exception {
+		return SqlSession.selectOne(NAMESPASE+".matchWithGameNo", game_no);
+	}
+
 
 	@Override
 	public void matchDelete(int game_no) throws Exception {
 		SqlSession.update(NAMESPASE2+".updateCancle", game_no);
 		SqlSession.update(NAMESPASE+".updateCancle", game_no);
 	}
-
+	
+	@Override
+   public String myClubName(int club_no) throws Exception {
+      return SqlSession.selectOne(NAMESPASE+".myclubName", club_no);
+   }
 }

@@ -18,5 +18,11 @@ public void matchRegister(MatchDTO dto)throws Exception;
 	
 	public List<MatchDTO> matchListWithClubNo(int club_no) throws Exception;
 	
+	public List<MatchDTO> matchListWithClubNoUnconnect(int club_no) throws Exception;
+	
+	public MatchDTO matchWithGameNo(int game_no) throws Exception;
+	
 	public void matchDelete(int game_no) throws Exception;
+	
+	public String myClubName(int club_no) throws Exception;
 }

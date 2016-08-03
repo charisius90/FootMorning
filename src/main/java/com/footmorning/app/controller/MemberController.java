@@ -1,5 +1,6 @@
 package com.footmorning.app.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -25,6 +26,7 @@ import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.service.ClubService;
+import com.footmorning.app.service.MatchService;
 import com.footmorning.app.service.MemberService;
 import com.footmorning.app.util.Email;
 import com.footmorning.app.util.EmailSender;
@@ -43,6 +45,9 @@ public class MemberController {
 	
 	@Inject
 	private ClubService clubService;
+	
+	@Inject
+	private MatchService matchService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
@@ -68,6 +73,7 @@ public class MemberController {
 			if(dto.getClub_no() != null){
 				int club_no = Integer.parseInt(dto.getClub_no());
 				WebUtils.setSessionAttribute(req, "CLUB_KEY", clubService.getWithNo(club_no));
+				WebUtils.setSessionAttribute(req, "MATCH_KEY", matchService.matchListWithClubNoUnconnect(club_no));
 			}
 		}
 		catch (Exception err) {

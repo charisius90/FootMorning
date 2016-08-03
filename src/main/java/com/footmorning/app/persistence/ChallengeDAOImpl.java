@@ -17,6 +17,12 @@ public class ChallengeDAOImpl implements ChallengeDAO {
 	@Inject
 	private SqlSession SqlSession;
 	
+	
+   @Override
+   public List<ChallengeDTO> validateUserClubNo(ChallengeDTO dto) throws Exception {
+      return SqlSession.selectList(NAMESPASE+".checkChallenge", dto);   
+   }
+
 	@Override
 	public void ChallengeRegister(ChallengeDTO dto) throws Exception {
 		SqlSession.insert(NAMESPASE+".register", dto);

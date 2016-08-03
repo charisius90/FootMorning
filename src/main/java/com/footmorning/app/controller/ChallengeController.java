@@ -10,22 +10,91 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.footmorning.app.domain.ChallengeDTO;
+import com.footmorning.app.domain.MatchDTO;
 import com.footmorning.app.service.ChallengeService;
+import com.footmorning.app.service.MatchService;
 
 @Controller
 public class ChallengeController {
 	
 	@Inject
 	private ChallengeService service;
+	
+	@Inject
+	private MatchService matchService;
+	
+	   @RequestMapping(value="/challenge/register",method=RequestMethod.POST)
+	   public String ChallengeRegister(HttpServletRequest req,RedirectAttributes rttr) throws Exception{
 
-	@RequestMapping(value="/challenge/register",method=RequestMethod.POST)
-	public String ChallengeRegister(ChallengeDTO dto,RedirectAttributes rttr) throws Exception{
+	      int user_club_no = Integer.parseInt(req.getParameter("receiver_club_no"));
+	      int club_no = Integer.parseInt(req.getParameter("sander_club_no"));
+	      int game_no = Integer.parseInt(req.getParameter("game_no"));
+	      
+	      System.out.println("DATA Called...:"+user_club_no+","+club_no);
+	      
+	      ChallengeDTO dto2 = new ChallengeDTO();
+	      dto2.setReceiver_club_no(user_club_no);
+	      dto2.setSender_club_no(club_no);
+	      dto2.setGame_no(game_no);
+	      
+	      
+//	      System.out.println("sender:...."+dto.toString());
+	      //보내는 클럽넘버와 받는 클럽넘버가 같을때
+//	      System.out.println("클럽넘버 받아옴?....:"+service.validateClubMo(club_no));
+	      if(user_club_no==club_no){
+	         req.setAttribute("result", "SAMECLUB");
+	         return "/matching/json/reslutJson";
+	      }
+	      //이미 도전장을 보낸경우
+	      else if(service.validateUserClubNo(dto2).size()>0){
+	         
+	         req.setAttribute("result", "SAMENAME");
+	         return "/matching/json/reslutJson";
+	      }
+	      else{
+	         return "/matching/json/reslutJson";
+	      }
+	   }
+   @RequestMapping(value="/challenge/registercomp")
+   public String ChallengeRegisterComplete(ChallengeDTO dto,RedirectAttributes rttr) throws Exception{
+      
+      service.ChallengeRegister(dto);
+      rttr.addFlashAttribute("msg", "SUCCESS");
+      return "redirect:/matching/main";
+   }
+	
 
-		System.out.println(dto.toString());
-		service.ChallengeRegister(dto);
+//	@RequestMapping(value="/challenge/register",method=RequestMethod.POST)
+//	public String ChallengeRegister(ChallengeDTO dto,RedirectAttributes rttr) throws Exception{
+//
+//		System.out.println(dto.toString());
+//		service.ChallengeRegister(dto);
+//		
+//		rttr.addFlashAttribute("msg", "SUCCESS");
+//		
+//		return "redirect:/matching/main";
+//	}
+	
+	@RequestMapping(value="/challenge/invite",method=RequestMethod.POST)
+	public String ChallengeInvite(HttpServletRequest req, RedirectAttributes rttr, MatchDTO dto) throws Exception{
+		System.out.println("invite 컨트롤러");
+		int game_no = Integer.parseInt(req.getParameter("checkbox"));
+		System.out.println("게임번호 : "+game_no);
+		
+		MatchDTO matchDto = matchService.matchWithGameNo(game_no);
+		ChallengeDTO challengeDto = new ChallengeDTO();
+		challengeDto.setSender_club_no(matchDto.getClub_no());
+		challengeDto.setReceiver_club_no(Integer.parseInt(req.getParameter("yourclubNo")));
+		challengeDto.setChallenge_content(req.getParameter("challenge_content"));
+		challengeDto.setGame_no(game_no);
+		challengeDto.setGame_flag(matchDto.getGame_flag());
+		challengeDto.setClub_ability(matchDto.getClub_ability());
+		challengeDto.setChallenge_flag("INVITE");
+		System.out.println("만든 초대장: " + challengeDto.toString());
+		
+		service.ChallengeRegister(challengeDto);
 		
 		rttr.addFlashAttribute("msg", "SUCCESS");
-		
-		return "redirect:/matching/main";
+		return "redirect:/club/clubList";
 	}
 }
