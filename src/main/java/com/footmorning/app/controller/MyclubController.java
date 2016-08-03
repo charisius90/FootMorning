@@ -195,7 +195,7 @@ public class MyclubController {
 				if(today.getTime() > rejectFrom.getTime() && today.getTime() < rejectTo.getTime()){
 					rttr.addFlashAttribute("msg", "현재는 가입신청을 받지 않는 기간입니다.");
 				}
-				else if(birthDate.getTime() < birthFrom.getTime() && birthDate.getTime() > birthTo.getTime()){
+				else if(birthDate.getTime() < birthFrom.getTime() || birthDate.getTime() > birthTo.getTime()){
 					rttr.addFlashAttribute("msg", "가입조건에 맞지 않는 연령입니다.");
 				}
 				else if(!clubConfig.getConfig_gender().equals("BOTH") && !dto.getMem_gender().toUpperCase().equals(clubConfig.getConfig_gender())){

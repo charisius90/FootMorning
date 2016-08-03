@@ -9,19 +9,23 @@
 <style>
 .banner >a{font-size: 16px; font-weight:bold; color: white;}
 #main-navbar >li{font-size: 16px; font-weight:bold; color: gray;}
+
+#main-navbar > li > a{
+	height:50px;
+	padding: 15px;
+}
 </style>
 <body>
 <nav class="navbar navbar-default navbar-static-top">
-		<div style="background-image: url('../resources/images/banner.jpg'); background-size: cover; height: 200px;">
+	<div style="background-image: url('../resources/images/banner.jpg'); background-size: cover; height: 200px;">
 		<div class="banner" align="right" style="height: 24px; padding-top: 10px">
 			<a href="/"><i class="glyphicon glyphicon-home"></i> 서비스홈</a>&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="member/memberLogout"><i class="glyphicon glyphicon-log-out"></i> 로그아웃</a>&nbsp;&nbsp;&nbsp;&nbsp;
 		</div>
 	</div>
 	<div class="container">
-		<div class="navbar-header"><a class="navbar-brand" href="#">로고들어갈위치</a></div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav nav-justified" style="margin-top:10px" id="main-navbar">
+			<ul class="nav nav-justified" id="main-navbar">
 				<li><a href="/admin/adminMain">관리 홈</a></li>
 				
 				<!-- 직원 메뉴 -->
