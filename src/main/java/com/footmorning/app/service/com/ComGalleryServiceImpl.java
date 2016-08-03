@@ -12,6 +12,7 @@ import com.footmorning.app.persistence.ComGalleryDAO;
 import com.footmorning.app.service.ComGalleryService;
 import com.footmorning.app.util.AlbumCriteria;
 import com.footmorning.app.util.AlbumSearchCriteria;
+import com.footmorning.app.util.SearchCriteria;
 
 @Service
 public class ComGalleryServiceImpl implements ComGalleryService {
@@ -124,6 +125,16 @@ public class ComGalleryServiceImpl implements ComGalleryService {
 	@Override
 	public List<ComGalleryReplyDTO> listAllReply(Integer bno) throws Exception {
 		return dao.listAllReply(bno);
+	}
+
+	@Override
+	public List<ComGalleryDTO> listAdmin(SearchCriteria cri) throws Exception {
+		return dao.listAdmin(cri);
+	}
+
+	@Override
+	public int listAdminCount(SearchCriteria cri) throws Exception {
+		return dao.listAdminCount(cri);
 	}
 
 }

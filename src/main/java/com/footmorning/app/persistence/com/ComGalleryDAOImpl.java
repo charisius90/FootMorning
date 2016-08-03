@@ -12,6 +12,7 @@ import com.footmorning.app.domain.ComGalleryReplyDTO;
 import com.footmorning.app.persistence.ComGalleryDAO;
 import com.footmorning.app.util.AlbumCriteria;
 import com.footmorning.app.util.AlbumSearchCriteria;
+import com.footmorning.app.util.SearchCriteria;
 
 @Repository
 public class ComGalleryDAOImpl implements ComGalleryDAO {
@@ -106,5 +107,16 @@ public class ComGalleryDAOImpl implements ComGalleryDAO {
 	public List<ComGalleryReplyDTO> listAllReply(Integer bno) throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listReply", bno);
 	}
+
+	@Override
+	public List<ComGalleryDTO> listAdmin(SearchCriteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listadmin", cri);
+	}
+
+	@Override
+	public int listAdminCount(SearchCriteria cri) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".listadmincount", cri);
+	}
+	
 
 }

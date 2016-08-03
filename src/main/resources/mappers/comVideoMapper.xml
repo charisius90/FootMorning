@@ -153,4 +153,30 @@
 		com_video_re_content=#{com_video_re_content} WHERE
 		com_video_re_no=#{com_video_re_no};
 	</update>
+	
+	<select id="listAdmin" resultType="ComVideoDTO">
+		<![CDATA[
+			select 
+			com_video_no, com_video_subject, com_video_regdate, com_video_count,
+			mem_no, com_video_writer
+			from com_video 
+			where com_video_no > 0
+		]]>
+
+		<include refid="search"></include>		
+		
+		<![CDATA[
+			order by com_video_no desc
+			limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<select id="listAdminCount" resultType="int">
+		<![CDATA[
+			select count(*)
+			from com_video where com_video_no > 0
+		]]>
+		<include refid="search"></include>		
+	</select>	
+	
 </mapper>

@@ -65,7 +65,7 @@ function popupLink(popHeight,popWidth){
 					<tr>
 						<td><input type="checkbox" name="" value="" /> ${dto.com_qna_no}</td>
 						<td>${dto.com_qna_writer}</td>
-						<td>${dto.com_qna_regdate}</td>
+						<td><fmt:formatDate value="${dto.com_qna_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
 						<td>${dto.com_qna_subject}</td>
 						<td></td>
 					</tr>

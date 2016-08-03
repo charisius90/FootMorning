@@ -1,5 +1,8 @@
 package com.footmorning.app.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -7,8 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.ComBoastService;
@@ -19,6 +24,9 @@ import com.footmorning.app.service.ComGalleryService;
 import com.footmorning.app.service.ComQnAService;
 import com.footmorning.app.service.ComVideoService;
 import com.footmorning.app.service.MemberService;
+import com.footmorning.app.util.AlbumPageMaker;
+import com.footmorning.app.util.AlbumSearchCriteria;
+import com.footmorning.app.util.ClubPageMaker;
 import com.footmorning.app.util.PageMaker;
 import com.footmorning.app.util.SearchCriteria;
 
@@ -141,62 +149,112 @@ public class AdminController {
 	 * 전체 커뮤니티 게시판 관리
 	 */
 	@RequestMapping("adminCommunityAll")
-	public void adminCommunityAll(SearchCriteria cri, Model model, HttpServletRequest req){
+	public void adminCommunityAll(SearchCriteria cri, Model model, String selectType){
 		try {
-			String select = req.getParameter("select");
-			System.out.println(select);
-			
-			int total = 0;
-			
-			if(true){
-				model.addAttribute("listcomboast", comboastService.listSearchCriteria(cri));
-				
-				total = memberService.listSearchCount(cri);
-				
-				model.addAttribute("total", total);
-			}
-//			else if(){
-//				model.addAttribute("listkor", comdiscussionkorService.listSearchCriteria(cri));
-//				
-//				total = memberService.listSearchCount(cri);
-//				
-//				model.addAttribute("total", total);
-//			}
-//			else if(){
-//				model.addAttribute("listcomworld", comdiscussionworldService.listSearchCriteria(cri));
-//				
-//				total = memberService.listSearchCount(cri);
-//				
-//				model.addAttribute("total", total);
-//			}
-//			else if(){
-//				model.addAttribute("listfree", comfreeService.listSearchCriteria(cri));
-//				
-//				total = memberService.listSearchCount(cri);
-//				
-//				model.addAttribute("total", total);
-//			}
-//			else if(){
-//				model.addAttribute("listgallery", comgalleryService.listSearchCriteria(cri));
-//				
-//				total = memberService.listSearchCount(cri);
-//				
-//				model.addAttribute("total", total);
-//			}
-//			else if(){
-//				model.addAttribute("listvideo", comvideoService.listSearchCriteria(cri));
-//				
-//				total = memberService.listSearchCount(cri);
-//				
-//				model.addAttribute("total", total);
-//			}
-			
 			
 			PageMaker pageMaker = new PageMaker();
-			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(total);
 			
-			model.addAttribute("pageMaker", pageMaker);
+			System.out.println(selectType);
+			
+			int total = 0;
+
+			if(selectType == null){
+				
+				pageMaker.setCri(cri);
+				model.addAttribute("pageMaker", pageMaker);
+				return;
+			}
+			
+			// 자랑
+			if(selectType.equals("boast")){
+				System.out.println("boast 게시판");
+				model.addAttribute("listcomboast", comboastService.listSearchCriteria(cri));
+				
+				total = comboastService.listSearchCount(cri);
+				
+				model.addAttribute("total", total);
+				
+				pageMaker.setCri(cri);
+				pageMaker.setTotalCount(total);
+					
+				model.addAttribute("pageMaker", pageMaker);
+			}
+			// 갤러리
+			else if(selectType.equals("gallery")){
+				System.out.println("gallery 게시판");
+				
+				model.addAttribute("listgallery", comgalleryService.listAdmin(cri));
+				
+				total = comgalleryService.listAdminCount(cri);
+				
+				model.addAttribute("total", total);
+				
+				pageMaker.setCri(cri);
+				pageMaker.setTotalCount(total);
+					
+				model.addAttribute("pageMaker", pageMaker);
+			}
+			// 동영상
+			else if(selectType.equals("video")){
+				System.out.println("video 게시판");
+				
+				model.addAttribute("listvideo", comvideoService.listAdmin(cri));
+				
+				total = comvideoService.listAdminCount(cri);
+				
+				model.addAttribute("total", total);
+				
+				pageMaker.setCri(cri);
+				pageMaker.setTotalCount(total);
+					
+				model.addAttribute("pageMaker", pageMaker);
+			}
+			// 국내
+			else if(selectType.equals("kor")){
+				System.out.println("kor 게시판");
+				model.addAttribute("listkor", comdiscussionkorService.listSearchCriteria(cri));
+				
+				total = comdiscussionkorService.listSearchCount(cri);
+				
+				model.addAttribute("total", total);
+				
+				pageMaker.setCri(cri);
+				pageMaker.setTotalCount(total);
+					
+				model.addAttribute("pageMaker", pageMaker);
+			}
+			// 해외
+			else if(selectType.equals("world")){
+				System.out.println("world 게시판");
+				model.addAttribute("listworld", comdiscussionworldService.listSearchCriteria(cri));
+				
+				System.out.println(comdiscussionworldService.listSearchCriteria(cri).toString());
+				
+				total = comdiscussionworldService.listSearchCount(cri);
+				
+				model.addAttribute("total", total);
+				
+				pageMaker.setCri(cri);
+				pageMaker.setTotalCount(total);
+					
+				model.addAttribute("pageMaker", pageMaker);
+			}
+			// 자유
+			else if(selectType.equals("free")){
+				System.out.println("free 게시판");
+				model.addAttribute("listfree", comfreeService.listSearchCriteria(cri));
+				
+				total = comfreeService.listSearchCount(cri);
+				
+				model.addAttribute("total", total);
+				
+				pageMaker.setCri(cri);
+				pageMaker.setTotalCount(total);
+					
+				model.addAttribute("pageMaker", pageMaker);
+			}
+			
+			
 		} 
 		catch (Exception e) {
 			e.printStackTrace();

@@ -6,6 +6,7 @@ import com.footmorning.app.domain.ComGalleryDTO;
 import com.footmorning.app.domain.ComGalleryReplyDTO;
 import com.footmorning.app.util.AlbumCriteria;
 import com.footmorning.app.util.AlbumSearchCriteria;
+import com.footmorning.app.util.SearchCriteria;
 
 public interface ComGalleryService {
 	public void create(ComGalleryDTO dto) throws Exception;
@@ -41,4 +42,8 @@ public interface ComGalleryService {
 	public void deleteReply(ComGalleryReplyDTO dto) throws Exception;
 
 	public List<ComGalleryReplyDTO> listAllReply(Integer bno) throws Exception;
+	
+	public List<ComGalleryDTO> listAdmin(SearchCriteria cri) throws Exception;
+
+	public int listAdminCount(SearchCriteria cri) throws Exception;
 }

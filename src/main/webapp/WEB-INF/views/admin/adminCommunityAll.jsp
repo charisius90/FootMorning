@@ -23,12 +23,12 @@
 							<td>게시판 선택</td>
 							<td>
 								<select name="selectType" class="form-control input-group-add" style="width: 156px;">
-									<option value="b" <c:out value="${cri.searchType == 'b'?'selected':''}"/>>클럽자랑 게시판</option>
-									<option value="g" <c:out value="${cri.searchType eq 'g'?'selected':''}"/>>축구갤러리 게시판</option>
-									<option value="v" <c:out value="${cri.searchType eq 'v'?'selected':''}"/>>축구동영상 게시판</option>
-									<option value="k" <c:out value="${cri.searchType eq 'k'?'selected':''}"/>>국내축구 게시판</option>
-									<option value="w" <c:out value="${cri.searchType eq 'w'?'selected':''}"/>>해외축구 게시판</option>
-									<option value="f" <c:out value="${cri.searchType eq 'f'?'selected':''}"/>>자유 게시판</option>
+									<option value="boast" <c:out value="${cri.selectType eq 'boast'?'selected':''}"/>>클럽자랑 게시판</option>
+									<option value="gallery" <c:out value="${cri.selectType eq 'gallery'?'selected':''}"/>>축구갤러리 게시판</option>
+									<option value="video" <c:out value="${cri.selectType eq 'video'?'selected':''}"/>>축구동영상 게시판</option>
+									<option value="kor" <c:out value="${cri.selectType eq 'kor'?'selected':''}"/>>국내축구 게시판</option>
+									<option value="world" <c:out value="${cri.selectType eq 'world'?'selected':''}"/>>해외축구 게시판</option>
+									<option value="free" <c:out value="${cri.selectType eq 'free'?'selected':''}"/>>자유 게시판</option>
 								</select>
 							<td>
 							
@@ -49,12 +49,12 @@
 							<td>
 								<select name="searchType" class="form-control input-group-add">
 									<option value="n" <c:out value="${cri.searchType == null?'selected':''}"/>>---</option>
-									<option value="j" <c:out value="${cri.searchType eq 'j'?'selected':''}"/>>직무</option>
-									<option value="m" <c:out value="${cri.searchType eq 'm'?'selected':''}"/>>이름</option>
+									<option value="w" <c:out value="${cri.searchType eq 'w'?'selected':''}"/>>작성자</option>
+									<option value="t" <c:out value="${cri.searchType eq 't'?'selected':''}"/>>제목</option>
 								</select>
 							</td>
 							<td><input type="text"  name="keyword" value='${pageMaker.cri.keyword}' class="form-control" size="40" placeholder="클럽명/클럽장/아이디"></td>
-							<td><button id="searchBtn" class="btn btn-default  input-group-add" type="submit">검색</button></td>
+							<td><button id="searchBtn" class="btn btn-default  input-group-add" type="button">검색</button></td>
 						</tr>
 					</table>
 				</div>
@@ -62,14 +62,13 @@
 		</div>
 		<br/>
 			
-			게시글 <span style="color:red">${total}</span>명
+			게시글 <span style="color:red">${total}</span>개
 			<table class="table table-bordered">
 				<tr style="background-color:#dddddd;">
 					<td><input type="checkbox" name="" value="" /> 작성자</td>
 					<td>글번호</td>
 					<td>등록일</td>
 					<td>제목</td>
-					<td>내용</td>
 				</tr>
 				
 				<c:if test="${!empty listcomboast}">
@@ -77,9 +76,8 @@
 						<tr>
 							<td><input type="checkbox" name="" value="" /> ${dto.com_boast_writer}</td>
 							<td>${dto.com_boast_no}</td>
-							<td>${dto.com_boast_regdate}</td>
+							<td><fmt:formatDate value="${dto.com_boast_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
 							<td>${dto.com_boast_subject}</td>
-							<td>${dto.com_boast_content}</td>
 						</tr>
 					</c:forEach>
 				</c:if>
@@ -89,9 +87,8 @@
 						<tr>
 							<td><input type="checkbox" name="" value="" /> ${dto.com_discussion_kor_writer}</td>
 							<td>${dto.com_discussion_kor_no}</td>
-							<td>${dto.com_discussion_kor_regdate}</td>
+							<td><fmt:formatDate value="${dto.com_discussion_kor_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
 							<td>${dto.com_discussion_kor_subject}</td>
-							<td>${dto.com_discussion_kor_content}</td>
 						</tr>
 					</c:forEach>
 				</c:if>
@@ -101,9 +98,8 @@
 						<tr>
 							<td><input type="checkbox" name="" value="" /> ${dto.com_discussion_world_writer}</td>
 							<td>${dto.com_discussion_world_no}</td>
-							<td>${dto.com_discussion_world_regdate}</td>
+							<td><fmt:formatDate value="${dto.com_discussion_world_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
 							<td>${dto.com_discussion_world_subject}</td>
-							<td>${dto.com_discussion_world_content}</td>
 						</tr>
 					</c:forEach>
 				</c:if>
@@ -113,9 +109,8 @@
 						<tr>
 							<td><input type="checkbox" name="" value="" /> ${dto.com_free_writer}</td>
 							<td>${dto.com_free_no}</td>
-							<td>${dto.com_free_regdate}</td>
+							<td><fmt:formatDate value="${dto.com_free_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
 							<td>${dto.com_free_subject}</td>
-							<td>${dto.com_free_content}</td>
 						</tr>
 					</c:forEach>
 				</c:if>
@@ -125,9 +120,8 @@
 						<tr>
 							<td><input type="checkbox" name="" value="" /> ${dto.com_gallery_writer}</td>
 							<td>${dto.com_gallery_no}</td>
-							<td>${dto.com_gallery_regdate}</td>
+							<td><fmt:formatDate value="${dto.com_gallery_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
 							<td>${dto.com_gallery_subject}</td>
-							<td>${dto.com_gallery_content}</td>
 						</tr>
 					</c:forEach>
 				</c:if>
@@ -137,9 +131,8 @@
 						<tr>
 							<td><input type="checkbox" name="" value="" /> ${dto.com_video_writer}</td>
 							<td>${dto.com_video_no}</td>
-							<td>${dto.com_video_regdate}</td>
+							<td><fmt:formatDate value="${dto.com_video_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
 							<td>${dto.com_video_subject}</td>
-							<td>${dto.com_video_content}</td>
 						</tr>
 					</c:forEach>
 				</c:if>
@@ -192,6 +185,7 @@
 <script>
 	$('#searchBtn').on("click", function(event) {
 		
+		// 게시판선택 옵션 값 가져오기
 		var selectType = $("select[name=selectType]").val();
 		
 		// 검색옵션 값 가져오기
@@ -200,13 +194,15 @@
 		// 키워드 값 가져오기
 		var keyword = $("input[name=keyword]").val();
 		
-		alert(selectType+", "+searchType+", "+keyword);
+		self.location = "/admin/adminCommunityAll"
+			+ "${pageMaker.makeQuery(1)}"
+			+ "&searchType=" 
+		 	+ searchType 
+			+ "&keyword=" 
+			+ keyword
+			+ "&selectType="
+			+ selectType;
 		
-		alert("searchType : " + searchType + ", " + "keyword : " + keyword);
-		self.location = "/admin/adminCommunityAll${pageMaker.makeQuery(1)}&searchType="+$("select option:selected").val()  
-		+"&selectType=" + $("select option:selected").val() 
-		+"&keyword=" + $('#keywordInput').val();
-	
 	});
 
 </script>
