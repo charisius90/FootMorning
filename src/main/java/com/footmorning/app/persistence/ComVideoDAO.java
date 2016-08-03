@@ -2,10 +2,12 @@ package com.footmorning.app.persistence;
 
 import java.util.List;
 
+import com.footmorning.app.domain.ComGalleryDTO;
 import com.footmorning.app.domain.ComVideoDTO;
 import com.footmorning.app.domain.ComVideoReplyDTO;
 import com.footmorning.app.util.AlbumCriteria;
 import com.footmorning.app.util.AlbumSearchCriteria;
+import com.footmorning.app.util.SearchCriteria;
 
 public interface ComVideoDAO {
 	public void create(ComVideoDTO dto) throws Exception;
@@ -41,4 +43,8 @@ public interface ComVideoDAO {
 	public void deleteReply(ComVideoReplyDTO dto) throws Exception;
 
 	public List<ComVideoReplyDTO> listAllReply(Integer bno) throws Exception;
+	
+	public List<ComVideoDTO> listAdmin(SearchCriteria cri) throws Exception;
+
+	public int listAdminCount(SearchCriteria cri) throws Exception;
 }

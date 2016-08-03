@@ -5,6 +5,7 @@ public class AlbumSearchCriteria extends AlbumCriteria {
 	private String searchType;
 	private String keyword;
 	private String club_no;
+	private String selectType;
 
 	public String getSearchType() {
 		return searchType;
@@ -30,9 +31,18 @@ public class AlbumSearchCriteria extends AlbumCriteria {
 		this.club_no = club_no;
 	}
 
+	public String getSelectType() {
+		return selectType;
+	}
+
+	public void setSelectType(String selectType) {
+		this.selectType = selectType;
+	}
+
 	@Override
 	public String toString() {
-		return "AlbumSearchCriteria [searchType=" + searchType + ", keyword=" + keyword + ", club_no=" + club_no + "]";
+		return "AlbumSearchCriteria [searchType=" + searchType + ", keyword=" + keyword + ", club_no=" + club_no
+				+ ", selectType=" + selectType + "]";
 	}
 
 }

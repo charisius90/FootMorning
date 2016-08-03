@@ -32,8 +32,8 @@
 									<option value="s" <c:out value="${cri.searchType eq 's'?'selected':''}"/>>차단여부</option>
 								</select>
 							<td>
-							<td><input type="text"  name="keyword" value='${pageMaker.cri.keyword}' class="form-control" size="40" placeholder="E-Mail/이름으로 검색가능"></td>
-							<td><button id="searchBtn" class="btn btn-default  input-group-add" type="submit">검색</button></td>
+							<td><input type="text"  name="keyword" value='${pageMaker.cri.keyword}' class="form-control" size="40" placeholder="E-Mail/이름으로 검색가능" id="keywordInput"></td>
+							<td><button id="searchBtn" class="btn btn-default  input-group-add" type="button">검색</button></td>
 						</tr>
 					</table>
 				</form>

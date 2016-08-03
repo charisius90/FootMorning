@@ -13,6 +13,7 @@ import com.footmorning.app.persistence.ComVideoDAO;
 import com.footmorning.app.service.ComVideoService;
 import com.footmorning.app.util.AlbumCriteria;
 import com.footmorning.app.util.AlbumSearchCriteria;
+import com.footmorning.app.util.SearchCriteria;
 
 @Service
 public class ComVideoSerivceImpl implements ComVideoService {
@@ -127,6 +128,16 @@ public class ComVideoSerivceImpl implements ComVideoService {
 	@Override
 	public List<ComVideoReplyDTO> listAllReply(Integer bno) throws Exception {
 		return dao.listAllReply(bno);
+	}
+
+	@Override
+	public List<ComVideoDTO> listAdmin(SearchCriteria cri) throws Exception {
+		return dao.listAdmin(cri);
+	}
+
+	@Override
+	public int listAdminCount(SearchCriteria cri) throws Exception {
+		return dao.listAdminCount(cri);
 	}
 
 }

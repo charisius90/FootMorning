@@ -67,8 +67,8 @@
 									<option value="c" <c:out value="${cri.searchType eq 'c'?'selected':''}"/>>내용</option>
 									<option value="w" <c:out value="${cri.searchType eq 'w'?'selected':''}"/>>작성자</option>
 								</select>
-								<input type="text" name="keyword" value='${pageMaker.cri.keyword}' style="height: 28px;">
-								<button id="searchBtn" class="btn btn-default input-group-add" type="submit" style="heigt: 25px;padding-top: 4px;padding-bottom: 4px;">검색</button>
+								<input type="text" name="keyword" value='${pageMaker.cri.keyword}' style="height: 28px;" id="keywordInput">
+								<button id="searchBtn" class="btn btn-default input-group-add" type="button" style="heigt: 25px;padding-top: 4px;padding-bottom: 4px;">검색</button>
 							</div>
 						</form>	
 								

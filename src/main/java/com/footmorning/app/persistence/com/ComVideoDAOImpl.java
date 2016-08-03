@@ -12,6 +12,7 @@ import com.footmorning.app.domain.ComVideoReplyDTO;
 import com.footmorning.app.persistence.ComVideoDAO;
 import com.footmorning.app.util.AlbumCriteria;
 import com.footmorning.app.util.AlbumSearchCriteria;
+import com.footmorning.app.util.SearchCriteria;
 
 @Repository
 public class ComVideoDAOImpl implements ComVideoDAO {
@@ -105,6 +106,16 @@ public class ComVideoDAOImpl implements ComVideoDAO {
 	@Override
 	public List<ComVideoReplyDTO> listAllReply(Integer bno) throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listReply", bno);
+	}
+
+	@Override
+	public List<ComVideoDTO> listAdmin(SearchCriteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listAdmin", cri);
+	}
+
+	@Override
+	public int listAdminCount(SearchCriteria cri) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".listAdminCount", cri);
 	}
 
 }

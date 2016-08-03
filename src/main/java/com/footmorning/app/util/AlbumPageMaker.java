@@ -84,10 +84,14 @@ public class AlbumPageMaker {
 	// 이동할 수 있다.
 	public String makeSearch(int page) {
 
-		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page)
+		UriComponents uriComponents = 
+				UriComponentsBuilder.newInstance()
+				.queryParam("page", page)
 				.queryParam("perPageNum", cri.getPerPageNum())
 				.queryParam("searchType", ((AlbumSearchCriteria) cri).getSearchType())
-				.queryParam("keyword", ((AlbumSearchCriteria) cri).getKeyword()).build();
+				.queryParam("keyword", ((AlbumSearchCriteria) cri).getKeyword())
+				.queryParam("selectType", ((AlbumSearchCriteria)cri).getSelectType())
+				.build();
 
 		return uriComponents.toUriString();
 	}

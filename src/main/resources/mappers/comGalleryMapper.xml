@@ -153,4 +153,29 @@
 		com_gallery_re_content=#{com_gallery_re_content} WHERE
 		com_gallery_re_no=#{com_gallery_re_no};
 	</update>
+	
+	<select id="listadmin" resultType="ComGalleryDTO">
+		<![CDATA[
+			select 
+			com_gallery_no, com_gallery_subject, com_gallery_regdate, com_gallery_count,
+			mem_no, com_gallery_writer
+			from com_gallery 
+			where com_gallery_no > 0
+		]]>
+
+		<include refid="search"></include>		
+		
+		<![CDATA[
+			order by com_gallery_no desc
+			limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<select id="listadmincount" resultType="int">
+		<![CDATA[
+			select count(*)
+			from com_gallery where com_gallery_no > 0
+		]]>
+		<include refid="search"></include>		
+	</select>
 </mapper>
