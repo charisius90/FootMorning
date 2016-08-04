@@ -42,4 +42,6 @@ public interface MyclubVideoService {
 	public void deleteReply(MyclubVideoReplyDTO dto) throws Exception;
 
 	public List<MyclubVideoReplyDTO> listAllReply(Integer bno) throws Exception;
+
+	public List<MyclubVideoDTO> listMypostAll(int mem_no) throws Exception;
 }

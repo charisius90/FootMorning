@@ -47,4 +47,6 @@ public interface ComGalleryDAO {
 	public List<ComGalleryDTO> listAdmin(SearchCriteria cri) throws Exception;
 
 	public int listAdminCount(SearchCriteria cri) throws Exception;
+	
+	public List<ComGalleryDTO> listMypostAll(int mem_no) throws Exception;
 }

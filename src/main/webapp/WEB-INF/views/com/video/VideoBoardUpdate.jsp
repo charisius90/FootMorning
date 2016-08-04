@@ -21,7 +21,7 @@
    		 <input type='hidden' name='com_video_no' value="${dto.com_video_no}">
          <div class="col-md-10">
             <div id="page-content-wrapper">
-            <h1>클럽자랑-수정하기</h1>          
+            <h1>동영상게시판-수정하기</h1>          
             <br/><br/>
             
             <!-- 글쓰는 부분 -->

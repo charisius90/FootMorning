@@ -155,4 +155,9 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 		// TODO Auto-generated method stub
 		return dao.listAllReply(bno);
 	}
+
+	@Override
+	public List<MyclubNoticeDTO> listMypostAll(int mem_no) throws Exception {
+		return dao.listMypostAll(mem_no);
+	}
 }

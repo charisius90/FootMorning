@@ -125,4 +125,9 @@ public class MyclubVideoServiceImpl implements MyclubVideoService {
 		return dao.listAllReply(bno);
 	}
 
+	@Override
+	public List<MyclubVideoDTO> listMypostAll(int mem_no) throws Exception {
+		return dao.listMypostAll(mem_no);
+	}
+
 }

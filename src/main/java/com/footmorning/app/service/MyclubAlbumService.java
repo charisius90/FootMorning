@@ -42,4 +42,6 @@ public interface MyclubAlbumService {
 	public void deleteReply(MyclubAlbumReplyDTO dto) throws Exception;
 
 	public List<MyclubAlbumReplyDTO> listAllReply(Integer bno) throws Exception;
+
+	public List<MyclubAlbumDTO> listMypostAll(int mem_no) throws Exception;
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.RequestAttributes;
@@ -15,7 +16,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.MemberDTO;
+import com.footmorning.app.service.ComBoastService;
+import com.footmorning.app.service.ComDiscussionKorService;
+import com.footmorning.app.service.ComDiscussionWorldService;
+import com.footmorning.app.service.ComFreeService;
+import com.footmorning.app.service.ComGalleryService;
+import com.footmorning.app.service.ComQnAService;
+import com.footmorning.app.service.ComVideoService;
 import com.footmorning.app.service.MemberService;
+import com.footmorning.app.service.MyclubAlbumService;
+import com.footmorning.app.service.MyclubFreeService;
+import com.footmorning.app.service.MyclubNoticeService;
+import com.footmorning.app.service.MyclubTeamService;
+import com.footmorning.app.service.MyclubVideoService;
 
 /**
  * 
@@ -27,6 +40,31 @@ import com.footmorning.app.service.MemberService;
 public class MyPageController {
 	@Inject
 	private MemberService service;
+	@Inject
+	private ComBoastService comboastservice;
+	@Inject
+	private ComDiscussionKorService comdiscussionkorservice;
+	@Inject
+	private ComDiscussionWorldService comdiscussionworldservice;
+	@Inject
+	private ComFreeService comfreeservice;
+	@Inject
+	private ComGalleryService comgalleryservice;
+	@Inject
+	private ComVideoService comvideoservice;
+	@Inject
+	private ComQnAService comqnaservice;
+	@Inject
+	private MyclubAlbumService myclubalbumservice;
+	@Inject
+	private MyclubFreeService myclubfreeservice;
+	@Inject
+	private MyclubNoticeService myclubnoticeservice;
+	@Inject
+	private MyclubTeamService myclubteamservice;
+	@Inject
+	private MyclubVideoService myclubvideoservice;
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(MyPageController.class);
 	
@@ -54,7 +92,34 @@ public class MyPageController {
 	}
 	
 	@RequestMapping("myPageArticles")
-	public void myPageArticles(){
+	public void myPageArticles(Model model, HttpServletRequest req){
+		try {
+			HttpSession session = req.getSession();
+			
+			MemberDTO dto = (MemberDTO)session.getAttribute("USER_KEY");
+			System.out.println(dto.getMem_no());
+			
+			
+			model.addAttribute("comboast", comboastservice.listMypostAll(Integer.parseInt(dto.getMem_no())));
+			model.addAttribute("comkor", comdiscussionkorservice.listMypostAll(Integer.parseInt(dto.getMem_no())));
+			model.addAttribute("comworld", comdiscussionworldservice.listMypostAll(Integer.parseInt(dto.getMem_no())));
+			model.addAttribute("comfree", comfreeservice.listMypostAll(Integer.parseInt(dto.getMem_no())));
+			model.addAttribute("comgallery", comgalleryservice.listMypostAll(Integer.parseInt(dto.getMem_no())));
+			model.addAttribute("comqna", comqnaservice.listMypostAll(Integer.parseInt(dto.getMem_no())));
+			model.addAttribute("comvideo", comvideoservice.listMypostAll(Integer.parseInt(dto.getMem_no())));
+
+			model.addAttribute("myclubalbum", myclubalbumservice.listMypostAll(Integer.parseInt(dto.getMem_no())));
+			model.addAttribute("myclubfree", myclubfreeservice.listMypostAll(Integer.parseInt(dto.getMem_no())));
+			model.addAttribute("myclubnotice", myclubnoticeservice.listMypostAll(Integer.parseInt(dto.getMem_no())));
+			
+			System.out.println(myclubnoticeservice.listMypostAll(Integer.parseInt(dto.getMem_no())).toString());
+			
+			model.addAttribute("myclubteam", myclubteamservice.listMypostAll(Integer.parseInt(dto.getMem_no())));
+			model.addAttribute("myclubvideo", myclubvideoservice.listMypostAll(Integer.parseInt(dto.getMem_no())));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping("myPagePW")

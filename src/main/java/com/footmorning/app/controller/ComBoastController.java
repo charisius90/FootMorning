@@ -39,7 +39,10 @@ public class ComBoastController {
 		
 //		ClubDTO dto = (ClubDTO)session.getAttribute("CLUB_KEY");
 //		cri.setClub_no(dto.getClub_no());
-		model.addAttribute("list", service.listSearchCriteria(cri));
+		model.addAttribute("list", service.listSearchCri(cri));
+		
+		
+		System.out.println(service.listSearchCriteria(cri).toString());
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);

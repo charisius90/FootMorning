@@ -152,4 +152,8 @@
 		myclub_album_re_content=#{myclub_album_re_content} WHERE
 		myclub_album_re_no=#{myclub_album_re_no};
 	</update>
+	
+	<select id="listMypostAll" resultType="MyclubAlbumDTO">
+		select * from myclub_album where mem_no = #{mem_no};
+	</select>		
 </mapper>

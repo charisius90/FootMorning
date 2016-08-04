@@ -126,4 +126,9 @@ public class MyclubAlbumServiceImpl implements MyclubAlbumService {
 		return dao.listAllReply(bno);
 	}
 
+	@Override
+	public List<MyclubAlbumDTO> listMypostAll(int mem_no) throws Exception {
+		return dao.listMypostAll(mem_no);
+	}
+
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.footmorning.app.domain.ComBoastDTO;
 import com.footmorning.app.domain.ComBoastReplyDTO;
+import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.util.Criteria;
 import com.footmorning.app.util.SearchCriteria;
 
@@ -37,9 +38,12 @@ public interface ComBoastDAO {
 	public ComBoastReplyDTO MyclubNoticeParentPos(Integer no);
 
 	public void updateReply(ComBoastReplyDTO dto) throws Exception;
-
+	
 	public void deleteReply(ComBoastReplyDTO dto) throws Exception;
 
 	public List<ComBoastReplyDTO> listAllReply(Integer bno) throws Exception;
 	
+	public List<ComBoastDTO> listSearchCri(SearchCriteria cri) throws Exception;
+
+	public List<ComBoastDTO> listMypostAll(int mem_no) throws Exception;
 }

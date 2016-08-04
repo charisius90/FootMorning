@@ -156,5 +156,9 @@ public class ComFreeServiceImpl implements ComFreeService {
 		return dao.listAllReply(bno);
 	}
 
+	@Override
+	public List<ComFreeDTO> listMypostAll(int mem_no) throws Exception {
+		return dao.listMypostAll(mem_no);
+	}
 
 }

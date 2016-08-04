@@ -47,4 +47,6 @@ public interface ComVideoDAO {
 	public List<ComVideoDTO> listAdmin(SearchCriteria cri) throws Exception;
 
 	public int listAdminCount(SearchCriteria cri) throws Exception;
+	
+	public List<ComVideoDTO> listMypostAll(int mem_no) throws Exception;
 }

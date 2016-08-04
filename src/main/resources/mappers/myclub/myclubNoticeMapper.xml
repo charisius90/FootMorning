@@ -157,5 +157,8 @@
 		myclub_notice_re_content=#{myclub_notice_re_content} WHERE
 		myclub_notice_re_no=#{myclub_notice_re_no};
 	</update>
-		
+
+	<select id="listMypostAll" resultType="MyclubNoticeDTO">
+		select * from myclub_notice where mem_no = #{mem_no};
+	</select>			
 </mapper>

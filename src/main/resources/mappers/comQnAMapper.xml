@@ -160,4 +160,8 @@
 		com_qna_re_content=#{com_qna_re_content} WHERE
 		com_qna_re_no=#{com_qna_re_no};
 	</update>
+	
+	<select id="listMypostAll" resultType="ComQnADTO">
+		select * from com_qna where mem_no = #{mem_no};
+	</select>	
 </mapper>

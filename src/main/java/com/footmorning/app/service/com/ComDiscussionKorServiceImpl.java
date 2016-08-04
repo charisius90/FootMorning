@@ -159,4 +159,9 @@ public class ComDiscussionKorServiceImpl implements ComDiscussionKorService {
 		return dao.listAllReply(bno);
 	}
 
+	@Override
+	public List<ComDiscussionKorDTO> listMypostAll(int mem_no) throws Exception {
+		return dao.listMypostAll(mem_no);
+	}
+
 }

@@ -42,4 +42,6 @@ public interface ComQnAService {
 	public void deleteReply(ComQnAReplyDTO dto) throws Exception;
 
 	public List<ComQnAReplyDTO> listAllReply(Integer bno) throws Exception;
+
+	public List<ComQnADTO> listMypostAll(int mem_no) throws Exception;
 }

@@ -170,6 +170,7 @@ public class AdminController {
 				System.out.println("boast 게시판");
 				model.addAttribute("listcomboast", comboastService.listSearchCriteria(cri));
 				
+				System.out.println(comboastService.listSearchCriteria(cri).toString());
 				total = comboastService.listSearchCount(cri);
 				
 				model.addAttribute("total", total);

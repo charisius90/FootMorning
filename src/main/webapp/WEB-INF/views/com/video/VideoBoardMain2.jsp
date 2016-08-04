@@ -34,7 +34,7 @@
 		<div id="page-content-wrapper">
 			<div class="col-md-10">
 				<div class="row">
-				<h1>앨범</h1><br/>
+				<h1>동영상</h1><br/>
 					<!-- 게시글 내용이 들어가는 부분 -->
 					<c:forEach items="${list}" var="comDTO" varStatus="status">
 		                  <c:if test="${not empty comDTO.com_video_main_thumnail}">

@@ -41,4 +41,6 @@ public interface MyclubTeamService {
 	public void deleteReply(MyclubTeamReplyDTO dto) throws Exception;
 
 	public List<MyclubTeamReplyDTO> listAllReply(Integer bno) throws Exception;
+
+	public List<MyclubTeamDTO> listMypostAll(int mem_no) throws Exception;
 }

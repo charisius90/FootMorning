@@ -108,4 +108,9 @@ public class MyclubVideoDAOImpl implements MyclubVideoDAO {
 		return sqlSession.selectList(NAMESPACE + ".listReply", bno);
 	}
 
+	@Override
+	public List<MyclubVideoDTO> listMypostAll(int mem_no) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listMypostAll", mem_no);
+	}
+
 }

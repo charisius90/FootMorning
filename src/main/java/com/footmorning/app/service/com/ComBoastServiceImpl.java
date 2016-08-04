@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.footmorning.app.domain.ComBoastDTO;
 import com.footmorning.app.domain.ComBoastReplyDTO;
+import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.persistence.ComBoastDAO;
 import com.footmorning.app.service.ComBoastService;
 import com.footmorning.app.util.Criteria;
@@ -158,6 +159,16 @@ public class ComBoastServiceImpl implements ComBoastService {
 	public List<ComBoastReplyDTO> listAllReply(Integer bno) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.listAllReply(bno);
+	}
+
+	@Override
+	public List<ComBoastDTO> listSearchCri(SearchCriteria cri) throws Exception {
+		return dao.listSearchCri(cri);
+	}
+
+	@Override
+	public List<ComBoastDTO> listMypostAll(int mem_no) throws Exception {
+		return dao.listMypostAll(mem_no);
 	}
 
 }

@@ -152,4 +152,8 @@
 		myclub_team_re_content=#{myclub_team_re_content} WHERE
 		myclub_team_re_no=#{myclub_team_re_no};
 	</update>	
+	
+	<select id="listMypostAll" resultType="MyclubTeamDTO">
+		select * from myclub_team where mem_no = #{mem_no};
+	</select>
 </mapper>

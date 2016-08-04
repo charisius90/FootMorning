@@ -152,4 +152,8 @@
 		myclub_free_re_content=#{myclub_free_re_content} WHERE
 		myclub_free_re_no=#{myclub_free_re_no};
 	</update>
+	
+	<select id="listMypostAll" resultType="MyclubFreeDTO">
+		select * from myclub_free where mem_no = #{mem_no};
+	</select>	
 </mapper>

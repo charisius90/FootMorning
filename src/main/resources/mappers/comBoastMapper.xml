@@ -110,7 +110,24 @@
 		  limit #{pageStart}, #{perPageNum}
 		]]>
 	</select>
-
+	
+	<select id="listSearchCri" resultType="ComBoastDTO">
+		<![CDATA[    
+			select
+			A.*, 
+			(SELECT COUNT(*) FROM com_boast_reply B WHERE B.com_boast_no=A.com_boast_no) as replycount
+			from com_boast A
+	  	 	where com_boast_no > 0
+		]]>
+	
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by com_boast_no desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+	
 	<!-- 검색 결과 게시물 총 갯수 계산 -->
 	<select id="listSearchCount" resultType="int">
 		<![CDATA[  
@@ -175,5 +192,9 @@
 		com_boast_re_content=#{com_boast_re_content} WHERE
 		com_boast_re_no=#{com_boast_re_no};
 	</update>
-
+	
+	<select id="listMypostAll" resultType="ComBoastDTO">
+		select * from com_boast where mem_no = #{mem_no};
+	</select>
+	
 </mapper>

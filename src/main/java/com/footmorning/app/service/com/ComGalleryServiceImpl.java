@@ -137,4 +137,9 @@ public class ComGalleryServiceImpl implements ComGalleryService {
 		return dao.listAdminCount(cri);
 	}
 
+	@Override
+	public List<ComGalleryDTO> listMypostAll(int mem_no) throws Exception {
+		return dao.listMypostAll(mem_no);
+	}
+
 }

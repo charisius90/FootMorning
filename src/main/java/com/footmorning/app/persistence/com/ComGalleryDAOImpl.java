@@ -117,6 +117,11 @@ public class ComGalleryDAOImpl implements ComGalleryDAO {
 	public int listAdminCount(SearchCriteria cri) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + ".listadmincount", cri);
 	}
+
+	@Override
+	public List<ComGalleryDTO> listMypostAll(int mem_no) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listMypostAll", mem_no);
+	}
 	
 
 }

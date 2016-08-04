@@ -42,4 +42,6 @@ public interface ComDiscussionKorDAO {
 	public void deleteReply(ComDiscussionKorReplyDTO dto) throws Exception;
 
 	public List<ComDiscussionKorReplyDTO> listAllReply(Integer bno) throws Exception;
+	
+	public List<ComDiscussionKorDTO> listMypostAll(int mem_no) throws Exception;
 }
