@@ -32,14 +32,28 @@
 	</sec:http>
 
 	<sec:authentication-manager>
-		<sec:authentication-provider>
-			<sec:jdbc-user-service data-source-ref="dataSource"
-				users-by-username-query="select mem_email, mem_pw, 1 as enabled from member where mem_email = ?"
-				authorities-by-username-query="select mem_email, authority from authority where mem_email = ?" />
+		<!-- 기존 코드 -->
+<!-- 		<sec:authentication-provider> -->
+<!-- 			<sec:jdbc-user-service data-source-ref="dataSource" -->
+<!-- 				users-by-username-query="select mem_email, mem_pw, 1 as enabled from member where mem_email = ?" -->
+<!-- 				authorities-by-username-query="select mem_email, authority from authority where mem_email = ?" /> -->
+<!-- 			<sec:password-encoder hash="bcrypt" /> -->
+<!-- 		</sec:authentication-provider> -->
+		
+		<!-- 현재 테스트 코드 -->
+		<sec:authentication-provider user-service-ref="customJdbcDaoImpl">
 			<sec:password-encoder hash="bcrypt" />
 		</sec:authentication-provider>
+		
 	</sec:authentication-manager>
 	
-	<bean id="bcryptPasswordEncoAccess Deniedder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-	
+	<bean id="bcryptPasswordEncoAccess Deniedder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />	
+	<bean id="customAuthenticationProvider" class="com.footmorning.app.domain.CustomAuthenticationProvider" />
+	<bean id="customJdbcDaoImpl" class="com.footmorning.app.persistence.CustomJdbcDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+		<property name="rolePrefix" value="" />
+		<property name="usersByUsernameQuery" value="select mem_email, mem_pw, 1 as enabled from member where mem_email = ?" />
+		<property name="authoritiesByUsernameQuery" value="select mem_email, authority from authority where mem_email = ?" />
+		<property name="enableGroups" value="false" />
+	</bean>
 </beans>

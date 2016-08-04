@@ -9,6 +9,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
+import com.footmorning.app.domain.CustomAuthenticationProvider;
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MatchService;
@@ -93,6 +95,11 @@ public class MemberController {
 //		
 //		return "redirect:/";
 //	}
+	/**
+	 * 자동로그인용
+	 */
+	@Autowired
+	private CustomAuthenticationProvider provider;
 	
 	@RequestMapping("memberSignUp")
 	public void signup(){}
@@ -118,6 +125,9 @@ public class MemberController {
 				e.printStackTrace();
 				return "/member/memberSignUp";
 			}
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			authentication.getDetails();
+			provider.authenticate(authentication);
 			return "redirect:/";
 		}
 		
