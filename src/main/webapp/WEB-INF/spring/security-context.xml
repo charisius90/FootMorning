@@ -14,7 +14,7 @@
 <!-- 		<sec:intercept-url pattern="/member/memberLogin" access="permitAll"/> -->
 <!-- 		<sec:intercept-url pattern="/member/memberSignUp" access="isAnonymous()"/> -->
 <!-- 		<sec:intercept-url pattern="/member/memberSearchPW" access="isAnonymous()"/> -->
-		<sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+<!-- 		<sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/> -->
 <!-- 		<sec:intercept-url pattern="/" access="permitAll"/> -->
 <!-- 		<sec:intercept-url pattern="/myclubMgr/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_CLUB')"/> -->
 <!-- 		<sec:intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_CLUB')"/> -->
