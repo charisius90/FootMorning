@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.ComBoastService;
@@ -264,13 +265,15 @@ public class AdminController {
 		}			
 	}
 	
-//	/**
-//	 *  전체 커뮤니티 게시판 관리(글삭제)
-//	 */
+	/**
+	 *  전체 커뮤니티 게시판 관리(글삭제)
+	 */
 //	@RequestMapping(value="adminCommunityAll", method=RequestMethod.POST)
-//	public void adminCommunityDelete(@RequestParam(value="param") List<String> param){
+//	public void adminCommunityDelete(@RequestBody List<Map<String, Object>> chkArr){
 //		
-//		System.out.println("글삭제 메서드 들어옴");
+//		for(Map map : chkArr){
+//			System.out.println(map);
+//		}
 //		
 //	}
 	

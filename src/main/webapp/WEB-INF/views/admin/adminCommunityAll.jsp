@@ -63,7 +63,6 @@
 		<br/>
 			
 			게시글 <span style="color:red">${total}</span>개
-			<form action="#" method="post">
 				<table class="table table-bordered">
 					<tr style="background-color:#dddddd;">
 						<td><input type="checkbox" name="selectAll" id="selectAll" /> 작성자</td>
@@ -147,12 +146,11 @@
 							<tr>
 								<td style="padding-top: 25px;">선택한 게시글을</td>
 								<td style="padding-top: 25px;">
-									<button class="btn btn-default" id="delete">삭제</button>
+									<button class="btn btn-default" onclick="fndelete()">삭제</button>
 								</td>
 							</tr>
 						</table>
 					</div>
-			</form>		
 				<!-- 페이징 -->
 				<div style="float: right; margin-left: 250px;">
 					<ul id="pagingul" class="pagination" class="col-xs-4 col-md-6">
@@ -185,28 +183,32 @@
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 <script>
 
-	$('#delete').on("click", function(even) {
+	function fndelete() {
+		var chkArr = new Array;
+			
+		$(".table input[name='writer']:checked").each(function() {
+			chkArr.push($(this).val());
+		});
+			
+		var paramJOSN = JSON.stringify(chkArr);
+			
+		alert(chkArr);	
 		
-		var items=[];
+		$.ajax({
+			url : 'adminCommunityAll',
+			type : 'POST',
+			data : paramJSON,
+			contentType : "application/json; charset=utf-8",
+			dateType : 'text',
+			success : function(data) {
+				console.log('return ' + data);
+			},
+			error : function() {
+				console.log('error');
+			}
+		});
 		
-		$(".table input[type='checkbox']:checked").each(function() {items.push($(this).val());});
-		
-		var param = items.join(',');
-		alert(param);
-		
-// 		$.ajax({
-// 			url : '/admin/adminCommunityAll${pageMaker.makeQuery(1)}',
-// 			type : 'post',
-// 			data : param,
-// 			dateType : 'text',
-// 			success : function(data) {
-// 				console.log('return ' + data);
-// 			},
-// 			error : function() {
-// 				console.log('error');
-// 			}
-// 		})
-	});
+	}
 	
 
 	$('#selectAll').on("click",function(event){
