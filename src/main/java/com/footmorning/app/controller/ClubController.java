@@ -45,7 +45,9 @@ public class ClubController {
 	private ClubMemberService clubMemberService;
 	@Inject
 	private MainNoticeService MainNoticeService;
-	@Autowired RoleFeeder roles;
+	@Autowired
+	RoleFeeder roles;
+	
 	// 회원 등급 파이널 변수 모음
 	public static final String GRADE_ADMIN = "0"; // 서비스 운영진
 	public static final String GRADE_MASTER = "1"; // 클럽마스터

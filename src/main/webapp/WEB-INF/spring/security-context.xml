@@ -11,6 +11,7 @@
 	<sec:http pattern="/**/include/*.jsp" security="none"/>
 	
 	<sec:http auto-config="true" use-expressions="true">
+<!-- 		<sec:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/> -->
 		<sec:intercept-url pattern="/**" access="permitAll"/>
 		
 		<sec:form-login 
@@ -19,19 +20,20 @@
 			password-parameter="mem_pw"
 			login-processing-url="/member/memberLoginProc"
 			default-target-url="/member/memberLoginSuccess"
-			authentication-failure-url="/member/memberLoginFailure"/>
+			authentication-failure-url="/member/memberLoginFailure" />
 			
 		<sec:csrf disabled="true"/>
 	</sec:http>
-
+	
+	<bean id="bcryptPasswordEncoAccess Deniedder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />	
+	
 	<sec:authentication-manager>
 		<sec:authentication-provider>
 			<sec:jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="select mem_email, mem_pw, 1 as enabled from member where mem_email = ?"
 				authorities-by-username-query="select mem_email, authority from authority where mem_email = ?" />
-			<sec:password-encoder hash="bcrypt"/>
+			<sec:password-encoder ref="bcryptPasswordEncoAccess Deniedder"/>
 		</sec:authentication-provider>
 	</sec:authentication-manager>
 	
-	<bean id="bcryptPasswordEncoAccess Deniedder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />	
 </beans>

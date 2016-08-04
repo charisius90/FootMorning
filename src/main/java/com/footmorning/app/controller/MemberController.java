@@ -13,7 +13,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -100,15 +99,15 @@ public class MemberController {
 	}
 	
 	@RequestMapping("memberLoginFailure")
-	public String loginFailure(@Valid MemberDTO member, BindingResult result, HttpServletRequest req) {
+	public String loginFailure(HttpServletRequest req) {
 		System.out.println("TEST F : " + SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
 		System.out.println("TEST F : " + SecurityContextHolder.getContext().getAuthentication().getName());
 		System.out.println("TEST F : " + SecurityContextHolder.getContext().getAuthentication().getCredentials());
-		if(result.hasErrors()){
-			return "/member/memberLogin";
-		}
-
-		result.reject("login");
+//		if(result.hasErrors()){
+//			return "/member/memberLogin";
+//		}
+//
+//		result.reject("login");
 		return "/member/memberLogin";
 	}
 	
@@ -118,7 +117,7 @@ public class MemberController {
 		HttpSession session = req.getSession();
 		session.invalidate();
 		
-		return "redirect:/";
+		return "/member/memberLogin";
 	}
 	
 	
@@ -146,6 +145,9 @@ public class MemberController {
 				return "redirect:/";
 			}
 			catch (Exception e) {
+				HttpSession session = req.getSession();
+				session.invalidate();
+				
 				e.printStackTrace();
 				return "/member/memberSignUp";
 			}
