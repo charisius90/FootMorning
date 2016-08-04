@@ -24,7 +24,6 @@ CREATE TABLE MEMBER
 )
 ;
 
-
 CREATE TABLE CHALLENGE
 (
 	challenge_no          INTEGER NOT NULL auto_increment PRIMARY KEY,
@@ -70,17 +69,7 @@ CREATE TABLE CLUB
 CREATE TABLE FORMATION
 (
 	fomation_no           INTEGER NOT NULL auto_increment PRIMARY KEY,
-	loc0                  VARCHAR(20) NULL,
-	loc1                  VARCHAR(20) NULL,
-	loc2                  VARCHAR(20) NULL,
-	loc3                  VARCHAR(20) NULL,
-	loc4                  VARCHAR(20) NULL,
-	loc5                  VARCHAR(20) NULL,
-	loc6                  VARCHAR(20) NULL,
-	loc7                  VARCHAR(20) NULL,
-	loc8                  VARCHAR(20) NULL,
-	loc9                  VARCHAR(20) NULL,
-	loc10                 VARCHAR(20) NULL,
+	formation_list        VARCHAR(2000) NULL,
 	lineup_no             INTEGER NOT NULL
 )
 ;
@@ -88,38 +77,18 @@ CREATE TABLE FORMATION
 CREATE TABLE LINEUP
 (
 	lineup_no             INTEGER NOT NULL auto_increment PRIMARY KEY,
-	player0               INTEGER NULL,
-	player1               INTEGER NULL,
-	player2               INTEGER NULL,
-	player3               INTEGER NULL,
-	player4               INTEGER NULL,
-	player5               INTEGER NULL,
-	player6               INTEGER NULL,
-	player7               INTEGER NULL,
-	player8               INTEGER NULL,
-	player9               INTEGER NULL,
-	player10              INTEGER NULL,
+	firstlineup_list      VARCHAR(200) NULL,
 	game_no               INTEGER NOT NULL,
 	game_flag             VARCHAR(10) NOT NULL
 )
 ;
 
-
-
-
 CREATE TABLE LINEUP_SUB
 (
 	lineup_no             INTEGER NOT NULL PRIMARY KEY,
-	player11              INTEGER NULL,
-	player12              INTEGER NULL,
-	player13              INTEGER NULL,
-	player14              INTEGER NULL,
-	player15              INTEGER NULL,
-	player16              INTEGER NULL
+	sublineup_list      VARCHAR(200) NULL
 )
 ;
-
-
 
 CREATE TABLE RECORD
 (
@@ -131,16 +100,6 @@ CREATE TABLE RECORD
 	game_flag             VARCHAR(10) NOT NULL
 )
 ;
-
-
-
-
-
-ALTER TABLE CHALLENGE
-	ADD FOREIGN KEY R_1 (game_no) REFERENCES GAME(game_no)
-;
-
-
 
 ALTER TABLE FORMATION
 	ADD FOREIGN KEY R_2 (lineup_no) REFERENCES LINEUP(lineup_no) 
@@ -896,7 +855,6 @@ ALTER TABLE myclub_visitor_reply
    ADD FOREIGN KEY R_49 (myclub_visitor_no) REFERENCES myclub_visitor(myclub_visitor_no)
 ;
 
-
 CREATE TABLE CLUB_MEMBER
 (
 	club_mem_no				 int auto_increment primary key,
@@ -918,8 +876,8 @@ CREATE TABLE CLUB_MEMBER
 CREATE TABLE CLUB_CONFIG
 (
 	config_no			 int auto_increment primary key,
-    config_reject_from	 date default '1000-01-01',
-	config_reject_to	 date default '1000-01-01',
+    config_reject_from	 date default '2000-01-01',
+	config_reject_to	 date default '2000-01-01',
     config_gender		 varchar(10) default 'BOTH',
     config_birth_from	 date default '1000-01-01',
     config_birth_to		 date default '9999-12-31',

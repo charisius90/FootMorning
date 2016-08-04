@@ -91,6 +91,34 @@
 				   }
 				});
 	}
+	
+	//널값데이터 수락할때 함수호출 ajax
+	   function yesChallenge2(challenge_no, game_no,sender_club_no,club_ability) {
+	      alert("함수");
+	         var params={
+	               "challenge_no":challenge_no,
+	               "game_no":game_no,
+	               "club_ability":club_ability,
+	               "club_no":sender_club_no
+	               
+	         }
+	         $.ajax({
+	               type : "POST",
+	               url : "/myclubMgr/yesChallengeThird",
+	               cache : false,
+	               data : params,
+	               success : function (data) {
+	                  data = $.parseJSON(data);
+	                  alert(data);
+	                  if(data.result){
+	                     $("#challenge_flag_"+challenge_no).text("수락됨");
+	                  }
+	               },
+	               fail : function (e) {
+	                  alert('등록된 스케줄이 없습니다.');
+	               }
+	            });
+	   }
 </script>
 
 </head>
@@ -135,6 +163,7 @@
 							<td id="challenge_flag_${sdto.challenge_no}">
 								<c:if test="${sdto.challenge_flag == null || sdto.challenge_flag == 'INVITE'}">
 									<c:if test="${today<=gameday}">요청중</c:if>
+									<c:if test="${sdto.game_time ==null}">요청중</c:if>
 									<c:if test="${today>gameday}"><font color="red">날짜가 지났습니다</font></c:if>
 								</c:if>
 								<c:if test="${sdto.challenge_flag == 'YES'}">수락됨</c:if>
@@ -172,6 +201,11 @@
 										<input type="button" id="noB_${rdto.challenge_no}" onclick="noChallenge(${rdto.challenge_no})" value="거절"/>
 									</c:if>
 									<c:if test="${today>gameday}"><font color="red">날짜가 지났습니다</font></c:if>
+									<!-- 추가한부분 날짜가 null일경우 -->
+		                           <c:if test="${rdto.game_date == null }">
+		                              <input type="button" id="yesB_${rdto.challenge_no}" onclick="yesChallenge2(${rdto.challenge_no}, ${rdto.game_no},${rdto.sender_club_no},${rdto.club_ability})" value="수락"/>
+		                              <input type="button" id="noB_${rdto.challenge_no}" onclick="noChallenge(${rdto.challenge_no})" value="거절"/>
+                           			</c:if>
 								</c:if>
 								<c:if test="${rdto.challenge_flag == 'INVITE'}">
 									<c:if test="${today<=gameday}">

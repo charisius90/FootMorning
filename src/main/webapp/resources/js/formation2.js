@@ -69,6 +69,47 @@ window.onload = function(){
 		   success : function (data) {
 			   data = $.parseJSON(data);
 			   console.dir(data);
+			     
+			   if(data.result == "LOAD"){
+				   alert("불러와야함");
+				   $ground.append("<div id='player0' class='uniform' style='top:356px; left:480px'>" +
+							"<span style='font-size: 1px;'>시발</span><span style='margin-top: 10px;' class='backnumber'>0</span>"+"</div>");
+				   $.ajax({
+					   type : "POST",
+					   url : "/myclub/myclubGamePrepareLoad",
+					   cache : false,
+					   success : function (data) {
+						   data = $.parseJSON(data);
+						   console.dir(data);
+					   },
+					   fail : function (e) {
+						   alert('포메 불러오기 실패');
+					   }
+				   });
+			   }else if(data.result == "NEW"){
+				   alert("새로함");
+				   
+				   var params={
+						   "club_no":$club_no
+					}
+					$.ajax({
+						   type : "POST",
+						   url : "/myclub/myclubGamePrepareMember",
+						   cache : false,
+						   data : params,
+						   success : function (data) {
+							   data = $.parseJSON(data);
+							   console.dir(data);
+								  
+							   for(var i=0; i<data.length; i++){
+								   $member.append("<option id='"+data[i].mem_no+"'>" + data[i].mem_no + "  " + data[i].mem_name + "</option>");
+							   }
+						   },
+						   fail : function (e) {
+							   alert('멤버 불러오기 실패');
+						   }
+					});
+			   }
 		   },
 		   fail : function (e) {
 			   alert('불러오기 실패');

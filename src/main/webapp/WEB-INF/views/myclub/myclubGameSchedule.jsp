@@ -37,6 +37,38 @@
 				   }
 				});
 	}
+	
+	   function editGame(game_no) {
+		      alert("editcalled...");
+		         var params={
+		               "game_no":game_no,
+		               "game_date":("#game_date_"+game_no),
+		               "game_time":("#game_time_"+game_no),
+		               "game_addr":("#game_addr_"+game_no),
+		               "club_ability":("#club_ability_"+game_no)
+		               
+		         }
+		         $.ajax({
+		               type : "POST",
+		               url : "/myclub/myclubEditGame",
+		               cache : false,
+		               data : params,
+		               success : function (data) {
+		                  data = $.parseJSON(data);
+		                  alert(data);
+		                  if(data.result){
+		                     alert(result);
+//		                      $("#edit"+game_no+"_1").text("");
+//		                      $("#edit_"+game_no+"_2").text("");
+//		                      $("#edit_"+game_no+"_3").text("");
+//		                      $("#edit_"+game_no+"_4").text("");
+		                  }
+		               },
+		               fail : function (e) {
+		                  alert('등록된 스케줄이 없습니다.');
+		               }
+		            });
+		   }
 </script>
 </head>
 <body>
@@ -58,6 +90,7 @@
 			<br/><br/>
 			
 			<div class="row">
+			<h5>경기준비가 가능한 일정</h5>
 				<c:out value="today : ${today}"/>
 				<table class="table table-hover" text-align="center">
 					<thead style="background-color: #e6e6e6">
@@ -82,21 +115,66 @@
 							<c:set var="index" value="<%=i%>"></c:set>
 							<td>${list[index].club_no}</td>
 							<td id="schedule_${matchDto.game_no}_2"><c:forEach begin="1" end="${list[index].club_ability}"><i class="glyphicon glyphicon-star"></i></c:forEach></td>
-							<%i++;%>
 							<td id="schedule_${matchDto.game_no}_3">
 								<c:if test="${matchDto.club_ability==0}"></c:if>
 								<c:if test="${matchDto.club_ability!=0}">
-									<c:if test="${today<=gameday}"><input type="button" value="경기 준비"/></c:if>
-									<c:if test="${today>gameday}"><input type="button" value="경기 결과"/></c:if>
+									<c:if test="${today<=gameday}">
+										<c:if test="${matchDto.club_no==USER_KEY.club_no}"><a class="btn btn-default" href="/myclub/myclubGamePrepare?game_no=${matchDto.game_no}&game_flag=HOME">경기준비</a></c:if>
+										<c:if test="${list[index].club_no==USER_KEY.club_no}"><a class="btn btn-default" href="/myclub/myclubGamePrepare?game_no=${list[index].game_no}&game_flag=AWAY">경기준비</a></c:if>
+									</c:if>
+									<c:if test="${today>gameday}"><a class="btn btn-default" href="">경기결과</a></c:if>
 								</c:if>
+							<%i++;%>
 							</td>
 							<td id="schedule_${matchDto.game_no}_4">
-								<c:if test="${matchDto.club_ability==0}">취소됨</c:if>
-								<c:if test="${matchDto.club_ability!=0}"><input type="button" value="경기취소" onclick="cancleGame(${matchDto.game_no})"/></c:if>
+								<c:if test="${matchDto.club_ability==0}"><font color="red">취소됨</font></c:if>
+								<c:if test="${matchDto.club_ability!=0}"><button class="btn btn-default" type="button" onclick="cancleGame(${matchDto.game_no})">경기취소</button></c:if>
 							</td>
 						</tr>
 					</c:forEach>
 				</table>
+				<h5>경기준비가 필요한 일정</h5>   
+            <table class="table table-hover" text-align="center">
+               <thead style="background-color: #e6e6e6">
+               <tr>
+                  <th>경기 번호</th><th>날짜</th><th>시간</th><th>장소</th>
+                  <th>HOME실력</th><th>HOME</th><th>vs</th><th>AWAY</th><th>AWAY실력</th>
+                  <th>관리</th><th>비고</th>
+               </tr>
+               </thead>
+               <%int j = 0; %>
+               <c:forEach items="${nullList}" var="matchDto" step="2">
+                  <tr>
+                     <fmt:formatDate value="${matchDto.game_date}" pattern="yyyy-MM-dd" var="gameday"/>
+                     <td>${matchDto.game_no}</td>
+                     <td><input id="game_date_${matchDto.game_no}" style="width:120px" class="form-control" type="text" name="game_date"/></td>
+                     <td><input id="game_time_${matchDto.game_no}" style="width:80px" class="form-control" type="text" name="game_time"/></td>
+                     <td><input id="game_addr_${matchDto.game_no}" style="width:80px" class="form-control" type="text" name="game_addr"/></td>
+                     <td>
+                        <select class="form-control" id="club_ability_${matchDto.game_no}" name="club_ability" style="width:120px">
+                            <option value="1">★</option>
+                            <option value="2">★★</option>
+                            <option value="3">★★★</option>
+                            <option value="4">★★★★</option>
+                            <option value="5">★★★★★</option>
+                              </select>
+                           </td>
+                     <td>${matchDto.club_no}</td>
+                     <td>0:0</td>
+                     <%j++;%>
+                     <c:set var="index" value="<%=j%>"></c:set>
+                     <td>${nullList[index].club_no}</td>
+                     <td><c:forEach begin="1" end="${nullList[index].club_ability}"><i class="glyphicon glyphicon-star"></i></c:forEach></td>
+                     <%j++;%>
+                     <td>
+                        <c:if test="${matchDto.club_ability==0}"><input type="button" value="수정" onclick="editGame(${matchDto.club_no})" /></c:if>
+                     </td>
+                     <td>
+                        <c:if test="${matchDto.club_ability==0}"></c:if>
+                     </td>
+                  </tr>
+               </c:forEach>
+            </table>
 				</div><!-- /.row -->	
 				
 				<div class="row">

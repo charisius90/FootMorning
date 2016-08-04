@@ -30,8 +30,9 @@ public class MyclubGameScheduleController {
 //		model.addAttribute("yourList", service.yourMatchListWithClubNo(club_no)); 
 		
 		model.addAttribute("list", service.matchListWithClubNo(club_no));
+		model.addAttribute("nullList" , service.matchListWithClubNoThird(club_no));
 		
-		List<MatchDTO> list = service.matchListWithClubNo(club_no);
+		List<MatchDTO> list = service.matchListWithClubNoThird(club_no);
 		System.out.println("리스트 받아옴");
 		for(int i=0; i<list.size(); i++){
 			System.out.println(i+"번쨰 : " +list.get(i).toString());
@@ -49,4 +50,17 @@ public class MyclubGameScheduleController {
 		
 		return "/myclub/json/myclubCancleGameJson";
 	}
+	
+	@RequestMapping("/myclub/myclubEditGame")
+	public String myclubEditGame(HttpServletRequest req) throws Exception{
+	      int game_no = Integer.parseInt(req.getParameter("game_no"));
+	      String game_date = req.getParameter("game_date");
+	      String game_time = req.getParameter("game_time");
+	      String game_addr = req.getParameter("game_addr");
+	      int club_ability = Integer.parseInt(req.getParameter("club_ability"));
+	      
+	      System.out.println(game_no+","+game_date+","+game_time+","+game_addr+","+club_ability);
+	      
+	      return"";
+	   }
 }
