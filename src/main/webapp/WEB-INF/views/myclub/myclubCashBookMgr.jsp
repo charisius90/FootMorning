@@ -11,6 +11,14 @@
 <link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
 <link href="../resources/bootstrap/css/custom.css" rel="stylesheet">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<style>
+	.cash-message{
+		color: #999999;
+	}
+	.cash-message:hover{
+		color: skyblue;
+	}
+</style>
 </head>
 <body>
 <%@ include file="../include/header.jsp" %>
@@ -107,8 +115,8 @@
 								<td colspan="7" ><span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-top: 1px;">행추가</span></td>
 							</tr>
 						</table>
-					<div align="right">
-						<button class="btn btn-default" type="submit">등록</button>
+					<div align="center" class="cash-message">
+						<span>동호회의 회계기록을 남겨보세요. 기록은 자동 저장됩니다.</span>
 					</div>
 				</div>
 			</div>	

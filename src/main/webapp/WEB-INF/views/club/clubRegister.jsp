@@ -93,8 +93,40 @@
 	var flag1 = false;
 	var flag2 = false;
 
-	$(document).ready(function(){
-	    $('#name').blur(function(){	// 입력한 클럽명을 ajax를 사용하여 실시간으로 중복확인하여 메시지 띄워줌. by 김소영
+	function fnSubmit(){
+		if(!$('#name').val()){
+        	$('#duplicateResult').html("<span style='color:red'>클럽명을 입력해 주세요.</span>");
+        	$('#name').focus();
+        	flag2 = false;
+        }
+		else{
+			flag2 = true;
+		}
+		
+		if($("#file").val() != ""){
+			var ext = $('#file').val().split('.').pop().toLowerCase();
+			if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+				alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
+				return;
+			}
+		}
+		
+		if(flag1 == true && flag2 == true){
+           	$('#club_form').submit();
+        }
+		else{
+			alert('파일을 전송할 수 없습니다.');
+		}
+	}
+
+	//@author 박수항
+	function fnFile(){
+		$("#file").click();
+	}
+
+	$(function(){
+	    // 입력한 클럽명을 ajax를 사용하여 실시간으로 중복확인하여 메시지 띄워줌. by 김소영
+	    $('#name').blur(function(){
 	        if ( $('#name').val().length > 0) {
 	        	var club_name = $(this).val();
 				$.ajax({
@@ -121,27 +153,9 @@
 	        	 $("#duplicateResult").empty();
 	        }
 	    });
-	});
-	
-	function fnSubmit(){
-		if(!$('#name').val()){
-        	$('#duplicateResult').html("<span style='color:red'>클럽명을 입력해 주세요.</span>");
-        	$('#name').focus();
-        	flag2 = false;
-        }
 		
-		if(flag1 == true && flag2 == true){
-           	$('#club_form').submit();
-        }
-	}
-
-	function fnFile(){
-		$("#file").click();
-	}
-
-	//@author 박수항
-	$(function(){
-		
+	    
+		//@author 박수항
 		// 업로드 없이 이미지 미리보기 기능
 		var $file = $("#file"),
 			$preview = $("#preview");
