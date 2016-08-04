@@ -90,8 +90,8 @@ public class MemberController {
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			
 			// 최종 접속 시간 업데이트
-			dto.setMem_logdate(service.getTime());
-			service.updateLogdate(dto);
+//			dto.setMem_logdate(service.getTime());
+//			service.updateLogdate(dto);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -121,12 +121,6 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	
-//	/**
-//	 * 자동로그인용
-//	 */
-//	@Autowired
-//	private CustomAuthenticationProvider provider;
 	
 	@RequestMapping("memberSignUp")
 	public void signup(){}
