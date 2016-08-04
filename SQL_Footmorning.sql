@@ -930,16 +930,39 @@ CREATE TABLE CLUB_CONFIG
 ;
 
 
+create table CLUB_AUTH
+(
+	club_no				 int,
+    mem_grade			 int,
+    auth_write			 int,
+    auth_mod			 int,
+    auth_cash			 int,
+    auth_access			 int,
+    auth_info			 int,
+    auth_member			 int,
+    auth_club			 int
+);
+
+
+USE `finaltest`;
+
 DELIMITER $$
 
 DROP TRIGGER IF EXISTS finaltest.club_AFTER_INSERT$$
 USE `finaltest`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `finaltest`.`club_AFTER_INSERT` AFTER INSERT ON `club` FOR EACH ROW
+CREATE DEFINER=`root`@`localhost` TRIGGER `finaltest`.`club_AFTER_INSERT` AFTER INSERT ON `club` FOR EACH ROW
 BEGIN
 	update member set club_no=new.club_no where mem_no=new.club_master;
     insert into club_config(club_no) values(new.club_no);
+    insert into club_auth values(new.club_no, 1, 1, 1, 1, 1, 1, 1, 1);
+    insert into club_auth values(new.club_no, 2, 1, 1, 1, 1, 1, 1, 0);
+    insert into club_auth values(new.club_no, 3, 1, 1, 1, 1, 1, 0, 0);
+    insert into club_auth values(new.club_no, 4, 1, 1, 1, 0, 0, 0, 0);
+    insert into club_auth values(new.club_no, 5, 1, 0, 0, 0, 0, 0, 0);
 END$$
 DELIMITER ;
+
+
 
 CREATE TABLE CLUB_CASHBOOK
 (
