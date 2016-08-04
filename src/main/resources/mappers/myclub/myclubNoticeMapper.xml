@@ -160,5 +160,9 @@
 
 	<select id="listMypostAll" resultType="MyclubNoticeDTO">
 		select * from myclub_notice where mem_no = #{mem_no};
+	</select>
+	
+	<select id="listNotice" resultType="MyclubNoticeDTO">
+		select * from myclub_notice where myclub_notice_no > 0 and club_no = #{club}
 	</select>			
 </mapper>

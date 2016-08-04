@@ -84,31 +84,34 @@
 					<div class="col-md-6">
 						<h4>공지사항</h4>
 						<table class="table table-condensed" style="text-align: center">
-							<tr>
-								<td><b>번호</b></td>
-								<td><b>제목</b></td>
-								<td><b>작성자</b></td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>방출자현황</td>
-								<td>운영자</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>월말결산현황</td>
-								<td>운영자</td>
-							</tr>
+							<thead style="background-color:#F7F7F7">
+								<tr>
+									<td><b>번호</b></td>
+									<td><b>제목</b></td>
+									<td><b>작성자</b></td>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${list}" var="dto">
+									<tr>
+										<td>${dto.myclub_notice_no}</td>
+										<td>${dto.myclub_notice_subject}</td>
+										<td>${dto.myclub_notice_writer}</td>
+									</tr>
+								</c:forEach>
+							</tbody>			
 						</table>
 					</div>
 					<div class="col-md-6" >
 						<h4>일정</h4>
 						<table class="table table-condensed" style="text-align: center" >
-							<tr>
-								<td><b>번호</b></td>
-								<td><b>제목</b></td>
-								<td><b>작성자</b></td>
-							</tr>
+							<thead style="background-color:#F7F7F7">
+								<tr>
+									<td><b>번호</b></td>
+									<td><b>제목</b></td>
+									<td><b>작성자</b></td>
+								</tr>
+							</thead>
 							<tr>
 								<td>1</td>
 								<td>8월5일수강종료</td>

@@ -160,4 +160,9 @@ public class MyclubNoticeServiceImpl implements MyclubNoticeService {
 	public List<MyclubNoticeDTO> listMypostAll(int mem_no) throws Exception {
 		return dao.listMypostAll(mem_no);
 	}
+
+	@Override
+	public List<MyclubNoticeDTO> listNotice(int club_no) throws Exception {
+		return dao.listNotice(club_no);
+	}
 }

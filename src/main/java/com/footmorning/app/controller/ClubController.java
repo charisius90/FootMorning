@@ -27,6 +27,7 @@ import com.footmorning.app.service.ClubMemberService;
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MainNoticeService;
 import com.footmorning.app.service.MemberService;
+import com.footmorning.app.service.MyclubNoticeService;
 import com.footmorning.app.util.ClubPageMaker;
 import com.footmorning.app.util.RoleFeeder;
 import com.footmorning.app.util.SearchClubCriteria;
@@ -45,6 +46,7 @@ public class ClubController {
 	private ClubMemberService clubMemberService;
 	@Inject
 	private MainNoticeService MainNoticeService;
+
 	@Autowired
 	RoleFeeder roles;
 	
@@ -150,6 +152,8 @@ public class ClubController {
 			clubMember.setMem_birth(member.getMem_birth());
 			clubMember.setClub_mem_flag("TRUE");
 			clubMemberService.insert(clubMember);
+			
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();

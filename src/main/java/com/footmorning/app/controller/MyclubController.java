@@ -33,6 +33,7 @@ import com.footmorning.app.service.ClubMemberService;
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MemberService;
 import com.footmorning.app.service.MyclubCashBookService;
+import com.footmorning.app.service.MyclubNoticeService;
 
 /**
  * 
@@ -54,6 +55,8 @@ public class MyclubController {
 	private ClubConfigService clubConfigService;
 	@Autowired
 	private ClubAuthService clubAuthService;
+	@Autowired
+	private MyclubNoticeService myclubnoticeservice;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MyclubController.class);
 	
@@ -69,6 +72,8 @@ public class MyclubController {
 		List<ClubMemberDTO> list = clubMemberService.listRequest(no);
 		model.addAttribute("MASTER", master);
 		model.addAttribute("REQUEST", list);
+		
+		model.addAttribute("list", myclubnoticeservice.listNotice(Integer.parseInt(club.getClub_no())));
 	}
 	
 	@RequestMapping("myclubRecord")

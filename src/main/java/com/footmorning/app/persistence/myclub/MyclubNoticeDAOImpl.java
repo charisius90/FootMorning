@@ -163,4 +163,9 @@ public class MyclubNoticeDAOImpl implements MyclubNoticeDAO {
 		return sqlSession.selectList(NAMESPACE + ".listMypostAll", mem_no);
 	}
 
+	@Override
+	public List<MyclubNoticeDTO> listNotice(int club_no) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listNotice", club_no);
+	}
+
 }
