@@ -161,4 +161,7 @@
 		com_discussion_kor_re_no=#{com_discussion_kor_re_no};
 	</update>
 	
+	<select id="listMypostAll" resultType="ComDiscussionKorDTO">
+		select * from com_discussion_kor where mem_no = #{mem_no};
+	</select>
 </mapper>

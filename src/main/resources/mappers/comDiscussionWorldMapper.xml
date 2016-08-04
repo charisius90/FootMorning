@@ -163,4 +163,7 @@
 		com_discussion_world_re_no=#{com_discussion_world_re_no};
 	</update>
 	
+	<select id="listMypostAll" resultType="ComDiscussionWorldDTO">
+		select * from com_discussion_world where mem_no = #{mem_no};
+	</select>
 </mapper>

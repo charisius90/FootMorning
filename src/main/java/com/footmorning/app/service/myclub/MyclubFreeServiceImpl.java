@@ -126,4 +126,9 @@ public class MyclubFreeServiceImpl implements MyclubFreeService{
 		// TODO Auto-generated method stub
 		return dao.listAllReply(bno);
 	}
+
+	@Override
+	public List<MyclubFreeDTO> listMypostAll(int mem_no) throws Exception {
+		return dao.listMypostAll(mem_no);
+	}
 }

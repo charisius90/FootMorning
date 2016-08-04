@@ -3,6 +3,7 @@ package com.footmorning.app.service;
 import java.util.List;
 
 import com.footmorning.app.domain.ComGalleryDTO;
+import com.footmorning.app.domain.ComQnADTO;
 import com.footmorning.app.domain.ComVideoDTO;
 import com.footmorning.app.domain.ComVideoReplyDTO;
 import com.footmorning.app.util.AlbumCriteria;
@@ -48,4 +49,6 @@ public interface ComVideoService {
 	public List<ComVideoDTO> listAdmin(SearchCriteria cri) throws Exception;
 
 	public int listAdminCount(SearchCriteria cri) throws Exception;
+
+	public List<ComVideoDTO> listMypostAll(int mem_no) throws Exception;
 }

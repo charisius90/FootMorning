@@ -41,4 +41,6 @@ public interface MyclubNoticeDAO {
 	public void deleteReply(MyclubNoticeReplyDTO dto) throws Exception;
 
 	public List<MyclubNoticeReplyDTO> listAllReply(Integer bno) throws Exception;
+	
+	public List<MyclubNoticeDTO> listMypostAll(int mem_no) throws Exception;
 }

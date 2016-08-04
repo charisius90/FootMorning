@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.ComBoastService;
@@ -156,6 +157,8 @@ public class AdminController {
 			
 			System.out.println(selectType);
 			
+			System.out.println(cri.toString());
+			
 			int total = 0;
 
 			if(selectType == null){
@@ -168,8 +171,9 @@ public class AdminController {
 			// 자랑
 			if(selectType.equals("boast")){
 				System.out.println("boast 게시판");
-				model.addAttribute("listcomboast", comboastService.listSearchCriteria(cri));
+				model.addAttribute("listcomboast", comboastService.listSearchCri(cri));
 				
+				System.out.println(comboastService.listSearchCri(cri).toString());
 				total = comboastService.listSearchCount(cri);
 				
 				model.addAttribute("total", total);
@@ -260,6 +264,19 @@ public class AdminController {
 			e.printStackTrace();
 		}			
 	}
+	
+	/**
+	 *  전체 커뮤니티 게시판 관리(글삭제)
+	 */
+//	@RequestMapping(value="adminCommunityAll", method=RequestMethod.POST)
+//	public void adminCommunityDelete(@RequestBody List<Map<String, Object>> chkArr){
+//		
+//		for(Map map : chkArr){
+//			System.out.println(map);
+//		}
+//		
+//	}
+	
 	
 	/**
 	 * 커뮤니티 신고 접수 관리

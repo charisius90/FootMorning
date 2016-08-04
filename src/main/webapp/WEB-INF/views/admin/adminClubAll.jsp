@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -26,13 +26,13 @@
 							<td>전체 검색</td>
 							<td>
 								<select name="searchType" class="form-control input-group-add">
-									<option value="n" <c:out value="${cri.searchType == null?'selected':''}"/>>---</option>
-									<option value="t" <c:out value="${cri.searchType eq 't'?'selected':''}"/>>클럽명</option>
-									<option value="c" <c:out value="${cri.searchType eq 'c'?'selected':''}"/>>클럽장</option>
+									<option value="n" <c:out value="${pageMaker.cri.searchType == null?'selected':''}"/>>---</option>
+									<option value="t" <c:out value="${pageMaker.cri.searchType eq 't'?'selected':''}"/>>클럽명</option>
+									<option value="c" <c:out value="${pageMaker.cri.searchType eq 'c'?'selected':''}"/>>클럽장</option>
 								</select>
 							<td>
-							<td><input type="text"  name="keyword" value='${pageMaker.cri.keyword}' class="form-control" size="40" placeholder="클럽명/클럽장/아이디"></td>
-							<td><button id="searchBtn" class="btn btn-default  input-group-add" type="submit">검색</button></td>
+							<td><input type="text"  name="keyword" value='${pageMaker.cri.keyword}' class="form-control" size="40" placeholder="클럽명/클럽장/아이디" id="keywordInput"></td>
+							<td><button id="searchBtn" class="btn btn-default  input-group-add" type="button">검색</button></td>
 						</tr>
 					</table>
 				</form>	

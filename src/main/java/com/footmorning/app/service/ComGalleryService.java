@@ -2,6 +2,7 @@ package com.footmorning.app.service;
 
 import java.util.List;
 
+import com.footmorning.app.domain.ComFreeDTO;
 import com.footmorning.app.domain.ComGalleryDTO;
 import com.footmorning.app.domain.ComGalleryReplyDTO;
 import com.footmorning.app.util.AlbumCriteria;
@@ -46,4 +47,6 @@ public interface ComGalleryService {
 	public List<ComGalleryDTO> listAdmin(SearchCriteria cri) throws Exception;
 
 	public int listAdminCount(SearchCriteria cri) throws Exception;
+	
+	public List<ComGalleryDTO> listMypostAll(int mem_no) throws Exception;
 }

@@ -2,6 +2,7 @@ package com.footmorning.app.persistence;
 
 import java.util.List;
 
+import com.footmorning.app.domain.ComDiscussionWorldDTO;
 import com.footmorning.app.domain.ComFreeDTO;
 import com.footmorning.app.domain.ComFreeReplyDTO;
 import com.footmorning.app.domain.ComQnADTO;
@@ -47,4 +48,6 @@ public interface ComFreeDAO {
 
 	public List<ComFreeReplyDTO> listAllReply(Integer bno) throws Exception;
 	
+	public List<ComFreeDTO> listMypostAll(int mem_no) throws Exception;
+
 }

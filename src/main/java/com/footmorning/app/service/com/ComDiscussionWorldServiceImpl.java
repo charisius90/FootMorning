@@ -157,5 +157,10 @@ public class ComDiscussionWorldServiceImpl implements ComDiscussionWorldService 
 		return dao.listAllReply(bno);
 	}
 
+	@Override
+	public List<ComDiscussionWorldDTO> listMypostAll(int mem_no) throws Exception {
+		return dao.listMypostAll(mem_no);
+	}
+
 
 }

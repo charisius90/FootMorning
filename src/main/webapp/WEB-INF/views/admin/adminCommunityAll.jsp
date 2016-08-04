@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -22,13 +22,13 @@
 						<tr>
 							<td>게시판 선택</td>
 							<td>
-								<select name="selectType" class="form-control input-group-add" style="width: 156px;">
-									<option value="boast" <c:out value="${cri.selectType eq 'boast'?'selected':''}"/>>클럽자랑 게시판</option>
-									<option value="gallery" <c:out value="${cri.selectType eq 'gallery'?'selected':''}"/>>축구갤러리 게시판</option>
-									<option value="video" <c:out value="${cri.selectType eq 'video'?'selected':''}"/>>축구동영상 게시판</option>
-									<option value="kor" <c:out value="${cri.selectType eq 'kor'?'selected':''}"/>>국내축구 게시판</option>
-									<option value="world" <c:out value="${cri.selectType eq 'world'?'selected':''}"/>>해외축구 게시판</option>
-									<option value="free" <c:out value="${cri.selectType eq 'free'?'selected':''}"/>>자유 게시판</option>
+								<select name="selectType" id="selectType" class="form-control input-group-add" style="width: 160px;" onchange="this.value">
+									<option value="boast" <c:out value="${pageMaker.cri.selectType == 'boast'?'selected':''}"/>>클럽자랑 게시판</option>
+									<option value="gallery" <c:out value="${pageMaker.cri.selectType eq 'gallery'?'selected':''}"/>>축구갤러리 게시판</option>
+									<option value="video" <c:out value="${pageMaker.cri.selectType eq 'video'?'selected':''}"/>>축구동영상 게시판</option>
+									<option value="kor" <c:out value="${pageMaker.cri.selectType eq 'kor'?'selected':''}"/>>국내축구 게시판</option>
+									<option value="world" <c:out value="${pageMaker.cri.selectType eq 'world'?'selected':''}"/>>해외축구 게시판</option>
+									<option value="free" <c:out value="${pageMaker.cri.selectType eq 'free'?'selected':''}"/>>자유 게시판</option>
 								</select>
 							<td>
 							
@@ -48,12 +48,12 @@
 							<td>게시글 검색</td>
 							<td>
 								<select name="searchType" class="form-control input-group-add">
-									<option value="n" <c:out value="${cri.searchType == null?'selected':''}"/>>---</option>
-									<option value="w" <c:out value="${cri.searchType eq 'w'?'selected':''}"/>>작성자</option>
-									<option value="t" <c:out value="${cri.searchType eq 't'?'selected':''}"/>>제목</option>
+									<option value="n" <c:out value="${pageMaker.cri.searchType == null?'selected':''}"/>>---</option>
+									<option value="w" <c:out value="${pageMaker.cri.searchType eq 'w'?'selected':''}"/>>작성자</option>
+									<option value="t" <c:out value="${pageMaker.cri.searchType eq 't'?'selected':''}"/>>제목</option>
 								</select>
 							</td>
-							<td><input type="text"  name="keyword" value='${pageMaker.cri.keyword}' class="form-control" size="40" placeholder="클럽명/클럽장/아이디"></td>
+							<td><input type="text"  name="keyword" value='${pageMaker.cri.keyword}' class="form-control" size="40" placeholder="클럽명/클럽장/아이디" id="keywordInput"></td>
 							<td><button id="searchBtn" class="btn btn-default  input-group-add" type="button">검색</button></td>
 						</tr>
 					</table>
@@ -63,95 +63,94 @@
 		<br/>
 			
 			게시글 <span style="color:red">${total}</span>개
-			<table class="table table-bordered">
-				<tr style="background-color:#dddddd;">
-					<td><input type="checkbox" name="" value="" /> 작성자</td>
-					<td>글번호</td>
-					<td>등록일</td>
-					<td>제목</td>
-				</tr>
+				<table class="table table-bordered">
+					<tr style="background-color:#dddddd;">
+						<td><input type="checkbox" name="selectAll" id="selectAll" /> 작성자</td>
+						<td>글번호</td>
+						<td>등록일</td>
+						<td>제목</td>
+					</tr>
+					
+					<c:if test="${!empty listcomboast}">
+						<c:forEach items="${listcomboast}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="writer" value="${dto.com_boast_no}" /> ${dto.com_boast_writer}</td>
+								<td>${dto.com_boast_no}</td>
+								<td><fmt:formatDate value="${dto.com_boast_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.com_boast_subject}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					
+					<c:if test="${!empty listkor}">
+						<c:forEach items="${listkor}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="writer" value="${dto.com_discussion_kor_no}" /> ${dto.com_discussion_kor_writer}</td>
+								<td>${dto.com_discussion_kor_no}</td>
+								<td><fmt:formatDate value="${dto.com_discussion_kor_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.com_discussion_kor_subject}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					
+					<c:if test="${!empty listworld}">
+						<c:forEach items="${listworld}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="writer_com_world" value="${dto.com_discussion_world_writer}" /> ${dto.com_discussion_world_writer}</td>
+								<td>${dto.com_discussion_world_no}</td>
+								<td><fmt:formatDate value="${dto.com_discussion_world_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.com_discussion_world_subject}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					
+					<c:if test="${!empty listfree}">
+						<c:forEach items="${listfree}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="writer_com_free" value="${dto.com_free_no}" /> ${dto.com_free_writer}</td>
+								<td>${dto.com_free_no}</td>
+								<td><fmt:formatDate value="${dto.com_free_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.com_free_subject}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					
+					<c:if test="${!empty listgallery}">
+						<c:forEach items="${listgallery}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="writer_com_gallery" value="${dto.com_gallery_no}" /> ${dto.com_gallery_writer}</td>
+								<td>${dto.com_gallery_no}</td>
+								<td><fmt:formatDate value="${dto.com_gallery_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.com_gallery_subject}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					
+					<c:if test="${!empty listvideo}">
+						<c:forEach items="${listvideo}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="writer_com_video" value="${dto.com_video_no}" /> ${dto.com_video_writer}</td>
+								<td>${dto.com_video_no}</td>
+								<td><fmt:formatDate value="${dto.com_video_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.com_video_subject}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					
+				</table>
+				<hr/>
 				
-				<c:if test="${!empty listcomboast}">
-					<c:forEach items="${listcomboast}" var="dto">
-						<tr>
-							<td><input type="checkbox" name="" value="" /> ${dto.com_boast_writer}</td>
-							<td>${dto.com_boast_no}</td>
-							<td><fmt:formatDate value="${dto.com_boast_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
-							<td>${dto.com_boast_subject}</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-				<c:if test="${!empty listkor}">
-					<c:forEach items="${listkor}" var="dto">
-						<tr>
-							<td><input type="checkbox" name="" value="" /> ${dto.com_discussion_kor_writer}</td>
-							<td>${dto.com_discussion_kor_no}</td>
-							<td><fmt:formatDate value="${dto.com_discussion_kor_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
-							<td>${dto.com_discussion_kor_subject}</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-				<c:if test="${!empty listworld}">
-					<c:forEach items="${listworld}" var="dto">
-						<tr>
-							<td><input type="checkbox" name="" value="" /> ${dto.com_discussion_world_writer}</td>
-							<td>${dto.com_discussion_world_no}</td>
-							<td><fmt:formatDate value="${dto.com_discussion_world_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
-							<td>${dto.com_discussion_world_subject}</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-				<c:if test="${!empty listfree}">
-					<c:forEach items="${listfree}" var="dto">
-						<tr>
-							<td><input type="checkbox" name="" value="" /> ${dto.com_free_writer}</td>
-							<td>${dto.com_free_no}</td>
-							<td><fmt:formatDate value="${dto.com_free_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
-							<td>${dto.com_free_subject}</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-				<c:if test="${!empty listgallery}">
-					<c:forEach items="${listgallery}" var="dto">
-						<tr>
-							<td><input type="checkbox" name="" value="" /> ${dto.com_gallery_writer}</td>
-							<td>${dto.com_gallery_no}</td>
-							<td><fmt:formatDate value="${dto.com_gallery_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
-							<td>${dto.com_gallery_subject}</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-				<c:if test="${!empty listvideo}">
-					<c:forEach items="${listvideo}" var="dto">
-						<tr>
-							<td><input type="checkbox" name="" value="" /> ${dto.com_video_writer}</td>
-							<td>${dto.com_video_no}</td>
-							<td><fmt:formatDate value="${dto.com_video_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
-							<td>${dto.com_video_subject}</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-			</table>
-			<hr/>
-			
-			<div class="span12" style="float: left;">
-				<div style="float: left;">
-					<table>
-						<tr>
-							<td style="padding-top: 25px;">선택한 게시글을</td>
-							<td style="padding-top: 25px;">
-								<button class="btn btn-default" onclick="delete()">삭제</button>
-							</td>
-						</tr>
-					</table>
-				</div>
-						
+				<div class="span12" style="float: left;">
+					<div style="float: left;">
+						<table>
+							<tr>
+								<td style="padding-top: 25px;">선택한 게시글을</td>
+								<td style="padding-top: 25px;">
+									<button class="btn btn-default" onclick="fndelete()">삭제</button>
+								</td>
+							</tr>
+						</table>
+					</div>
 				<!-- 페이징 -->
 				<div style="float: right; margin-left: 250px;">
 					<ul id="pagingul" class="pagination" class="col-xs-4 col-md-6">
@@ -183,6 +182,48 @@
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 <script>
+
+	function fndelete() {
+		var chkArr = new Array;
+			
+		$(".table input[name='writer']:checked").each(function() {
+			chkArr.push($(this).val());
+		});
+			
+		var paramJOSN = JSON.stringify(chkArr);
+			
+		alert(chkArr);	
+		
+		$.ajax({
+			url : 'adminCommunityAll',
+			type : 'POST',
+			data : paramJSON,
+			contentType : "application/json; charset=utf-8",
+			dateType : 'text',
+			success : function(data) {
+				console.log('return ' + data);
+			},
+			error : function() {
+				console.log('error');
+			}
+		});
+		
+	}
+	
+
+	$('#selectAll').on("click",function(event){
+		var  chk = $(this).is(":checked");
+		if(chk) $(".table input").prop('checked', true);
+		else $(".table input").prop('checked', false);	
+		
+	});
+
+	$('#selectType').change(function(event) {
+		var selectType = $("select[name=selectType]").val();
+		
+		self.location = "/admin/adminCommunityAll?&selectType="+selectType;
+	});
+	
 	$('#searchBtn').on("click", function(event) {
 		
 		// 게시판선택 옵션 값 가져오기

@@ -37,14 +37,14 @@ function popupLink(popHeight,popWidth){
 							<td>질문 검색</td>
 							<td>
 							<select name="searchType" class="form-control input-group-add">
-										<option value="n" <c:out value="${cri.searchType == null?'selected':''}"/>>---</option>
-										<option value="t" <c:out value="${cri.searchType eq 't'?'selected':''}"/>>항목</option>
-										<option value="t" <c:out value="${cri.searchType eq 't'?'selected':''}"/>>제목</option>
-										<option value="c" <c:out value="${cri.searchType eq 'c'?'selected':''}"/>>처리여부</option>
+										<option value="n" <c:out value="${pageMaker.cri.searchType == null?'selected':''}"/>>---</option>
+										<option value="t" <c:out value="${pageMaker.cri.searchType eq 't'?'selected':''}"/>>항목</option>
+										<option value="t" <c:out value="${pageMaker.cri.searchType eq 't'?'selected':''}"/>>제목</option>
+										<option value="c" <c:out value="${pageMaker.cri.searchType eq 'c'?'selected':''}"/>>처리여부</option>
 							</select>
 							</td>
-							<td><input type="text"  name="keyword" value='${pageMaker.cri.keyword}' class="form-control" size="40" placeholder="항목/제목/처리여부"></td>
-							<td><button id="searchBtn" class="btn btn-default  input-group-add" type="submit">검색</button></td>
+							<td><input type="text"  name="keyword" value='${pageMaker.cri.keyword}' class="form-control" size="40" placeholder="항목/제목/처리여부" id="keywordInput"></td>
+							<td><button id="searchBtn" class="btn btn-default  input-group-add" type="button">검색</button></td>
 						</tr>
 					</table>
 				</form>

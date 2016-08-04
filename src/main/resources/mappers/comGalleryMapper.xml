@@ -178,4 +178,8 @@
 		]]>
 		<include refid="search"></include>		
 	</select>
+	
+	<select id="listMypostAll" resultType="ComGalleryDTO">
+		select * from com_gallery where mem_no = #{mem_no};
+	</select>
 </mapper>

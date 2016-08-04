@@ -160,4 +160,8 @@
 		com_free_re_content=#{com_free_re_content} WHERE
 		com_free_re_no=#{com_free_re_no};
 	</update>
+
+	<select id="listMypostAll" resultType="ComFreeDTO">
+		select * from com_free where mem_no = #{mem_no};
+	</select>	
 </mapper>

@@ -157,6 +157,11 @@ public class ComQnAServiceImpl implements ComQnAService {
 		return dao.listAllReply(bno);
 	}
 
+	@Override
+	public List<ComQnADTO> listMypostAll(int mem_no) throws Exception {
+		return dao.listMypostAll(mem_no);
+	}
+
 
 
 }

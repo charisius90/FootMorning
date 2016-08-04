@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.footmorning.app.domain.ComBoastDTO;
 import com.footmorning.app.domain.ComBoastReplyDTO;
+import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.persistence.ComBoastDAO;
 import com.footmorning.app.util.Criteria;
 import com.footmorning.app.util.SearchCriteria;
@@ -160,6 +161,16 @@ public class ComBoastDAOImpl implements ComBoastDAO {
 	@Override
 	public List<ComBoastReplyDTO> listAllReply(Integer bno) throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".listReply", bno);
+	}
+
+	@Override
+	public List<ComBoastDTO> listSearchCri(SearchCriteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listSearchCri", cri);
+	}
+
+	@Override
+	public List<ComBoastDTO> listMypostAll(int mem_no) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listMypostAll", mem_no);
 	}
 
 }

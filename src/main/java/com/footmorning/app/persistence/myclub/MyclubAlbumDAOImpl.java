@@ -107,4 +107,9 @@ public class MyclubAlbumDAOImpl implements MyclubAlbumDAO {
 		return sqlSession.selectList(NAMESPACE + ".listReply", bno);
 	}
 
+	@Override
+	public List<MyclubAlbumDTO> listMypostAll(int mem_no) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listMypostAll", mem_no);
+	}
+
 }

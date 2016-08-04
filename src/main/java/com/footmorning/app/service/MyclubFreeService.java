@@ -2,6 +2,7 @@ package com.footmorning.app.service;
 
 import java.util.List;
 
+import com.footmorning.app.domain.MyclubAlbumDTO;
 import com.footmorning.app.domain.MyclubFreeDTO;
 import com.footmorning.app.domain.MyclubFreeReplyDTO;
 import com.footmorning.app.util.Criteria;
@@ -42,4 +43,6 @@ public interface MyclubFreeService {
 	public void deleteReply(MyclubFreeReplyDTO dto) throws Exception;
 
 	public List<MyclubFreeReplyDTO> listAllReply(Integer bno) throws Exception;
+
+	public List<MyclubFreeDTO> listMypostAll(int mem_no) throws Exception;
 }

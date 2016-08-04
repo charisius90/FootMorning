@@ -140,4 +140,8 @@ public class ComVideoSerivceImpl implements ComVideoService {
 		return dao.listAdminCount(cri);
 	}
 
+	@Override
+	public List<ComVideoDTO> listMypostAll(int mem_no) throws Exception {
+		return dao.listMypostAll(mem_no);
+	}
 }

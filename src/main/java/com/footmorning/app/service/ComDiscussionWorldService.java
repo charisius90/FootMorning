@@ -2,6 +2,7 @@ package com.footmorning.app.service;
 
 import java.util.List;
 
+import com.footmorning.app.domain.ComDiscussionKorDTO;
 import com.footmorning.app.domain.ComDiscussionWorldDTO;
 import com.footmorning.app.domain.ComDiscussionWorldReplyDTO;
 import com.footmorning.app.util.Criteria;
@@ -41,4 +42,6 @@ public interface ComDiscussionWorldService {
 	public void deleteReply(ComDiscussionWorldReplyDTO dto) throws Exception;
 
 	public List<ComDiscussionWorldReplyDTO> listAllReply(Integer bno) throws Exception;
+
+	public List<ComDiscussionWorldDTO> listMypostAll(int mem_no) throws Exception;
 }

@@ -41,4 +41,7 @@ public interface ComDiscussionWorldDAO {
 	public void deleteReply(ComDiscussionWorldReplyDTO dto) throws Exception;
 
 	public List<ComDiscussionWorldReplyDTO> listAllReply(Integer bno) throws Exception;
+	
+	public List<ComDiscussionWorldDTO> listMypostAll(int mem_no) throws Exception;
+
 }

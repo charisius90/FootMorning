@@ -21,6 +21,11 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<!-- maximum file size in bytes 50MB -->
+		<beans:property name="maxUploadSize" value="52428800" />
+	</beans:bean>
+	
 	<!-- gmail -->
     <beans:bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
         <beans:property name="host" value="smtp.gmail.com" />

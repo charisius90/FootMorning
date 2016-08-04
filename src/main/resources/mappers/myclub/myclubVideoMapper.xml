@@ -152,4 +152,8 @@
 		myclub_video_re_content=#{myclub_video_re_content} WHERE
 		myclub_video_re_no=#{myclub_video_re_no};
 	</update>
+	
+	<select id="listMypostAll" resultType="MyclubVideoDTO">
+		select * from myclub_video where mem_no = #{mem_no};
+	</select>
 </mapper>

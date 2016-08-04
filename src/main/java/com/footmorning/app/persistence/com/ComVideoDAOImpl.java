@@ -118,4 +118,9 @@ public class ComVideoDAOImpl implements ComVideoDAO {
 		return sqlSession.selectOne(NAMESPACE + ".listAdminCount", cri);
 	}
 
+	@Override
+	public List<ComVideoDTO> listMypostAll(int mem_no) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".listMypostAll", mem_no);
+	}
+
 }

@@ -30,7 +30,7 @@
 		    <input type="hidden" name="mem_no" value="${USER_KEY.mem_no}"/>
 			<div class="col-md-10">
 				<div id="page-content-wrapper">
-				<h1>앨범게시판-글쓰기</h1> 			
+				<h1>동영상게시판-글쓰기</h1> 			
 				<br/><br/>
 				
 				<!-- 글쓰는 부분 -->
