@@ -63,95 +63,96 @@
 		<br/>
 			
 			게시글 <span style="color:red">${total}</span>개
-			<table class="table table-bordered">
-				<tr style="background-color:#dddddd;">
-					<td><input type="checkbox" name="" value="" /> 작성자</td>
-					<td>글번호</td>
-					<td>등록일</td>
-					<td>제목</td>
-				</tr>
+			<form action="#" method="post">
+				<table class="table table-bordered">
+					<tr style="background-color:#dddddd;">
+						<td><input type="checkbox" name="selectAll" id="selectAll" /> 작성자</td>
+						<td>글번호</td>
+						<td>등록일</td>
+						<td>제목</td>
+					</tr>
+					
+					<c:if test="${!empty listcomboast}">
+						<c:forEach items="${listcomboast}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="writer" value="${dto.com_boast_no}" /> ${dto.com_boast_writer}</td>
+								<td>${dto.com_boast_no}</td>
+								<td><fmt:formatDate value="${dto.com_boast_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.com_boast_subject}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					
+					<c:if test="${!empty listkor}">
+						<c:forEach items="${listkor}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="writer" value="${dto.com_discussion_kor_no}" /> ${dto.com_discussion_kor_writer}</td>
+								<td>${dto.com_discussion_kor_no}</td>
+								<td><fmt:formatDate value="${dto.com_discussion_kor_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.com_discussion_kor_subject}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					
+					<c:if test="${!empty listworld}">
+						<c:forEach items="${listworld}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="writer_com_world" value="${dto.com_discussion_world_writer}" /> ${dto.com_discussion_world_writer}</td>
+								<td>${dto.com_discussion_world_no}</td>
+								<td><fmt:formatDate value="${dto.com_discussion_world_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.com_discussion_world_subject}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					
+					<c:if test="${!empty listfree}">
+						<c:forEach items="${listfree}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="writer_com_free" value="${dto.com_free_no}" /> ${dto.com_free_writer}</td>
+								<td>${dto.com_free_no}</td>
+								<td><fmt:formatDate value="${dto.com_free_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.com_free_subject}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					
+					<c:if test="${!empty listgallery}">
+						<c:forEach items="${listgallery}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="writer_com_gallery" value="${dto.com_gallery_no}" /> ${dto.com_gallery_writer}</td>
+								<td>${dto.com_gallery_no}</td>
+								<td><fmt:formatDate value="${dto.com_gallery_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.com_gallery_subject}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					
+					<c:if test="${!empty listvideo}">
+						<c:forEach items="${listvideo}" var="dto">
+							<tr>
+								<td><input type="checkbox" name="writer_com_video" value="${dto.com_video_no}" /> ${dto.com_video_writer}</td>
+								<td>${dto.com_video_no}</td>
+								<td><fmt:formatDate value="${dto.com_video_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
+								<td>${dto.com_video_subject}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+					
+				</table>
+				<hr/>
 				
-				<c:if test="${!empty listcomboast}">
-					<c:forEach items="${listcomboast}" var="dto">
-						<tr>
-							<td><input type="checkbox" name="" value="" /> ${dto.com_boast_writer}</td>
-							<td>${dto.com_boast_no}</td>
-							<td><fmt:formatDate value="${dto.com_boast_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
-							<td>${dto.com_boast_subject}</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-				<c:if test="${!empty listkor}">
-					<c:forEach items="${listkor}" var="dto">
-						<tr>
-							<td><input type="checkbox" name="" value="" /> ${dto.com_discussion_kor_writer}</td>
-							<td>${dto.com_discussion_kor_no}</td>
-							<td><fmt:formatDate value="${dto.com_discussion_kor_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
-							<td>${dto.com_discussion_kor_subject}</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-				<c:if test="${!empty listworld}">
-					<c:forEach items="${listworld}" var="dto">
-						<tr>
-							<td><input type="checkbox" name="" value="" /> ${dto.com_discussion_world_writer}</td>
-							<td>${dto.com_discussion_world_no}</td>
-							<td><fmt:formatDate value="${dto.com_discussion_world_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
-							<td>${dto.com_discussion_world_subject}</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-				<c:if test="${!empty listfree}">
-					<c:forEach items="${listfree}" var="dto">
-						<tr>
-							<td><input type="checkbox" name="" value="" /> ${dto.com_free_writer}</td>
-							<td>${dto.com_free_no}</td>
-							<td><fmt:formatDate value="${dto.com_free_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
-							<td>${dto.com_free_subject}</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-				<c:if test="${!empty listgallery}">
-					<c:forEach items="${listgallery}" var="dto">
-						<tr>
-							<td><input type="checkbox" name="" value="" /> ${dto.com_gallery_writer}</td>
-							<td>${dto.com_gallery_no}</td>
-							<td><fmt:formatDate value="${dto.com_gallery_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
-							<td>${dto.com_gallery_subject}</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-				<c:if test="${!empty listvideo}">
-					<c:forEach items="${listvideo}" var="dto">
-						<tr>
-							<td><input type="checkbox" name="" value="" /> ${dto.com_video_writer}</td>
-							<td>${dto.com_video_no}</td>
-							<td><fmt:formatDate value="${dto.com_video_regdate}" pattern="yyyy/MM/dd hh:mm:ss"/></td>
-							<td>${dto.com_video_subject}</td>
-						</tr>
-					</c:forEach>
-				</c:if>
-				
-			</table>
-			<hr/>
-			
-			<div class="span12" style="float: left;">
-				<div style="float: left;">
-					<table>
-						<tr>
-							<td style="padding-top: 25px;">선택한 게시글을</td>
-							<td style="padding-top: 25px;">
-								<button class="btn btn-default" onclick="delete()">삭제</button>
-							</td>
-						</tr>
-					</table>
-				</div>
-						
+				<div class="span12" style="float: left;">
+					<div style="float: left;">
+						<table>
+							<tr>
+								<td style="padding-top: 25px;">선택한 게시글을</td>
+								<td style="padding-top: 25px;">
+									<button class="btn btn-default" id="delete">삭제</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+			</form>		
 				<!-- 페이징 -->
 				<div style="float: right; margin-left: 250px;">
 					<ul id="pagingul" class="pagination" class="col-xs-4 col-md-6">
@@ -183,6 +184,38 @@
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 <script>
+
+	$('#delete').on("click", function(even) {
+		
+		var items=[];
+		
+		$(".table input[type='checkbox']:checked").each(function() {items.push($(this).val());});
+		
+		var param = items.join(',');
+		alert(param);
+		
+// 		$.ajax({
+// 			url : '/admin/adminCommunityAll${pageMaker.makeQuery(1)}',
+// 			type : 'post',
+// 			data : param,
+// 			dateType : 'text',
+// 			success : function(data) {
+// 				console.log('return ' + data);
+// 			},
+// 			error : function() {
+// 				console.log('error');
+// 			}
+// 		})
+	});
+	
+
+	$('#selectAll').on("click",function(event){
+		var  chk = $(this).is(":checked");
+		if(chk) $(".table input").prop('checked', true);
+		else $(".table input").prop('checked', false);	
+		
+	});
+
 	$('#selectType').change(function(event) {
 		var selectType = $("select[name=selectType]").val();
 		

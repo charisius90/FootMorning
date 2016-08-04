@@ -264,6 +264,17 @@ public class AdminController {
 		}			
 	}
 	
+//	/**
+//	 *  전체 커뮤니티 게시판 관리(글삭제)
+//	 */
+//	@RequestMapping(value="adminCommunityAll", method=RequestMethod.POST)
+//	public void adminCommunityDelete(@RequestParam(value="param") List<String> param){
+//		
+//		System.out.println("글삭제 메서드 들어옴");
+//		
+//	}
+	
+	
 	/**
 	 * 커뮤니티 신고 접수 관리
 	 */
