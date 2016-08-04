@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
+import com.footmorning.app.domain.ClubAuthDTO;
 import com.footmorning.app.domain.ClubConfigDTO;
 import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.ClubMemberDTO;
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.domain.MyclubCashBookDTO;
+import com.footmorning.app.service.ClubAuthService;
 import com.footmorning.app.service.ClubConfigService;
 import com.footmorning.app.service.ClubMemberService;
 import com.footmorning.app.service.ClubService;
@@ -50,6 +52,8 @@ public class MyclubController {
 	private ClubMemberService clubMemberService;
 	@Autowired
 	private ClubConfigService clubConfigService;
+	@Autowired
+	private ClubAuthService clubAuthService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MyclubController.class);
 	
@@ -78,6 +82,14 @@ public class MyclubController {
 			ClubDTO club = (ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY");
 			List<MyclubCashBookDTO> list = myclubCashBookService.listAllWithClubNo(Integer.parseInt(club.getClub_no()));
 			model.addAttribute("BOOK", list);
+			
+			int no = Integer.parseInt(club.getClub_no());
+			Map<String, List<ClubAuthDTO>> map = new HashMap<>();
+			map.put("AUTH_MASTER", clubAuthService.listAuthMaster(no));
+			map.put("AUTH_MGR", clubAuthService.listAuthMgr(no));
+			map.put("AUTH_STAFF", clubAuthService.listAuthStaff(no));
+			map.put("AUTH_MEMBER", clubAuthService.listAuthMember(no));
+			model.addAllAttributes(map);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.clubAuthMapper">
+
+	<insert id="insert" parameterType="com.footmorning.app.domain.ClubAuthDTO">
+		insert 
+			into club_auth 
+				(club_no, mem_grade, auth_write, auth_mod, auth_cash, auth_access, auth_info, auth_member, auth_club)
+			values
+				(#{club_no}, #{mem_grade}, #{auth_write}, #{auth_mod}, 
+					#{auth_cash}, #{auth_access}, #{auth_info}, #{auth_member}, #{auth_club})
+	</insert>
+
+	<update id="update" parameterType="ClubAuthDTO">
+		update club_auth set 
+			auth_write = #{auth_write},
+			auth_mod = #{auth_mod},
+			auth_cash = #{auth_cash},
+			auth_access = #{auth_access},
+			auth_info = #{auth_info},
+			auth_member = #{auth_member},
+			auth_club = #{auth_club}
+			where club_no=#{club_no} and mem_grade=#{mem_grade}
+	</update>
+	
+	<delete id="delete" parameterType="ClubAuthDTO">
+		delete from club_auth where club_no=#{club_no} and mem_grade=#{mem_grade}
+	</delete>
+	
+	<select id="listAuthMaster" resultType="ClubAuthDTO">
+		select * from club_auth where club_no=#{club_no} and mem_grade=1
+	</select>
+	
+	<select id="listAuthMgr" resultType="ClubAuthDTO">
+		select * from club_auth where club_no=#{club_no} and mem_grade=2
+	</select>
+	
+	<select id="listAuthStaff" resultType="ClubAuthDTO">
+		select * from club_auth where club_no=#{club_no} and mem_grade=3
+	</select>
+	
+	<select id="listAuthMem" resultType="ClubAuthDTO">
+		select * from club_auth where club_no=#{club_no} and mem_grade=4
+	</select>
+</mapper>
