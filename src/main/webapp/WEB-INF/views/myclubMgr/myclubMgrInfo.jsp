@@ -54,7 +54,7 @@
 						<div id="preview" onclick="fnFile()"></div>
 					</div>
 					<div class="col-md-6" style="margin-top: 20px;">
-						<form method="post" action="/myclubMgr/myclubMgrInfo">
+						<form method="post" action="/myclubMgr/myclubMgrInfo" enctype="multipart/form-data">
 							<input type="hidden" name="club_no" value="${CLUB_KEY.club_no}"/>
 							<input type="hidden" name="club_regdate" value="${CLUB_KEY.club_regdate}"/>
 							<input type="hidden" name="club_master" value="${USER_KEY.mem_no}"/>
@@ -63,7 +63,7 @@
 							<table id="inputs" class="table table-hover">
 								<tr>
 									<td><span>클럽로고</span></td>
-									<td><input id="file" type="file" name="club_image"/></td>
+									<td><input id="file" type="file" name="uploadfile"/></td>
 								</tr>
 								<tr>
 									<td><span>클럽명</span></td>
@@ -123,7 +123,8 @@
 		var image = "${CLUB_KEY.club_image}";
 		if(image!=null && image!=""){
 			var img = new Image();
-			img.src = image;
+			img.src = "../resources/upload/" + image;
+			img.style = "width:100%; height:100%"
 			img.alt = "이미지를 불러 올 수 없습니다.";
 			$preview.html(img);
 		}

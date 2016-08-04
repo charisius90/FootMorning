@@ -95,9 +95,8 @@ public class ClubController {
 	public String registerPOST(ClubDTO dto, String mem_email, Model model, HttpServletRequest req){
 		MultipartFile uploadfile = dto.getUploadfile();
 		String root = req.getSession().getServletContext().getRealPath("/");
-		String savePath = root + "resources/upload";
+		String savePath = root + "resources/upload/";
 		String originalFileName = null;
-        String originalFileExtension = null;
         String storedFileName = null;
         
         File file = new File(savePath);
@@ -107,12 +106,7 @@ public class ClubController {
         
 		if(uploadfile!=null){
 			originalFileName = uploadfile.getOriginalFilename();
-            originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-            
-            long currentTime = System.currentTimeMillis();  
-    		SimpleDateFormat simDf = new SimpleDateFormat("yyyyMMddHHmmss");  
-    		
-            storedFileName = simDf.format(new Date(currentTime)) + originalFileExtension;
+            storedFileName = System.currentTimeMillis() + "_" + originalFileName;
              
             file = new File(savePath + storedFileName);
             try {

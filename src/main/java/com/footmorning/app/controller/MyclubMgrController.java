@@ -1,5 +1,7 @@
 package com.footmorning.app.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
@@ -89,15 +92,42 @@ public class MyclubMgrController {
 	@RequestMapping(value="myclubMgrInfo", method=RequestMethod.POST)
 	public String myclubInfoMgrComplete(ClubDTO dto, HttpServletRequest req){
 		System.out.println("myclubMgrInfo : " + dto);
-		if(dto.getClub_image()==null){
-			try {
-				ClubDTO club = service.getClubInfo(dto.getClub_name());
-				dto.setClub_image(club.getClub_image());
+			MultipartFile uploadfile = dto.getUploadfile();
+			String root = req.getSession().getServletContext().getRealPath("/");
+			String savePath = root + "resources/upload/";
+			String originalFileName = null;
+			String storedFileName = null;
+			
+			File file = new File(savePath);
+			if(file.exists() == false){
+				file.mkdirs();
 			}
-			catch (Exception e) {
-				e.printStackTrace();
+			
+			if(uploadfile!=null){
+				originalFileName = uploadfile.getOriginalFilename();
+				storedFileName = System.currentTimeMillis() + "_" + originalFileName;
+				
+				file = new File(savePath + storedFileName);
+				try {
+					uploadfile.transferTo(file);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				dto.setClub_image(file.getName());
 			}
-		}
+			else{
+				try {
+					ClubDTO club = service.getClubInfo(dto.getClub_name());
+					dto.setClub_image(club.getClub_image());
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		service.update(dto);
 		WebUtils.setSessionAttribute(req, "CLUB_KEY", dto);
 		
