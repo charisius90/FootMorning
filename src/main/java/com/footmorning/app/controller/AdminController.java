@@ -1,13 +1,17 @@
 package com.footmorning.app.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.relation.Role;
+import javax.management.relation.RoleStatus;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.ComBoastService;
 import com.footmorning.app.service.ComDiscussionKorService;
@@ -55,6 +61,8 @@ public class AdminController {
 	@Autowired
 	private ComQnAService comqnaService;
 	
+	public static final String ROLE_ADMIN = "ROLE_ADMIN";
+	
 	/**
 	 * 관리 홈
 	 */
@@ -72,6 +80,33 @@ public class AdminController {
 	 */
 	@RequestMapping("adminEmpAdd")
 	public void adminInquriyAdd(){}
+	
+	@RequestMapping(value="adminEmpAdd", method=RequestMethod.POST)
+	public String adminInquriyAddPsot(MemberDTO dto, RedirectAttributes rttr){
+		try {
+		
+			memberService.insertMember(dto);
+		
+			MemberDTO member;
+
+			member = memberService.getMemberInfo(dto.getMem_email());
+			member.setMem_grade("0");
+			memberService.updateMember(member);
+			
+			Map map = new HashMap();
+			map.put("mem_email", member.getMem_email());
+			map.put("role", new SimpleGrantedAuthority(ROLE_ADMIN).toString());
+			memberService.updateAuth(map);
+		
+			rttr.addFlashAttribute("msg", "SUCCESS");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return "redirect:/admin/adminEmpAdd";
+	}
 	
 	/**
 	 * 전체 회원 관리
