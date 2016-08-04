@@ -35,7 +35,7 @@
 				</div>
 				<div class="col-md-10" style="border:1px solid gray; padding:50px; border-radius:15px">
 						<div class="col-md-6" id="clubMainImg" style="float:left">
-							<img  src="../resources/images/real.jpg" width="100%" height="400px">
+							<img  src="../resources/upload/${CLUB_KEY.club_image}" width="100%" height="400px">
 						</div>
 						<div class="col-md-6">
 							<table class="table">

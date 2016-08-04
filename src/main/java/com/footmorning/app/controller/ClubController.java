@@ -1,5 +1,9 @@
 package com.footmorning.app.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
 import com.footmorning.app.domain.ClubDTO;
@@ -86,9 +92,42 @@ public class ClubController {
 	
 	@RequestMapping(value="clubRegister", method=RequestMethod.POST)
 	public String registerPOST(ClubDTO dto, String mem_email, Model model, HttpServletRequest req){
-		System.out.println("check : " + dto);
+		MultipartFile uploadfile = dto.getUploadfile();
+		String root = req.getSession().getServletContext().getRealPath("/");
+		String savePath = root + "resources/upload";
+		String originalFileName = null;
+        String originalFileExtension = null;
+        String storedFileName = null;
+        
+        File file = new File(savePath);
+        if(file.exists() == false){
+        	file.mkdirs();
+        }
+        
+		if(uploadfile!=null){
+			originalFileName = uploadfile.getOriginalFilename();
+            originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            
+            long currentTime = System.currentTimeMillis();  
+    		SimpleDateFormat simDf = new SimpleDateFormat("yyyyMMddHHmmss");  
+    		
+            storedFileName = simDf.format(new Date(currentTime)) + originalFileExtension;
+             
+            file = new File(savePath + storedFileName);
+            try {
+				uploadfile.transferTo(file);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		dto.setClub_image(file.getName());
 		service.insert(dto);
-
+		System.out.println("clubRegister : " + dto.toString());
+		
 		MemberDTO member = null;
 		try {
 			member = memberService.getMemberInfo(mem_email);

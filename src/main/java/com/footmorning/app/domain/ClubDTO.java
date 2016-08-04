@@ -1,5 +1,7 @@
 package com.footmorning.app.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ClubDTO {
 	private String club_no;
 	private String club_name;
@@ -11,6 +13,7 @@ public class ClubDTO {
 	private String club_master;
 	private String club_master_name;
 	private String club_mem_count;
+	private MultipartFile uploadfile;
 	
 	public String getClub_no() {
 		return club_no;
@@ -72,13 +75,18 @@ public class ClubDTO {
 	public void setClub_mem_count(String club_mem_count) {
 		this.club_mem_count = club_mem_count;
 	}
-	
+	public MultipartFile getUploadfile() {
+		return uploadfile;
+	}
+	public void setUploadfile(MultipartFile uploadfile) {
+		this.uploadfile = uploadfile;
+	}
 	@Override
 	public String toString() {
 		return "ClubDTO [club_no=" + club_no + ", club_name=" + club_name + ", club_image=" + club_image
 				+ ", club_content=" + club_content + ", club_loc=" + club_loc + ", club_type=" + club_type
 				+ ", club_regdate=" + club_regdate + ", club_master=" + club_master + ", club_master_name="
-				+ club_master_name + ", club_mem_count=" + club_mem_count + "]";
+				+ club_master_name + ", club_mem_count=" + club_mem_count + ", uploadfile=" + uploadfile + "]";
 	}
 	
 }
