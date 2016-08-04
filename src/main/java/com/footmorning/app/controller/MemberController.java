@@ -202,7 +202,6 @@ public class MemberController {
 	
 	@RequestMapping(value = "validationCheck")
 	public @ResponseBody String validationCheck(String email, String pw, String name, String cmd) throws Exception {
-		System.out.println(email + ", " + cmd);
 		String result = null;
 		
 		if(cmd.equals("email")){
@@ -247,7 +246,6 @@ public class MemberController {
 				result = "yes";
 			}
 		}
-		System.out.println(result);
 		return result;
 			
 	}
