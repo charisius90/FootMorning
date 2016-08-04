@@ -54,7 +54,7 @@
 							</c:forEach>
 						</table>
 					<div align="right">
-						<a class="btn btn-default" role="button" href="/myclub/myclubCashBookMgr">수정</a>
+						<a class="btn btn-default" role="button" href="javascript:fnModify()">수정</a>
 					</div>
 				</div>
 			</div>	
@@ -65,5 +65,32 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	function fnModify(){
+		var memGrade = "${USER_KEY.mem_grade}";
+		var url = "/myclub/myclubCashBookMgr";
+		switch(memGrade){
+		case "0":
+			break;
+		case "1":
+			break;
+		case "2":
+			if("${AUTH_MGR.auth_cash != 1}"){ url = null; }
+			break;
+		case "3":
+			if("${AUTH_STAFF.auth_cash != 1}"){ url = null; }
+			break;
+		case "4":
+			if("${AUTH_MEMBER.auth_cash != 1}"){ url = null; }
+			break;
+		}
+		
+		if(url == null){
+			alert("권한이 없습니다.");
+			return;
+		}
+		location.href = url;
+	}
+</script>
 </body>
 </html>

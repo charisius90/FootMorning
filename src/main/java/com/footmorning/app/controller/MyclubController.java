@@ -88,6 +88,7 @@ public class MyclubController {
 			List<MyclubCashBookDTO> list = myclubCashBookService.listAllWithClubNo(Integer.parseInt(club.getClub_no()));
 			model.addAttribute("BOOK", list);
 			
+			// 클럽의 등급별 회원권한정보
 			int no = Integer.parseInt(club.getClub_no());
 			Map<String, List<ClubAuthDTO>> map = new HashMap<>();
 			map.put("AUTH_MASTER", clubAuthService.listAuthMaster(no));

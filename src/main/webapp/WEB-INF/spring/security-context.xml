@@ -21,7 +21,9 @@
 			login-processing-url="/member/memberLoginProc"
 			default-target-url="/member/memberLoginSuccess"
 			authentication-failure-url="/member/memberLoginFailure" />
-		<sec:session-management session-fixation-protection="none" />
+		<sec:session-management session-fixation-protection="none">
+			<sec:concurrency-control max-sessions="100" error-if-maximum-exceeded="false"/>
+		</sec:session-management>
 		<sec:csrf disabled="true"/>
 	</sec:http>
 	
