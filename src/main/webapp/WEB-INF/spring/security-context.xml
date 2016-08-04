@@ -10,16 +10,17 @@
 	<sec:http pattern="/**/resources/**" security="none"/>
 	<sec:http pattern="/**/include/*.jsp" security="none"/>
 	
-	<sec:http auto-config='true'>
-		<sec:intercept-url pattern="/member/memberLogin" access="isAnonymous()"/>
-		<sec:intercept-url pattern="/member/memberSignUp" access="isAnonymous()"/>
-		<sec:intercept-url pattern="/member/memberSearchPW" access="isAnonymous()"/>
+	<sec:http auto-config="true" use-expressions="true">
+<!-- 		<sec:intercept-url pattern="/member/memberLogin" access="permitAll"/> -->
+<!-- 		<sec:intercept-url pattern="/member/memberSignUp" access="isAnonymous()"/> -->
+<!-- 		<sec:intercept-url pattern="/member/memberSearchPW" access="isAnonymous()"/> -->
 		<sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
-		<sec:intercept-url pattern="/" access="permitAll"/>
-		<sec:intercept-url pattern="/myclubMgr/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_CLUB')"/>
-		<sec:intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_CLUB')"/>
+<!-- 		<sec:intercept-url pattern="/" access="permitAll"/> -->
+<!-- 		<sec:intercept-url pattern="/myclubMgr/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_CLUB')"/> -->
+<!-- 		<sec:intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_CLUB')"/> -->
+		<sec:intercept-url pattern="/**" access="permitAll"/>
 		
-		<sec:form-login
+		<sec:form-login 
 			login-page="/member/memberLogin"
 			username-parameter="mem_email"
 			password-parameter="mem_pw"
@@ -27,33 +28,37 @@
 			default-target-url="/member/memberLoginSuccess"
 			authentication-failure-url="/member/memberLoginFailure"/>
 			
-		<sec:logout logout-url="/member/memberLogout" invalidate-session="true" delete-cookies="JSESSIONID"/>
+<!-- 		<sec:session-management> -->
+<!-- 			<sec:concurrency-control max-sessions="10" error-if-maximum-exceeded="true"/> -->
+<!-- 		</sec:session-management> -->
+		
 		<sec:csrf disabled="true"/>
 	</sec:http>
 
 	<sec:authentication-manager>
 		<!-- 기존 코드 -->
-<!-- 		<sec:authentication-provider> -->
-<!-- 			<sec:jdbc-user-service data-source-ref="dataSource" -->
-<!-- 				users-by-username-query="select mem_email, mem_pw, 1 as enabled from member where mem_email = ?" -->
-<!-- 				authorities-by-username-query="select mem_email, authority from authority where mem_email = ?" /> -->
+		<sec:authentication-provider>
+			<sec:jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select mem_email, mem_pw, 1 as enabled from member where mem_email = ?"
+				authorities-by-username-query="select mem_email, authority from authority where mem_email = ?" />
+			<sec:password-encoder hash="bcrypt"/>
+		</sec:authentication-provider>
+		<!-- 현재 테스트 코드 -->
+<!-- 		<sec:authentication-provider user-service-ref="customJdbcDaoImpl"> -->
 <!-- 			<sec:password-encoder hash="bcrypt" /> -->
 <!-- 		</sec:authentication-provider> -->
-		
-		<!-- 현재 테스트 코드 -->
-		<sec:authentication-provider user-service-ref="customJdbcDaoImpl">
-			<sec:password-encoder hash="bcrypt" />
-		</sec:authentication-provider>
-		
 	</sec:authentication-manager>
 	
 	<bean id="bcryptPasswordEncoAccess Deniedder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />	
-	<bean id="customAuthenticationProvider" class="com.footmorning.app.domain.CustomAuthenticationProvider" />
-	<bean id="customJdbcDaoImpl" class="com.footmorning.app.persistence.CustomJdbcDaoImpl">
-		<property name="dataSource" ref="dataSource" />
-		<property name="rolePrefix" value="" />
-		<property name="usersByUsernameQuery" value="select mem_email, mem_pw, 1 as enabled from member where mem_email = ?" />
-		<property name="authoritiesByUsernameQuery" value="select mem_email, authority from authority where mem_email = ?" />
-		<property name="enableGroups" value="false" />
-	</bean>
+	
+<!-- 	<bean id="customAuthenticationProvider" class="com.footmorning.app.util.CustomAuthenticationProvider"/> -->
+<!-- 	<bean id="customJdbcDaoImpl" class="com.footmorning.app.util.CustomJdbcDaoImpl"> -->
+<!-- 		<property name="dataSource" ref="dataSource" /> -->
+<!-- 		<property name="rolePrefix" value="" /> -->
+<!-- 		<property name="usersByUsernameQuery" value="select mem_email, mem_pw, 1 as enabled from member where mem_email = ?" /> -->
+<!-- 		<property name="authoritiesByUsernameQuery" value="select mem_email, authority from authority where mem_email = ?" /> -->
+<!-- 		<property name="enableGroups" value="false" /> -->
+<!-- 		<property name="usernameBasedPrimaryKey" value="false" /> -->
+<!-- 	</bean> -->
+<!-- 	<sec:global-method-security pre-post-annotations="enabled" /> -->
 </beans>

@@ -10,6 +10,7 @@ public interface MemberService {
 	public String getTime();
 	public List<MemberDTO> listAll() throws Exception;
 	public void updateAuth(Map map);
+	public void updateLogdate(MemberDTO dto);
 	public void insertMember(MemberDTO dto);
 	public void updateMember(MemberDTO dto);
 	public void deleteMember(Integer mem_no);

@@ -36,6 +36,11 @@ public class MemberDAOImpl implements MemberDAO {
 	public void deleteAuth(String mem_email) {
 		sqlSession.delete(NAMESPACE + ".deleteAuth", mem_email);
 	}
+
+	@Override
+	public void updateLogdate(MemberDTO dto) {
+		sqlSession.update(NAMESPACE + ".updateLogdate", dto);
+	}
 	
 	@Override
 	public void insertMember(MemberDTO dto) {

@@ -1,15 +1,23 @@
 package com.footmorning.app.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
-import com.footmorning.app.domain.CustomAuthenticationProvider;
 import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.service.ClubService;
 import com.footmorning.app.service.MatchService;
@@ -49,12 +56,18 @@ public class MemberController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
+	// Role 권한 목록
+	public static final String ROLE_ADMIN = "ROLE_ADMIN";
+	public static final String ROLE_USER = "ROLE_USER";
+	public static final String ROLE_USER_BLOCK = "ROLE_USER_BLOCK";
+	public static final String ROLE_CLUB = "ROLE_CLUB";
+	
 	@RequestMapping("memberLogin")
 	public void login(HttpServletRequest req){}
-
 	@RequestMapping("memberLoginSuccess")
-	public String loginSuccess(@Valid MemberDTO member, BindingResult result, HttpServletRequest req) {
+	public String loginSuccess(HttpServletRequest req) {
 		try {
+			System.out.println("hi~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 			String email = SecurityContextHolder.getContext().getAuthentication().getName();
 			
 			MemberDTO dto = service.getMemberInfo(email);
@@ -66,10 +79,19 @@ public class MemberController {
 				WebUtils.setSessionAttribute(req, "CLUB_KEY", clubService.getWithNo(club_no));
 				WebUtils.setSessionAttribute(req, "MATCH_KEY", matchService.matchListWithClubNoUnconnect(club_no));
 			}
+			//TEST코드
+			System.out.println("TEST : " + SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+			System.out.println("TEST : " + SecurityContextHolder.getContext().getAuthentication().getName());
+			System.out.println("TEST : " + SecurityContextHolder.getContext().getAuthentication().getCredentials());
+			List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
+			roles.add(new SimpleGrantedAuthority(ROLE_USER));
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(dto.getMem_email(), dto.getMem_pw(), roles);
+			Authentication auth = token;
+			SecurityContextHolder.getContext().setAuthentication(auth);
 			
 			// 최종 접속 시간 업데이트
 			dto.setMem_logdate(service.getTime());
-			service.updateMember(dto);
+			service.updateLogdate(dto);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -79,6 +101,9 @@ public class MemberController {
 	
 	@RequestMapping("memberLoginFailure")
 	public String loginFailure(@Valid MemberDTO member, BindingResult result, HttpServletRequest req) {
+		System.out.println("TEST F : " + SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+		System.out.println("TEST F : " + SecurityContextHolder.getContext().getAuthentication().getName());
+		System.out.println("TEST F : " + SecurityContextHolder.getContext().getAuthentication().getCredentials());
 		if(result.hasErrors()){
 			return "/member/memberLogin";
 		}
@@ -87,19 +112,21 @@ public class MemberController {
 		return "/member/memberLogin";
 	}
 	
-//	@RequestMapping("memberLogout")
-//	public String logout(HttpServletRequest req){
-//		// 세션 닫기
-//		HttpSession session = req.getSession();
-//		session.invalidate();
-//		
-//		return "redirect:/";
-//	}
-	/**
-	 * 자동로그인용
-	 */
-	@Autowired
-	private CustomAuthenticationProvider provider;
+	@RequestMapping("memberLogout")
+	public String logout(HttpServletRequest req){
+		// 세션 닫기
+		HttpSession session = req.getSession();
+		session.invalidate();
+		
+		return "redirect:/";
+	}
+	
+	
+//	/**
+//	 * 자동로그인용
+//	 */
+//	@Autowired
+//	private CustomAuthenticationProvider provider;
 	
 	@RequestMapping("memberSignUp")
 	public void signup(){}
@@ -110,25 +137,23 @@ public class MemberController {
 		logger.info("signupComplete : " + member.toString() + ", " + mem_pw_check);
 		if(member.getMem_pw().equals(mem_pw_check)){
 			try{
+				List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
+				roles.add(new SimpleGrantedAuthority(ROLE_USER));
+				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(member.getMem_email(), member.getMem_pw(), roles);
+				Authentication auth = token;
+				SecurityContextHolder.getContext().setAuthentication(auth);
+				
 				service.insertMember(member);
-			}
-			catch(Exception err){
-				System.out.println("MemberController signupComplete : " + err);
-				return "/member/memberSignUp";
-			}
-			
-			try {
+				
 				MemberDTO dto = service.getMemberInfo(member.getMem_email());
 				WebUtils.setSessionAttribute(req, "USER_KEY", dto);
+
+				return "redirect:/";
 			}
 			catch (Exception e) {
 				e.printStackTrace();
 				return "/member/memberSignUp";
 			}
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			authentication.getDetails();
-			provider.authenticate(authentication);
-			return "redirect:/";
 		}
 		
 		return "/member/memberSignUp";

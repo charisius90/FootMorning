@@ -19,6 +19,10 @@
 		delete from authority where mem_email=#{mem_email}
 	</update>	
 	<!-- security 추가 부분 -->
+	
+	<update id="updateLogdate" parameterType="com.footmorning.app.domain.MemberDTO">
+		update member set mem_logdate=now() where mem_email=#{mem_email}
+	</update>
 
 	<select id="getTime" resultType="String">
 		select now()

@@ -2,11 +2,17 @@ package com.footmorning.app.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.Assert;
 
 public class CustomUserDetails implements UserDetails{
 	private String username;
@@ -27,7 +33,7 @@ public class CustomUserDetails implements UserDetails{
 
 		return authorities;
 	}
-
+	
 	@Override
 	public String getPassword() {
 		return password;

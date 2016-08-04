@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,24 +31,29 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private BCryptPasswordEncoder bCrypt;
 	
-	@Autowired
-	private RoleFeeder roles;
-
 	@Override
 	public void updateAuth(Map map) {
 		memberDAO.updateAuth(map);
+	}
+	
+
+	@Override
+	public void updateLogdate(MemberDTO dto) {
+		memberDAO.updateLogdate(dto);
 	}
 
 	@Override
 	public void insertMember(MemberDTO dto) {
 		// bCrypt로 비밀번호 암호화
 		dto.setMem_pw(this.bCrypt.encode(dto.getMem_pw()));
+		
 		memberDAO.insertMember(dto);
 		
-		// 새 회원의 이메일과 권한 DB에 추가
+		Object[] objs = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray();
 		Map map = new HashMap();
 		map.put("mem_email", dto.getMem_email());
-		map.put("role", roles.getRole(roles.ROLE_USER));
+		map.put("role", objs[0].toString());
+		
 		memberDAO.insertAuth(map);
 	}
 

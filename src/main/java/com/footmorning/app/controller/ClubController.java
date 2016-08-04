@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -97,7 +98,7 @@ public class ClubController {
 			
 			Map map = new HashMap();
 			map.put("mem_email", member.getMem_email());
-			map.put("role", roles.getRole(roles.ROLE_CLUB));
+			map.put("role", new SimpleGrantedAuthority(roles.ROLE_CLUB).toString());
 			memberService.updateAuth(map);
 			
 			WebUtils.setSessionAttribute(req, "USER_KEY", member);
