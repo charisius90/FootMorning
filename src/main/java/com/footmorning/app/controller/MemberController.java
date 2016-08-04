@@ -135,6 +135,7 @@ public class MemberController {
 	public String signupComplete(MemberDTO member, String mem_pw_check, HttpServletRequest req){
 //	public String signupComplete(@Valid MemberDTO member, BindingResult result, String mem_pw_check, HttpServletRequest req){
 		logger.info("signupComplete : " + member.toString() + ", " + mem_pw_check);
+		
 		if(member.getMem_pw().equals(mem_pw_check)){
 			try{
 				List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
@@ -159,9 +160,6 @@ public class MemberController {
 		return "/member/memberSignUp";
 	}
 	
-	@RequestMapping("memberSearchPW")
-	public void searchPW(){
-	}
 	
 	/**
 	 * 비밀번호 찾기 페이지(임시비밀번호 생성 후 이메일 전송)
@@ -172,6 +170,9 @@ public class MemberController {
 	@Autowired
 	private Email email;
 
+	@RequestMapping("memberSearchPW")
+	public void searchPW(){}
+	
 	@RequestMapping(value="memberSearchPW", method=RequestMethod.POST)
 	public ModelAndView sendEmail(MemberDTO dto, ModelMap model) throws Exception {
 	    ModelAndView mav;

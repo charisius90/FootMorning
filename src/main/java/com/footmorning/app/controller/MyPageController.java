@@ -30,11 +30,6 @@ import com.footmorning.app.service.MyclubNoticeService;
 import com.footmorning.app.service.MyclubTeamService;
 import com.footmorning.app.service.MyclubVideoService;
 
-/**
- * 
- * @author ��ҿ�
- *
- */
 @Controller
 @RequestMapping("/mypage/*")
 public class MyPageController {
@@ -68,6 +63,10 @@ public class MyPageController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MyPageController.class);
 	
+	/**
+	 * 회원정보 페이지
+	 * @author 김소영
+	 */
 	@RequestMapping("myPageProfile")
 	public void myPageProfile(){
 	}
@@ -91,6 +90,10 @@ public class MyPageController {
 		return "redirect:/mypage/myPageProfile";
 	}
 	
+	/**
+	 * 내가 작성한 글 페이지
+	 * @author 박규채
+	 */
 	@RequestMapping("myPageArticles")
 	public void myPageArticles(Model model, HttpServletRequest req){
 		try {
@@ -122,6 +125,10 @@ public class MyPageController {
 		}
 	}
 	
+	/**
+	 * 비밀번호 변경 페이지
+	 * @author 김소영
+	 */
 	@RequestMapping("myPagePW")
 	public void myPagePW(){
 	}
