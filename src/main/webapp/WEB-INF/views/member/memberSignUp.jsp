@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" isELIgnored="false" session="true"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,9 +19,6 @@
 <body>
 <%@ include file="../include/header.jsp" %>
 
-<spring:hasBindErrors name="memberDTO" />
-<form:errors name="memberDTO" />
-
 	<div class="container-fluid">
 		<div class="row">
 			<div id="wrapper">
@@ -33,38 +29,40 @@
 					<div class="col-md-10" align="center">
 						<h1>회원가입</h1><br/>
 
-						<form method="post" action="/member/memberSignUp">
+						<form id="signup_form" method="post" action="/member/memberSignUp">
 							<table>
 								<tr>
 									<td>E-Mail</td>
-									<td><input type="text" name="mem_email"
-										placeholder="E-Mail 입력" required></td>
-								</tr>
-								<tr>
-									<td><form:errors path="memberDTO.mem_email" /></td>
+									<td>
+										<input id="inputEmail" type="text" name="mem_email"	placeholder="E-Mail 입력">
+										<div id="emailCheck"></div>
+									</td>
 								</tr>
 								<tr>
 									<td>이름</td>
-									<td><input type="text" name="mem_name"
-										placeholder="이름 입력" required></td>
+									<td>
+										<input id="inputName" type="text" name="mem_name" placeholder="이름 입력">
+										<div id="nameCheck"></div>
+									</td>
 								</tr>
 								<tr>
 									<td>비밀번호</td>
-									<td><input type="password" name="mem_pw"
-										placeholder="비밀번호 입력" required></td>
-								</tr>
-								<tr>
-									<td><form:errors path="memberDTO.mem_pw" /></td>
+									<td>
+										<input id="inputPassword" type="password" name="mem_pw" placeholder="비밀번호 입력">
+										<div id="pwCheck"></div>
+									</td>
 								</tr>
 								<tr>
 									<td>비밀번호 확인</td>
-									<td><input type="password" name="mem_pw_check"
-										placeholder="비밀번호 재입력" required></td>
+									<td>
+										<input id="rePassword" type="password" name="mem_pw_check" placeholder="비밀번호 재입력">
+										<div id="repwCheck"></div>
+									</td>
 								</tr>
 								<tr>
 									<td>생년월일</td>
 									<td><input type="text" name="mem_birth" placeholder="생년월일 입력"
-										required></td>
+										></td>
 								</tr>
 								<tr>
 									<td>성별</td>
@@ -74,13 +72,14 @@
 								<tr>
 									<td>전화번호</td>
 									<td><input type="text" name="mem_phone" placeholder="전화번호입력"
-										required></td>
+										></td>
 								</tr>
 								<tr >
-									<td colspan="2" align="center"><input class="btn btn-primary" type="submit" value="가입">&nbsp;&nbsp;
+									<td colspan="2" align="center"><input id="register_btn" class="btn btn-primary" type="button" value="가입">&nbsp;&nbsp;
 									<input class="btn btn-default" type="reset" value="취소"></td>
 								</tr>
 							</table>
+							<br/><span id="inputCheck" style="color:red"></span>
 						</form>
 					</div>
 				</div>
@@ -96,6 +95,131 @@
 		changeMonth:true,
 		changeYear:true,
 		yearRange: "1930:2016"
+	});
+	
+	var flag1 = false;
+	var flag2 = false;
+	$(document).ready(function(){
+	    $('#inputEmail').keyup(function(){	// 입력한 이메일 형식을 ajax를 사용하여 실시간으로 확인하여 메시지 띄워줌. by 소영
+	        if ( $('#inputEmail').val().length > 0) {
+	            var email = $(this).val();
+	            $.ajax({
+	                type : 'POST',
+	                url : '/member/validationCheck',
+	                data:{email:email, cmd:"email"},
+	                success : function(data) {
+	                	var result = data.trim();
+	                	if (result == "yes"){
+	                        $("#emailCheck").html("<span style='color:blue'>사용 가능한 이메일 입니다.</span>");
+	                        flag1 = true;
+	                    } 
+	                	else if(result == "not"){
+	                        $("#emailCheck").html("<span style='color:red'>잘못된 이메일 형식입니다.</span>");
+	                        flag1 = false;
+	                    }
+	                	else if(result == "no"){
+	                		$("#emailCheck").html("<span style='color:red'>중복된 이메일 입니다.</span>");
+	                		flag1 = false;
+	                	}
+	                }
+	            });
+	        }
+	        else{
+	        	 $("#emailCheck").empty();
+	        }
+	    });
+	    
+	    $('#inputPassword').keyup(function(){	// 입력한 패스워드 형식을 ajax를 사용하여 실시간으로 확인하여 메시지 띄워줌.
+	        if ( $('#inputPassword').val().length > 0) {
+	            var pw = $(this).val();
+	            $.ajax({
+	                type : 'POST',
+	                url : '/member/validationCheck',
+	                data:{pw:pw, cmd:"pw"},
+	                success : function(data) {
+	                	var result = data.trim();
+	                	if (result == "yes"){
+	                        $("#pwCheck").html("<span style='color:blue'>사용 가능한 비밀번호 입니다.</span>");
+	                        flag1 = true;
+	                    } 
+	                	else if(result == "no"){
+	                		$("#pwCheck").html("<span style='color:red'>영문,숫자,특수문자 조합 8자 이상 16자 이하만 가능합니다.</span>");
+	                		flag1 = false;
+	                	}
+	                }
+	            });
+	        }
+	        else{
+	        	 $("#pwCheck").empty();
+	        }
+	    });
+	    
+	    $('#rePassword').keyup(function(){
+	    	if ( $('#rePassword').val().length > 0) {
+		    	if($('#rePassword').val()!=$('#inputPassword').val()){
+		    		$("#repwCheck").html("<span style='color:red'>비밀번호가 일치하지 않습니다.</span>");
+		    		flag1 = false;
+		    	}
+		    	else{
+		    		$("#repwCheck").empty();
+		    		flag1 = true;
+		    	}
+	    	}
+	    	else{
+	        	 $("#repwCheck").empty();
+	        }
+	    	
+	    });
+	    
+	    $('#inputName').keyup(function(){	// 입력한 이름 형식을 ajax를 사용하여 실시간으로 확인하여 메시지 띄워줌.
+	        if ( $('#inputName').val().length > 0) {
+	            var name = $(this).val();
+	            $.ajax({
+	                type : 'POST',
+	                url : '/member/validationCheck',
+	                data:{name:name, cmd:"name"},
+	                success : function(data) {
+	                	var result = data.trim();
+	                	if (result == "yes"){
+	                        $("#nameCheck").html("<span style='color:blue'>사용 가능한 이름입니다.</span>");
+	                        flag1 = true;
+	                    } 
+	                	else if(result == "no"){
+	                		$("#nameCheck").html("<span style='color:red'>6자 이하만 가능합니다.</span>");
+	                		flag1 = false;
+	                	}
+	                }
+	            });
+	        }
+	        else{
+	        	 $("#nameCheck").empty();
+	        }
+	    });
+	    
+	    $("#register_btn").click(function(){	// 가입하기 버튼을 클릭했을 때 비어있는 값 확인하여 메시지 띄워줌. by 소영
+	        if(!$('#inputName').val()){
+	        	$('#inputCheck').html('이름을 입력해 주세요.');
+	        	$('#inputName').focus();
+	        	flag2 = false;
+	        }	
+	        else if(!$('#inputEmail').val()){
+	        	$('#inputCheck').html('이메일을 입력해 주세요.');
+	        	$('#inputEmail').focus();
+	        	flag2 = false;
+	        }
+	        else if(!$('#inputPassword').val()){ 
+	        	$('#inputCheck').html('비밀번호를 입력해 주세요.');
+	        	$('#inputPassword').focus();
+	            flag2 = false;
+	        }
+	        else{
+	        	$('#inputCheck').empty();
+	        	flag2 = true;
+	        }
+	        if(flag1 == true && flag2 == true){
+	           	$('#signup_form').submit();
+	        }
+	    });
 	});
 </script>
 </body>

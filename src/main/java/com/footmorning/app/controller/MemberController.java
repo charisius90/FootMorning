@@ -2,6 +2,8 @@ package com.footmorning.app.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -25,6 +27,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
@@ -197,11 +200,61 @@ public class MemberController {
         }
 	}
 	
-	@Autowired
+	@RequestMapping(value = "validationCheck")
+	public @ResponseBody String validationCheck(String email, String pw, String name, String cmd) throws Exception {
+		String result = null;
+		
+		if(cmd.equals("email")){
+			// 이메일 정규표현식에 알맞은 형식인지 확인
+			Pattern p = Pattern.compile("^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$");
+			Matcher m = p.matcher(email); 
+			boolean test = m.find();	
+			
+			if(test==true){
+				try{
+					MemberDTO member = service.getMemberInfo(email);
+						result = "no";
+				}
+				catch(Exception err){
+					result = "yes";
+				}
+			}
+			else{
+				result = "not";
+			}
+		}
+		else if(cmd.equals("pw")){
+			
+			Pattern p = Pattern.compile("([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])");
+			Matcher m = p.matcher(pw);
+			boolean test = m.find();
+			
+			if(pw.length() >= 8 && pw.length() <= 16){
+				if(test==true){
+					result = "yes";
+				}
+				else{
+					result = "no";
+				}
+			}
+		}
+		else if(cmd.equals("name")){
+			if(name.length()>6){
+				result = "no";
+			}
+			else{
+				result = "yes";
+			}
+		}
+		return result;
+			
+	}
+	
+/*	@Autowired
 	private MemberValidation valid;
 	
 	@InitBinder
 	private void initBinder(WebDataBinder binder){
 		binder.setValidator(valid);
-	}
+	}*/
 }

@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
@@ -159,6 +160,19 @@ public class ClubController {
 			e.printStackTrace();
 		}
 		return "redirect:/myclub/myclubMain?no=" + member.getClub_no();
+	}
+	
+	@RequestMapping(value="duplicationCheck", method=RequestMethod.POST)
+	public @ResponseBody String duplicationCheck(String club_name) throws Exception {
+		String result = null;
+		ClubDTO club = service.getClubInfo(club_name);
+		if(club!=null){
+			result = "no";
+		}
+		else{
+			result = "yes";
+		}
+		return result;
 	}
 	
 }
