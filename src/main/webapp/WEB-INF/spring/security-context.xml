@@ -21,18 +21,18 @@
 			login-processing-url="/member/memberLoginProc"
 			default-target-url="/member/memberLoginSuccess"
 			authentication-failure-url="/member/memberLoginFailure" />
-			
+		<sec:session-management session-fixation-protection="none" />
 		<sec:csrf disabled="true"/>
 	</sec:http>
 	
-	<bean id="bcryptPasswordEncoAccess Deniedder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />	
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />	
 	
 	<sec:authentication-manager>
 		<sec:authentication-provider>
 			<sec:jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="select mem_email, mem_pw, 1 as enabled from member where mem_email = ?"
 				authorities-by-username-query="select mem_email, authority from authority where mem_email = ?" />
-			<sec:password-encoder ref="bcryptPasswordEncoAccess Deniedder"/>
+			<sec:password-encoder ref="bcryptPasswordEncoder"/>
 		</sec:authentication-provider>
 	</sec:authentication-manager>
 	
