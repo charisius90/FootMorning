@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 <link href="../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
 <style>
 	#preview {
 		cursor: pointer;
@@ -45,7 +47,7 @@
 						<div id="preview" onclick="fnFile()"></div>
 					</div>
 					<div class="col-md-6" style="margin-top: 20px;">
-						<form method="post" action="/club/clubRegister" enctype="multipart/form-data">
+						<form id="club_form" method="post" action="/club/clubRegister" enctype="multipart/form-data">
 							<input type="hidden" name="club_master" value="${USER_KEY.mem_no}"/>
 							<input type="hidden" name="club_master_name" value="${USER_KEY.mem_name}"/>
 							<input type="hidden" name="club_mem_count" value="1"/>
@@ -57,7 +59,10 @@
 								</tr>
 								<tr>
 									<td><span>클럽명</span></td>
-									<td><input id="name" type="text" name="club_name" /><input type="button" value="중복확인"/></td>
+									<td>
+										<input id="name" type="text" name="club_name" />
+										<div id="duplicateResult"></div>
+									</td>
 								</tr>
 								<tr>
 									<td><span>클럽지역</span></td>
@@ -73,7 +78,7 @@
 								</tr>
 							</table>
 							<div align="right">
-								<button class="btn btn-primary" type="submit">등록</button>&nbsp;&nbsp;&nbsp;
+								<button class="btn btn-primary" type="button" onclick="fnSubmit()">등록</button>&nbsp;&nbsp;&nbsp;
 								<button class="btn btn-default" type="reset">취소</button>
 							</div>
 						</form>
@@ -85,6 +90,51 @@
 </div>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
+	var flag1 = false;
+	var flag2 = false;
+
+	$(document).ready(function(){
+	    $('#name').blur(function(){	// 입력한 클럽명을 ajax를 사용하여 실시간으로 중복확인하여 메시지 띄워줌. by 김소영
+	        if ( $('#name').val().length > 0) {
+	        	var club_name = $(this).val();
+				$.ajax({
+					url : "/club/duplicationCheck",
+					type : "post",
+					data : {club_name:club_name},
+					success : function(data) {
+						var result = data.trim();
+						if (result=="no") {
+							$("#duplicateResult").html("<span style='color:red'>사용중인 클럽명입니다.</span>");
+							flag1 = false;
+						} 
+						else if(result=="yes"){
+							$("#duplicateResult").html("<span style='color:blue'>사용가능한 클럽명입니다.</span>");
+							flag1 = true;
+						}
+					},
+					error : function(error) {
+						alert(error.statusText);
+					}
+				});
+			}
+	        else{
+	        	 $("#duplicateResult").empty();
+	        }
+	    });
+	});
+	
+	function fnSubmit(){
+		if(!$('#name').val()){
+        	$('#duplicateResult').html("<span style='color:red'>클럽명을 입력해 주세요.</span>");
+        	$('#name').focus();
+        	flag2 = false;
+        }
+		
+		if(flag1 == true && flag2 == true){
+           	$('#club_form').submit();
+        }
+	}
+
 	function fnFile(){
 		$("#file").click();
 	}
