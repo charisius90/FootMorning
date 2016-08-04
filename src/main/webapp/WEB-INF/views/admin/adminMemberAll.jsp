@@ -26,10 +26,10 @@
 							<td>회원검색</td>
 							<td>
 								<select name="searchType" class="form-control input-group-add">
-									<option value="n" <c:out value="${cri.searchType == null?'selected':''}"/>>---</option>
-									<option value="e" <c:out value="${cri.searchType eq 'e'?'selected':''}"/>>E-Mail</option>
-									<option value="m" <c:out value="${cri.searchType eq 'm'?'selected':''}"/>>이름</option>
-									<option value="s" <c:out value="${cri.searchType eq 's'?'selected':''}"/>>차단여부</option>
+									<option value="n" <c:out value="${pageMaker.cri.searchType == null?'selected':''}"/>>---</option>
+									<option value="e" <c:out value="${pageMaker.cri.searchType eq 'e'?'selected':''}"/>>E-Mail</option>
+									<option value="m" <c:out value="${pageMaker.cri.searchType eq 'm'?'selected':''}"/>>이름</option>
+									<option value="s" <c:out value="${pageMaker.cri.searchType eq 's'?'selected':''}"/>>차단여부</option>
 								</select>
 							<td>
 							<td><input type="text"  name="keyword" value='${pageMaker.cri.keyword}' class="form-control" size="40" placeholder="E-Mail/이름으로 검색가능" id="keywordInput"></td>

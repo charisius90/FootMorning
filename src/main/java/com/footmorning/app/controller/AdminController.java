@@ -156,6 +156,8 @@ public class AdminController {
 			
 			System.out.println(selectType);
 			
+			System.out.println(cri.toString());
+			
 			int total = 0;
 
 			if(selectType == null){
@@ -168,9 +170,9 @@ public class AdminController {
 			// 자랑
 			if(selectType.equals("boast")){
 				System.out.println("boast 게시판");
-				model.addAttribute("listcomboast", comboastService.listSearchCriteria(cri));
+				model.addAttribute("listcomboast", comboastService.listSearchCri(cri));
 				
-				System.out.println(comboastService.listSearchCriteria(cri).toString());
+				System.out.println(comboastService.listSearchCri(cri).toString());
 				total = comboastService.listSearchCount(cri);
 				
 				model.addAttribute("total", total);
