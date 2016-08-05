@@ -15,26 +15,27 @@
 		cursor:pointer;
 		height:100px; 
 		text-align:center;
-		background:#ffcccc; 
+		background:gray; 
 		border-radius:5px;
 		padding:5px;
 		padding-top:35px;
 		margin-bottom: 10px;
 		margin-top:20px;
+		color:white
 	}
 	
 	#new_club:hover {
-		background:#ffd5d5;
+		background:gray;
 	}
 	
 	#new_club:hover >span{
-		color: #135a97;
+		color: white;
 	}
 	
 	#new_club >span{
 		font-size: x-large;
 		font-weight: bolder;
-		color: #337ab7;
+		color: white;
 	}
 </style>
 </head>
@@ -76,8 +77,8 @@
 				</div>
 			</div>
 			<div>
-				<p style="text-align:center; height:30px; border-radius:5px; background:#ffcccc; padding-top:5px">
-					<a href="/club/notice/main">공지사항</a>
+				<p style="text-align:center; height:30px; border-radius:5px; background:gray; padding-top:5px">
+					<a href="/club/notice/main" style="color:white">공지사항</a>
 				</p>
 				<ul>
 					<c:forEach items="${notice}" var="clubNotice" begin="0" end="3" step="1">

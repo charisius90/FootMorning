@@ -29,7 +29,7 @@
 				<div id="page-content-wrapper">
 					<div class="col-md-10">
 						<div align="center"><h1>로그인 페이지</h1></div>
-						<form action="/member/memberLoginProc" method="post">
+						<form action="/member/memberLoginProc2" method="post">
 						<table align="center" height="40" width="430" border="0"
 							style="border: solid 2px #87CEEEB; margin-top: 4%">
 

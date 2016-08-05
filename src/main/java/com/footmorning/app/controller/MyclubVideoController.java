@@ -38,8 +38,8 @@ public class MyclubVideoController {
 		System.out.println("클럽 이름:"+dto.getClub_name());
 		cri.setClub_no(dto.getClub_no());
 		model.addAttribute("list", service.listSearchCriteria(cri));
-		System.out.println("첫번째:"+service.listSearchCriteria(cri).get(0).getMyclub_video_main_thumnail());
-		System.out.println("두번째:"+service.listSearchCriteria(cri).get(1).getMyclub_video_main_thumnail());
+//		System.out.println("첫번째:"+service.listSearchCriteria(cri).get(0).getMyclub_video_main_thumnail());
+//		System.out.println("두번째:"+service.listSearchCriteria(cri).get(1).getMyclub_video_main_thumnail());
 		
 		AlbumPageMaker pageMaker = new AlbumPageMaker();
 		pageMaker.setCri(cri);

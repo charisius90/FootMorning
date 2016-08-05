@@ -9,14 +9,16 @@
 <style>
 .banner >a{font-size: 16px; font-weight:bold; color: white;}
 .nav-main{
-    background-color: #f2dede;
+    background-color: black;
 }
 #nav-ul > li > a{
 	height:50px;
 	padding: 15px;
+	color:white
 }
 #nav-ul > li > a:hover{
-    background-color:pink;
+    background-color:black;
+    color:white
 }
 </style>
 <body>
@@ -34,9 +36,9 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="navbar-header"><a class="navbar-brand" href="/">로고들어갈위치</a></div>
+		<div class="navbar-header"><a href="/"><img src="../resources/images/logo.png" style="height:50px"/></a></div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav nav-justified" id="nav-ul">
+			<ul class="nav nav-justified navbar-inverse" id="nav-ul">
 				<li><a href="/matching/main">매칭</a></li>
 				<li><a href="/club/clubList">클럽</a></li>
 				<c:if test="${USER_KEY.club_no!=null}">

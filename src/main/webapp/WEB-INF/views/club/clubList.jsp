@@ -170,7 +170,7 @@
                <c:forEach items="${list}" var="clubDTO">
                   <tr>
                      <td>${clubDTO.club_no}</td>
-                     <td><a href="/myclub/myclubMain?no=${clubDTO.club_no}"><img class="logo" src="${clubDTO.club_image}" alt="LOGO 위치"/></a></td>
+                     <td><a href="/myclub/myclubMain?no=${clubDTO.club_no}"><img class="logo" src="../resources/upload/${clubDTO.club_image}" alt="LOGO 위치"/></a></td>
 <%--                      <td><a href="/myclub/myclubMain?no=${clubDTO.club_no}">${clubDTO.club_name}</a></td> --%>
                      <td>
                         <a href="javascript:popOver(${clubDTO.club_no})" 
