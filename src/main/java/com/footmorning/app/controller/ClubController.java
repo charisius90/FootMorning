@@ -134,10 +134,10 @@ public class ClubController {
 			member.setMem_grade(GRADE_MASTER);
 			memberService.updateMember(member);
 			
-			Map map = new HashMap();
-			map.put("mem_email", member.getMem_email());
-			map.put("role", new SimpleGrantedAuthority(roles.ROLE_CLUB).toString());
-			memberService.updateAuth(map);
+//			Map map = new HashMap();
+//			map.put("mem_email", member.getMem_email());
+//			map.put("role", new SimpleGrantedAuthority(roles.ROLE_CLUB).toString());
+//			memberService.updateAuth(map);
 			
 			WebUtils.setSessionAttribute(req, "USER_KEY", member);
 			

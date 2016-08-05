@@ -66,13 +66,13 @@ public class MemberController {
 	
 	@RequestMapping("memberLogin")
 	public void login(HttpServletRequest req){}
-	@RequestMapping("memberLoginSuccess")
-	public String loginSuccess(HttpServletRequest req) {
+	@RequestMapping(value="memberLogin", method=RequestMethod.POST)
+	public String loginSuccess(HttpServletRequest req, MemberDTO dto) {
 		try {
-			System.out.println("hi~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-			String email = SecurityContextHolder.getContext().getAuthentication().getName();
-			
-			MemberDTO dto = service.getMemberInfo(email);
+//			System.out.println("hi~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+//			String email = SecurityContextHolder.getContext().getAuthentication().getName();
+//			
+//			MemberDTO dto = service.getMemberInfo(email);
 			
 			WebUtils.setSessionAttribute(req, "USER_KEY", dto);
 			
@@ -82,14 +82,14 @@ public class MemberController {
 				WebUtils.setSessionAttribute(req, "MATCH_KEY", matchService.matchListWithClubNoUnconnect(club_no));
 			}
 			//TEST코드
-			System.out.println("TEST : " + SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
-			System.out.println("TEST : " + SecurityContextHolder.getContext().getAuthentication().getName());
-			System.out.println("TEST : " + SecurityContextHolder.getContext().getAuthentication().getCredentials());
-			List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
-			roles.add(new SimpleGrantedAuthority(ROLE_USER));
-			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(dto.getMem_email(), dto.getMem_pw(), roles);
-			Authentication auth = token;
-			SecurityContextHolder.getContext().setAuthentication(auth);
+//			System.out.println("TEST : " + SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+//			System.out.println("TEST : " + SecurityContextHolder.getContext().getAuthentication().getName());
+//			System.out.println("TEST : " + SecurityContextHolder.getContext().getAuthentication().getCredentials());
+//			List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
+//			roles.add(new SimpleGrantedAuthority(ROLE_USER));
+//			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(dto.getMem_email(), dto.getMem_pw(), roles);
+//			Authentication auth = token;
+//			SecurityContextHolder.getContext().setAuthentication(auth);
 			
 			// 최종 접속 시간 업데이트
 //			dto.setMem_logdate(service.getTime());
@@ -101,18 +101,18 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("memberLoginFailure")
-	public String loginFailure(HttpServletRequest req) {
-		System.out.println("TEST F : " + SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
-		System.out.println("TEST F : " + SecurityContextHolder.getContext().getAuthentication().getName());
-		System.out.println("TEST F : " + SecurityContextHolder.getContext().getAuthentication().getCredentials());
-//		if(result.hasErrors()){
-//			return "/member/memberLogin";
-//		}
-//
-//		result.reject("login");
-		return "/member/memberLogin";
-	}
+//	@RequestMapping("memberLoginFailure")
+//	public String loginFailure(HttpServletRequest req) {
+//		System.out.println("TEST F : " + SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+//		System.out.println("TEST F : " + SecurityContextHolder.getContext().getAuthentication().getName());
+//		System.out.println("TEST F : " + SecurityContextHolder.getContext().getAuthentication().getCredentials());
+////		if(result.hasErrors()){
+////			return "/member/memberLogin";
+////		}
+////
+////		result.reject("login");
+//		return "/member/memberLogin";
+//	}
 	
 	@RequestMapping("memberLogout")
 	public String logout(HttpServletRequest req){
@@ -134,11 +134,11 @@ public class MemberController {
 		
 		if(member.getMem_pw().equals(mem_pw_check)){
 			try{
-				List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
-				roles.add(new SimpleGrantedAuthority(ROLE_USER));
-				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(member.getMem_email(), member.getMem_pw(), roles);
-				Authentication auth = token;
-				SecurityContextHolder.getContext().setAuthentication(auth);
+//				List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
+//				roles.add(new SimpleGrantedAuthority(ROLE_USER));
+//				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(member.getMem_email(), member.getMem_pw(), roles);
+//				Authentication auth = token;
+//				SecurityContextHolder.getContext().setAuthentication(auth);
 				
 				service.insertMember(member);
 				

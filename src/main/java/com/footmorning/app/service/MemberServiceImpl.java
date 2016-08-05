@@ -28,8 +28,8 @@ public class MemberServiceImpl implements MemberService {
 	@Inject
 	private MemberDAO memberDAO;
 	
-	@Autowired
-	private BCryptPasswordEncoder bCrypt;
+//	@Autowired
+//	private BCryptPasswordEncoder bCrypt;
 	
 	@Override
 	public void updateAuth(Map map) {
@@ -45,21 +45,21 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void insertMember(MemberDTO dto) {
 		// bCrypt로 비밀번호 암호화
-		dto.setMem_pw(this.bCrypt.encode(dto.getMem_pw()));
+//		dto.setMem_pw(this.bCrypt.encode(dto.getMem_pw()));
 		
 		memberDAO.insertMember(dto);
 		
-		Object[] objs = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray();
-		Map map = new HashMap();
-		map.put("mem_email", dto.getMem_email());
-		map.put("role", objs[0].toString());
-		
-		memberDAO.insertAuth(map);
+//		Object[] objs = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray();
+//		Map map = new HashMap();
+//		map.put("mem_email", dto.getMem_email());
+//		map.put("role", objs[0].toString());
+//		
+//		memberDAO.insertAuth(map);
 	}
 
 	@Override
 	public void updateMember(MemberDTO dto) {
-		dto.setMem_pw(this.bCrypt.encode(dto.getMem_pw()));
+//		dto.setMem_pw(this.bCrypt.encode(dto.getMem_pw()));
 		memberDAO.updateMember(dto);
 	}
 
@@ -68,8 +68,8 @@ public class MemberServiceImpl implements MemberService {
 		try {
 			memberDAO.deleteMember(mem_no);
 			
-			String mem_email = memberDAO.getWithNo(mem_no).getMem_email();
-			memberDAO.deleteAuth(mem_email);
+//			String mem_email = memberDAO.getWithNo(mem_no).getMem_email();
+//			memberDAO.deleteAuth(mem_email);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
