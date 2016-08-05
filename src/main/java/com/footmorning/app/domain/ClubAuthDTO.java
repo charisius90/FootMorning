@@ -2,91 +2,91 @@ package com.footmorning.app.domain;
 
 public class ClubAuthDTO {
 
-	private int club_no;
-	private int mem_garde;
-	private int auth_writer;
-	private int auth_mod;
-	private int auth_cash;
-	private int auth_access;
-	private int auth_info;
-	private int auth_member;
-	private int auth_club;
+	private String club_no;
+	private String mem_grade;
+	private String auth_write;
+	private String auth_mod;
+	private String auth_cash;
+	private String auth_access;
+	private String auth_info;
+	private String auth_member;
+	private String auth_club;
 
-	public int getClub_no() {
+	public String getClub_no() {
 		return club_no;
 	}
 
-	public int getMem_garde() {
-		return mem_garde;
+	public String getAuth_write() {
+		return auth_write;
 	}
 
-	public int getAuth_writer() {
-		return auth_writer;
-	}
-
-	public int getAuth_mod() {
+	public String getAuth_mod() {
 		return auth_mod;
 	}
 
-	public int getAuth_cash() {
+	public String getAuth_cash() {
 		return auth_cash;
 	}
 
-	public int getAuth_access() {
+	public String getAuth_access() {
 		return auth_access;
 	}
 
-	public int getAuth_info() {
+	public String getAuth_info() {
 		return auth_info;
 	}
 
-	public int getAuth_member() {
+	public String getAuth_member() {
 		return auth_member;
 	}
 
-	public int getAuth_club() {
+	public String getAuth_club() {
 		return auth_club;
 	}
 
-	public void setClub_no(int club_no) {
+	public void setClub_no(String club_no) {
 		this.club_no = club_no;
 	}
 
-	public void setMem_garde(int mem_garde) {
-		this.mem_garde = mem_garde;
+	public void setAuth_write(String auth_write) {
+		this.auth_write = auth_write;
 	}
 
-	public void setAuth_writer(int auth_writer) {
-		this.auth_writer = auth_writer;
-	}
-
-	public void setAuth_mod(int auth_mod) {
+	public void setAuth_mod(String auth_mod) {
 		this.auth_mod = auth_mod;
 	}
 
-	public void setAuth_cash(int auth_cash) {
+	public void setAuth_cash(String auth_cash) {
 		this.auth_cash = auth_cash;
 	}
 
-	public void setAuth_access(int auth_access) {
+	public void setAuth_access(String auth_access) {
 		this.auth_access = auth_access;
 	}
 
-	public void setAuth_info(int auth_info) {
+	public void setAuth_info(String auth_info) {
 		this.auth_info = auth_info;
 	}
 
-	public void setAuth_member(int auth_member) {
+	public void setAuth_member(String auth_member) {
 		this.auth_member = auth_member;
 	}
 
-	public void setAuth_club(int auth_club) {
+	public void setAuth_club(String auth_club) {
 		this.auth_club = auth_club;
 	}
 
+	public String getMem_grade() {
+		return mem_grade;
+	}
+	
+	public void setMem_grade(String mem_grade) {
+		this.mem_grade = mem_grade;
+	}
+	
 	@Override
 	public String toString() {
-		return "ClubAuth [club_no=" + club_no + ", mem_garde=" + mem_garde + ", auth_writer=" + auth_writer
+		return "ClubAuth [club_no=" + club_no + ", mem_grade=" + mem_grade + ", auth_write=" + auth_write
 				+ ", auth_mod=" + auth_mod + ", auth_cash=" + auth_cash + ", auth_access=" + auth_access
 				+ ", auth_info=" + auth_info + ", auth_member=" + auth_member + ", auth_club=" + auth_club + "]";
 	}

@@ -2,6 +2,7 @@ package com.footmorning.app.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,10 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
+import com.footmorning.app.domain.ClubAuthDTO;
 import com.footmorning.app.domain.ClubConfigDTO;
 import com.footmorning.app.domain.ClubDTO;
 import com.footmorning.app.domain.ClubMemberDTO;
 import com.footmorning.app.domain.MemberDTO;
+import com.footmorning.app.service.ClubAuthService;
 import com.footmorning.app.service.ClubConfigService;
 import com.footmorning.app.service.ClubMemberService;
 import com.footmorning.app.service.ClubService;
@@ -45,6 +48,8 @@ public class MyclubMgrController {
 	private ClubConfigService clubConfigService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private ClubAuthService clubAuthService;
 
 	/**
 	 * 회원 등급 파이널 변수 모음
@@ -312,8 +317,85 @@ public class MyclubMgrController {
 	 * 직책/등급관리
 	 */
 	@RequestMapping("myclubMgrMemberGrade")
-	public void myclubMgrMemberGrade(){
+	public void myclubMgrMemberGrade(HttpServletRequest req, Model model){
+		try {
+			int no = Integer.parseInt(((ClubDTO)WebUtils.getSessionAttribute(req, "CLUB_KEY")).getClub_no());
+			Map<String, ClubAuthDTO> map = new HashMap<>();
+			map.put("AUTH_MASTER", clubAuthService.getAuthMaster(no));
+			map.put("AUTH_MGR", clubAuthService.getAuthMgr(no));
+			map.put("AUTH_STAFF", clubAuthService.getAuthStaff(no));
+			map.put("AUTH_MEMBER", clubAuthService.getAuthMember(no));
+			map.put("AUTH_USER", clubAuthService.getAuthUser(no));
+			model.addAllAttributes(map);
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping(value="myclubMgrMemberGrade", method=RequestMethod.POST)
+	public @ResponseBody String myclubMgrMemberGradeComplete(@RequestBody List<Map<String, Object>> list, int no){
 		
+		try {
+			ClubAuthDTO masterAuth = clubAuthService.getAuthMaster(no);
+			ClubAuthDTO mgrAuth = clubAuthService.getAuthMgr(no);
+			ClubAuthDTO staffAuth = clubAuthService.getAuthStaff(no);
+			ClubAuthDTO memberAuth = clubAuthService.getAuthMember(no);
+			ClubAuthDTO userAuth = clubAuthService.getAuthUser(no);
+			
+			int index = 0;
+			for(Map<String, Object> map : list){
+				switch(index){
+				case 0:
+					masterAuth.setAuth_access(((Integer)map.get("auth_access")).toString());
+					masterAuth.setAuth_cash(((Integer)map.get("auth_cash")).toString());
+					masterAuth.setAuth_club(((Integer)map.get("auth_club")).toString());
+					masterAuth.setAuth_info(((Integer)map.get("auth_info")).toString());
+					masterAuth.setAuth_member(((Integer)map.get("auth_member")).toString());
+					masterAuth.setAuth_mod(((Integer)map.get("auth_mod")).toString());
+					break;
+				case 1:
+					mgrAuth.setAuth_access(((Integer)map.get("auth_access")).toString());
+					mgrAuth.setAuth_cash(((Integer)map.get("auth_cash")).toString());
+					mgrAuth.setAuth_club(((Integer)map.get("auth_club")).toString());
+					mgrAuth.setAuth_info(((Integer)map.get("auth_info")).toString());
+					mgrAuth.setAuth_member(((Integer)map.get("auth_member")).toString());
+					mgrAuth.setAuth_mod(((Integer)map.get("auth_mod")).toString());
+					break;
+				case 2:
+					staffAuth.setAuth_access(((Integer)map.get("auth_access")).toString());
+					staffAuth.setAuth_cash(((Integer)map.get("auth_cash")).toString());
+					staffAuth.setAuth_club(((Integer)map.get("auth_club")).toString());
+					staffAuth.setAuth_info(((Integer)map.get("auth_info")).toString());
+					staffAuth.setAuth_member(((Integer)map.get("auth_member")).toString());
+					staffAuth.setAuth_mod(((Integer)map.get("auth_mod")).toString());
+					break;
+				case 3:
+					memberAuth.setAuth_access(((Integer)map.get("auth_access")).toString());
+					memberAuth.setAuth_cash(((Integer)map.get("auth_cash")).toString());
+					memberAuth.setAuth_club(((Integer)map.get("auth_club")).toString());
+					memberAuth.setAuth_info(((Integer)map.get("auth_info")).toString());
+					memberAuth.setAuth_member(((Integer)map.get("auth_member")).toString());
+					memberAuth.setAuth_mod(((Integer)map.get("auth_mod")).toString());
+					break;
+				case 4:
+					userAuth.setAuth_mod(((Integer)map.get("auth_mod")).toString());
+					break;
+				}
+				index++;
+			}
+			
+			clubAuthService.update(masterAuth);
+			clubAuthService.update(mgrAuth);
+			clubAuthService.update(staffAuth);
+			clubAuthService.update(memberAuth);
+			clubAuthService.update(userAuth);
+			
+			return "SUCCESS";
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return "FAILURE";
+		}
 	}
 	
 	/**

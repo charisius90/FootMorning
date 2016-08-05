@@ -90,11 +90,12 @@ public class MyclubController {
 			
 			// 클럽의 등급별 회원권한정보
 			int no = Integer.parseInt(club.getClub_no());
-			Map<String, List<ClubAuthDTO>> map = new HashMap<>();
-			map.put("AUTH_MASTER", clubAuthService.listAuthMaster(no));
-			map.put("AUTH_MGR", clubAuthService.listAuthMgr(no));
-			map.put("AUTH_STAFF", clubAuthService.listAuthStaff(no));
-			map.put("AUTH_MEMBER", clubAuthService.listAuthMember(no));
+			Map<String, ClubAuthDTO> map = new HashMap<>();
+			map.put("AUTH_MASTER", clubAuthService.getAuthMaster(no));
+			map.put("AUTH_MGR", clubAuthService.getAuthMgr(no));
+			map.put("AUTH_STAFF", clubAuthService.getAuthStaff(no));
+			map.put("AUTH_MEMBER", clubAuthService.getAuthMember(no));
+			map.put("AUTH_USER", clubAuthService.getAuthUser(no));
 			model.addAllAttributes(map);
 		}
 		catch (Exception e) {

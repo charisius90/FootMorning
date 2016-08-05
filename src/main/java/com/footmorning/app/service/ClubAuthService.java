@@ -12,11 +12,13 @@ public interface ClubAuthService {
 
 	public void delete(ClubAuthDTO dto) throws Exception;
 	
-	public List<ClubAuthDTO> listAuthMaster(Integer no) throws Exception;
+	public ClubAuthDTO getAuthMaster(Integer no) throws Exception;
 	
-	public List<ClubAuthDTO> listAuthMgr(Integer no) throws Exception;
+	public ClubAuthDTO getAuthMgr(Integer no) throws Exception;
 	
-	public List<ClubAuthDTO> listAuthStaff(Integer no) throws Exception;
+	public ClubAuthDTO getAuthStaff(Integer no) throws Exception;
 	
-	public List<ClubAuthDTO> listAuthMember(Integer no) throws Exception;
+	public ClubAuthDTO getAuthMember(Integer no) throws Exception;
+	
+	public ClubAuthDTO getAuthUser(Integer no) throws Exception;
 }

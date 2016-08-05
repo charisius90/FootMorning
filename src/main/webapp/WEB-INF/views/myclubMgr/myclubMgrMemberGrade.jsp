@@ -38,8 +38,8 @@
 						<tr>
 							<th>방문자 권한</th>
 							<td>
-								등업되지 않은 임시회원이며, 다음 권한을 부여할 수가 있습니다.<br/>
-								<input type="checkbox"/>&nbsp;글쓰기 권한
+								클럽에 방문한 외부 회원이며, 다음 권한을 부여할 수가 있습니다.<br/>
+								<input name="user_mod" value="auth_mod" type="checkbox"/>&nbsp;자유게시판이용
 							</td>
 						</tr>
 						<tr>
@@ -160,13 +160,45 @@
 				$("input[name=member_all]").prop("checked", false);
 			}
 		});
+		// 이하 기존 권한값 세팅
+		$("input[name=master_mod]").prop("checked", "${AUTH_MASTER.auth_mod}"==1?true:false);
+		$("input[name=master_cash]").prop("checked", "${AUTH_MASTER.auth_cash}"==1?true:false);
+		$("input[name=master_access]").prop("checked", "${AUTH_MASTER.auth_access}"==1?true:false);
+		$("input[name=master_info]").prop("checked", "${AUTH_MASTER.auth_info}"==1?true:false);
+		$("input[name=master_mem]").prop("checked", "${AUTH_MASTER.auth_member}"==1?true:false);
+		$("input[name=master_club]").prop("checked", "${AUTH_MASTER.auth_club}"==1?true:false);
+		
+		$("input[name=mgr_mod]").prop("checked", "${AUTH_MGR.auth_mod}"==1?true:false);
+		$("input[name=mgr_cash]").prop("checked", "${AUTH_MGR.auth_cash}"==1?true:false);
+		$("input[name=mgr_access]").prop("checked", "${AUTH_MGR.auth_access}"==1?true:false);
+		$("input[name=mgr_info]").prop("checked", "${AUTH_MGR.auth_info}"==1?true:false);
+		$("input[name=mgr_mem]").prop("checked", "${AUTH_MGR.auth_member}"==1?true:false);
+		$("input[name=mgr_club]").prop("checked", "${AUTH_MGR.auth_club}"==1?true:false);
+		
+		$("input[name=staff_mod]").prop("checked", "${AUTH_STAFF.auth_mod}"==1?true:false);
+		$("input[name=staff_cash]").prop("checked", "${AUTH_STAFF.auth_cash}"==1?true:false);
+		$("input[name=staff_access]").prop("checked", "${AUTH_STAFF.auth_access}"==1?true:false);
+		$("input[name=staff_info]").prop("checked", "${AUTH_STAFF.auth_info}"==1?true:false);
+		$("input[name=staff_mem]").prop("checked", "${AUTH_STAFF.auth_member}"==1?true:false);
+		$("input[name=staff_club]").prop("checked", "${AUTH_STAFF.auth_club}"==1?true:false);
+		
+		$("input[name=member_mod]").prop("checked", "${AUTH_MEMBER.auth_mod}"==1?true:false);
+		$("input[name=member_cash]").prop("checked", "${AUTH_MEMBER.auth_cash}"==1?true:false);
+		$("input[name=member_access]").prop("checked", "${AUTH_MEMBER.auth_access}"==1?true:false);
+		$("input[name=member_info]").prop("checked", "${AUTH_MEMBER.auth_info}"==1?true:false);
+		$("input[name=member_mem]").prop("checked", "${AUTH_MEMBER.auth_member}"==1?true:false);
+		$("input[name=member_club]").prop("checked", "${AUTH_MEMBER.auth_club}"==1?true:false);
+		
+		$("input[name=user_mod]").prop("checked", "${AUTH_USER.auth_mod}"==1?true:false);
+		
 	})
 	
 	function fnSubmit(){
 		var master = new Object(),
 			mgr = new Object(),
 			staff = new Object(),
-			member = new Object();
+			member = new Object(),
+			user = new Object();
 		
 		var dataArr = new Array();
 		
@@ -200,6 +232,8 @@
 		member.auth_member = $("input[name=member_mem]").prop("checked") ? 1 : 0;
 		member.auth_club = $("input[name=member_club]").prop("checked") ? 1 : 0;
 		
+		user.auth_mod = $("input[name=user_mod]").prop("checked") ? 1 : 0;
+		
 		dataArr.push(master);
 		dataArr.push(mgr);
 		dataArr.push(staff);
@@ -208,12 +242,12 @@
 		dataJSON = JSON.stringify(dataArr);
 		
 		$.ajax({
-			url:"/myclubMgr/myclubMgrMemberGrade",
+			url:"/myclubMgr/myclubMgrMemberGrade?no=${CLUB_KEY.club_no}",
 			type:"POST",
 			contentType : "application/json; charset=utf-8",
 			data:dataJSON,
 			success:function(data){
-				console.log("success : " + data);
+				alert(data);
 			}
 		});
 	}

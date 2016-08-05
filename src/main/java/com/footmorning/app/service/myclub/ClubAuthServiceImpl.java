@@ -1,7 +1,5 @@
 package com.footmorning.app.service.myclub;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -32,23 +30,28 @@ public class ClubAuthServiceImpl implements ClubAuthService {
 	}
 
 	@Override
-	public List<ClubAuthDTO> listAuthMaster(Integer no) throws Exception {
-		return dao.listAuthMaster(no);
+	public ClubAuthDTO getAuthMaster(Integer no) throws Exception {
+		return dao.getAuthMaster(no);
 	}
 
 	@Override
-	public List<ClubAuthDTO> listAuthMgr(Integer no) throws Exception {
-		return dao.listAuthMgr(no);
+	public ClubAuthDTO getAuthMgr(Integer no) throws Exception {
+		return dao.getAuthMgr(no);
 	}
 
 	@Override
-	public List<ClubAuthDTO> listAuthStaff(Integer no) throws Exception {
-		return dao.listAuthStaff(no);
+	public ClubAuthDTO getAuthStaff(Integer no) throws Exception {
+		return dao.getAuthStaff(no);
 	}
 
 	@Override
-	public List<ClubAuthDTO> listAuthMember(Integer no) throws Exception {
-		return dao.listAuthMember(no);
+	public ClubAuthDTO getAuthMember(Integer no) throws Exception {
+		return dao.getAuthMember(no);
+	}
+	
+	@Override
+	public ClubAuthDTO getAuthUser(Integer no) throws Exception {
+		return dao.getAuthUser(no);
 	}
 
 }

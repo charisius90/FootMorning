@@ -27,22 +27,26 @@
 	</update>
 	
 	<delete id="delete" parameterType="ClubAuthDTO">
-		delete from club_auth where club_no=#{club_no} and mem_grade=#{mem_grade}
+		delete from club_auth where club_no=#{no} and mem_grade=#{mem_grade}
 	</delete>
 	
-	<select id="listAuthMaster" resultType="ClubAuthDTO">
-		select * from club_auth where club_no=#{club_no} and mem_grade=1
+	<select id="getAuthMaster" resultType="ClubAuthDTO">
+		select * from club_auth where club_no=#{no} and mem_grade=1
 	</select>
 	
-	<select id="listAuthMgr" resultType="ClubAuthDTO">
-		select * from club_auth where club_no=#{club_no} and mem_grade=2
+	<select id="getAuthMgr" resultType="ClubAuthDTO">
+		select * from club_auth where club_no=#{no} and mem_grade=2
 	</select>
 	
-	<select id="listAuthStaff" resultType="ClubAuthDTO">
-		select * from club_auth where club_no=#{club_no} and mem_grade=3
+	<select id="getAuthStaff" resultType="ClubAuthDTO">
+		select * from club_auth where club_no=#{no} and mem_grade=3
 	</select>
 	
-	<select id="listAuthMem" resultType="ClubAuthDTO">
-		select * from club_auth where club_no=#{club_no} and mem_grade=4
+	<select id="getAuthMember" resultType="ClubAuthDTO">
+		select * from club_auth where club_no=#{no} and mem_grade=4
+	</select>
+	
+	<select id="getAuthUser" resultType="ClubAuthDTO">
+		select * from club_auth where club_no=#{no} and mem_grade=5
 	</select>
 </mapper>

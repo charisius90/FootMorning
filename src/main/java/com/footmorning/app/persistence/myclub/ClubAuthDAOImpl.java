@@ -33,23 +33,28 @@ public class ClubAuthDAOImpl implements ClubAuthDAO {
 	}
 
 	@Override
-	public List<ClubAuthDTO> listAuthMaster(Integer no) throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".listAuthMaster", no);
+	public ClubAuthDTO getAuthMaster(Integer no) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".getAuthMaster", no);
 	}
 
 	@Override
-	public List<ClubAuthDTO> listAuthMgr(Integer no) throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".listAuthMgr", no);
+	public ClubAuthDTO getAuthMgr(Integer no) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".getAuthMgr", no);
 	}
 
 	@Override
-	public List<ClubAuthDTO> listAuthStaff(Integer no) throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".listAuthStaff", no);
+	public ClubAuthDTO getAuthStaff(Integer no) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".getAuthStaff", no);
 	}
 
 	@Override
-	public List<ClubAuthDTO> listAuthMember(Integer no) throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".listAuthMember", no);
+	public ClubAuthDTO getAuthMember(Integer no) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".getAuthMember", no);
+	}
+	
+	@Override
+	public ClubAuthDTO getAuthUser(Integer no) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".getAuthUser", no);
 	}
 
 }

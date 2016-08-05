@@ -237,6 +237,10 @@ public class MemberController {
 					result = "no";
 				}
 			}
+			else{
+				// test를 위해 주석처리
+//				result = "no";
+			}
 		}
 		else if(cmd.equals("name")){
 			if(name.length()>6){
