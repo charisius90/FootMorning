@@ -104,7 +104,7 @@ window.onload = function(){
 						   success : function (data) {
 							   data = $.parseJSON(data);
 							   console.dir(data);
-							   var members = data;
+							   var members = data.members;
 
 							   for(var i=0; i<members.length; i++){
 								   $member.append("<option id='"+members[i].mem_no+"'>" + members[i].mem_no + "  " + members[i].mem_name + "</option>");
