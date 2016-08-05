@@ -56,23 +56,19 @@ public class MyclubVideoServiceImpl implements MyclubVideoService {
 	}
 
 	private String getMainThumnail(String content) {
-		String mainThumnail = "";
-
-		if (content.contains("img src=")) {
-			int startIndex = content.indexOf("img src=") + 9;
-			// System.out.println(content.charAt(startIndex));
-			int endIndex = content.indexOf("\"", startIndex) - 1;
-			if (startIndex < endIndex) {
-				mainThumnail = content.substring(startIndex, endIndex);
-			}
-			// System.out.println(mainThumnail);
+		System.out.println("섬네일 메서드 컨텐트 : " + content);
+		int startIndex = content.indexOf("<source src=") + 13;
+		int endIndex = content.indexOf("\"", startIndex);
+		System.out.println("시작" +startIndex+ "끝"+endIndex);
+		if(endIndex < startIndex) {
+			return "";
 		}
-		return mainThumnail;
+		return content.substring(startIndex, endIndex);
 	}		
 
 	@Override
 	public List<MyclubVideoDTO> listCriteria(AlbumCriteria cri) throws Exception {
-		return dao.listCriteria(cri);
+		return getMyClubVideos(dao.listCriteria(cri));
 	}
 
 	@Override

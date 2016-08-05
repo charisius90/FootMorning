@@ -89,4 +89,15 @@ public class MatchDAOImpl implements MatchDAO {
 	public Integer gameNoMax() throws Exception {
 		return SqlSession.selectOne(NAMESPASE + ".gameNoMax");
 	}
+
+	@Override
+	public void editHome(MatchDTO dto) throws Exception {
+		SqlSession.update(NAMESPASE + ".editHome", dto);
+	}
+
+	@Override
+	public void editAway(MatchDTO dto) throws Exception {
+		SqlSession.update(NAMESPASE + ".editAway", dto);
+
+	}
 }

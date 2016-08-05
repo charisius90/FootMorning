@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,8 +22,15 @@
 				<%@ include file="../include/myclubMgrSidebar.jsp" %>
 			</div>
 			<div id="page-content-wrapper">
-			${GAME_KEY.game_flag}&nbsp;&nbsp;&nbsp;&nbsp;${GAME_KEY.game_no}
 				<h3>경기 준비</h3>
+				<h3><%for(int i=0;i<45;i++){%>&nbsp;<%}%>
+				(HOME)&nbsp;&nbsp;&nbsp;${HOME_KEY.club_no}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				${HOME_KEY.game_score}&nbsp;:&nbsp;${AWAY_KEY.game_score}
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${AWAY_KEY.club_no}&nbsp;&nbsp;&nbsp;(AWAY)
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<font size="3px">날짜:<fmt:formatDate value="${GAME_KEY.game_date}" pattern="yyyy-MM-dd"/> 
+				&nbsp;&nbsp;&nbsp;장소:${GAME_KEY.game_addr}</font>
+				</h3>
 				<div id="formation">
 					<div id="ground" class="ground"></div>
 					<form id="request" method="POST" action="/myclub/myclubGamePrepareRegister">
@@ -73,7 +81,7 @@ if(msg == "SUCCESS"){
 	<!--Import jQuery before formation.js-->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-	<script type="text/javascript" src="/resources/js/formation.js"></script>
+	<script type="text/javascript" src="/resources/js/formationPrepare.js"></script>
 	<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

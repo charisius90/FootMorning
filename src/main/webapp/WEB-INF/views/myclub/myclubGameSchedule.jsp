@@ -9,6 +9,8 @@
 <title>Insert title here</title>
 <link href="../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
+<link href="/resources/css/jquery.timepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" /> 
 <script type="text/javascript">
@@ -122,7 +124,10 @@
 										<c:if test="${matchDto.club_no==USER_KEY.club_no}"><a class="btn btn-default" href="/myclub/myclubGamePrepare?game_no=${matchDto.game_no}&game_flag=HOME">경기준비</a></c:if>
 										<c:if test="${list[index].club_no==USER_KEY.club_no}"><a class="btn btn-default" href="/myclub/myclubGamePrepare?game_no=${list[index].game_no}&game_flag=AWAY">경기준비</a></c:if>
 									</c:if>
-									<c:if test="${today>gameday}"><a class="btn btn-default" href="">경기결과</a></c:if>
+									<c:if test="${today>gameday}">
+										<c:if test="${matchDto.club_no==USER_KEY.club_no}"><a class="btn btn-default" href="/myclub/myclubGameResult?game_no=${matchDto.game_no}&game_flag=HOME">경기결과</a></c:if>
+										<c:if test="${list[index].club_no==USER_KEY.club_no}"><a class="btn btn-default" href="/myclub/myclubGameResult?game_no=${list[index].game_no}&game_flag=AWAY">경기결과</a></c:if>
+									</c:if>
 								</c:if>
 							<%i++;%>
 							</td>
@@ -134,6 +139,8 @@
 					</c:forEach>
 				</table>
 				<h5>경기준비가 필요한 일정</h5>   
+             <form action="/myclub/myclubEditGame" method=post>
+<%--             <input type="hidden" name="club_no" value="${USER_KEY.club_no}" /> --%>
             <table class="table table-hover" text-align="center">
                <thead style="background-color: #e6e6e6">
                <tr>
@@ -144,11 +151,13 @@
                </thead>
                <%int j = 0; %>
                <c:forEach items="${nullList}" var="matchDto" step="2">
+                     <input type="hidden" name="club_no" value="${USER_KEY.club_no }">
+               <input type="hidden" name="game_no" value="${matchDto.game_no}">
                   <tr>
                      <fmt:formatDate value="${matchDto.game_date}" pattern="yyyy-MM-dd" var="gameday"/>
                      <td>${matchDto.game_no}</td>
                      <td><input id="game_date_${matchDto.game_no}" style="width:120px" class="form-control" type="text" name="game_date"/></td>
-                     <td><input id="game_time_${matchDto.game_no}" style="width:80px" class="form-control" type="text" name="game_time"/></td>
+                     <td><input id="game_time_${matchDto.game_no}" style="width:80px" class="form-control" type="text" name="game_time" /></td>
                      <td><input id="game_addr_${matchDto.game_no}" style="width:80px" class="form-control" type="text" name="game_addr"/></td>
                      <td>
                         <select class="form-control" id="club_ability_${matchDto.game_no}" name="club_ability" style="width:120px">
@@ -157,8 +166,8 @@
                             <option value="3">★★★</option>
                             <option value="4">★★★★</option>
                             <option value="5">★★★★★</option>
-                              </select>
-                           </td>
+                        </select>
+                     </td>
                      <td>${matchDto.club_no}</td>
                      <td>0:0</td>
                      <%j++;%>
@@ -167,7 +176,8 @@
                      <td><c:forEach begin="1" end="${nullList[index].club_ability}"><i class="glyphicon glyphicon-star"></i></c:forEach></td>
                      <%j++;%>
                      <td>
-                        <c:if test="${matchDto.club_ability==0}"><input type="button" value="수정" onclick="editGame(${matchDto.club_no})" /></c:if>
+                        <c:if test="${matchDto.club_ability==0}"><input type="submit" value="수정"/></c:if>
+<%--                         <c:if test="${matchDto.club_ability==0}"><input type="button" value="수정" onclick="editGame(${matchDto.club_no})" /></c:if> --%>
                      </td>
                      <td>
                         <c:if test="${matchDto.club_ability==0}"></c:if>
@@ -175,6 +185,7 @@
                   </tr>
                </c:forEach>
             </table>
+            </form>
 				</div><!-- /.row -->	
 				
 				<div class="row">
@@ -200,19 +211,26 @@
 	</div><!-- /.row -->
 </div><!-- /.container -->
 
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="/resources/js/jquery.timepicker.js"></script>
+<!-- <script   src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+<script src="../resources/bootstrap/js/bootstrap.min.js"></script>
 <script>
-	$(function(){
-		$("#datepicker").datepicker(
-			{
-				dateFormat: "yymmdd",
-				changeMonth: true,
-				changeYear: true,
-				minDate: "0",
-				maxDate: "+1y",
-			}		
-		);
-	});
 
+//데이트피커 연결
+var date = $("[name=game_date]").datepicker({
+   dateFormat:"yy/mm/dd",
+   changeMonth:true,
+   changeYear:true
+//      yearRange: "2016"
+});
+
+var time = $('[name=game_time]').timepicker({
+    'minTime': '06:00am',
+    'maxTime': '16:30pm',
+    'showDuration': true
+});
 </script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->

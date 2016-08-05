@@ -70,4 +70,14 @@ public class MatchServiceImpl implements MatchService {
 	public Integer gameNoMax() throws Exception {
 		return dao.gameNoMax();
 	}
+
+	@Override
+	public void editHome(MatchDTO dto) throws Exception {
+		dao.editHome(dto);
+	}
+
+	@Override
+	public void editAway(MatchDTO dto) throws Exception {
+		dao.editAway(dto);
+	}
 }

@@ -30,10 +30,6 @@ public class MatchingController {
 	
 	@RequestMapping("/matching/main")
 	public String matchingMain(Model model, HttpServletRequest req) throws Exception{
-		HttpSession session = req.getSession();
-	      
-	    ClubDTO clubKey = (ClubDTO)session.getAttribute("CLUB_KEY");
-	      
 		model.addAttribute("list",service.matchListAll()); 
 		
 		//클럽목록
@@ -42,8 +38,6 @@ public class MatchingController {
 		model.addAttribute("popular", ClubService.popularityListAll());
 		//클럽공지사항 : 
 		model.addAttribute("notice", MainNoticeService.listAll());
-		
-		model.addAttribute("CLUB_NAME", service.myClubName(Integer.parseInt(clubKey.getClub_no())));
 		
 		return "/matching/matchingPage";
 	}

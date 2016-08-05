@@ -39,8 +39,8 @@
 					<c:forEach items="${list}" var="myclubDTO" varStatus="status">
 		                  <c:if test="${not empty myclubDTO.myclub_video_main_thumnail}">
 			                  <div class="col-xs-6 col-md-3" >
-									<a href="/myclub/video/read?myclub_video_no=${myclubDTO.myclub_video_no}" class="thumbnail" style="height: 180px">${myclubDTO.myclub_video_no}
-								   	<img src="${myclubDTO.myclub_video_main_thumnail}" style="max-width: 200px; max-height: 140px" /></a>
+									<a href="/myclub/video/read?myclub_video_no=${myclubDTO.myclub_video_no}" class="thumbnail" style="height: 200px">${myclubDTO.myclub_video_no}
+								   	<video style="max-width: 200px; max-height: 140px" src="${myclubDTO.myclub_video_main_thumnail}" type="video/mp4"></video></a>
 							 	제목 : ${myclubDTO.myclub_video_subject}
 							 		<c:if test="${myclubDTO.replycount > 0}"> [${myclubDTO.replycount}]</c:if> 
 							 		

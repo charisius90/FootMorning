@@ -10,17 +10,16 @@ import com.footmorning.app.domain.ChallengeDTO;
 import com.footmorning.app.persistence.ChallengeDAO;
 
 @Service
-public class ChallengeServiceImpl implements ChallengeService{
+public class ChallengeServiceImpl implements ChallengeService {
 
 	@Inject
 	private ChallengeDAO dao;
-	
+
 	@Override
-   public List<ChallengeDTO> validateUserClubNo(ChallengeDTO dto) throws Exception {
-      // TODO Auto-generated method stub
-      return dao.validateUserClubNo(dto);
-   }
-	
+	public List<ChallengeDTO> validateUserClubNo(ChallengeDTO dto) throws Exception {
+		return dao.validateUserClubNo(dto);
+	}
+
 	@Override
 	public void ChallengeRegister(ChallengeDTO dto) throws Exception {
 		dao.ChallengeRegister(dto);
@@ -30,7 +29,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public List<ChallengeDTO> SendChallengeListAll(int no) throws Exception {
 		return dao.SendChallengeListAll(no);
 	}
-	
+
 	@Override
 	public List<ChallengeDTO> ReciveChallengeListAll(int no) throws Exception {
 		return dao.ReciveChallengeListAll(no);
@@ -44,5 +43,10 @@ public class ChallengeServiceImpl implements ChallengeService{
 	@Override
 	public boolean noChallenge(int no) throws Exception {
 		return dao.noChallenge(no);
+	}
+
+	@Override
+	public String myClubName(int club_no) throws Exception {
+		return dao.myClubName(club_no);
 	}
 }

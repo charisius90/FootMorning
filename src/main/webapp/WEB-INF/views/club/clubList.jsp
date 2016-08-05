@@ -108,7 +108,8 @@
                //open modal
                $('#send_chellenge_modal').modal('show');
                //추후에 
-               $("#receiver_club_name").val(club_no);
+               $("#receiver_club_name").val(data.HOME_NAME);
+               $("#sender_club_name").val(data.AWAY_NAME);
                $("#receiver_club_no").val(club_no);
             }
          },
@@ -247,7 +248,7 @@
                         <td><fmt:formatDate value="${dto.game_date}" pattern="yyyy-MM-dd"/></td>
                         <td>${dto.game_time}</td>
                         <td>${dto.game_addr}</td>
-                        <td>${dto.club_no}</td>
+                        <td>${dto.club_name}</td>
                         <td>${dto.club_master_name}</td>
                         <td><c:forEach begin="1" end="${dto.club_ability}"><i class="glyphicon glyphicon-star"></i></c:forEach></td>
                         <td><input name="checkbox" id="checkbox_${dto.game_no}" type="checkbox" value="${dto.game_no}"/></td>
@@ -292,7 +293,7 @@
                                                   시간&nbsp;<input class="form-control" type="text" id="challengeTime" placeholder="매칭이 성사 된 이후에 설정 하실 수 있습니다." readonly="readonly"><br/>
                                                    지역&nbsp;<input class="form-control" type="text" id="challengeAddr" placeholder="매칭이 성사 된 이후에 설정 하실 수 있습니다." readonly="readonly"><br/>
                                        HOME팀&nbsp;<input class="form-control" type="text" id="receiver_club_name" readonly="readonly"/><br/>   
-                                          AWAY팀&nbsp;<input class="form-control" type="text" id="sender_club_name" value="${USER_KEY.club_no}" readonly="readonly"/><br/>
+                                          AWAY팀&nbsp;<input class="form-control" type="text" id="sender_club_name" readonly="readonly"/><br/>
                                           실력&nbsp;<select class="form-control" name="club_ability" style="width:170px">
                                              <option value="1">★</option>
                                              <option value="2">★★</option>

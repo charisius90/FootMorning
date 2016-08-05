@@ -30,13 +30,14 @@ import com.footmorning.app.domain.MemberDTO;
 import com.footmorning.app.domain.SubLineupDTO;
 import com.footmorning.app.service.ChallengeService;
 import com.footmorning.app.service.MatchService;
+import com.footmorning.app.service.MemberService;
 import com.footmorning.app.service.MyclubGamePrepareService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class MyclubGamePrepareController {
 	@Inject
-	private MyclubGamePrepareService service;
+	private MyclubGamePrepareService prepareService;
 	
 	@Inject
 	private MatchService matchService;
@@ -52,75 +53,91 @@ public class MyclubGamePrepareController {
 		matchDto.setGame_no(Integer.parseInt(game_no));
 		matchDto.setGame_flag(game_flag);
 		WebUtils.setSessionAttribute(req, "GAME_KEY", matchService.matchWithGameNoAndGameFlag(matchDto));
-		
-		String lineup_no = service.checkLineupNo(matchDto);
-		if(lineup_no != null){
-			System.out.println("불러와야함");
-			//선발 멤버 번호
-			FirstLineupDTO firstLineupDto = service.firstLineupWithLineupNo(lineup_no);
-			//후보 멤버 번호
-			SubLineupDTO subLineupDto = service.subLineupWithLineupNo(lineup_no);
-			//포메 (DB용)
-			FormationDTO formationDto = service.formationWithLineupNo(lineup_no);
-			//포메 (뿌리기용)
-//			FormationListDTO formationListDto = formationDto.
-			req.setAttribute("result", "LOAD");
-	         
-		}else{
-			System.out.println("새로생성함");
-			req.setAttribute("result", "NEW");
-		}
+		matchDto.setGame_flag("HOME");
+		WebUtils.setSessionAttribute(req, "HOME_KEY", matchService.matchWithGameNoAndGameFlag(matchDto));
+		matchDto.setGame_flag("AWAY");
+		WebUtils.setSessionAttribute(req, "AWAY_KEY", matchService.matchWithGameNoAndGameFlag(matchDto));
 		
 		return "/myclub/myclubGamePrepare";
 	}
 	
-//	@RequestMapping(value = "/myclub/myclubGamePrepareCheck")
-//	public String GamePrepareCheck(Model model, HttpServletRequest req) throws Exception {
-//		MatchDTO matchDto = (MatchDTO)WebUtils.getSessionAttribute(req, "GAME_KEY");
-//		
-//		String lineup_no = service.checkLineupNo(matchDto);
-//		if(lineup_no != null){
-//			System.out.println("불러와야함");
-//			req.setAttribute("result", "LOAD");
-//	         
-//		}else{
-//			System.out.println("새로생성함");
-//			req.setAttribute("result", "NEW");
-//		}
-//		return "/myclub/json/myclubGamePrepareFlagJson";
-//	}
+	@RequestMapping(value = "/myclub/myclubGamePrepareCheck")
+	public String GamePrepareCheck(Model model, HttpServletRequest req, int club_no) throws Exception {
+		MatchDTO matchDto = (MatchDTO)WebUtils.getSessionAttribute(req, "GAME_KEY");
+		
+		String lineup_no = prepareService.checkLineupNo(matchDto);
+		
+		List<MemberDTO> members = prepareService.listMemberWithClubNo(club_no);
+		
+		if(lineup_no != null){
+			System.out.println("불러와야함");
+			req.setAttribute("result", "LOAD");
+			//선발 멤버 번호
+			FirstLineupDTO firstLineupDto = prepareService.firstLineupWithLineupNo(lineup_no);
+			//후보 멤버 번호
+			SubLineupDTO subLineupDto = prepareService.subLineupWithLineupNo(lineup_no);
+			//포메 (DB용)
+			FormationDTO formationDto = prepareService.formationWithLineupNo(lineup_no);
+			
+			List<Integer> firstList = convertJsonStringToList(Integer.class, firstLineupDto.getFirstlineup_list());
+			List<Integer> subList = convertJsonStringToList(Integer.class, subLineupDto.getSublineup_list());
+			System.out.println(firstLineupDto.getFirstlineup_list());
+			List<MemberDTO> firstMembers = new ArrayList<>();
+			List<MemberDTO> subMembers = new ArrayList<>();
+			//System.out.println("first list : "+firstList);
+			List<MemberDTO> nonLine = new ArrayList<>();
+			for(MemberDTO member :  members) {
+				if(firstList.contains(Integer.parseInt(member.getMem_no()))) {
+					System.out.println("한번 걸러짐");
+					firstMembers.add(member);
+					continue;
+				}
+
+				if(subList.contains(Integer.parseInt(member.getMem_no()))) {
+					subMembers.add(member);
+					continue;
+				}
+				nonLine.add(member);
+			}
+			req.setAttribute("firstLineUp", firstMembers);
+			req.setAttribute("subLineUp", subMembers);
+			req.setAttribute("formations", formationDto.getFormation_list());
+			req.setAttribute("members", nonLine);
+	         
+		}else{
+			System.out.println("새로생성함");
+			req.setAttribute("result", "NEW");
+			req.setAttribute("members", members);
+		}
+		return "/myclub/json/myclubGamePrepareFlagJson";
+	}
 	
 	@RequestMapping(value = "/myclub/myclubGamePrepareMember")
 	public String GamePrepareMember(Model model, int club_no) throws Exception {
-		model.addAttribute("memberList", service.listMemberWithClubNo(club_no));
-		List<MemberDTO> list =  service.listMemberWithClubNo(club_no);
+		System.out.println("모든 멤버 가져오기");
+		model.addAttribute("memberList", prepareService.listMemberWithClubNo(club_no));
+		
+		List<MemberDTO> list =  prepareService.listMemberWithClubNo(club_no);
 		for(int i=0; i<list.size(); i++){
 			System.out.println(i+"번쨰 : " +list.get(i).toString());
 		}
 		return "/myclub/json/myclubGamePrepareJson";
 	}
 	
-//	@RequestMapping(value = "/myclub/myclubGamePrepareLoad")
-//	public String GamePrepareLoad(Model model, int club_no) throws Exception {
-//		System.out.println("로딩 컨트롤러");
-//		return "/myclub/myclubGamePrepare";
-//	}
-	
 	@RequestMapping(value = "/myclub/myclubGamePrepareRegister")
-	public String GamePrepareRegister(@RequestBody Map<String, List<Object>> json, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+	public String GamePrepareRegister(@RequestBody Map<String, List<Object>> json, HttpServletRequest req) throws Exception {
 		MatchDTO matchDto = (MatchDTO)WebUtils.getSessionAttribute(req, "GAME_KEY");
 		int game_no = matchDto.getGame_no();
 		String game_flag = matchDto.getGame_flag();
-		String lineup_no = service.checkLineupNo(matchDto);
+		String lineup_no = prepareService.checkLineupNo(matchDto);
 		System.out.println("라인업번호 : " + lineup_no);
 		
 		if(lineup_no != null){
-			rttr.addFlashAttribute("msg", "EXIST");
 			System.out.println("이미 존재함");
 			
-			service.deleteFormation(lineup_no);
-			service.deleteSubLineup(lineup_no);
-			service.deleteFirstLineup(lineup_no);
+			prepareService.deleteFormation(lineup_no);
+			prepareService.deleteSubLineup(lineup_no);
+			prepareService.deleteFirstLineup(lineup_no);
 		}
 		
 		System.out.println(json.get("firstLineUp"));
@@ -131,35 +148,34 @@ public class MyclubGamePrepareController {
 		firstDto.setFirstlineup_list(convertCollectionToStringJson(json.get("firstLineUp")));
 		firstDto.setGame_no(game_no);
 		firstDto.setGame_flag(game_flag);
-		service.registerFirstLineup(firstDto);
+		prepareService.registerFirstLineup(firstDto);
 		System.out.println("선발 성공");
 		
-		lineup_no = service.checkLineupNo(matchDto);
+		lineup_no = prepareService.checkLineupNo(matchDto);
 		
 		SubLineupDTO subDto = new SubLineupDTO();
 		subDto.setSublineup_list(convertCollectionToStringJson(json.get("subLineUp")));
 		subDto.setLineup_no(lineup_no);
-		service.registerSubLineup(subDto);
+		prepareService.registerSubLineup(subDto);
 		System.out.println("후보 성공");
 		
 		FormationDTO formationDto = new FormationDTO();
 		formationDto.setFormation_list(convertCollectionToStringJson(json.get("formation")));
 		formationDto.setLineup_no(lineup_no);
-		service.registerFormation(formationDto);
+		prepareService.registerFormation(formationDto);
 		System.out.println("포메 성공");
 		
 		//db저장
 //		System.out.println("firststring : " +convertCollectionToStringJson(json.get("firstLineUp")));
 //		System.out.println("substring : " +convertCollectionToStringJson(json.get("subLineUp")));
-//		System.out.println("formationstring : " +convertCollectionToStringJson(json.get("formation")));
+		System.out.println("formationstring : " +convertCollectionToStringJson(json.get("formation")));
 	
 		//db로드
 //		System.out.println("firstlist : " +convertJsonStringToList(Integer.class, convertCollectionToStringJson(json.get("firstLineUp")))) ;
 //		System.out.println("sublist : " +convertJsonStringToList(Integer.class, convertCollectionToStringJson(json.get("subLineUp")))) ;
 //		System.out.println("formationlist : " +convertJsonStringToList(FormationListDTO.class, convertCollectionToStringJson(json.get("formation")))) ;
-		rttr.addFlashAttribute("msg", "SUCCESS");
-		
-		return "/myclub/myclubGameSchedule";
+		req.setAttribute("result", true);
+		return "/myclub/json/myclubGameRegisterResultJson";
 	}
 	
 	// DB 넣을 때 : list -> string

@@ -3,18 +3,18 @@ package com.footmorning.app.domain;
 import java.util.List;
 
 public class LocationDTO {
-	private String top;
-	private String left;
-	public String getTop() {
+	private Integer top;
+	private Integer left;
+	public Integer getTop() {
 		return top;
 	}
-	public void setTop(String top) {
+	public void setTop(Integer top) {
 		this.top = top;
 	}
-	public String getLeft() {
+	public Integer getLeft() {
 		return left;
 	}
-	public void setLeft(String left) {
+	public void setLeft(Integer left) {
 		this.left = left;
 	}
 	@Override

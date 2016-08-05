@@ -52,11 +52,12 @@ public class ChallengeController {
 	      }
 	      //이미 도전장을 보낸경우
 	      else if(service.validateUserClubNo(dto2).size()>0){
-	         
 	         req.setAttribute("result", "SAMENAME");
 	         return "/matching/json/reslutJson";
 	      }
 	      else{
+	    	  req.setAttribute("HOME_NAME", service.myClubName(user_club_no));
+	          req.setAttribute("AWAY_NAME", service.myClubName(club_no));
 	         return "/matching/json/reslutJson";
 	      }
 	   }
@@ -67,18 +68,6 @@ public class ChallengeController {
       rttr.addFlashAttribute("msg", "SUCCESS");
       return "redirect:/matching/main";
    }
-	
-
-//	@RequestMapping(value="/challenge/register",method=RequestMethod.POST)
-//	public String ChallengeRegister(ChallengeDTO dto,RedirectAttributes rttr) throws Exception{
-//
-//		System.out.println(dto.toString());
-//		service.ChallengeRegister(dto);
-//		
-//		rttr.addFlashAttribute("msg", "SUCCESS");
-//		
-//		return "redirect:/matching/main";
-//	}
 	
 	@RequestMapping(value="/challenge/invite",method=RequestMethod.POST)
 	public String ChallengeInvite(HttpServletRequest req, RedirectAttributes rttr, MatchDTO dto) throws Exception{

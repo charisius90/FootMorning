@@ -34,12 +34,13 @@ public class MyclubVideoController {
 		HttpSession session = req.getSession();
 		
 		ClubDTO dto = (ClubDTO)session.getAttribute("CLUB_KEY");
-
-		
+		System.out.println("지금 클럽:"+dto.getClub_no());
+		System.out.println("클럽 이름:"+dto.getClub_name());
 		cri.setClub_no(dto.getClub_no());
 		model.addAttribute("list", service.listSearchCriteria(cri));
-
-
+		System.out.println("첫번째:"+service.listSearchCriteria(cri).get(0).getMyclub_video_main_thumnail());
+		System.out.println("두번째:"+service.listSearchCriteria(cri).get(1).getMyclub_video_main_thumnail());
+		
 		AlbumPageMaker pageMaker = new AlbumPageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listSearchCount(cri));
@@ -57,8 +58,10 @@ public class MyclubVideoController {
 	// register (POST)
 	@RequestMapping(value = "/myclub/video/register", method = RequestMethod.POST)
 	public String registerComplete(MyclubVideoDTO dto, RedirectAttributes rttr) throws Exception {
+		String videoContent = dto.getMyclub_video_content();
+		String[] splitCount = videoContent.split("<source src=");
+		dto.setMyclub_video_count(splitCount.length -1);
 		service.register(dto);
-
 		rttr.addFlashAttribute("msg", "SUCCESS");
 
 		return "redirect:/myclub/video/main";

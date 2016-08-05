@@ -16,4 +16,6 @@ public interface ChallengeService {
 	public boolean yesChallenge(int no) throws Exception;
 	
 	public boolean noChallenge(int no) throws Exception;
+	
+	public String myClubName(int club_no) throws Exception;
 }

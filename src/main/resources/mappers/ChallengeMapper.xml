@@ -51,4 +51,8 @@
       and receiver_club_no =#{receiver_club_no}
       and game_no=#{game_no};
    </select>
+   
+   <select id="myclubName" resultType="String">
+      select club_name from club where club_no=#{club_no}
+   </select>
 </mapper>

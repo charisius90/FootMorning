@@ -53,9 +53,12 @@
 	</select>
 
 	<select id="listWithClubNoUnconnect" resultType="MatchDTO">
-		select * from
-		game where game_no not in (select game_no from game where
-		game_flag='AWAY' or game_flag='INVITE') and club_no=#{club_no};
+<!-- 		select * from -->
+<!-- 		game where game_no not in (select game_no from game where -->
+<!-- 		game_flag='AWAY' or game_flag='INVITE') and club_no=#{club_no}; -->
+		select g.*,c.club_master_name,c.club_name from
+      game g inner join club c where g.game_no not in (select game_no from game where
+      game_flag='AWAY' or game_flag='INVITE')  and g.club_no=#{club_no} and c.club_no=g.club_no;
 	</select>
 
 	<select id="matchWithGameNo" resultType="MatchDTO">
@@ -92,4 +95,12 @@
 	<select id="gameNoMax" resultType="int">
 		select max(game_no) from game;
 	</select>
+	
+	<update id="editHome" parameterType="MatchDTO">
+      	UPDATE game SET game_date=#{game_date}, game_time=#{game_time}, game_addr=#{game_addr},club_ability=#{club_ability} WHERE game_no=#{game_no} and game_flag='HOME';
+    </update>
+   
+    <update id="editAway" parameterType="MatchDTO">
+      	UPDATE game SET game_date=#{game_date}, game_time=#{game_time}, game_addr=#{game_addr} WHERE game_no=#{game_no} and game_flag='AWAY';
+    </update>
 </mapper>
