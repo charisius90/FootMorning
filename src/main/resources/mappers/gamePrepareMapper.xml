@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.footmorning.mappers.gamePrepareMapper">
+	<select id="listMemberWithClubNo" resultType="MemberDTO">
+		select * from member where club_no=#{club_no};
+	</select>
+
+	<select id="checkLineupNo" resultType="String">
+		select lineup_no from LINEUP where game_no=#{game_no} and game_flag=#{game_flag};
+	</select>
+	
+	<insert id="registerFirstLineup" parameterType="MatchDTO">
+		INSERT INTO LINEUP(firstlineup_list, game_no, game_flag) 
+		VALUES (
+		#{firstlineup_list},
+		#{game_no},
+		#{game_flag});
+	</insert> 
+	
+	<insert id="registerSubLineup" parameterType="MatchDTO">
+		INSERT INTO LINEUP_SUB(lineup_no, sublineup_list) 
+		VALUES (
+		#{lineup_no},
+		#{sublineup_list});
+	</insert>
+	
+	<insert id="registerFormation" parameterType="MatchDTO">
+		INSERT INTO FORMATION(formation_list, lineup_no) 
+		VALUES (
+		#{formation_list},
+		#{lineup_no});
+	</insert>
+
+	<delete id="deleteFirstLineup">
+		delete from lineup where lineup_no=#{lineup_no};
+	</delete>
+	
+	<delete id="deleteSubLineup">
+		delete from lineup_sub where lineup_no=#{lineup_no};
+	</delete>
+	
+	<delete id="deleteFormation">
+		delete from formation where lineup_no=#{lineup_no};
+	</delete>
+	
+	<select id="firstLineupWithLineupNo" resultType="FirstLineupDTO">
+		select * from lineup where lineup_no=#{lineup_no};
+	</select>
+	
+	<select id="subLineupWithLineupNo" resultType="SubLineupDTO">
+		select * from lineup_sub where lineup_no=#{lineup_no};
+	</select>
+	
+	<select id="formationWithLineupNo" resultType="FormationDTO">
+		select * from formation where lineup_no=#{lineup_no};
+	</select>
+</mapper>

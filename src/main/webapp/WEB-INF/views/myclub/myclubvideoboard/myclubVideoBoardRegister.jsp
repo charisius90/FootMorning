@@ -3,16 +3,59 @@
 <html>
 <head>
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../../resources/bootstrap/css/startbootstrap-simple-sidebar.css" rel="stylesheet">
 <script type="text/javascript" src="/resources/SmartEditor2.8.2/js/HuskyEZCreator.js" charset="utf-8"></script>
-<script>
+<script type="text/javascript" >
 	function resize_Image(event) {
 		resize_X=event.x;
 		resize_Y=event.y;
 		event.srcElement.width=resize_X;
 		event.srcElement.height=resize_Y;
 	}
+	
+	 function fnUploadFile () {
+		 //var $fileForm = $("#fileForm");
+		 	
+		 var formData = new FormData();
+       	 formData.append("uploadfile", $("input[name=uploadfile]")[0].files[0]);
+       	 
+       	 $.ajax({
+       	    url: '/video/fileUpload',
+       	    data: formData,
+       	    processData: false,
+       	    contentType: false,
+       	    type: 'POST',
+       	    success: function(data){
+        	       data = $.parseJSON(data);
+        	       console.dir(data);
+        	       if(data.result) {
+        	    	   alert('성공');;
+        	    	   var video= '<video width="400" height="300" autoplay="autoplay"><source src="'+data.fileName+'" type="video/mp4" /></video><br />';
+	  	    	      $("#videoDiv").append(video);
+	  	    	    } else {
+        	    	   alsert("동영상 추가가 제대로 이루어지지 않았습니다.");
+        	       }
+        	    }
+       	  });
+ 	
+	    }
+	 
+	 function submitContents() {
+		 $form = $("#videoForm");
+		 var video_content = $form.find('input[name=myclub_video_content]').val($("#videoDiv").html());
+		 $form.append(video_content);
+		 if($form.find('input[name=myclub_video_subject]').val()=="") {
+			 return alert('동영상 게시판 제목을 입력하세요.')
+		 }
+		 if($form.find('input[name=myclub_video_content]').val()=="") {
+			 return alert('동영상 업로드 해주세요.')
+		 }
+		 
+		 $form.submit();
+	 }
+
 </script>
 
 </head>
@@ -26,18 +69,16 @@
 			<div>
 				<%@ include file="../../include/communitysidebar.jsp" %>
 			</div>
-			<form name="f1" method="post" action="/myclub/video/register">
+			<form id="videoForm" name="videoForm" method="post" action="/myclub/video/register">
 		    <input type="hidden" name="mem_no" value="${USER_KEY.mem_no}"/>
 		    <input type="hidden" name="club_no" value="${CLUB_KEY.club_no}"/>
 			<div class="col-md-10">
 				<div id="page-content-wrapper">
 				<h1>앨범게시판-글쓰기</h1> 			
-				<br/><br/>
-				
-				<!-- 글쓰는 부분 -->
 				<div class="container">
 					<div class="row">
 						<table class="table">
+			
 		                     <tr>
 		                        <td>제목</td>
 		                        <td><input type="text" id="myclub_video_subject" name="myclub_video_subject" /></td>
@@ -46,98 +87,32 @@
 		                        <td>작성자</td>
 		                        <td><input type="text" name="myclub_video_writer" value="${USER_KEY.mem_name}"/></td>
 		                     </tr>
-		                     <tr>
-		                        <td>내용</td>
-								<td><textarea name="myclub_video_content" id="ir1" rows="10" cols="100"
-									style="width: 766px; height: 412px; display: none;">
-									</textarea> <!--textarea name="ir1" id="ir1" rows="10" cols="100" style="width:100%; height:412px; min-width:610px; display:none;"></textarea-->
-								<script type="text/javascript">
-									var oEditors = [];
-
-									// 추가 글꼴 목록
-									//var aAdditionalFontSet = [["MS UI Gothic", "MS UI Gothic"], ["Comic Sans MS", "Comic Sans MS"],["TEST","TEST"]];
-
-									nhn.husky.EZCreator
-											.createInIFrame({
-												oAppRef : oEditors,
-												elPlaceHolder : "ir1",
-												sSkinURI : "/resources/SmartEditor2.8.2/SmartEditor2Skin.html",
-												htParams : {
-													bUseToolbar : true, // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-													bUseVerticalResizer : true, // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-													bUseModeChanger : false, // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-													//aAdditionalFontList : aAdditionalFontSet,		// 추가 글꼴 목록
-													fOnBeforeUnload : function() {
-														alert("완료!");
-													}
-												}, //boolean
-												fOnAppLoad : function() {
-													//예제 코드
-// 													oEditors.getById["ir1"]
-// 															.exec(
-// 																	"PASTE_HTML",
-// 																	[ "로딩이 완료된 후에 본문에 삽입되는 text입니다." ]);
-												},
-												fCreator : "createSEditor2"
-											});
-
-									function pasteHTML() {
-										var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
-										oEditors.getById["ir1"].exec("PASTE_HTML", [ sHTML ]);
-									}
-
-									function showHTML() {
-										var sHTML = oEditors.getById["ir1"].getIR();
-										alert(sHTML);
-									}
-
-									function submitContents(elClickedObj) {
-										oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []); // 에디터의 내용이 textarea에 적용됩니다.
-
-										// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("ir1").value를 이용해서 처리하면 됩니다.
-										alert("누름");
-										
-										var title = document.getElementById("myclub_video_subject").value;
-										var content = document.getElementById("ir1").value;
-										
-										
-										if(title == "" || title == null){
-											alert("제목을 입력해주세요.")
-											document.f1.subject.focus();
-// 											$("#subject").focus();
-											return;
-										}
-										else if(content == "<p>&nbsp;</p>"){
-											alert("내용을 입력해주세요.");
-											document.f1.ir1.focus();
-											return;
-										}
-										
-										try {
-											elClickedObj.form.submit();
-										} catch (e) {
-											alert("등록 실패" + e)
-										}
-									}
-
-									function setDefaultFont() {
-										var sDefaultFont = '궁서';
-										var nFontSize = 24;
-										oEditors.getById["ir1"].setDefaultFont(sDefaultFont, nFontSize);
-									}
-								</script></td>
-		                     </tr>
-                 	 	</table>
+							<tr>
+								<td colspan="2">동경상 미리보기</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div id="videoDiv">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<input type="file" id="uploadfile" name="uploadfile" required="required"> <input id="uploadbutton" type="button" onclick="fnUploadFile()" value="게시글에 추가"/>
+									<input type="hidden" name="myclub_video_content" />
+								</td>
+							</tr>
+						</table>
 					</div>
-				</div>
-				<hr/>
+				</div>			
+			</div>
+			<hr/>
 			
-				<div align="right">
-					<a href="/myclub/video/main" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
-					<button type="button" class="btn btn-default" onclick="submitContents(this);"><span class="glyphicon glyphicon-pencil"></span>등록</button>
-					<a href="/myclub/video/main" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
-				</div>		
-				</div>
+			<div align="right">
+				<a href="/myclub/video/main" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>목록</a>
+				<button type="button" class="btn btn-default" onclick="submitContents();"><span class="glyphicon glyphicon-pencil"></span>등록</button>
+				<a href="/myclub/video/main" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span>취소</a>
+			</div>		
 			</div>	
 			</form>
 		</div>

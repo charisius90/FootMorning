@@ -69,7 +69,7 @@ public class MyclubGameMgrController {
 		matchDto.setGame_date(sdf.parse(req.getParameter("game_date")));
 		matchDto.setGame_time(req.getParameter("game_time"));
 		matchDto.setGame_addr(req.getParameter("game_addr"));
-		matchDto.setGame_flag("INVITE");
+		matchDto.setGame_flag("AWAY");
 		matchDto.setClub_no(Integer.parseInt(req.getParameter("club_no")));
 		matchDto.setClub_ability(Integer.parseInt(req.getParameter("club_ability")));
 		
@@ -91,4 +91,28 @@ public class MyclubGameMgrController {
 		
 		return"/myclubMgr/json/myclubChallengeFlagJson";
 	}
+	
+	   @RequestMapping(value="/myclubMgr/yesChallengeThird", method=RequestMethod.POST)
+	   public String myclubCallengeMgrYesThird(HttpServletRequest req) throws Exception{
+	      int challenge_no = Integer.parseInt(req.getParameter("challenge_no"));
+	      
+	      MatchDTO matchDto = new MatchDTO();
+	      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	      
+	      matchDto.setGame_no(Integer.parseInt(req.getParameter("game_no")));
+//	      matchDto.setGame_date(sdf.parse(req.getParameter("game_date")));
+//	      matchDto.setGame_time(req.getParameter("game_time"));
+//	      matchDto.setGame_addr(req.getParameter("game_addr"));
+	      matchDto.setGame_flag("AWAY");
+	      matchDto.setClub_no(Integer.parseInt(req.getParameter("club_no")));
+	      matchDto.setClub_ability(Integer.parseInt(req.getParameter("club_ability")));
+	      
+	      System.out.println(matchDto.toString());
+	      service.yesChallenge(challenge_no);
+	      service2.matchReciveRegister(matchDto);
+	      
+	      req.setAttribute("result", true);
+	      
+	      return "/myclubMgr/json/myclubChallengeFlagJson";
+	   }
 }

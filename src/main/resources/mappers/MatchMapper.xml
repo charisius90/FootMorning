@@ -4,9 +4,10 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.footmorning.mappers.MatchMapper">
-	
+
 	<insert id="register" parameterType="MatchDTO">
-		INSERT INTO game(game_no, game_date,game_time,game_addr, game_flag, club_no, club_ability) 
+		INSERT INTO game(game_no,
+		game_date,game_time,game_addr, game_flag, club_no, club_ability)
 		VALUES (
 		#{game_no},
 		#{game_date},
@@ -16,9 +17,11 @@
 		#{club_no},
 		#{club_ability});
 	</insert>
-	
+
 	<insert id="registerRecive" parameterType="MatchDTO">
-		INSERT INTO game(game_no, game_date,game_time,game_addr, game_flag, club_no, club_ability) 
+		INSERT INTO
+		game(game_no, game_date,game_time,game_addr, game_flag, club_no,
+		club_ability)
 		VALUES (
 		#{game_no},
 		#{game_date},
@@ -28,45 +31,76 @@
 		#{club_no},
 		#{club_ability});
 	</insert>
-	
+
 	<select id="listAll" resultType="MatchDTO">
-		select * from game inner join club on game.club_no=club.club_no
-		where game_no not in (select game_no from game where game_flag ='AWAY' or game_flag ='INVITE') order by game_no desc;
+		select * from game inner join
+		club on game.club_no=club.club_no
+		where game_no not in (select game_no
+		from game where game_flag ='AWAY' or game_flag ='INVITE') and
+		game_time is not null order by
+		game_no desc;
 	</select>
-	
-	<select id="myListWithClubNo" resultType="MatchDTO">
-		select distinct g.* from game g, challenge c 
-		where g.club_no=#{club_no} and (c.sender_club_no=#{club_no} or c.receiver_club_no=#{club_no}) and c.challenge_flag='YES' order by game_no desc;
-	</select>
-	
-	<select id="yourListWithClubNo" resultType="MatchDTO">
-		select distinct g.* from game g, challenge c 
-		where g.club_no=#{club_no} and (c.sender_club_no=#{club_no} or c.receiver_club_no=#{club_no}) and c.challenge_flag='YES' order by game_no desc;
-	</select>
-	
+
 	<select id="listWithClubNo" resultType="MatchDTO">
-		select distinct g.* from game g, challenge c where g.game_no in 
-		(select g.game_no from game g, challenge c where g.club_no=#{club_no} and (c.sender_club_no=#{club_no} or c.receiver_club_no=#{club_no}) 
-		and c.challenge_flag in ('YES', 'CANCLE')) order by game_date desc, game_time desc, game_flag desc;
+		select distinct * from
+		game where game_no in
+		(select game_no from challenge where
+		(sender_club_no=#{club_no} or
+		receiver_club_no=#{club_no}) and
+		challenge_flag in ('YES', 'CANCLE')) and game_date is not null
+		order by
+		game_date desc, game_time desc, game_flag desc;
 	</select>
-	
+
 	<select id="listWithClubNoUnconnect" resultType="MatchDTO">
-		select * from game where game_no not in (select game_no from game where game_flag='AWAY' or game_flag='INVITE') and club_no=#{club_no};
+<!-- 		select * from -->
+<!-- 		game where game_no not in (select game_no from game where -->
+<!-- 		game_flag='AWAY' or game_flag='INVITE') and club_no=#{club_no}; -->
+		select g.*,c.club_master_name,c.club_name from
+      game g inner join club c where g.game_no not in (select game_no from game where
+      game_flag='AWAY' or game_flag='INVITE')  and g.club_no=#{club_no} and c.club_no=g.club_no;
 	</select>
-	
+
 	<select id="matchWithGameNo" resultType="MatchDTO">
-		select * from game where game_no=#{game_no} and game_flag='HOME';
+		select * from game where
+		game_no=#{game_no} and game_flag='HOME';
 	</select>
-	
+
+	<select id="matchWithGameNoAndGameFlag" resultType="MatchDTO">
+		select * from
+		game where game_no=#{game_no} and game_flag=#{game_flag};
+	</select>
+
 	<select id="checkGameNo" resultType="String">
-		select case when max(game_no) is null then 0 else max(game_no) end from game;
+		select case when
+		max(game_no) is null then 0 else max(game_no) end from game;
+	</select>
+
+	<update id="updateCancle">
+		UPDATE GAME SET `club_ability`=0 WHERE
+		`game_no`=#{game_no};
+	</update>
+
+	<select id="myclubName" resultType="String">
+		select club_name from club
+		where club_no=#{club_no};
+	</select>
+
+	<select id="listWithClubNoDateNull" resultType="MatchDTO">
+		select distinct * from game where game_no in (select game_no from challenge where
+		(sender_club_no=#{club_no} or receiver_club_no=#{club_no}) and
+		challenge_flag='YES') and game_date is null order by game_no desc, game_flag desc;
+	</select>
+
+	<select id="gameNoMax" resultType="int">
+		select max(game_no) from game;
 	</select>
 	
-	<update id="updateCancle">
-		UPDATE GAME SET `club_ability`=0 WHERE `game_no`=#{game_no};
-	</update>
-	
-	<select id="myclubName" resultType="String">
-      select club_name from club where club_no=#{club_no};
-   </select>
+	<update id="editHome" parameterType="MatchDTO">
+      	UPDATE game SET game_date=#{game_date}, game_time=#{game_time}, game_addr=#{game_addr},club_ability=#{club_ability} WHERE game_no=#{game_no} and game_flag='HOME';
+    </update>
+   
+    <update id="editAway" parameterType="MatchDTO">
+      	UPDATE game SET game_date=#{game_date}, game_time=#{game_time}, game_addr=#{game_addr} WHERE game_no=#{game_no} and game_flag='AWAY';
+    </update>
 </mapper>
